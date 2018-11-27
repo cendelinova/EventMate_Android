@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+	<item
+			android:id="@+id/inbox_tab"
+			android:title="@string/tab_inbox"
+			android:icon="@drawable/ic_message"/>
+	
+	
+	<item
+			android:id="@+id/events_tab"
+			android:title="@string/tab_events"
+			android:icon="@drawable/ic_events"/>
+	
+	<item
+			android:id="@+id/profile_tab"
+			android:title="@string/tab_profile"
+			android:icon="@drawable/ic_user"/>
+</menu>
