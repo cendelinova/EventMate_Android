@@ -1,7 +1,8 @@
-package pp.erasmus.tei.gr.eventmate
+package pp.erasmus.tei.gr.eventmate.ui
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import pp.erasmus.tei.gr.eventmate.R
 
 class MainActivity : AppCompatActivity() {
 
