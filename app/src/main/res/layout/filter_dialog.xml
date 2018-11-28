@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical"
+	android:padding="@dimen/spacing_normal">
+	
+	<TextView
+		style="@style/MessageTitle"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginBottom="@dimen/spacing_normal"
+		android:text="@string/title_select_filters"
+		android:textStyle="bold"/>
+	
+	<RadioGroup
+		android:id="@+id/filter_who"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginBottom="@dimen/spacing_normal">
+		
+		<TextView
+			android:id="@+id/header_who"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginBottom="@dimen/spacing_small"
+			android:text="@string/who"
+			android:textAllCaps="true" />
+		
+		<RadioButton
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:text="@string/event_owner" />
+		
+		<RadioButton
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:text="@string/event_assignee" />
+	</RadioGroup>
+	
+	<RadioGroup
+		android:id="@+id/filter_event_status"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content">
+		
+		<TextView
+			android:id="@+id/header_status"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginBottom="@dimen/spacing_small"
+			android:text="@string/event_status"
+			android:textAllCaps="true" />
+		
+		<RadioButton
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:text="@string/event_status_editable" />
+		
+		<RadioButton
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:text="@string/event_status_ready_to_play" />
+		
+		<RadioButton
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:text="@string/event_status_in_play" />
+		
+		<RadioButton
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:text="@string/event_status_evaluation" />
+		
+		<RadioButton
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:text="@string/event_status_finished" />
+	</RadioGroup>
+	
+	<Button
+		android:id="@+id/btn_apply_filter"
+		style="@style/Button"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_gravity="center_horizontal"
+		android:text="@string/btn_confirm" />
+
+</LinearLayout>

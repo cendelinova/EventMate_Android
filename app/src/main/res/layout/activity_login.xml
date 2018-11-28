@@ -12,12 +12,10 @@
 	tools:context=".ui.login.LoginActivity">
 	
 	<TextView
+		style="@style/MessageTitle"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:layout_marginTop="@dimen/spacing_large"
-		android:text="@string/welcome_message"
-		android:textAlignment="center"
-		android:textAllCaps="true" />
+		android:text="@string/mgs_welcome" />
 	
 	<ImageView
 		android:id="@+id/icon"
@@ -90,8 +88,7 @@
 			android:layout_gravity="start"
 			android:backgroundTint="@color/facebook_blue"
 			android:drawableStart="@drawable/ic_facebook"
-			android:drawablePadding="@dimen/spacing_normal"
-			android:padding="@dimen/spacing_normal"
+			android:padding="@dimen/spacing_small"
 			android:text="@string/btn_facebook"
 			android:textColor="@color/white" />
 		
@@ -107,8 +104,7 @@
 			android:layout_gravity="end"
 			android:backgroundTint="@color/google_red"
 			android:drawableStart="@drawable/ic_google_plus"
-			android:drawablePadding="@dimen/spacing_normal"
-			android:padding="@dimen/spacing_normal"
+			android:padding="@dimen/spacing_small"
 			android:text="@string/btn_google"
 			android:textColor="@color/white" />
 	

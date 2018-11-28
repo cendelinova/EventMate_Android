@@ -4,13 +4,14 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import pp.erasmus.tei.gr.eventmate.R
+import pp.erasmus.tei.gr.eventmate.ui.base.BaseActivity
 import pp.erasmus.tei.gr.eventmate.ui.mainActivity.MainActivityFragmentAdapter.Companion.EVENTS_TAB
 import pp.erasmus.tei.gr.eventmate.ui.mainActivity.MainActivityFragmentAdapter.Companion.INBOX_TAB
 import pp.erasmus.tei.gr.eventmate.ui.mainActivity.MainActivityFragmentAdapter.Companion.PROFILE_TAB
 import timber.log.Timber
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
 	
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
