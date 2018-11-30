@@ -1,0 +1,13 @@
+package gr.tei.erasmus.pp.eventmate.ui.events
+
+import android.os.Bundle
+import gr.tei.erasmus.pp.eventmate.R
+import gr.tei.erasmus.pp.eventmate.ui.base.BaseActivity
+
+class NewEventActivity : BaseActivity() {
+	
+	override fun onCreate(savedInstanceState: Bundle?) {
+		super.onCreate(savedInstanceState)
+		setContentView(R.layout.activity_new_event)
+	}
+}

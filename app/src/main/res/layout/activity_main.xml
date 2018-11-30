@@ -6,7 +6,7 @@
 	android:layout_height="match_parent"
 	tools:context=".ui.mainActivity.MainActivity">
 	
-	<pp.erasmus.tei.gr.eventmate.customViews.NonSwipeableViewPager
+	<gr.tei.erasmus.pp.eventmate.customViews.NonSwipeableViewPager
 		android:id="@+id/viewpager"
 		android:layout_width="match_parent"
 		android:layout_height="0dp"
