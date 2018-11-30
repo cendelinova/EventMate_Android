@@ -37,8 +37,15 @@
 		
 		</RelativeLayout>
 	
-	
 	</android.support.v7.widget.Toolbar>
+	
+	<gr.tei.erasmus.pp.eventmate.customViews.RecyclerViewEmptyViewSupport
+		android:id="@+id/event_recycler_view"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:clipToPadding="false"
+		android:overScrollMode="never"
+		android:padding="@dimen/spacing_normal"/>
 	
 	
 	<LinearLayout
