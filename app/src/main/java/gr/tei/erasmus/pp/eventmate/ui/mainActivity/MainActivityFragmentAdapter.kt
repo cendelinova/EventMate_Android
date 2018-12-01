@@ -49,19 +49,4 @@ class MainActivityFragmentAdapter(
 		}
 	)
 	
-	/**
-	 * Get icon for given position.
-	 *
-	 * @param position The position of actually active tab.
-	 * @return tab icon Drawable
-	 */
-	fun getPageIcon(position: Int) = ContextCompat.getDrawable(
-		context, when (position) {
-			INBOX_TAB -> R.drawable.ic_message
-			EVENTS_TAB -> R.drawable.ic_events
-			PROFILE_TAB -> R.drawable.ic_user
-			else -> throw IndexOutOfBoundsException()
-		}
-	)
-	
 }

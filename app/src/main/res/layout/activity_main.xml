@@ -6,26 +6,44 @@
 	android:layout_height="match_parent"
 	tools:context=".ui.mainActivity.MainActivity">
 	
-	<gr.tei.erasmus.pp.eventmate.customViews.NonSwipeableViewPager
-		android:id="@+id/viewpager"
-		android:layout_width="match_parent"
-		android:layout_height="0dp"
-		android:layout_weight="1" />
 	
-	<View
-		android:layout_width="match_parent"
-		android:layout_height="1dp"
-		android:background="@color/divider_color"
-		app:layout_constraintBottom_toTopOf="@id/bottom_navigation" />
+	<!--<gr.tei.erasmus.pp.eventmate.customViews.NonSwipeableViewPager-->
+	<!--android:id="@+id/viewpager"-->
+	<!--android:layout_width="0dp"-->
+	<!--android:layout_height="wrap_content"-->
+	<!--app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"-->
+	<!--app:layout_constraintEnd_toEndOf="parent"-->
+	<!--app:layout_constraintStart_toStartOf="parent"-->
+	<!--app:layout_constraintTop_toTopOf="parent"-->
+	<!--app:layout_constraintVertical_bias="1.0" />-->
+	
+	<FrameLayout
+		android:id="@+id/frame_container"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		app:layout_behavior="@string/appbar_scrolling_view_behavior"
+		app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
+		app:layout_constraintTop_toBottomOf="parent"/>
 	
 	<android.support.design.widget.BottomNavigationView
 		android:id="@+id/bottom_navigation"
-		android:layout_width="match_parent"
+		android:layout_width="0dp"
 		android:layout_height="wrap_content"
-		android:layout_gravity="bottom"
 		app:itemIconTint="@drawable/bottom_navigation_colors"
 		app:itemTextColor="@drawable/bottom_navigation_colors"
-		app:layout_constraintBottom_toBottomOf="@id/viewpager"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintLeft_toLeftOf="parent"
+		app:layout_constraintRight_toRightOf="parent"
 		app:menu="@menu/bottom_navigation_menu" />
+	
+	<!--<View-->
+	<!--android:id="@+id/view"-->
+	<!--android:layout_width="0dp"-->
+	<!--android:layout_height="1dp"-->
+	<!--android:background="@color/divider_color"-->
+	<!--app:layout_constraintBottom_toTopOf="@id/bottom_navigation" />-->
 
 </android.support.constraint.ConstraintLayout>

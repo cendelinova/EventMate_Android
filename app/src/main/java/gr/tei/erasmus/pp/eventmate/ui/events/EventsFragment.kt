@@ -13,6 +13,9 @@ import gr.tei.erasmus.pp.eventmate.models.Event
 import gr.tei.erasmus.pp.eventmate.ui.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_events.*
 import timber.log.Timber
+import android.support.v7.app.AppCompatActivity
+
+
 
 class EventsFragment : BaseFragment() {
 	
@@ -30,6 +33,7 @@ class EventsFragment : BaseFragment() {
 		handleAddFab()
 		showFilterDialog()
 		initializeRecyclerView()
+		
 	}
 	
 	private fun handleAddFab() {
@@ -39,9 +43,9 @@ class EventsFragment : BaseFragment() {
 	}
 	
 	private fun showFilterDialog() {
-		btn_filter.setOnClickListener {
-			openFilterDialog()
-		}
+//		btn_filter.setOnClickListener {
+//			openFilterDialog()
+//		}
 	}
 	
 	private fun openFilterDialog() {
@@ -66,12 +70,12 @@ class EventsFragment : BaseFragment() {
 		
 		eventAdapter = EventAdapter(context!!, onEventClick, prepareEvents())
 		
-		with(event_recycler_view) {
-			setHasFixedSize(true)
-			setEmptyView(events_empty_view)
-			layoutManager = LinearLayoutManager(context!!)
-			adapter = eventAdapter
-		}
+//		with(event_recycler_view) {
+//			setHasFixedSize(true)
+////			setEmptyView(events_empty_view)
+//			layoutManager = LinearLayoutManager(context!!)
+//			adapter = eventAdapter
+//		}
 	}
 	
 	private val onEventClick = object : EventListener {
@@ -81,6 +85,6 @@ class EventsFragment : BaseFragment() {
 	}
 	
 	private fun prepareEvents(): MutableList<Event> {
-		return mutableListOf(Event("blala"), Event("esgge"), Event("semei"))
+		return mutableListOf(Event("blala"), Event("esgge"), Event("semei"), Event("semei"), Event("semei"), Event("semei"), Event("semei"), Event("semei"))
 	}
 }

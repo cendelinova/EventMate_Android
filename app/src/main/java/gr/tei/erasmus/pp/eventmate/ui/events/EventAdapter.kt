@@ -29,7 +29,7 @@ class EventAdapter(private val context: Context, private val eventListener: Even
 	private fun displayEventEntry(viewHolder: EventViewHolder, event: Event) {
 		with(viewHolder.itemView) {
 			root.setOnClickListener { eventListener.onItemClick(event) }
-			name.text = event.name
+			event_name.text = event.name
 		}
 	}
 	

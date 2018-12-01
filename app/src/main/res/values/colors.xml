@@ -9,8 +9,11 @@
 	<color name="facebook_blue">#3B5998</color>
 	<color name="google_red">#dd4b39</color>
 	
+	<color name="color_accent_8">#14064f68</color>
+	
 	<color name="grey">#757575</color>
 	
 	<color name="primary_text_color">@color/grey</color>
 	<color name="divider_color">@color/light_grey</color>
+	<color name="card_view_background">@color/color_accent_8</color>
 </resources>
