@@ -43,9 +43,9 @@ class EventsFragment : BaseFragment() {
 	}
 	
 	private fun showFilterDialog() {
-//		btn_filter.setOnClickListener {
-//			openFilterDialog()
-//		}
+		btn_filter.setOnClickListener {
+			openFilterDialog()
+		}
 	}
 	
 	private fun openFilterDialog() {
@@ -68,11 +68,11 @@ class EventsFragment : BaseFragment() {
 	private fun initializeRecyclerView() {
 		Timber.v("initializeRecyclerView() called")
 		
-		eventAdapter = EventAdapter(context!!, onEventClick, mutableListOf())
+		eventAdapter = EventAdapter(context!!, onEventClick, prepareEvents())
 		
 		with(event_recycler_view) {
 			setHasFixedSize(true)
-//			setEmptyView(events_empty_view)
+			setEmptyView(events_empty_view)
 			layoutManager = LinearLayoutManager(context!!)
 			adapter = eventAdapter
 		}
@@ -84,7 +84,7 @@ class EventsFragment : BaseFragment() {
 		}
 	}
 	
-//	private fun prepareEvents(): MutableList<Event> {
-////		return mutableListOf(Event("blala"), Event("esgge"), Event("semei"), Event("semei"), Event("semei"), Event("semei"), Event("semei"), Event("semei"))
-//	}
+	private fun prepareEvents(): MutableList<Event> {
+		return mutableListOf(Event("blala"), Event("esgge"), Event("semei"), Event("semei"), Event("semei"), Event("semei"), Event("semei"), Event("semei"))
+	}
 }

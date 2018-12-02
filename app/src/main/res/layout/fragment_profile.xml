@@ -3,15 +3,26 @@
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
-	android:layout_height="match_parent"
-	android:layout_margin="@dimen/spacing_normal">
+	android:layout_height="match_parent">
+	
+	<android.support.v7.widget.Toolbar
+		android:id="@+id/toolbar"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:background="@android:color/transparent"
+		android:theme="@style/AppTheme.AppBarOverlayNoBackground"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent">
+	
+	</android.support.v7.widget.Toolbar>
 	
 	<ImageView
 		android:layout_width="0dp"
 		android:layout_height="280dp"
-		android:elevation="-2dp"
+		android:alpha="0.8"
 		android:scaleType="fitXY"
-		android:src="@drawable/ic_location"
+		android:src="@drawable/profile_background"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toTopOf="parent" />
@@ -64,8 +75,8 @@
 		style="@style/CountMessageText"
 		android:layout_width="0dp"
 		android:layout_height="wrap_content"
+		android:layout_marginStart="@dimen/spacing_normal"
 		android:text="0"
-		
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toBottomOf="@id/tv_congrats_msg"
 		tools:text="0" />
@@ -88,6 +99,7 @@
 		android:layout_width="0dp"
 		android:layout_height="wrap_content"
 		android:text="5"
+		android:layout_marginStart="@dimen/spacing_normal"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toBottomOf="@id/tv_count_organized_events"
 		tools:text="5" />
@@ -111,6 +123,7 @@
 		android:layout_width="0dp"
 		android:layout_height="wrap_content"
 		android:text="3"
+		android:layout_marginStart="@dimen/spacing_normal"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toBottomOf="@id/tv_count_attended_events"
 		tools:text="3" />

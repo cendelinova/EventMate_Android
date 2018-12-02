@@ -28,4 +28,5 @@
 	
 	<dimen name="search_view_input_height">48dp</dimen>
 	<dimen name="rank_icon_size">100dp</dimen>
+	<dimen name="spacing_xhuge">55dp</dimen>
 </resources>

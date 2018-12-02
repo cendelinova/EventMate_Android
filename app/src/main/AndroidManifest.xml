@@ -18,9 +18,14 @@
 			</intent-filter>
 		</activity>
 		<activity android:name=".ui.login.LoginActivity" />
-		<activity android:name=".ui.signup.SignupActivity"></activity>
+		<activity android:name=".ui.signup.SignupActivity" />
 		<activity android:name=".ui.events.NewEventActivity" />
-		<activity android:name=".ui.events.EventDetailActivity"></activity>
+		<activity android:name=".ui.events.EventDetailActivity" />
+		<activity
+			android:name=".ui.settings.SettingsActivity"
+			android:label="@string/title_activity_settings" />
+		<activity android:name=".ui.gameRank.GameRankActivity" />
+		<activity android:name=".ui.help.HelpActivity"></activity>
 	</application>
 
 </manifest>

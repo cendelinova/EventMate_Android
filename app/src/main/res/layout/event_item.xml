@@ -22,8 +22,7 @@
 			android:id="@+id/event_photo"
 			android:layout_width="@dimen/bigger_icon_size"
 			android:layout_height="@dimen/bigger_icon_size"
-			android:src="@drawable/ic_image_placeholder"
-			android:tint="@color/grey" />
+			android:src="@drawable/ic_event_placeholder" />
 		
 		<RelativeLayout
 			android:layout_width="match_parent"

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto">
+	
+	<item
+		android:icon="@drawable/ic_more"
+		android:title=""
+		app:showAsAction="always">
+		<item
+			android:id="@+id/settings"
+			android:title="@string/settings"
+			app:showAsAction="ifRoom" />
+		<item
+			android:id="@+id/game_rank"
+			android:title="@string/game_rank"
+			app:showAsAction="ifRoom" />
+		<item
+			android:id="@+id/help"
+			android:title="@string/help"
+			app:showAsAction="ifRoom" />
+		<item
+			android:id="@+id/logout"
+			android:title="@string/logout"
+			app:showAsAction="ifRoom" />
+	
+	</item>
+
+</menu>

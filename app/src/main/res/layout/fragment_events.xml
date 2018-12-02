@@ -5,23 +5,6 @@
 	android:layout_width="match_parent"
 	android:layout_height="match_parent">
 	
-	<!--<android.support.design.widget.AppBarLayout-->
-		<!--android:layout_width="match_parent"-->
-		<!--android:layout_height="wrap_content"-->
-		<!--android:id="@+id/toolbar">-->
-		<!--<android.support.v7.widget.Toolbar-->
-			<!--android:layout_width="0dp"-->
-			<!--android:layout_height="60dp"-->
-			<!--android:layout_marginTop="8dp"-->
-			<!--android:background="@android:color/transparent"-->
-			<!--android:theme="@style/AppTheme.AppBarOverlayNoBackground"-->
-			<!--app:layout_constraintEnd_toEndOf="parent"-->
-			<!--app:layout_constraintStart_toStartOf="parent"-->
-			<!--app:layout_constraintTop_toTopOf="parent"-->
-			<!--app:title="@string/title_my_events"-->
-			<!--app:titleTextColor="@color/colorPrimary"/>-->
-	<!--</android.support.design.widget.AppBarLayout>-->
-	
 	<android.support.v7.widget.Toolbar
 		android:id="@+id/toolbar"
 		android:layout_width="0dp"
@@ -30,37 +13,33 @@
 		android:theme="@style/AppTheme.AppBarOverlayNoBackground"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toTopOf="parent"
-		app:title="@string/title_my_events"
-		app:titleTextColor="@color/colorPrimary"/>
-
-
-
-		<!--<RelativeLayout-->
-		<!--android:layout_width="match_parent"-->
-		<!--android:layout_height="wrap_content"-->
-		<!--android:background="@android:color/transparent">-->
-		<!---->
-		<!--<TextView-->
-		<!--style="@style/MessageTitle"-->
-		<!--android:layout_width="wrap_content"-->
-		<!--android:layout_height="wrap_content"-->
-		<!--android:layout_centerInParent="true"-->
-		<!--android:text="@string/title_my_events" />-->
-		<!---->
-		<!--<ImageView-->
-		<!--android:id="@+id/btn_filter"-->
-		<!--android:layout_width="wrap_content"-->
-		<!--android:layout_height="wrap_content"-->
-		<!--android:layout_alignParentEnd="true"-->
-		<!--android:layout_centerVertical="true"-->
-		<!--android:layout_marginEnd="@dimen/spacing_small"-->
-		<!--android:backgroundTint="@android:color/transparent"-->
-		<!--android:src="@drawable/ic_filter" />-->
-		<!---->
-		<!--</RelativeLayout>-->
+		app:layout_constraintTop_toTopOf="parent">
+		
+		<RelativeLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:background="@android:color/transparent">
+			
+			<TextView
+				style="@style/MessageTitle"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_centerInParent="true"
+				android:text="@string/title_my_events" />
+			
+			<ImageView
+				android:id="@+id/btn_filter"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_alignParentEnd="true"
+				android:layout_centerVertical="true"
+				android:layout_marginEnd="@dimen/spacing_small"
+				android:backgroundTint="@android:color/transparent"
+				android:src="@drawable/ic_filter" />
+		
+		</RelativeLayout>
 	
-	<!--</android.support.v7.widget.Toolbar>-->
+	</android.support.v7.widget.Toolbar>
 	
 	
 	<gr.tei.erasmus.pp.eventmate.customViews.RecyclerViewEmptyViewSupport
@@ -72,31 +51,33 @@
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@id/toolbar" />
+		app:layout_constraintTop_toBottomOf="@id/toolbar"
+		android:layout_marginTop="@dimen/spacing_xhuge"
+		android:paddingBottom="@dimen/spacing_xhuge"/>
 	
-	<!--<LinearLayout-->
-	<!--android:id="@+id/events_empty_view"-->
-	<!--android:layout_width="match_parent"-->
-	<!--android:layout_height="match_parent"-->
-	<!--android:orientation="vertical">-->
-	<!---->
-	<!--<Space-->
-	<!--android:layout_width="match_parent"-->
-	<!--android:layout_height="0dp"-->
-	<!--android:layout_weight="2" />-->
-	<!---->
-	<!--<TextView-->
-	<!--style="@style/EmptyText"-->
-	<!--android:layout_width="match_parent"-->
-	<!--android:layout_height="wrap_content"-->
-	<!--android:text="@string/tv_no_events" />-->
-	<!---->
-	<!--<Space-->
-	<!--android:layout_width="match_parent"-->
-	<!--android:layout_height="0dp"-->
-	<!--android:layout_weight="2" />-->
-	<!---->
-	<!--</LinearLayout>-->
+	<LinearLayout
+		android:id="@+id/events_empty_view"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:orientation="vertical">
+		
+		<Space
+			android:layout_width="match_parent"
+			android:layout_height="0dp"
+			android:layout_weight="2" />
+		
+		<TextView
+			style="@style/EmptyText"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:text="@string/tv_no_events" />
+		
+		<Space
+			android:layout_width="match_parent"
+			android:layout_height="0dp"
+			android:layout_weight="2" />
+	
+	</LinearLayout>
 	
 	
 	<android.support.design.widget.FloatingActionButton
