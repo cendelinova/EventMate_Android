@@ -6,6 +6,20 @@
 	android:layout_height="match_parent"
 	tools:context=".ui.signup.SignupActivity">
 	
+	
+	<android.support.v7.widget.Toolbar
+		android:id="@+id/toolbar"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content">
+		
+		<TextView
+			style="@style/MessageTitle"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:text="@string/msg_give_info" />
+	
+	</android.support.v7.widget.Toolbar>
+	
 	<LinearLayout
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
@@ -15,12 +29,6 @@
 		android:gravity="center_horizontal"
 		android:orientation="vertical">
 		
-		<TextView
-			style="@style/MessageTitle"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:text="@string/msg_give_info" />
-		
 		
 		<ImageView
 			android:id="@+id/profile_photo"
@@ -28,7 +36,7 @@
 			android:layout_height="@dimen/profile_photo_size"
 			android:layout_marginTop="@dimen/spacing_large"
 			android:layout_marginBottom="@dimen/spacing_large"
-			android:src="@drawable/user_placeholder" />
+			android:src="@drawable/ic_user_placeholder" />
 		
 		
 		<android.support.design.widget.TextInputLayout

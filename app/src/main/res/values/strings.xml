@@ -1,8 +1,8 @@
 <resources>
 	<string name="app_name">EventMate</string>
 	<string name="tab_inbox">Inbox</string>
-	<string name="tab_events">Events</string>
-	<string name="tab_profile">Profile</string>
+	<string name="tab_events">My events</string>
+	<string name="tab_profile">My profile</string>
 	<string name="hint_email">Email</string>
 	<string name="hint_password">Password</string>
 	<string name="mgs_welcome">Happy to see you again</string>
@@ -33,4 +33,8 @@
 	<string name="error_required_field">This field is required</string>
 	<string name="error_password_not_equal">Passwords don\'t match</string>
 	<string name="error_invalid_password">Password must be at least 6 characters</string>
+	<string name="mgs_congrats">Congrats</string>
+	<string name="tv_organized_events">organized events</string>
+	<string name="tv_attended_events">attended events</string>
+	<string name="tv_earned_points">earned points</string>
 </resources>

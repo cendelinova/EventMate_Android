@@ -68,14 +68,14 @@ class EventsFragment : BaseFragment() {
 	private fun initializeRecyclerView() {
 		Timber.v("initializeRecyclerView() called")
 		
-		eventAdapter = EventAdapter(context!!, onEventClick, prepareEvents())
+		eventAdapter = EventAdapter(context!!, onEventClick, mutableListOf())
 		
-//		with(event_recycler_view) {
-//			setHasFixedSize(true)
-////			setEmptyView(events_empty_view)
-//			layoutManager = LinearLayoutManager(context!!)
-//			adapter = eventAdapter
-//		}
+		with(event_recycler_view) {
+			setHasFixedSize(true)
+//			setEmptyView(events_empty_view)
+			layoutManager = LinearLayoutManager(context!!)
+			adapter = eventAdapter
+		}
 	}
 	
 	private val onEventClick = object : EventListener {
@@ -84,7 +84,7 @@ class EventsFragment : BaseFragment() {
 		}
 	}
 	
-	private fun prepareEvents(): MutableList<Event> {
-		return mutableListOf(Event("blala"), Event("esgge"), Event("semei"), Event("semei"), Event("semei"), Event("semei"), Event("semei"), Event("semei"))
-	}
+//	private fun prepareEvents(): MutableList<Event> {
+////		return mutableListOf(Event("blala"), Event("esgge"), Event("semei"), Event("semei"), Event("semei"), Event("semei"), Event("semei"), Event("semei"))
+//	}
 }
