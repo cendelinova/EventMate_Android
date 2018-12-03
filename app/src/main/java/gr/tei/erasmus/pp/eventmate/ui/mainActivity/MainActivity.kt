@@ -18,14 +18,12 @@ class MainActivity : BaseActivity() {
 		Timber.v("onCreate() called with: savedInstanceState = [$savedInstanceState]")
 		
 		setContentView(R.layout.activity_main)
-		
+		setupToolbar(toolbar, false)
 		setupPages()
 	}
 	
 	private fun setupPages() {
 		Timber.v("setupPages() called")
-
-//		viewpager.adapter = MainActivityFragmentAdapter(this, supportFragmentManager)
 		bottom_navigation.setOnNavigationItemSelectedListener {
 			when (it.itemId) {
 				R.id.inbox_tab -> {
@@ -34,14 +32,10 @@ class MainActivity : BaseActivity() {
 				}
 				R.id.events_tab -> {
 					loadFragment(EventsFragment())
-
-//					viewpager.setCurrentItem(EVENTS_TAB, true)
 					true
 				}
 				R.id.profile_tab -> {
 					loadFragment(ProfileFragment())
-
-//					viewpager.setCurrentItem(PROFILE_TAB, true)
 					true
 				}
 				else -> throw IndexOutOfBoundsException()
@@ -49,16 +43,21 @@ class MainActivity : BaseActivity() {
 		}
 	}
 	
+	fun setCustomTitle(title: String) {
+		my_title.text = title
+	}
+	
 	/**
-	 * loading fragment into FrameLayout
+	 * Loading fragment into FrameLayout
 	 *
 	 * @param fragment
 	 */
 	private fun loadFragment(fragment: Fragment) {
-		// load fragment
 		val transaction = supportFragmentManager.beginTransaction()
 		transaction.replace(R.id.frame_container, fragment)
 		transaction.addToBackStack(null)
 		transaction.commit()
 	}
+	
+	
 }

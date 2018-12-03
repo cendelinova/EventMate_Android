@@ -5,18 +5,6 @@
 	android:layout_width="match_parent"
 	android:layout_height="match_parent">
 	
-	<android.support.v7.widget.Toolbar
-		android:id="@+id/toolbar"
-		android:layout_width="0dp"
-		android:layout_height="wrap_content"
-		android:background="@android:color/transparent"
-		android:theme="@style/AppTheme.AppBarOverlayNoBackground"
-		app:layout_constraintEnd_toEndOf="parent"
-		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toTopOf="parent">
-	
-	</android.support.v7.widget.Toolbar>
-	
 	<ImageView
 		android:layout_width="0dp"
 		android:layout_height="280dp"
@@ -31,7 +19,7 @@
 		android:id="@+id/profile_image"
 		android:layout_width="0dp"
 		android:layout_height="160dp"
-		android:layout_marginTop="@dimen/spacing_huge"
+		android:layout_marginTop="@dimen/spacing_large"
 		android:src="@drawable/ic_user_placeholder"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"

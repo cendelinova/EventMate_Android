@@ -2,16 +2,14 @@ package gr.tei.erasmus.pp.eventmate.ui.base
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.Toolbar
 import android.view.MenuItem
 import android.view.WindowManager
-import gr.tei.erasmus.pp.eventmate.R
 
 abstract class BaseActivity : AppCompatActivity() {
+	
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
-		
-		setupToolbar()
-		
 		window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
 	}
 	
@@ -30,12 +28,12 @@ abstract class BaseActivity : AppCompatActivity() {
 	
 	/* Private methods ****************************************************************************/
 	
-	private fun setupToolbar() {
-		setSupportActionBar(findViewById(R.id.toolbar))
+	protected fun setupToolbar(toolbar: Toolbar, displayHomeAsUp: Boolean = true, displayTitle: Boolean = false) {
+		setSupportActionBar(toolbar)
 		
 		supportActionBar?.run {
-			setDisplayHomeAsUpEnabled(true)
-			setDisplayShowTitleEnabled(false)
+			setDisplayHomeAsUpEnabled(displayHomeAsUp)
+			setDisplayShowTitleEnabled(displayTitle)
 		}
 		
 	}

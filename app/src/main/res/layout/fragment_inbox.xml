@@ -3,26 +3,5 @@
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent">
-	
-	<android.support.v7.widget.Toolbar
-		android:id="@+id/toolbar"
-		android:layout_width="match_parent"
-		android:layout_height="?attr/actionBarSize"
-		android:background="#364161"
-		android:theme="@style/AppTheme.AppBarOverlayNoBackground"
-		app:popupTheme="@style/AppTheme.PopupOverlay">
-		
-		<!--<pp.erasmus.tei.gr.eventmate.customViews.ToolbarSearchView-->
-			<!--android:id="@+id/search_view"-->
-			<!--android:layout_width="match_parent"-->
-			<!--android:layout_height="match_parent"-->
-			<!--android:layout_marginLeft="@dimen/spacing_normal"-->
-			<!--android:layout_marginRight="@dimen/spacing_normal"-->
-			<!--app:hint="@string/hint_search"-->
-			<!--app:hintTextColor="@color/blacklist_header_search_hint"-->
-			<!--app:searchTextColor="@color/blacklist_header_search_text"-->
-			<!--app:titleText="@string/call_log" />-->
-	
-	</android.support.v7.widget.Toolbar>
 
 </android.support.constraint.ConstraintLayout>

@@ -4,17 +4,16 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.widget.AdapterView
+import android.widget.Toast
 import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.app.App
 import gr.tei.erasmus.pp.eventmate.models.Event
 import gr.tei.erasmus.pp.eventmate.ui.base.BaseFragment
+import gr.tei.erasmus.pp.eventmate.ui.mainActivity.MainActivity
 import kotlinx.android.synthetic.main.fragment_events.*
 import timber.log.Timber
-import android.support.v7.app.AppCompatActivity
-
 
 
 class EventsFragment : BaseFragment() {
@@ -24,16 +23,27 @@ class EventsFragment : BaseFragment() {
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 		Timber.v("onCreateView() called with: inflater = [$inflater], container = [$container], savedInstanceState = [$savedInstanceState]")
 		
+		setHasOptionsMenu(true)
 		return inflater.inflate(R.layout.fragment_events, null)
-		
+	}
+	
+	override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+		inflater?.inflate(R.menu.menu_fragment_events, menu)
+		super.onCreateOptionsMenu(menu, inflater)
+	}
+	
+	override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+		if (item?.itemId == R.id.filter) showFilterDialog()
+		return super.onOptionsItemSelected(item)
 	}
 	
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
-		handleAddFab()
-		showFilterDialog()
-		initializeRecyclerView()
 		
+		(activity as MainActivity).setCustomTitle(getString(R.string.title_my_events))
+		
+		handleAddFab()
+		initializeRecyclerView()
 	}
 	
 	private fun handleAddFab() {
@@ -42,13 +52,8 @@ class EventsFragment : BaseFragment() {
 		}
 	}
 	
-	private fun showFilterDialog() {
-		btn_filter.setOnClickListener {
-			openFilterDialog()
-		}
-	}
 	
-	private fun openFilterDialog() {
+	private fun showFilterDialog() {
 		val context = App.COMPONENTS.provideContext()
 		val viewGroup = activity?.findViewById(android.R.id.content) as ViewGroup
 		val dialog = LayoutInflater.from(context)
@@ -56,9 +61,21 @@ class EventsFragment : BaseFragment() {
 		
 		AlertDialog.Builder(activity!!).apply {
 			setView(dialog)
+			setOnItemSelectedListener(itemDialogLister)
 		}.also {
 			it.create()
 		}.show()
+	}
+	
+	private val itemDialogLister = object : AdapterView.OnItemSelectedListener {
+		override fun onNothingSelected(parent: AdapterView<*>?) {
+		
+		}
+		
+		override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+			Toast.makeText(context, "bllaa $position $id", Toast.LENGTH_LONG).show()
+		}
+		
 	}
 	
 	
@@ -85,6 +102,15 @@ class EventsFragment : BaseFragment() {
 	}
 	
 	private fun prepareEvents(): MutableList<Event> {
-		return mutableListOf(Event("blala"), Event("esgge"), Event("semei"), Event("semei"), Event("semei"), Event("semei"), Event("semei"), Event("semei"))
+		return mutableListOf(
+			Event("blala"),
+			Event("esgge"),
+			Event("semei"),
+			Event("semei"),
+			Event("semei"),
+			Event("semei"),
+			Event("semei"),
+			Event("semei")
+		)
 	}
 }

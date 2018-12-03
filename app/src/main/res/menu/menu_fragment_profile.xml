@@ -5,24 +5,25 @@
 	<item
 		android:icon="@drawable/ic_more"
 		android:title=""
-		app:showAsAction="always">
+		app:showAsAction="ifRoom">
 		<item
 			android:id="@+id/settings"
 			android:title="@string/settings"
-			app:showAsAction="ifRoom" />
+			app:showAsAction="never" />
 		<item
 			android:id="@+id/game_rank"
 			android:title="@string/game_rank"
-			app:showAsAction="ifRoom" />
+			app:showAsAction="never" />
 		<item
 			android:id="@+id/help"
 			android:title="@string/help"
-			app:showAsAction="ifRoom" />
+			app:showAsAction="never" />
 		<item
 			android:id="@+id/logout"
 			android:title="@string/logout"
-			app:showAsAction="ifRoom" />
+			app:showAsAction="never" />
 	
 	</item>
+
 
 </menu>
