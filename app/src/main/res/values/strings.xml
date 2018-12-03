@@ -13,7 +13,7 @@
 	<string name="tv_forgotten_password">Forgotten password?</string>
 	<string name="hint_name">Name</string>
 	<string name="btn_signup">Sign up</string>
-	<string name="msg_give_info">Give us information about you</string>
+	<string name="msg_give_info_you">Give us information about you</string>
 	<string name="title_my_events">My events</string>
 	<string name="hint_repeat_password">Repeat password</string>
 	<string name="hint_search">Search</string>
@@ -115,4 +115,12 @@
 	
 	<string name="pref_title_vibrate">Vibrate</string>
 	<string name="filter">Filter</string>
+	<string name="btn_cancel">Cancel</string>
+	<string name="hint_event_name">Event name</string>
+	<string name="hint_date">Date</string>
+	<string name="hint_place">Place</string>
+	<string name="hint_guests">Guests</string>
+	<string name="btn_save">Save</string>
+	<string name="msg_give_info">Give us more information</string>
+	<string name="choose_photo">Choose photo</string>
 </resources>

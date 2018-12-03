@@ -64,6 +64,13 @@ dependencies {
     // Circle photo
     implementation 'de.hdodenhof:circleimageview:2.2.0'
 
+    // Picasso photo
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
+    // Dialog image
+    implementation 'com.github.jrvansuita:PickImage:2.2.4'
+
+
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'

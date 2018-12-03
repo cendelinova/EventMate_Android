@@ -1,16 +1,19 @@
 package gr.tei.erasmus.pp.eventmate.ui.events
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.view.*
-import android.widget.AdapterView
+import android.widget.RadioGroup
 import android.widget.Toast
 import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.app.App
 import gr.tei.erasmus.pp.eventmate.models.Event
 import gr.tei.erasmus.pp.eventmate.ui.base.BaseFragment
+import gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.EventDetailActivity
+import gr.tei.erasmus.pp.eventmate.ui.events.newEvent.NewEventActivity
 import gr.tei.erasmus.pp.eventmate.ui.mainActivity.MainActivity
 import kotlinx.android.synthetic.main.fragment_events.*
 import timber.log.Timber
@@ -61,23 +64,22 @@ class EventsFragment : BaseFragment() {
 		
 		AlertDialog.Builder(activity!!).apply {
 			setView(dialog)
-			setOnItemSelectedListener(itemDialogLister)
+			setPositiveButton(R.string.btn_confirm, applyFilterListener)
+			setNegativeButton(R.string.btn_cancel, cancelFilterListener)
+			setTitle(R.string.title_select_filters)
 		}.also {
 			it.create()
 		}.show()
 	}
 	
-	private val itemDialogLister = object : AdapterView.OnItemSelectedListener {
-		override fun onNothingSelected(parent: AdapterView<*>?) {
-		
-		}
-		
-		override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-			Toast.makeText(context, "bllaa $position $id", Toast.LENGTH_LONG).show()
-		}
-		
+	
+	private val applyFilterListener = DialogInterface.OnClickListener { dialog, _ ->
+		Toast.makeText(activity, (dialog as AlertDialog).findViewById<RadioGroup>(R.id.filter_who)?.checkedRadioButtonId!!, Toast.LENGTH_LONG).show()
 	}
 	
+	private val cancelFilterListener = DialogInterface.OnClickListener { dialog, _ ->
+		dialog.cancel()
+	}
 	
 	/**
 	 * We have blacklist items obtained, initialize recyclerView and display them.

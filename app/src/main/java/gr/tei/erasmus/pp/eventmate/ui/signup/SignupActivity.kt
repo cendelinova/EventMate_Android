@@ -11,11 +11,11 @@ import com.mobsandgeeks.saripaar.annotation.NotEmpty
 import com.mobsandgeeks.saripaar.annotation.Password
 import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.helpers.TextInputLayoutHelper
-import gr.tei.erasmus.pp.eventmate.ui.base.NoToolbarActivity
+import gr.tei.erasmus.pp.eventmate.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_signup.*
 
 
-class SignupActivity : NoToolbarActivity(), Validator.ValidationListener {
+class SignupActivity : BaseActivity(), Validator.ValidationListener {
 	
 	@NotEmpty(messageResId = R.string.error_required_field)
 	@Email(messageResId = R.string.error_invalid_email)
@@ -45,6 +45,7 @@ class SignupActivity : NoToolbarActivity(), Validator.ValidationListener {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_signup)
 		
+		setupToolbar(toolbar, true)
 		initInputs()
 		handleSignUpButton()
 	}

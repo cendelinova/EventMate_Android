@@ -1,4 +1,4 @@
-package gr.tei.erasmus.pp.eventmate.ui.events
+package gr.tei.erasmus.pp.eventmate.ui.events.eventDetail
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle

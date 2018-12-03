@@ -22,5 +22,25 @@
 		<item name="android:layout_marginBottom">@dimen/spacing_normal</item>
 		<item name="android:layout_marginTop">@dimen/spacing_normal</item>
 	</style>
+	
+	<style name="MyEditText" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+		<item name="android:layout_marginLeft">@dimen/spacing_normal</item>
+		<item name="android:layout_marginRight">@dimen/spacing_normal</item>
+		<item name="android:layout_marginBottom">@dimen/spacing_normal</item>
+		<item name="errorEnabled">true</item>
+	</style>
+	
+	<!--<style name="AlertDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">-->
+	<!--<item name="buttonBarNegativeButtonStyle">@style/NegativeButtonStyle</item>-->
+	<!--<item name="buttonBarPositiveButtonStyle">@style/PositiveButtonStyle</item>-->
+	<!--</style>-->
+	<!---->
+	<!--<style name="NegativeButtonStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">-->
+	<!--<item name="android:textColor">@color/grey</item>-->
+	<!--</style>-->
+	<!---->
+	<!--<style name="PositiveButtonStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">-->
+	<!--<item name="android:textColor">@color/colorAccent</item>-->
+	<!--</style>-->
 
 </resources>

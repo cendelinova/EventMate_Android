@@ -1,9 +1,157 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	tools:context=".ui.events.NewEventActivity">
+	tools:context=".ui.events.newEvent.NewEventActivity">
+	
+	<android.support.constraint.ConstraintLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content">
+		
+		<android.support.v7.widget.Toolbar
+			android:id="@+id/toolbar"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:background="@android:color/transparent"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent">
+			
+			<TextView
+				style="@style/MessageTitle"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="center"
+				android:text="@string/msg_give_info" />
+		
+		</android.support.v7.widget.Toolbar>
+		
+		<FrameLayout
+			android:id="@+id/photo_layout"
+			android:layout_width="130dp"
+			android:layout_height="110dp"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/toolbar">
+			
+			<ImageView
+				android:id="@+id/event_photo"
+				android:layout_width="@dimen/profile_photo_size"
+				android:layout_height="@dimen/profile_photo_size"
+				android:layout_gravity="top|center_horizontal"
+				android:background="?selectableItemBackground"
+				android:clickable="true"
+				android:focusable="true"
+				android:scaleType="fitXY"
+				android:src="@drawable/ic_event_placeholder" />
+			
+			<ImageView
+				android:layout_width="24dp"
+				android:layout_height="24dp"
+				android:layout_gravity="bottom|end"
+				android:layout_marginEnd="3dp"
+				android:layout_marginBottom="5dp"
+				android:background="@drawable/edit_badge"
+				android:scaleType="center"
+				android:src="@drawable/ic_edit_solid" />
+		</FrameLayout>
+		
+		<android.support.design.widget.TextInputLayout
+			android:id="@+id/input_event_name"
+			style="@style/MyEditText"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="@dimen/spacing_normal"
+			android:hint="@string/hint_event_name"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/photo_layout">
+			
+			<android.support.design.widget.TextInputEditText
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:drawableEnd="@drawable/ic_name"
+				android:drawableTint="@color/grey"
+				android:inputType="text"
+				android:lines="1" />
+		</android.support.design.widget.TextInputLayout>
+		
+		
+		<android.support.design.widget.TextInputLayout
+			android:id="@+id/input_date"
+			style="@style/MyEditText"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:focusableInTouchMode="false"
+			android:hint="@string/hint_date"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/input_event_name">
+			
+			<android.support.design.widget.TextInputEditText
+				android:id="@+id/edit_text_date"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:drawableEnd="@drawable/ic_events"
+				android:drawableTint="@color/grey"
+				android:focusableInTouchMode="false"
+				android:inputType="date"
+				android:lines="1" />
+		</android.support.design.widget.TextInputLayout>
+		
+		<android.support.design.widget.TextInputLayout
+			android:id="@+id/input_place"
+			style="@style/MyEditText"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:hint="@string/hint_place"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/input_date">
+			
+			<android.support.design.widget.TextInputEditText
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:drawableEnd="@drawable/ic_location"
+				android:drawableTint="@color/grey"
+				android:inputType="text"
+				
+				android:lines="1" />
+		</android.support.design.widget.TextInputLayout>
+		
+		
+		<android.support.design.widget.TextInputLayout
+			android:id="@+id/input_guests"
+			style="@style/MyEditText"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:hint="@string/hint_guests"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/input_place">
+			
+			<android.support.design.widget.TextInputEditText
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:drawableEnd="@drawable/ic_guests"
+				android:drawableTint="@color/grey"
+				android:inputType="text" />
+		</android.support.design.widget.TextInputLayout>
+		
+		<android.support.v7.widget.AppCompatButton
+			android:id="@+id/btn_save"
+			style="@style/Button"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/btn_save"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/input_guests" />
+	
+	
+	</android.support.constraint.ConstraintLayout>
 
-</android.support.constraint.ConstraintLayout>
+
+</ScrollView>
