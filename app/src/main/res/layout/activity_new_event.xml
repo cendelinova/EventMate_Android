@@ -101,6 +101,29 @@
 				android:lines="1" />
 		</android.support.design.widget.TextInputLayout>
 		
+		
+		<android.support.design.widget.TextInputLayout
+			android:id="@+id/input_time"
+			style="@style/MyEditText"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:focusableInTouchMode="false"
+			android:hint="@string/hint_time"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/input_date">
+			
+			<android.support.design.widget.TextInputEditText
+				android:id="@+id/edit_text_time"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:drawableEnd="@drawable/ic_time"
+				android:drawableTint="@color/grey"
+				android:focusableInTouchMode="false"
+				android:inputType="time"
+				android:lines="1" />
+		</android.support.design.widget.TextInputLayout>
+		
 		<android.support.design.widget.TextInputLayout
 			android:id="@+id/input_place"
 			style="@style/MyEditText"
@@ -109,7 +132,7 @@
 			android:hint="@string/hint_place"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@id/input_date">
+			app:layout_constraintTop_toBottomOf="@id/input_time">
 			
 			<android.support.design.widget.TextInputEditText
 				android:layout_width="match_parent"
@@ -117,7 +140,6 @@
 				android:drawableEnd="@drawable/ic_location"
 				android:drawableTint="@color/grey"
 				android:inputType="text"
-				
 				android:lines="1" />
 		</android.support.design.widget.TextInputLayout>
 		
@@ -141,11 +163,11 @@
 		</android.support.design.widget.TextInputLayout>
 		
 		<android.support.v7.widget.AppCompatButton
-			android:id="@+id/btn_save"
+			android:id="@+id/btn_create_event"
 			style="@style/Button"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:text="@string/btn_save"
+			android:text="@string/btn_create_event"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toBottomOf="@id/input_guests" />

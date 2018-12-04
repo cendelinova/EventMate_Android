@@ -120,7 +120,8 @@
 	<string name="hint_date">Date</string>
 	<string name="hint_place">Place</string>
 	<string name="hint_guests">Guests</string>
-	<string name="btn_save">Save</string>
+	<string name="btn_create_event">Create event</string>
 	<string name="msg_give_info">Give us more information</string>
 	<string name="choose_photo">Choose photo</string>
+	<string name="hint_time">Time</string>
 </resources>

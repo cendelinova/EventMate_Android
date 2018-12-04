@@ -57,6 +57,7 @@ dependencies {
 
     // Input validation
     implementation 'com.mobsandgeeks:android-saripaar:2.0.0'
+    kapt 'com.mobsandgeeks:android-saripaar:2.0.0'
 
     // Joda time
     implementation 'joda-time:joda-time:2.10.1'

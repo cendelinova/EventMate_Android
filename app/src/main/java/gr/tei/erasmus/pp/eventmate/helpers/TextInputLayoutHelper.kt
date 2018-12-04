@@ -10,4 +10,14 @@ object TextInputLayoutHelper {
 			input.error = null
 		}
 	}
+	
+	fun setRequiredMark (listOfInputs: MutableList<TextInputLayout>) {
+		for(input in listOfInputs) {
+			input.markRequired()
+		}
+	}
+	
+	private fun TextInputLayout.markRequired() {
+		hint = "$hint *"
+	}
 }

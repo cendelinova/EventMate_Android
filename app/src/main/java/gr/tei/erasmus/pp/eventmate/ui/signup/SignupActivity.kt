@@ -63,7 +63,6 @@ class SignupActivity : BaseActivity(), Validator.ValidationListener {
 				}
 			}
 		}
-		
 	}
 	
 	override fun onValidationSucceeded() {
