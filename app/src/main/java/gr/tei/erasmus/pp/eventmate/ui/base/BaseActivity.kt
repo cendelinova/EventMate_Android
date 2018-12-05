@@ -1,5 +1,7 @@
 package gr.tei.erasmus.pp.eventmate.ui.base
 
+import android.arch.lifecycle.LiveData
+import android.arch.lifecycle.Observer
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
@@ -26,7 +28,7 @@ abstract class BaseActivity : AppCompatActivity() {
 		super.onDestroy()
 	}
 	
-	/* Private methods ****************************************************************************/
+	/* Protected methods ****************************************************************************/
 	
 	protected fun setupToolbar(toolbar: Toolbar, displayHomeAsUp: Boolean = true, displayTitle: Boolean = false) {
 		setSupportActionBar(toolbar)
@@ -35,6 +37,8 @@ abstract class BaseActivity : AppCompatActivity() {
 			setDisplayHomeAsUpEnabled(displayHomeAsUp)
 			setDisplayShowTitleEnabled(displayTitle)
 		}
-		
 	}
+	
+	protected fun <R> observe(data: LiveData<R>, observer: Observer<R>) = data.observe(this, observer)
+	
 }

@@ -1,5 +1,7 @@
 package gr.tei.erasmus.pp.eventmate.ui.events
 
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
@@ -22,6 +24,9 @@ import timber.log.Timber
 class EventsFragment : BaseFragment() {
 	
 	private lateinit var eventAdapter: EventAdapter
+	
+	private val viewModel by lazy { ViewModelProviders.of(this).get(EventsViewModel::class.java) }
+	
 	
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 		Timber.v("onCreateView() called with: inflater = [$inflater], container = [$container], savedInstanceState = [$savedInstanceState]")
@@ -47,6 +52,27 @@ class EventsFragment : BaseFragment() {
 		
 		handleAddFab()
 		initializeRecyclerView()
+		observeViewModel()
+		viewModel.obtainEvents()
+	}
+	
+	private fun observeViewModel() {
+		with(viewModel) {
+			observe(eventProgressState, observeEventProgressState)
+			events.observe(this@EventsFragment, observeEvents)
+		}
+	}
+	
+	private val observeEventProgressState = Observer<EventProgressState> {
+		//		when (it) {
+//			null -> return@Observer
+//			EventProgressState.LOADING -> Toast.makeText(this@EventsFragment, "loading", Toast.LENGTH_LONG).show()
+//			EventProgressState.DONE -> Toast.makeText(this@EventsFragment, "loading", Toast.LENGTH_LONG).show()
+//		}
+	}
+	
+	private val observeEvents = Observer<MutableList<Event>> { events ->
+		eventAdapter.updateEventList(events!!)
 	}
 	
 	private fun handleAddFab() {
@@ -54,7 +80,6 @@ class EventsFragment : BaseFragment() {
 			startActivity(Intent(this.activity, NewEventActivity::class.java))
 		}
 	}
-	
 	
 	private fun showFilterDialog() {
 		val context = App.COMPONENTS.provideContext()
@@ -74,7 +99,11 @@ class EventsFragment : BaseFragment() {
 	
 	
 	private val applyFilterListener = DialogInterface.OnClickListener { dialog, _ ->
-		Toast.makeText(activity, (dialog as AlertDialog).findViewById<RadioGroup>(R.id.filter_who)?.checkedRadioButtonId!!, Toast.LENGTH_LONG).show()
+		Toast.makeText(
+			activity,
+			(dialog as AlertDialog).findViewById<RadioGroup>(R.id.filter_who)?.checkedRadioButtonId!!,
+			Toast.LENGTH_LONG
+		).show()
 	}
 	
 	private val cancelFilterListener = DialogInterface.OnClickListener { dialog, _ ->
@@ -87,7 +116,7 @@ class EventsFragment : BaseFragment() {
 	private fun initializeRecyclerView() {
 		Timber.v("initializeRecyclerView() called")
 		
-		eventAdapter = EventAdapter(context!!, onEventClick, prepareEvents())
+		eventAdapter = EventAdapter(context!!, onEventClick, mutableListOf())
 		
 		with(event_recycler_view) {
 			setHasFixedSize(true)
@@ -101,18 +130,5 @@ class EventsFragment : BaseFragment() {
 		override fun onItemClick(event: Event) {
 			startActivity(Intent(activity, EventDetailActivity::class.java))
 		}
-	}
-	
-	private fun prepareEvents(): MutableList<Event> {
-		return mutableListOf(
-			Event("blala"),
-			Event("esgge"),
-			Event("semei"),
-			Event("semei"),
-			Event("semei"),
-			Event("semei"),
-			Event("semei"),
-			Event("semei")
-		)
 	}
 }

@@ -10,7 +10,7 @@ import gr.tei.erasmus.pp.eventmate.models.Event
 import kotlinx.android.synthetic.main.event_item.view.*
 import timber.log.Timber
 
-class EventAdapter(private val context: Context, private val eventListener: EventListener, private val events: MutableList<Event>) : RecyclerView.Adapter<EventAdapter.EventViewHolder>() {
+class EventAdapter(private val context: Context, private val eventListener: EventListener, private var events: MutableList<Event>) : RecyclerView.Adapter<EventAdapter.EventViewHolder>() {
 	
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventViewHolder {
 		Timber.d("onCreateViewHolder() called with parent = [$parent], viewType = [$viewType]")
@@ -31,6 +31,14 @@ class EventAdapter(private val context: Context, private val eventListener: Even
 			root.setOnClickListener { eventListener.onItemClick(event) }
 			event_name.text = event.name
 		}
+	}
+	
+	/**
+	 * Update and notify data set change.
+	 */
+	fun updateEventList(updatedEvents: MutableList<Event>) {
+		events = updatedEvents
+		notifyDataSetChanged()
 	}
 	
 	/* Inner classes ******************************************************************************/

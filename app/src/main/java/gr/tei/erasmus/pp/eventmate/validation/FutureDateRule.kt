@@ -1,4 +1,4 @@
-package gr.tei.erasmus.pp.eventmate.annotations
+package gr.tei.erasmus.pp.eventmate.validation
 
 import com.mobsandgeeks.saripaar.AnnotationRule
 import gr.tei.erasmus.pp.eventmate.helpers.DateTimeHelper
