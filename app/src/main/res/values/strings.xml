@@ -124,4 +124,5 @@
 	<string name="msg_give_info">Give us more information</string>
 	<string name="choose_photo">Choose photo</string>
 	<string name="hint_time">Time</string>
+	<string name="error_future_time">Time should be in the future</string>
 </resources>

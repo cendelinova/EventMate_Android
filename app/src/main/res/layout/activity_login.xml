@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:pp="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	android:layout_margin="@dimen/spacing_normal"
 	android:focusable="true"
 	android:focusableInTouchMode="true"
 	android:gravity="center_horizontal"
@@ -15,6 +15,7 @@
 		style="@style/MessageTitle"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
+		android:layout_marginTop="@dimen/spacing_normal"
 		android:text="@string/mgs_welcome" />
 	
 	<ImageView
@@ -27,7 +28,7 @@
 	
 	<android.support.design.widget.TextInputLayout
 		android:id="@+id/input_email"
-		style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+		style="@style/MyEditText"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:layout_marginBottom="@dimen/spacing_normal"
@@ -42,10 +43,11 @@
 	
 	<android.support.design.widget.TextInputLayout
 		android:id="@+id/input_password"
-		style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+		style="@style/MyEditText"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:hint="@string/hint_password">
+		android:hint="@string/hint_password"
+		pp:passwordToggleEnabled="true">
 		
 		<android.support.design.widget.TextInputEditText
 			android:layout_width="match_parent"
@@ -78,7 +80,9 @@
 	<LinearLayout
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
+		android:layout_marginStart="@dimen/spacing_normal"
 		android:layout_marginTop="@dimen/spacing_huge"
+		android:layout_marginEnd="@dimen/spacing_normal"
 		android:orientation="horizontal">
 		
 		<Button

@@ -3,6 +3,7 @@
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
+	xmlns:pp="http://schemas.android.com/apk/res-auto"
 	tools:context=".ui.signup.SignupActivity">
 	
 	
@@ -72,6 +73,7 @@
 		<android.support.design.widget.TextInputLayout
 			android:id="@+id/input_password"
 			style="@style/MyEditText"
+			pp:passwordToggleEnabled="true"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:hint="@string/hint_password">
@@ -86,6 +88,7 @@
 		<android.support.design.widget.TextInputLayout
 			android:id="@+id/input_repeat_password"
 			style="@style/MyEditText"
+			pp:passwordToggleEnabled="true"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:hint="@string/hint_repeat_password">

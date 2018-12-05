@@ -1,25 +1,24 @@
 package gr.tei.erasmus.pp.eventmate.annotations
 
-import com.mobsandgeeks.saripaar.AnnotationRule
+import android.widget.EditText
 import gr.tei.erasmus.pp.eventmate.helpers.DateTimeHelper
 import org.joda.time.DateTime
-import org.joda.time.format.DateTimeFormat
-import timber.log.Timber
-import java.text.ParseException
 
-class FutureTimeRule(ruleAnnotation: FutureTime?) : AnnotationRule<FutureTime, String>(ruleAnnotation) {
-	override fun isValid(dateString: String?): Boolean {
-		val formatter = DateTimeFormat.forPattern(DateTimeHelper.DATE_TIME_FORMAT)
-		var parsedDate: DateTime? = null
-		
-		if (dateString.isNullOrEmpty()) return false
-		
-		try {
-			parsedDate = formatter.parseDateTime(dateString)
-		} catch (ignored: ParseException) {
-			Timber.e(ignored)
+class FutureTimeRule(private val pickedDate: DateTime?) {
+	
+	fun isValid(view: EditText?): Boolean {
+		pickedDate?.run {
+			val parsedTime =
+				DateTimeHelper.parseDateTimeFromString(view?.text.toString(), DateTimeHelper.TIME_FORMAT)
+					?: return false
+			
+			// set time
+			val pickedDateTime = pickedDate.withTime(parsedTime.toLocalTime())
+			
+			return pickedDateTime.isAfterNow
 		}
 		
-		return parsedDate != null && parsedDate.isAfterNow
+		return false
 	}
+	
 }
