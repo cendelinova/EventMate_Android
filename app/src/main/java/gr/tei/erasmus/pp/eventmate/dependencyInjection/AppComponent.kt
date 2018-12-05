@@ -2,6 +2,7 @@ package gr.tei.erasmus.pp.eventmate.dependencyInjection
 
 import android.content.Context
 import dagger.Component
+import gr.tei.erasmus.pp.eventmate.database.AppDatabase
 import javax.inject.Singleton
 
 @Singleton
@@ -14,4 +15,6 @@ interface AppComponent {
 //	fun provideRetrofit(): Retrofit
 //
 //	fun provideGson(): Gson
+	
+	fun provideDatabase(): AppDatabase
 }

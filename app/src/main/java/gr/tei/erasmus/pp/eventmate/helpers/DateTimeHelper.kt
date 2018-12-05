@@ -29,5 +29,10 @@ class DateTimeHelper {
 			
 			return parsedDateTime
 		}
+		
+		fun convertDateTimeToString(dateTime: DateTime, format: String): String {
+			val formatter = DateTimeFormat.forPattern(format)
+			return formatter.print(dateTime)
+		}
 	}
 }

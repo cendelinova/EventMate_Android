@@ -12,6 +12,7 @@ import android.widget.RadioGroup
 import android.widget.Toast
 import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.app.App
+import gr.tei.erasmus.pp.eventmate.database.entities.EventEntity
 import gr.tei.erasmus.pp.eventmate.models.Event
 import gr.tei.erasmus.pp.eventmate.ui.base.BaseFragment
 import gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.EventDetailActivity
@@ -71,8 +72,15 @@ class EventsFragment : BaseFragment() {
 //		}
 	}
 	
-	private val observeEvents = Observer<MutableList<Event>> { events ->
-		eventAdapter.updateEventList(events!!)
+	private val observeEvents = Observer<MutableList<EventEntity>> { events ->
+		val eventModels = mutableListOf<Event>()
+		
+		if (events != null) {
+			for (event in events) {
+				eventModels.add(Event(event.eventName!!))
+			}
+		}
+		eventAdapter.updateEventList(eventModels)
 	}
 	
 	private fun handleAddFab() {

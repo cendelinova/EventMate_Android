@@ -6,11 +6,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import gr.tei.erasmus.pp.eventmate.R
+import gr.tei.erasmus.pp.eventmate.helpers.DateTimeHelper
 import gr.tei.erasmus.pp.eventmate.models.Event
 import kotlinx.android.synthetic.main.event_item.view.*
 import timber.log.Timber
 
-class EventAdapter(private val context: Context, private val eventListener: EventListener, private var events: MutableList<Event>) : RecyclerView.Adapter<EventAdapter.EventViewHolder>() {
+class EventAdapter(
+	private val context: Context,
+	private val eventListener: EventListener,
+	private var events: MutableList<Event>
+) : RecyclerView.Adapter<EventAdapter.EventViewHolder>() {
 	
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventViewHolder {
 		Timber.d("onCreateViewHolder() called with parent = [$parent], viewType = [$viewType]")
@@ -30,6 +35,7 @@ class EventAdapter(private val context: Context, private val eventListener: Even
 		with(viewHolder.itemView) {
 			root.setOnClickListener { eventListener.onItemClick(event) }
 			event_name.text = event.name
+			event_date.text = DateTimeHelper.convertDateTimeToString(event.date, DateTimeHelper.DATE_FORMAT)
 		}
 	}
 	
