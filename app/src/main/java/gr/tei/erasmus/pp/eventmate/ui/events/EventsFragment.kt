@@ -5,6 +5,7 @@ import android.arch.lifecycle.ViewModelProviders
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.view.*
@@ -12,9 +13,11 @@ import android.widget.RadioGroup
 import android.widget.Toast
 import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.app.App
-import gr.tei.erasmus.pp.eventmate.database.entities.EventEntity
-import gr.tei.erasmus.pp.eventmate.models.Event
+import gr.tei.erasmus.pp.eventmate.data.model.Event
 import gr.tei.erasmus.pp.eventmate.ui.base.BaseFragment
+import gr.tei.erasmus.pp.eventmate.ui.base.ErrorState
+import gr.tei.erasmus.pp.eventmate.ui.base.LoadingState
+import gr.tei.erasmus.pp.eventmate.ui.base.State
 import gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.EventDetailActivity
 import gr.tei.erasmus.pp.eventmate.ui.events.newEvent.NewEventActivity
 import gr.tei.erasmus.pp.eventmate.ui.mainActivity.MainActivity
@@ -54,39 +57,35 @@ class EventsFragment : BaseFragment() {
 		handleAddFab()
 		initializeRecyclerView()
 		observeViewModel()
-		viewModel.obtainEvents()
+		viewModel.getEvents()
 	}
 	
 	private fun observeViewModel() {
 		with(viewModel) {
-			observe(eventProgressState, observeEventProgressState)
-			events.observe(this@EventsFragment, observeEvents)
+			observe(states, observeEventProgressState)
 		}
-	}
-	
-	private val observeEventProgressState = Observer<EventProgressState> {
-		//		when (it) {
-//			null -> return@Observer
-//			EventProgressState.LOADING -> Toast.makeText(this@EventsFragment, "loading", Toast.LENGTH_LONG).show()
-//			EventProgressState.DONE -> Toast.makeText(this@EventsFragment, "loading", Toast.LENGTH_LONG).show()
-//		}
-	}
-	
-	private val observeEvents = Observer<MutableList<EventEntity>> { events ->
-		val eventModels = mutableListOf<Event>()
-		
-		if (events != null) {
-			for (event in events) {
-				eventModels.add(Event(event.eventName!!))
-			}
-		}
-		eventAdapter.updateEventList(eventModels)
 	}
 	
 	private fun handleAddFab() {
 		fab.setOnClickListener {
 			startActivity(Intent(this.activity, NewEventActivity::class.java))
 		}
+	}
+	
+	
+	private fun showError(error: Throwable) {
+		Timber.e("Error $error while fetching events")
+		event_recycler_view.visibility = View.GONE
+		toggleProgress(false)
+		Snackbar.make(
+			events_fragment,
+			getString(R.string.loading_error),
+			Snackbar.LENGTH_INDEFINITE
+		).show()
+//			.setAction(R.string.retry) {
+//				startActivity(EventsFragment>().clearTop().clearTask().newTask())
+//			}
+//			.show()
 	}
 	
 	private fun showFilterDialog() {
@@ -106,18 +105,6 @@ class EventsFragment : BaseFragment() {
 	}
 	
 	
-	private val applyFilterListener = DialogInterface.OnClickListener { dialog, _ ->
-		Toast.makeText(
-			activity,
-			(dialog as AlertDialog).findViewById<RadioGroup>(R.id.filter_who)?.checkedRadioButtonId!!,
-			Toast.LENGTH_LONG
-		).show()
-	}
-	
-	private val cancelFilterListener = DialogInterface.OnClickListener { dialog, _ ->
-		dialog.cancel()
-	}
-	
 	/**
 	 * We have blacklist items obtained, initialize recyclerView and display them.
 	 */
@@ -134,9 +121,41 @@ class EventsFragment : BaseFragment() {
 		}
 	}
 	
+	private fun toggleProgress(visibility: Boolean) {
+		progress.visibility = if (visibility) View.VISIBLE else View.INVISIBLE
+	}
+	
+	
+	/* Listeners *******************************************************************************************************/
+	
 	private val onEventClick = object : EventListener {
 		override fun onItemClick(event: Event) {
 			startActivity(Intent(activity, EventDetailActivity::class.java))
 		}
 	}
+	
+	private val applyFilterListener = DialogInterface.OnClickListener { dialog, _ ->
+		Toast.makeText(
+			activity,
+			(dialog as AlertDialog).findViewById<RadioGroup>(R.id.filter_who)?.checkedRadioButtonId!!,
+			Toast.LENGTH_LONG
+		).show()
+	}
+	
+	private val cancelFilterListener = DialogInterface.OnClickListener { dialog, _ ->
+		dialog.cancel()
+	}
+	
+	// Observer
+	private val observeEventProgressState = Observer<State> { state ->
+		when (state) {
+			is LoadingState -> toggleProgress(true)
+			is ErrorState -> showError(state.error)
+			is EventsViewModel.EventListState ->  {
+				toggleProgress(false)
+				eventAdapter.updateEventList(state.events)
+			}
+		}
+	}
+	
 }

@@ -1,4 +1,4 @@
-package gr.tei.erasmus.pp.eventmate.database.converters
+package gr.tei.erasmus.pp.eventmate.data.source.local.room.converters
 
 import android.arch.persistence.room.TypeConverter
 import org.joda.time.DateTime

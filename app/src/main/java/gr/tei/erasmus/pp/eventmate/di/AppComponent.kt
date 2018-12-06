@@ -1,8 +1,10 @@
-package gr.tei.erasmus.pp.eventmate.dependencyInjection
+package gr.tei.erasmus.pp.eventmate.di
 
 import android.content.Context
 import dagger.Component
-import gr.tei.erasmus.pp.eventmate.database.AppDatabase
+import gr.tei.erasmus.pp.eventmate.data.repository.EventRepository
+import gr.tei.erasmus.pp.eventmate.data.source.local.room.AppDatabase
+import gr.tei.erasmus.pp.eventmate.data.source.local.room.dao.EventDao
 import javax.inject.Singleton
 
 @Singleton
@@ -17,4 +19,9 @@ interface AppComponent {
 //	fun provideGson(): Gson
 	
 	fun provideDatabase(): AppDatabase
+	
+	fun provideEventDao(): EventDao
+	
+	fun provideEventRepository() : EventRepository
+	
 }

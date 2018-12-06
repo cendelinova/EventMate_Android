@@ -1,4 +1,4 @@
-package gr.tei.erasmus.pp.eventmate.customViews
+package gr.tei.erasmus.pp.eventmate.ui.common
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter

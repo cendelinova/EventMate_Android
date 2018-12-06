@@ -3,28 +3,42 @@ package gr.tei.erasmus.pp.eventmate.ui.events
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import gr.tei.erasmus.pp.eventmate.app.App
-import gr.tei.erasmus.pp.eventmate.models.Event
+import gr.tei.erasmus.pp.eventmate.data.model.Event
 import gr.tei.erasmus.pp.eventmate.ui.base.BaseViewModel
+import gr.tei.erasmus.pp.eventmate.ui.base.ErrorState
+import gr.tei.erasmus.pp.eventmate.ui.base.LoadingState
+import gr.tei.erasmus.pp.eventmate.ui.base.State
+import kotlinx.coroutines.launch
 
 class EventsViewModel : BaseViewModel() {
+	private val eventRepository by lazy { App.COMPONENTS.provideEventRepository() }
 	
-	private val roomDatabase by lazy { App.COMPONENTS.provideDatabase() }
-	
-	
-	private val _eventState: MutableLiveData<EventProgressState> = MutableLiveData()
-	val eventProgressState: LiveData<EventProgressState> = _eventState
-	
-	private val _events = MutableLiveData<MutableList<Event>>()
-	//	val events: LiveData<MutableList<Event>> = _events
-//	var events = MutableLiveData<MutableList<Event>>()
-	val events = roomDatabase.eventDao().getAll()
-	
+	private val mStates = MutableLiveData<State>()
+	val states: LiveData<State>
+		get() = mStates
 	
 	private var allEvents = mutableListOf<Event>()
 	
-	fun obtainEvents() {
-		events
+	fun getEvents() {
+		launch {
+			mStates.postValue(LoadingState)
+			try {
+				val events = eventRepository.getAllEvents().await()
+				mStates.postValue(EventListState(events))
+			} catch (error: Throwable) {
+				mStates.postValue(ErrorState(error))
+			}
+		}
 	}
-
 	
+	data class EventListState(val events: MutableList<Event>) : State() {
+		companion object {
+			fun from(list: MutableList<Event>): EventListState {
+				return if (list.isEmpty()) error("event list should not be empty")
+				else {
+					EventListState(list)
+				}
+			}
+		}
+	}
 }

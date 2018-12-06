@@ -2,9 +2,9 @@ package gr.tei.erasmus.pp.eventmate.app
 
 import android.app.Application
 import gr.tei.erasmus.pp.eventmate.BuildConfig
-import gr.tei.erasmus.pp.eventmate.dependencyInjection.AppComponent
-import gr.tei.erasmus.pp.eventmate.dependencyInjection.AppModule
-import gr.tei.erasmus.pp.eventmate.dependencyInjection.DaggerAppComponent
+import gr.tei.erasmus.pp.eventmate.di.AppComponent
+import gr.tei.erasmus.pp.eventmate.di.AppModule
+import gr.tei.erasmus.pp.eventmate.di.DaggerAppComponent
 import timber.log.Timber
 
 class App: Application() {

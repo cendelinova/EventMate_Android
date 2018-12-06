@@ -1,4 +1,4 @@
-package gr.tei.erasmus.pp.eventmate.validation
+package gr.tei.erasmus.pp.eventmate.helpers.validation
 
 import android.widget.EditText
 import gr.tei.erasmus.pp.eventmate.helpers.DateTimeHelper

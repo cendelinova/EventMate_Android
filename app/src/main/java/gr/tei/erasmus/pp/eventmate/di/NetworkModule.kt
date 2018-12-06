@@ -1,4 +1,4 @@
-package gr.tei.erasmus.pp.eventmate.dependencyInjection
+package gr.tei.erasmus.pp.eventmate.di
 
 import com.google.gson.Gson
 import dagger.Module

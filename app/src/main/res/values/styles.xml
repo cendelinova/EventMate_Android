@@ -26,8 +26,7 @@
 	<style name="MyEditText" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 		<item name="android:layout_marginLeft">@dimen/spacing_normal</item>
 		<item name="android:layout_marginRight">@dimen/spacing_normal</item>
-		<item name="android:layout_marginBottom">@dimen/spacing_large</item>
-		<item name="errorEnabled">false</item>
+		<item name="android:layout_marginBottom">@dimen/spacing_normal</item>
 	</style>
 	
 	<!--<style name="AlertDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">-->

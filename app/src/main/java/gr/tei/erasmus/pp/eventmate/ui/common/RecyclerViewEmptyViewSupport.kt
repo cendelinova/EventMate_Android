@@ -1,4 +1,4 @@
-package gr.tei.erasmus.pp.eventmate.customViews
+package gr.tei.erasmus.pp.eventmate.ui.common
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
