@@ -38,7 +38,8 @@
 			android:label="@string/title_activity_settings" />
 		<activity android:name=".ui.gameRank.GameRankActivity" />
 		<activity android:name=".ui.help.HelpActivity" />
-		<activity android:name=".ui.inbox.ConversationDetailActivity"></activity>
+		<activity android:name=".ui.inbox.conversationDetail.ConversationDetailActivity" />
+		<activity android:name=".ui.inbox.newMessage.NewMessageActivity"></activity>
 	</application>
 
 </manifest>

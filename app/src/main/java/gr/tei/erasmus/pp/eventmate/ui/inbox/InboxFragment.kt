@@ -9,6 +9,8 @@ import android.view.ViewGroup
 import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.data.model.Conversation
 import gr.tei.erasmus.pp.eventmate.ui.base.BaseFragment
+import gr.tei.erasmus.pp.eventmate.ui.inbox.conversationDetail.ConversationDetailActivity
+import gr.tei.erasmus.pp.eventmate.ui.inbox.newMessage.NewMessageActivity
 import gr.tei.erasmus.pp.eventmate.ui.mainActivity.MainActivity
 import kotlinx.android.synthetic.main.fragment_inbox.*
 import timber.log.Timber
@@ -28,6 +30,7 @@ class InboxFragment : BaseFragment() {
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 		initializeRecyclerView()
+		handleFabBtn()
 	}
 	
 	/**
@@ -43,6 +46,12 @@ class InboxFragment : BaseFragment() {
 			setEmptyView(conversation_empty_view)
 			layoutManager = LinearLayoutManager(context!!)
 			adapter = conversationAdapter
+		}
+	}
+	
+	private fun handleFabBtn() {
+		fab.setOnClickListener {
+			startActivity(Intent(this@InboxFragment.activity, NewMessageActivity::class.java))
 		}
 	}
 	

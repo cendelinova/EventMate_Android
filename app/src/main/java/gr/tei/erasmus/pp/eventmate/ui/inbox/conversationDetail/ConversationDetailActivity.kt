@@ -1,10 +1,10 @@
-package gr.tei.erasmus.pp.eventmate.ui.inbox
+package gr.tei.erasmus.pp.eventmate.ui.inbox.conversationDetail
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import gr.tei.erasmus.pp.eventmate.R
+import gr.tei.erasmus.pp.eventmate.ui.base.BaseActivity
 
-class ConversationDetailActivity : AppCompatActivity() {
+class ConversationDetailActivity : BaseActivity() {
 	
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)

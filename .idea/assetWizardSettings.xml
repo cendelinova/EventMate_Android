@@ -35,8 +35,8 @@
                           <map>
                             <entry key="assetSourceType" value="FILE" />
                             <entry key="color" value="ffffff" />
-                            <entry key="outputName" value="ic_time" />
-                            <entry key="sourceFile" value="C:\Users\cendp\Downloads\clock.svg" />
+                            <entry key="outputName" value="ic_send" />
+                            <entry key="sourceFile" value="C:\Users\cendp\Downloads\send.svg" />
                           </map>
                         </option>
                       </PersistentState>
