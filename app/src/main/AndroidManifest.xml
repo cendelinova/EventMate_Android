@@ -35,7 +35,8 @@
 		<activity android:name=".ui.events.eventDetail.EventDetailActivity" />
 		<activity
 			android:name=".ui.settings.SettingsActivity"
-			android:label="@string/title_activity_settings" />
+			android:label="@string/title_activity_settings"
+			android:theme="@style/AppTheme.NoActionBar" />
 		<activity android:name=".ui.gameRank.GameRankActivity" />
 		<activity android:name=".ui.help.HelpActivity" />
 		<activity android:name=".ui.inbox.conversationDetail.ConversationDetailActivity" />

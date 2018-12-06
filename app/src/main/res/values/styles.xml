@@ -29,5 +29,10 @@
 		<item name="android:layout_marginBottom">@dimen/spacing_normal</item>
 	</style>
 	
+	<style name="AppTheme.NoActionBar">
+		<item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
+		<item name="windowActionBar">false</item>
+		<item name="windowNoTitle">true</item>
+	</style>
 
 </resources>

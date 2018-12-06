@@ -8,6 +8,7 @@ import dagger.Provides
 import gr.tei.erasmus.pp.eventmate.data.repository.EventRepository
 import gr.tei.erasmus.pp.eventmate.data.source.local.room.AppDatabase
 import gr.tei.erasmus.pp.eventmate.data.source.local.room.dao.EventDao
+import gr.tei.erasmus.pp.eventmate.helpers.SharedPreferenceHelper
 import javax.inject.Singleton
 
 @Module
@@ -39,6 +40,10 @@ class AppModule(context: Context) : ContextWrapper(context) {
 	@Provides
 	@Singleton
 	fun provideEventRepository(eventDao: EventDao) = EventRepository(eventDao)
+	
+	@Provides
+	@Singleton
+	fun provideSharedPreferenceHelper(context: Context) = SharedPreferenceHelper(context)
 	
 	
 }

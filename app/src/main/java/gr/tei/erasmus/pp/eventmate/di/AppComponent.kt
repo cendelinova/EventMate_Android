@@ -5,6 +5,7 @@ import dagger.Component
 import gr.tei.erasmus.pp.eventmate.data.repository.EventRepository
 import gr.tei.erasmus.pp.eventmate.data.source.local.room.AppDatabase
 import gr.tei.erasmus.pp.eventmate.data.source.local.room.dao.EventDao
+import gr.tei.erasmus.pp.eventmate.helpers.SharedPreferenceHelper
 import javax.inject.Singleton
 
 @Singleton
@@ -22,6 +23,8 @@ interface AppComponent {
 	
 	fun provideEventDao(): EventDao
 	
-	fun provideEventRepository() : EventRepository
+	fun provideEventRepository(): EventRepository
+	
+	fun provideSharedPreferencesHelper(): SharedPreferenceHelper
 	
 }

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+	xmlns:android="http://schemas.android.com/apk/res/android">
+	<PreferenceCategory android:title="@string/preferences_category_notifications">
+		<SwitchPreference
+			android:key="@string/pref_key_pm"
+			android:summary="@string/pref_description_pm"
+			android:title="@string/pref_title_pm" />
+		
+		<SwitchPreference
+		android:key="@string/pref_key_gm"
+		android:summary="@string/pref_description_gm"
+		android:title="@string/pref_title_gm" />
+		
+		<SwitchPreference
+			android:key="@string/pref_key_event_invitation"
+			android:summary="@string/pref_description_event_invitation"
+			android:title="@string/pref_title_event_invitation" />
+		
+		<SwitchPreference
+			android:key="@string/pref_key_event_start"
+			android:summary="@string/pref_description_event_start"
+			android:title="@string/pref_title_event_start" />
+		
+		<SwitchPreference
+			android:key="@string/pref_key_assign_points"
+			android:summary="@string/pref_description_assign_points"
+			android:title="@string/pref_title_assign_points" />
+	</PreferenceCategory>
+	
+	<PreferenceCategory android:title="@string/preferences_category_others">
+		<Preference
+			android:key="@string/pref_key_reset_score"
+			android:summary="@string/pref_description_reset_score"
+			android:title="@string/pref_title_reset_score" />
+		
+		<!--<RingtonePreference-->
+			<!--android:key="ringtone"-->
+			<!--android:summary="@string/pref_description_ringtone"-->
+			<!--android:title="@string/pref_title_ringtone" />-->
+	</PreferenceCategory>
+</PreferenceScreen>
