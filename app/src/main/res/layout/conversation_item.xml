@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/conversation_item"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:layout_marginStart="@dimen/spacing_normal"
+	android:layout_marginEnd="@dimen/spacing_normal"
+	android:layout_marginBottom="@dimen/spacing_normal">
+	
+	<de.hdodenhof.circleimageview.CircleImageView
+		android:id="@+id/conversation_photo"
+		android:layout_width="@dimen/small_profile_photo_size"
+		android:layout_height="@dimen/small_profile_photo_size"
+		android:src="@drawable/ic_user_placeholder" />
+	
+	<TextView
+		android:id="@+id/conversation_name"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="@dimen/spacing_normal"
+		android:textAllCaps="true"
+		android:textSize="@dimen/font_normal"
+		app:layout_constraintStart_toEndOf="@id/conversation_photo"
+		tools:text="Bill Simon" />
+	
+	<TextView
+		android:id="@+id/message"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="@dimen/spacing_normal"
+		android:ellipsize="end"
+		android:lines="1"
+		android:maxLines="1"
+		android:textSize="@dimen/font_normal"
+		app:layout_constraintStart_toEndOf="@id/conversation_photo"
+		app:layout_constraintTop_toBottomOf="@id/conversation_name"
+		tools:text="See you there smmeeieissemiiismsseieiieieiememsmssmieeiensnseieisbbbss" />
+	
+	<TextView
+		android:id="@+id/sent_time"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:textSize="@dimen/font_normal"
+		app:layout_constraintEnd_toEndOf="parent"
+		tools:text="5:00 PM" />
+
+</android.support.constraint.ConstraintLayout>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:layout_marginStart="@dimen/spacing_large"
+	android:gravity="center_vertical"
+	android:orientation="horizontal"
+	android:padding="@dimen/spacing_normal">
+	
+	<de.hdodenhof.circleimageview.CircleImageView
+		android:id="@+id/civ_message_user_photo"
+		android:layout_width="40dp"
+		android:layout_height="40dp"
+		android:layout_marginStart="@dimen/spacing_normal"
+		android:src="@drawable/ic_user_placeholder"
+		android:visibility="gone" />
+	
+	<LinearLayout
+		android:id="@+id/ll_auth_time"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignParentRight="true"
+		android:orientation="vertical">
+		
+		<TextView
+			android:id="@+id/tv_message_time"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginLeft="@dimen/spacing_normal"
+			android:layout_marginEnd="@dimen/spacing_small"
+			android:layout_marginBottom="@dimen/spacing_small"
+			android:drawableLeft="@drawable/ic_time"
+			android:drawablePadding="@dimen/spacing_small" />
+		
+		<TextView
+			android:id="@+id/tv_message_author"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:visibility="gone" />
+	
+	</LinearLayout>
+	
+	<!--<include layout="@layout/shared_event_layout" />-->
+	
+	<ImageView
+		android:id="@+id/iv_message_photo"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_below="@+id/ll_auth_time"
+		android:layout_alignParentRight="true"
+		android:adjustViewBounds="true"
+		android:background="@drawable/bg_message_me"
+		android:maxWidth="120dp"
+		android:maxHeight="120dp"
+		android:padding="@dimen/spacing_normal"
+		android:visibility="gone" />
+	
+	<TextView
+		android:id="@+id/tv_message_text"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_below="@+id/ll_auth_time"
+		android:layout_alignParentRight="true"
+		android:background="@drawable/bg_message_me"
+		android:padding="@dimen/spacing_normal"
+		android:textColor="@android:color/white" />
+
+</RelativeLayout>

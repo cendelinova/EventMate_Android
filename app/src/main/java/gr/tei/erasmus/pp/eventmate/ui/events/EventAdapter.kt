@@ -33,7 +33,7 @@ class EventAdapter(
 	
 	private fun displayEventEntry(viewHolder: EventViewHolder, event: Event) {
 		with(viewHolder.itemView) {
-			events_fragment.setOnClickListener { eventListener.onItemClick(event) }
+			event_item.setOnClickListener { eventListener.onItemClick(event) }
 			event_name.text = event.name
 			event_date.text = event.date
 		}

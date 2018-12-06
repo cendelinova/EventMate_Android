@@ -2,7 +2,7 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
-	android:id="@+id/events_fragment"
+	android:id="@+id/event_item"
 	android:layout_width="match_parent"
 	android:layout_height="90dp"
 	android:layout_marginStart="@dimen/spacing_normal"

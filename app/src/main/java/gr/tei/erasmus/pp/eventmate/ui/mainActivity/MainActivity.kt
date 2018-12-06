@@ -21,6 +21,11 @@ class MainActivity : BaseActivity() {
 		setupToolbar(toolbar, false)
 		setupPages()
 		loadFragment(EventsFragment())
+		setMainPage()
+	}
+	
+	private fun setMainPage() {
+		bottom_navigation.selectedItemId = R.id.events_tab
 	}
 	
 	private fun setupPages() {

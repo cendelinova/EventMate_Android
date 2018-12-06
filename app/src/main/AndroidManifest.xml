@@ -11,13 +11,12 @@
 		android:roundIcon="@mipmap/ic_launcher_round"
 		android:supportsRtl="true"
 		android:theme="@style/AppTheme">
-		
 		<provider
 			android:name="android.support.v4.content.FileProvider"
-			tools:replace="android:authorities"
 			android:authorities="${applicationId}.com.vansuita.pickimage.provider"
 			android:exported="false"
-			android:grantUriPermissions="true">
+			android:grantUriPermissions="true"
+			tools:replace="android:authorities">
 			<meta-data
 				android:name="android.support.FILE_PROVIDER_PATHS"
 				android:resource="@xml/picker_provider_paths" />
@@ -38,7 +37,8 @@
 			android:name=".ui.settings.SettingsActivity"
 			android:label="@string/title_activity_settings" />
 		<activity android:name=".ui.gameRank.GameRankActivity" />
-		<activity android:name=".ui.help.HelpActivity"></activity>
+		<activity android:name=".ui.help.HelpActivity" />
+		<activity android:name=".ui.inbox.ConversationDetailActivity"></activity>
 	</application>
 
 </manifest>

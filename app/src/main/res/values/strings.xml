@@ -129,4 +129,7 @@
 	<string name="retry">Retry</string>
 	<string name="error_create_event">Error occured while creating event</string>
 	<string name="empty_string">-</string>
+	<string name="hint_enter_message">Enter message</string>
+	<string name="tv_no_conversation">No conversations</string>
+	<string name="title_inbox">My conversation</string>
 </resources>
