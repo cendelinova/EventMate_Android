@@ -19,16 +19,17 @@
 			android:text="@string/who"
 			android:textAllCaps="true" />
 		
-		<android.support.v7.widget.AppCompatRadioButton
+		<RadioButton
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:text="@string/event_owner"
-			android:buttonTint="@color/colorAccent"/>
+			android:theme="@style/MyRadioButtonStyle"/>
 		
-		<android.support.v7.widget.AppCompatRadioButton
+		<RadioButton
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:text="@string/event_assignee" />
+			android:text="@string/event_assignee"
+			android:theme="@style/MyRadioButtonStyle"/>
 	</RadioGroup>
 	
 	<RadioGroup
@@ -44,30 +45,35 @@
 			android:text="@string/event_status"
 			android:textAllCaps="true" />
 		
-		<android.support.v7.widget.AppCompatRadioButton
+		<RadioButton
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:text="@string/event_status_editable" />
+			android:text="@string/event_status_editable"
+			android:theme="@style/MyRadioButtonStyle"/>
 		
-		<android.support.v7.widget.AppCompatRadioButton
+		<RadioButton
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
+			android:theme="@style/MyRadioButtonStyle"
 			android:text="@string/event_status_ready_to_play" />
 		
-		<android.support.v7.widget.AppCompatRadioButton
+		<RadioButton
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:text="@string/event_status_in_play" />
+			android:text="@string/event_status_in_play"
+			android:theme="@style/MyRadioButtonStyle"/>
 		
-		<android.support.v7.widget.AppCompatRadioButton
+		<RadioButton
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:text="@string/event_status_evaluation" />
+			android:text="@string/event_status_evaluation"
+			android:theme="@style/MyRadioButtonStyle"/>
 		
-		<android.support.v7.widget.AppCompatRadioButton
+		<RadioButton
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:text="@string/event_status_finished" />
+			android:text="@string/event_status_finished"
+			android:theme="@style/MyRadioButtonStyle"/>
 	</RadioGroup>
 
 </LinearLayout>

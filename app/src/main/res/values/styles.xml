@@ -34,5 +34,10 @@
 		<item name="windowActionBar">false</item>
 		<item name="windowNoTitle">true</item>
 	</style>
+	
+	<style name="MyRadioButtonStyle" parent="Widget.AppCompat.CompoundButton.RadioButton">
+		<item name="android:colorControlActivated">@color/colorAccent</item>
+		<item name="android:textSize">@dimen/font_normal</item>
+	</style>
 
 </resources>
