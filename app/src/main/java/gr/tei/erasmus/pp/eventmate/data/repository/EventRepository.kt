@@ -20,6 +20,8 @@ class EventRepository(private val eventDao: EventDao) : CoroutineScope {
 		}
 	
 	fun insert(eventEntity: EventEntity) = eventDao.insert(eventEntity)
+	
+	fun delete(eventEntity: EventEntity) = eventDao.delete(eventEntity)
 
 
 //	fun getEventDetail(id: String): Deferred<Event> {

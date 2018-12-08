@@ -155,4 +155,7 @@
 	<string name="pref_description_event_invitation">Be notified when your friend has invited to his event</string>
 	<string name="pref_title_event_invitation">Event invitation</string>
 	<string name="pref_key_reset_score">reset_score</string>
+	<string name="delete">Delete</string>
+	<string name="event_item_removed">Event %1$s successfully removed</string>
+	<string name="undo">undo</string>
 </resources>

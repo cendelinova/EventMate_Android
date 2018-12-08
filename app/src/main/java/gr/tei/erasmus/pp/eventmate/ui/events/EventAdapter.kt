@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import gr.tei.erasmus.pp.eventmate.R
-import gr.tei.erasmus.pp.eventmate.helpers.DateTimeHelper
 import gr.tei.erasmus.pp.eventmate.data.model.Event
 import kotlinx.android.synthetic.main.event_item.view.*
 import timber.log.Timber
@@ -33,7 +32,7 @@ class EventAdapter(
 	
 	private fun displayEventEntry(viewHolder: EventViewHolder, event: Event) {
 		with(viewHolder.itemView) {
-			event_item.setOnClickListener { eventListener.onItemClick(event) }
+			view_foreground.setOnClickListener { eventListener.onItemClick(event) }
 			event_name.text = event.name
 			event_date.text = event.date
 		}

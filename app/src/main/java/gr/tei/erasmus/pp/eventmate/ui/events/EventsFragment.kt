@@ -6,18 +6,18 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
+import android.support.v4.content.ContextCompat
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.*
 import android.widget.RadioGroup
 import android.widget.Toast
 import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.app.App
 import gr.tei.erasmus.pp.eventmate.data.model.Event
-import gr.tei.erasmus.pp.eventmate.ui.base.BaseFragment
-import gr.tei.erasmus.pp.eventmate.ui.base.ErrorState
-import gr.tei.erasmus.pp.eventmate.ui.base.LoadingState
-import gr.tei.erasmus.pp.eventmate.ui.base.State
+import gr.tei.erasmus.pp.eventmate.ui.base.*
 import gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.EventDetailActivity
 import gr.tei.erasmus.pp.eventmate.ui.events.newEvent.NewEventActivity
 import gr.tei.erasmus.pp.eventmate.ui.mainActivity.MainActivity
@@ -58,6 +58,7 @@ class EventsFragment : BaseFragment() {
 		initializeRecyclerView()
 		observeViewModel()
 		viewModel.getEvents()
+		setupSwipeAction()
 	}
 	
 	private fun observeViewModel() {
@@ -121,8 +122,43 @@ class EventsFragment : BaseFragment() {
 		}
 	}
 	
+	private fun setupSwipeAction() {
+		Timber.v("setupSwipeAction() called")
+		
+		val swipeHandler = EventSwipeCallback(0, ItemTouchHelper.LEFT, swipeItemListener)
+		ItemTouchHelper(swipeHandler).attachToRecyclerView(event_recycler_view)
+	}
+	
 	private fun toggleProgress(visibility: Boolean) {
 		progress.visibility = if (visibility) View.VISIBLE else View.INVISIBLE
+	}
+	
+	/**
+	 * User swiped left -> delete swiped contact from CallLog
+	 */
+	private fun deleteSwipe(viewHolder: RecyclerView.ViewHolder?) {
+		if (viewHolder is EventAdapter.EventViewHolder) {
+			
+			val event = viewModel.getEventList()[viewHolder.adapterPosition]
+			val deletedPosition = viewHolder.adapterPosition
+			with(event) {
+				Snackbar.make(
+					events_fragment,
+					getString(R.string.event_item_removed, name),
+					Snackbar.LENGTH_LONG
+				).apply {
+					setAction(getString(R.string.undo)) {
+						viewModel.addToEventList(
+							this@with,
+							deletedPosition
+						)
+					}
+					setActionTextColor(ContextCompat.getColor(context, R.color.colorAccent))
+				}.show()
+				
+				viewModel.deleteEvent(this)
+			}
+		}
 	}
 	
 	
@@ -131,6 +167,12 @@ class EventsFragment : BaseFragment() {
 	private val onEventClick = object : EventListener {
 		override fun onItemClick(event: Event) {
 			startActivity(Intent(activity, EventDetailActivity::class.java))
+		}
+	}
+	
+	private val swipeItemListener = object : SwipeItemHandler.RecyclerItemTouchHelperListener {
+		override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int, position: Int) {
+			deleteSwipe(viewHolder)
 		}
 	}
 	
@@ -151,7 +193,7 @@ class EventsFragment : BaseFragment() {
 		when (state) {
 			is LoadingState -> toggleProgress(true)
 			is ErrorState -> showError(state.error)
-			is EventsViewModel.EventListState ->  {
+			is EventsViewModel.EventListState -> {
 				toggleProgress(false)
 				eventAdapter.updateEventList(state.events)
 			}

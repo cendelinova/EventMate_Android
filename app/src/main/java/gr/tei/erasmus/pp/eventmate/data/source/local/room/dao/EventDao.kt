@@ -1,10 +1,7 @@
 package gr.tei.erasmus.pp.eventmate.data.source.local.room.dao
 
 import android.arch.lifecycle.LiveData
-import android.arch.persistence.room.Dao
-import android.arch.persistence.room.Insert
-import android.arch.persistence.room.OnConflictStrategy
-import android.arch.persistence.room.Query
+import android.arch.persistence.room.*
 import gr.tei.erasmus.pp.eventmate.data.source.local.room.entities.EventEntity
 
 @Dao
@@ -14,4 +11,7 @@ interface EventDao {
 	
 	@Query("SELECT * FROM event")
 	fun getAll(): MutableList<EventEntity>
+	
+	@Delete
+	fun delete(eventEntity: EventEntity)
 }

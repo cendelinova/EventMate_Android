@@ -24,11 +24,32 @@ class EventsViewModel : BaseViewModel() {
 			mStates.postValue(LoadingState)
 			try {
 				val events = eventRepository.getAllEvents().await()
+				allEvents.addAll(events)
 				mStates.postValue(EventListState(events))
 			} catch (error: Throwable) {
 				mStates.postValue(ErrorState(error))
 			}
 		}
+	}
+	
+	fun deleteEvent(event: Event) {
+		launch {
+			mStates.postValue(LoadingState)
+			try {
+				eventRepository.delete(Event.convertToEntity(event))
+				allEvents.remove(event)
+				mStates.postValue(EventListState(allEvents))
+			} catch (error: Throwable) {
+				mStates.postValue(ErrorState(error))
+			}
+		}
+	}
+	
+	fun getEventList() = allEvents
+	
+	fun addToEventList(deletedItem: Event, deletedIndex: Int) {
+		allEvents.add(deletedIndex, deletedItem)
+		mStates.postValue(EventListState(allEvents))
 	}
 	
 	data class EventListState(val events: MutableList<Event>) : State() {
