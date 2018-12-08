@@ -158,4 +158,12 @@
 	<string name="delete">Delete</string>
 	<string name="event_item_removed">Event %1$s successfully removed</string>
 	<string name="undo">undo</string>
+	<string name="title_activity_new_task">NewTaskActivity</string>
+	<string name="btn_create_task">Save task</string>
+	<string name="hint_task_name">Task name</string>
+	<string name="hint_points">Points</string>
+	<string name="hint_asigness">Asigness</string>
+	<string name="hint_description">Description</string>
+	<string name="hint_task_time">Task time</string>
+	<string name="msg_task_info">What\'s this task about?</string>
 </resources>

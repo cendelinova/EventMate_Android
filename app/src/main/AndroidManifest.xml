@@ -40,7 +40,11 @@
 		<activity android:name=".ui.gameRank.GameRankActivity" />
 		<activity android:name=".ui.help.HelpActivity" />
 		<activity android:name=".ui.inbox.conversationDetail.ConversationDetailActivity" />
-		<activity android:name=".ui.inbox.newMessage.NewMessageActivity"></activity>
+		<activity android:name=".ui.inbox.newMessage.NewMessageActivity" />
+		<activity
+			android:name=".ui.tasks.NewTaskActivity"
+			android:label="@string/title_activity_new_task"
+			android:theme="@style/AppTheme"></activity>
 	</application>
 
 </manifest>

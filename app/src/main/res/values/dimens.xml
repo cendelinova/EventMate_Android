@@ -30,4 +30,5 @@
 	<dimen name="rank_icon_size">100dp</dimen>
 	<dimen name="spacing_xhuge">55dp</dimen>
 	<dimen name="small_profile_photo_size">50dp</dimen>
+	<dimen name="fab_margin">16dp</dimen>
 </resources>
