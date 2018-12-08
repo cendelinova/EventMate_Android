@@ -154,6 +154,7 @@ class EventsFragment : BaseFragment() {
 						)
 					}
 					setActionTextColor(ContextCompat.getColor(context, R.color.colorAccent))
+					addCallback(moveFabBackDown())
 				}.show()
 				
 				viewModel.deleteEvent(this)
@@ -161,6 +162,11 @@ class EventsFragment : BaseFragment() {
 		}
 	}
 	
+	private fun moveFabBackDown() = object : Snackbar.Callback() {
+		override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
+			fab?.translationY = 0.0f
+		}
+	}
 	
 	/* Listeners *******************************************************************************************************/
 	

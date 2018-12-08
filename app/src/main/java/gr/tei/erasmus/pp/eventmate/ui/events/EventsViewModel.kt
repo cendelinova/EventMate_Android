@@ -22,6 +22,7 @@ class EventsViewModel : BaseViewModel() {
 	fun getEvents() {
 		launch {
 			mStates.postValue(LoadingState)
+			allEvents.clear()
 			try {
 				val events = eventRepository.getAllEvents().await()
 				allEvents.addAll(events)
@@ -38,6 +39,7 @@ class EventsViewModel : BaseViewModel() {
 			try {
 				eventRepository.delete(Event.convertToEntity(event))
 				allEvents.remove(event)
+				val events = eventRepository.getAllEvents().await()
 				mStates.postValue(EventListState(allEvents))
 			} catch (error: Throwable) {
 				mStates.postValue(ErrorState(error))

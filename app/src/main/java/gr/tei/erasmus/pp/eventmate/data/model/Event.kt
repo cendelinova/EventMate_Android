@@ -36,7 +36,7 @@ data class Event(
 		
 		fun convertToEntity(model: Event) = with(model) {
 			EventEntity(
-				null,
+				id,
 				name,
 				DateTimeHelper.parseDateTimeFromString(date, DateTimeHelper.DATE_TIME_FORMAT)
 			)

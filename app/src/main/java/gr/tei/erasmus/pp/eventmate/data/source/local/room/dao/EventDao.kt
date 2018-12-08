@@ -12,6 +12,6 @@ interface EventDao {
 	@Query("SELECT * FROM event")
 	fun getAll(): MutableList<EventEntity>
 	
-	@Delete
-	fun delete(eventEntity: EventEntity)
+	@Query("DELETE FROM event WHERE uid = :uid")
+	fun delete(uid: Long)
 }
