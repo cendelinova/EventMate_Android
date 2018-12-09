@@ -166,4 +166,11 @@
 	<string name="hint_description">Description</string>
 	<string name="hint_task_time">Task time</string>
 	<string name="msg_task_info">What\'s this task about?</string>
+	
+	<!-- TODO: Remove or change this placeholder text -->
+	<string name="hello_blank_fragment">Hello blank fragment</string>
+	<string name="tasks_tab_title">Tasks</string>
+	<string name="guests_tab_title">Guests</string>
+	<string name="edit">Edit</string>
+	<string name="tv_no_tasks">No tasks</string>
 </resources>

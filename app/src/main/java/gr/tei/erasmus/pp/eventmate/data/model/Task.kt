@@ -1,5 +1,3 @@
 package gr.tei.erasmus.pp.eventmate.data.model
 
-class Task {
-
-}
+data class Task(val name: String, val points: Int, private val assigness: List<User>?)

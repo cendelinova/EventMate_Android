@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content">
+	
+	<android.support.v7.widget.CardView
+		android:id="@+id/view_background"
+		android:layout_width="match_parent"
+		android:layout_height="90dp"
+		android:layout_marginStart="@dimen/spacing_normal"
+		android:layout_marginEnd="@dimen/spacing_normal"
+		android:layout_marginBottom="@dimen/spacing_tiny"
+		app:cardBackgroundColor="@color/darkPink"
+		app:cardCornerRadius="5dp"
+		app:cardElevation="0dp">
+		
+		<RelativeLayout
+			android:layout_width="match_parent"
+			android:layout_height="match_parent">
+			
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_alignParentEnd="true"
+				android:layout_centerVertical="true"
+				android:layout_marginEnd="@dimen/spacing_normal"
+				android:drawableTop="@drawable/ic_delete"
+				android:fontFamily="sans-serif-condensed"
+				android:text="@string/delete"
+				android:textColor="#ffffff"
+				android:textSize="@dimen/font_small"
+				android:textStyle="normal" />
+		
+		</RelativeLayout>
+	
+	</android.support.v7.widget.CardView>
+	
+	<android.support.v7.widget.CardView
+		android:id="@+id/view_foreground"
+		android:layout_width="match_parent"
+		android:layout_height="90dp"
+		android:layout_marginStart="@dimen/spacing_normal"
+		android:layout_marginEnd="@dimen/spacing_normal"
+		android:layout_marginBottom="@dimen/spacing_tiny"
+		android:foreground="?attr/selectableItemBackground"
+		app:cardBackgroundColor="@color/card_view_background"
+		app:cardCornerRadius="5dp"
+		app:cardElevation="0dp">
+		
+		<RelativeLayout
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:layout_margin="@dimen/spacing_small">
+			
+			<RelativeLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginStart="@dimen/spacing_small">
+				
+				<LinearLayout
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_alignParentEnd="true"
+					android:orientation="horizontal">
+					
+					<de.hdodenhof.circleimageview.CircleImageView
+						android:id="@+id/assignee1"
+						android:layout_width="@dimen/icon_size"
+						android:layout_height="@dimen/icon_size"
+						android:layout_marginEnd="@dimen/spacing_tiny"
+						android:src="@drawable/ic_user_placeholder" />
+					
+					<de.hdodenhof.circleimageview.CircleImageView
+						android:id="@+id/assignee2"
+						android:layout_width="@dimen/icon_size"
+						android:layout_height="@dimen/icon_size"
+						android:layout_marginEnd="@dimen/spacing_tiny"
+						android:src="@drawable/ic_user_placeholder" />
+					
+					<de.hdodenhof.circleimageview.CircleImageView
+						android:id="@+id/assignee3"
+						android:layout_width="@dimen/icon_size"
+						android:layout_height="@dimen/icon_size"
+						android:src="@drawable/ic_user_placeholder" />
+				</LinearLayout>
+				
+				<TextView
+					android:id="@+id/task_name"
+					style="@style/NameTitle"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginBottom="@dimen/spacing_small"
+					tools:text="Bartender selfie" />
+				
+				<TextView
+					android:id="@+id/task_points"
+					style="@style/SmallTextWithDrawable"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_below="@id/task_name"
+					android:layout_marginEnd="@dimen/spacing_tiny"
+					android:drawableStart="@drawable/ic_points"
+					tools:text="20" />
+				
+				<TextView
+					android:id="@+id/task_description"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_below="@id/task_name"
+					android:layout_toEndOf="@id/task_points"
+					android:ellipsize="end"
+					android:maxLines="1"
+					tools:text="Take a selfie with bartender" />
+			
+			</RelativeLayout>
+		
+		
+		</RelativeLayout>
+		
+		<ImageButton
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="bottom|end"
+			android:background="@android:color/transparent"
+			android:src="@drawable/ic_arrow_down" />
+	
+	</android.support.v7.widget.CardView>
+
+</FrameLayout>
