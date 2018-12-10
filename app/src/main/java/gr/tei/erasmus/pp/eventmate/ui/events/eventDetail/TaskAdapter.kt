@@ -19,7 +19,7 @@ class TaskAdapter(
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
 		Timber.d("onCreateViewHolder() called with parent = [$parent], viewType = [$viewType]")
 		
-		return TaskViewHolder(LayoutInflater.from(context).inflate(R.layout.event_item, parent, false))
+		return TaskViewHolder(LayoutInflater.from(context).inflate(R.layout.task_item, parent, false))
 	}
 	
 	override fun getItemCount() = tasks.size
@@ -35,6 +35,7 @@ class TaskAdapter(
 			view_foreground.setOnClickListener { taskListener.onItemClick(task) }
 			task_name.text = task.name
 			task_points.text = task.points.toString()
+			task_description.text = task.description
 		}
 	}
 	

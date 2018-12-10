@@ -6,8 +6,10 @@ import android.content.ContextWrapper
 import dagger.Module
 import dagger.Provides
 import gr.tei.erasmus.pp.eventmate.data.repository.EventRepository
+import gr.tei.erasmus.pp.eventmate.data.repository.TaskRepository
 import gr.tei.erasmus.pp.eventmate.data.source.local.room.AppDatabase
 import gr.tei.erasmus.pp.eventmate.data.source.local.room.dao.EventDao
+import gr.tei.erasmus.pp.eventmate.data.source.local.room.dao.TaskDao
 import gr.tei.erasmus.pp.eventmate.helpers.SharedPreferenceHelper
 import javax.inject.Singleton
 
@@ -40,6 +42,14 @@ class AppModule(context: Context) : ContextWrapper(context) {
 	@Provides
 	@Singleton
 	fun provideEventRepository(eventDao: EventDao) = EventRepository(eventDao)
+	
+	@Provides
+	@Singleton
+	fun provideTaskDao(roomDatabase: AppDatabase) = roomDatabase.taskDao()
+	
+	@Provides
+	@Singleton
+	fun provideTaskRepository(taskDao: TaskDao) = TaskRepository(taskDao)
 	
 	@Provides
 	@Singleton

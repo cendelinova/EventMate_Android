@@ -11,6 +11,8 @@ object TextInputLayoutHelper {
 		}
 	}
 	
+	fun collectValueFromInput(inputLayout: TextInputLayout) = inputLayout.editText?.text.toString()
+	
 	fun setRequiredMark (listOfInputs: MutableList<TextInputLayout>) {
 		for(input in listOfInputs) {
 			input.markRequired()
@@ -20,4 +22,6 @@ object TextInputLayoutHelper {
 	private fun TextInputLayout.markRequired() {
 		hint = "$hint *"
 	}
+	
+	
 }

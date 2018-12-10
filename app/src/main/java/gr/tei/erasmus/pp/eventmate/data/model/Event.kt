@@ -8,7 +8,6 @@ data class Event(
 	val name: String,
 	val permissions: MutableList<Permission>?,
 	val date: String,
-	val time: String,
 	val place: String,
 	val tasks: MutableList<Task>?,
 	val state: EventState,
@@ -16,12 +15,12 @@ data class Event(
 ) {
 	
 	constructor(name: String) : this(
-		null, name, null, "", "", "", null,
+		null, name, null, "", "", null,
 		EventState.EDITABLE, null
 	)
 	
 	constructor(id: Long?, name: String, date: String) : this(
-		id, name, null, date, "", "", null,
+		id, name, null, date, "", null,
 		EventState.EDITABLE, null
 	)
 	

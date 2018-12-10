@@ -173,4 +173,5 @@
 	<string name="guests_tab_title">Guests</string>
 	<string name="edit">Edit</string>
 	<string name="tv_no_tasks">No tasks</string>
+	<string name="success_task_created">Task created</string>
 </resources>

@@ -101,7 +101,10 @@
 					android:layout_height="wrap_content"
 					android:layout_below="@id/task_name"
 					android:layout_marginEnd="@dimen/spacing_tiny"
+					android:drawablePadding="@dimen/spacing_tiny"
 					android:drawableStart="@drawable/ic_points"
+					android:textAlignment="center"
+					android:textSize="@dimen/font_normal"
 					tools:text="20" />
 				
 				<TextView
