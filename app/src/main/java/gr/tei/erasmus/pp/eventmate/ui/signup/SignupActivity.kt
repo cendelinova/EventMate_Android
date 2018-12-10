@@ -1,5 +1,6 @@
 package gr.tei.erasmus.pp.eventmate.ui.signup
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.TextInputLayout
 import android.widget.Toast
@@ -9,13 +10,19 @@ import com.mobsandgeeks.saripaar.annotation.ConfirmPassword
 import com.mobsandgeeks.saripaar.annotation.Email
 import com.mobsandgeeks.saripaar.annotation.NotEmpty
 import com.mobsandgeeks.saripaar.annotation.Password
+import com.squareup.picasso.Picasso
+import com.vansuita.pickimage.bean.PickResult
+import com.vansuita.pickimage.bundle.PickSetup
+import com.vansuita.pickimage.dialog.PickImageDialog
+import com.vansuita.pickimage.listeners.IPickResult
 import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.helpers.TextInputLayoutHelper
 import gr.tei.erasmus.pp.eventmate.ui.base.BaseActivity
+import gr.tei.erasmus.pp.eventmate.ui.mainActivity.MainActivity
 import kotlinx.android.synthetic.main.activity_signup.*
 
 
-class SignupActivity : BaseActivity(), Validator.ValidationListener {
+class SignupActivity : BaseActivity(), Validator.ValidationListener, IPickResult {
 	
 	@NotEmpty(messageResId = R.string.error_required_field)
 	@Email(messageResId = R.string.error_invalid_email)
@@ -45,9 +52,10 @@ class SignupActivity : BaseActivity(), Validator.ValidationListener {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_signup)
 		
-		setupToolbar(toolbar, true)
+		setupToolbar(toolbar)
 		initInputs()
 		handleSignUpButton()
+		setupChoosingPhotoDialog()
 	}
 	
 	override fun onValidationFailed(errors: MutableList<ValidationError>?) {
@@ -66,8 +74,15 @@ class SignupActivity : BaseActivity(), Validator.ValidationListener {
 	}
 	
 	override fun onValidationSucceeded() {
-		Toast.makeText(this, "Yay! we got it right!", Toast.LENGTH_SHORT).show();
+		Toast.makeText(this, "Yay! we got it right!", Toast.LENGTH_SHORT).show()
+		startActivity(Intent(this, MainActivity::class.java))
 		
+	}
+	
+	override fun onPickResult(pickResult: PickResult?) {
+		pickResult?.let {
+			Picasso.get().load(pickResult.uri).into(profile_photo)
+		}
 	}
 	
 	private fun initInputs() {
@@ -83,6 +98,14 @@ class SignupActivity : BaseActivity(), Validator.ValidationListener {
 	private fun handleSignUpButton() {
 		btn_signup.setOnClickListener {
 			validator.validate()
+		}
+	}
+	
+	private fun setupChoosingPhotoDialog() {
+		profile_photo.setOnClickListener {
+			PickImageDialog.build(PickSetup().apply {
+				setTitle(R.string.choose_photo)
+			}).show(this)
 		}
 	}
 }

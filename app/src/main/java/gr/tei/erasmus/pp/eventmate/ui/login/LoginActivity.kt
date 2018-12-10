@@ -30,14 +30,13 @@ class LoginActivity : NoToolbarActivity() {
 	private fun handleLoginButton() {
 		btn_login.setOnClickListener {
 			//todo validate + api call
-			startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+			startActivity(Intent(this, MainActivity::class.java))
 		}
 	}
 	
 	private fun handleSignUp() {
 		tv_no_account.setOnClickListener {
-			startActivity(Intent(this@LoginActivity, SignupActivity::class.java))
-			
+			startActivity(Intent(this, SignupActivity::class.java))
 		}
 	}
 	

@@ -31,7 +31,6 @@
 		style="@style/MyEditText"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:layout_marginBottom="@dimen/spacing_normal"
 		android:hint="@string/hint_email">
 		
 		<android.support.design.widget.TextInputEditText
@@ -60,6 +59,7 @@
 		style="@style/Button"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
+		android:padding="@dimen/spacing_normal"
 		android:text="@string/btn_login" />
 	
 	<TextView
@@ -92,7 +92,8 @@
 			android:layout_gravity="start"
 			android:backgroundTint="@color/facebook_blue"
 			android:drawableStart="@drawable/ic_facebook"
-			android:padding="@dimen/spacing_small"
+			android:drawablePadding="@dimen/spacing_tiny"
+			android:padding="@dimen/spacing_normal"
 			android:text="@string/btn_facebook"
 			android:textColor="@color/white" />
 		
@@ -108,7 +109,8 @@
 			android:layout_gravity="end"
 			android:backgroundTint="@color/google_red"
 			android:drawableStart="@drawable/ic_google_plus"
-			android:padding="@dimen/spacing_small"
+			android:drawablePadding="@dimen/spacing_tiny"
+			android:padding="@dimen/spacing_normal"
 			android:text="@string/btn_google"
 			android:textColor="@color/white" />
 	

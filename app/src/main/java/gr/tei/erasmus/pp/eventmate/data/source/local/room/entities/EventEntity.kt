@@ -9,5 +9,7 @@ import org.joda.time.DateTime
 data class EventEntity(
 	@PrimaryKey(autoGenerate = true) var uid: Long?,
 	@ColumnInfo(name = "event_name") var eventName: String,
-	@ColumnInfo(name = "date") var date: DateTime?
+	@ColumnInfo(name = "date") var date: DateTime?,
+	@ColumnInfo(name = "place") var place: String
+//	@ColumnInfo(typeAffinity = ColumnInfo.BLOB, name = "photo") var image: ByteArray?
 )

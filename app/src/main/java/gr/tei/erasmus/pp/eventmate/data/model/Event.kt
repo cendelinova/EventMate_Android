@@ -11,17 +11,23 @@ data class Event(
 	val place: String,
 	val tasks: MutableList<Task>?,
 	val state: EventState,
-	val reports: MutableList<Report>?
+	val reports: MutableList<Report>?,
+	val photo: String?
 ) {
 	
 	constructor(name: String) : this(
 		null, name, null, "", "", null,
-		EventState.EDITABLE, null
+		EventState.EDITABLE, null, null
 	)
 	
-	constructor(id: Long?, name: String, date: String) : this(
-		id, name, null, date, "", null,
-		EventState.EDITABLE, null
+	constructor(id: Long?, name: String, date: String, place: String) : this(
+		id, name, null, date, place, null,
+		EventState.EDITABLE, null, null
+	)
+	
+	constructor(id: Long?, name: String, date: String, place: String, photo: String) : this(
+		id, name, null, date, place, null,
+		EventState.EDITABLE, null, photo
 	)
 	
 	companion object {
@@ -29,7 +35,8 @@ data class Event(
 			Event(
 				uid,
 				eventName,
-				DateTimeHelper.convertDateTimeToString(date, DateTimeHelper.DATE_TIME_FORMAT)
+				DateTimeHelper.convertDateTimeToString(date, DateTimeHelper.FULL_DATE_TIME_FORMAT),
+				place
 			)
 		}
 		
@@ -37,7 +44,8 @@ data class Event(
 			EventEntity(
 				id,
 				name,
-				DateTimeHelper.parseDateTimeFromString(date, DateTimeHelper.DATE_TIME_FORMAT)
+				DateTimeHelper.parseDateTimeFromString(date, DateTimeHelper.FULL_DATE_TIME_FORMAT),
+				place
 			)
 		}
 	}

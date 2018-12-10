@@ -8,14 +8,15 @@ import java.text.ParseException
 
 class DateTimeHelper {
 	companion object {
-		const val DATE_FORMAT = "MM/dd/yyyy"
+		const val DATE_FORMAT = "dd/MM/yyyy"
 		const val TIME_FORMAT = "HH:mm"
-		const val DATE_TIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ssZ"
+		const val DATE_TIME_FORMAT = "dd/MM/yyyy HH:mm"
+		const val FULL_DATE_TIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ssZ"
 		
 		fun isToday(dateTime: DateTime): Boolean = (dateTime.toLocalDate()) == (LocalDate())
 		
 		fun parseDateTimeFromString(dateTimeString: String?, format: String): DateTime? {
-			val formatter = DateTimeFormat.forPattern(format)
+			val formatter = getFormatter(format)
 			
 			if (dateTimeString.isNullOrEmpty()) return null
 			
@@ -32,11 +33,19 @@ class DateTimeHelper {
 		
 		fun convertDateTimeToString(dateTime: DateTime?, format: String): String {
 			dateTime?.run {
-				val formatter = DateTimeFormat.forPattern(format)
+				val formatter = getFormatter(format)
 				return formatter.print(dateTime)
 			}
 			
 			return ""
 		}
+		
+		fun formatDateTimeString(dateTimeString: String, format: String): String {
+			val dateTime = parseDateTimeFromString(dateTimeString, FULL_DATE_TIME_FORMAT)
+			return convertDateTimeToString(dateTime, format)
+		}
+		
+		private fun getFormatter(format: String) = DateTimeFormat.forPattern(format)
+		
 	}
 }

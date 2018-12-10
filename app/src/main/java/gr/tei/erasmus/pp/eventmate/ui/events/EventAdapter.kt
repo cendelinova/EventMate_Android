@@ -5,8 +5,10 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.squareup.picasso.Picasso
 import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.data.model.Event
+import gr.tei.erasmus.pp.eventmate.helpers.DateTimeHelper
 import kotlinx.android.synthetic.main.event_item.view.*
 import timber.log.Timber
 
@@ -34,7 +36,8 @@ class EventAdapter(
 		with(viewHolder.itemView) {
 			view_foreground.setOnClickListener { eventListener.onItemClick(event) }
 			event_name.text = event.name
-			event_date.text = event.date
+			event_date.text = DateTimeHelper.formatDateTimeString(event.date, DateTimeHelper.DATE_TIME_FORMAT)
+			event_place.text = event.place
 		}
 	}
 	
