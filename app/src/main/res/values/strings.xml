@@ -174,4 +174,10 @@
 	<string name="edit">Edit</string>
 	<string name="tv_no_tasks">No tasks</string>
 	<string name="success_task_created">Task created</string>
+	<string name="tv_no_guests">No guests</string>
+	<string name="title_description">Description</string>
+	<string name="title_time_limit">Time limit</string>
+	<string name="title_location">Location</string>
+	<string name="title_points">Points</string>
+	<string name="title_assigness">Assigness</string>
 </resources>

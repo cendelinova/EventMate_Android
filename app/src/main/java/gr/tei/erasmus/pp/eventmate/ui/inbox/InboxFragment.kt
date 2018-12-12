@@ -61,9 +61,10 @@ class InboxFragment : BaseFragment() {
 		}
 	}
 	
+	
 	private fun prepareConversations(): MutableList<Conversation> {
 		return mutableListOf(
-			Conversation(1, "Bill Watson", "", "ahojky", "5:55", false),
+			Conversation(1, "Bill Watson", "", "blaba", "5:55", false),
 			Conversation(1, "james Watson", "", "sebbs", "5:55", false)
 		)
 	}

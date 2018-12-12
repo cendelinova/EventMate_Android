@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/guest_item"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:layout_marginBottom="@dimen/spacing_small">
+	
+	<de.hdodenhof.circleimageview.CircleImageView
+		android:id="@+id/user_photo"
+		android:layout_width="@dimen/profile_photo_size"
+		android:layout_height="@dimen/profile_photo_size"
+		android:src="@drawable/ic_user_placeholder"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent" />
+	
+	<TextView
+		android:id="@+id/user_name"
+		style="@style/MessageTitle"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="@dimen/spacing_tiny"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/user_photo"
+		tools:text="Jonas Wolf" />
+
+</android.support.constraint.ConstraintLayout>

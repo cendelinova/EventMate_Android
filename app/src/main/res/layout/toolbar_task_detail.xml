@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	xmlns:tools="http://schemas.android.com/tools"
+	xmlns:app="http://schemas.android.com/apk/res-auto">
+	
+	<android.support.v7.widget.Toolbar
+		android:id="@+id/toolbar"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:background="@android:color/transparent"
+		android:elevation="2dp"
+		android:theme="@style/AppTheme.AppBarOverlayNoBackground"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintHorizontal_bias="1.0"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
+		app:popupTheme="@style/AppTheme.PopupOverlay">
+		
+		<RelativeLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_margin="@dimen/spacing_small">
+			
+			<TextView
+				android:id="@+id/task_name"
+				style="@style/MessageTitle"
+				android:textStyle="bold"
+				android:textSize="@dimen/font_large"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="@string/msg_task_info" />
+			
+			<FrameLayout
+				android:id="@+id/photo_layout"
+				android:layout_width="95dp"
+				android:layout_height="95dp"
+				android:layout_alignParentEnd="true">
+				
+				<ImageView
+					android:id="@+id/task_photo"
+					android:layout_width="@dimen/bigger_icon_size"
+					android:layout_height="84dp"
+					android:layout_gravity="top|center_horizontal"
+					android:background="?selectableItemBackground"
+					android:clickable="true"
+					android:focusable="true"
+					android:scaleType="fitXY"
+					android:src="@drawable/ic_event_placeholder" />
+				
+				<ImageView
+					android:id="@+id/task_status_icon"
+					android:layout_width="24dp"
+					android:layout_height="24dp"
+					android:layout_gravity="bottom|end"
+					android:layout_marginEnd="3dp"
+					android:layout_marginBottom="5dp"
+					android:background="@drawable/edit_badge"
+					android:scaleType="center"
+					android:src="@drawable/ic_edit_solid" />
+			</FrameLayout>
+			
+			<TextView
+				android:id="@+id/tasks_status"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_below="@id/task_name"
+				android:layout_marginTop="@dimen/spacing_normal"
+				tools:text="Task is ready to play" />
+		
+		</RelativeLayout>
+	
+	</android.support.v7.widget.Toolbar>
+	
+</android.support.constraint.ConstraintLayout>

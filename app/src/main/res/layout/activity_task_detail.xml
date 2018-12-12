@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	tools:context=".ui.taskDetail.TaskDetailActivity">
+	
+	<include
+		android:id="@+id/header"
+		layout="@layout/toolbar_task_detail" />
+	
+	<TextView
+		android:id="@+id/title_description"
+		style="@style/TitleTextWithDrawable"
+		android:layout_width="0dp"
+		android:drawableStart="@drawable/ic_description"
+		android:layout_height="wrap_content"
+		android:text="@string/title_description"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/header" />
+	
+	<include
+		android:id="@+id/divider"
+		layout="@layout/text_divider" />
+	
+	<TextView
+		android:id="@+id/title_time_limit"
+		style="@style/TitleTextWithDrawable"
+		android:layout_width="0dp"
+		android:drawableStart="@drawable/ic_time"
+		android:layout_height="wrap_content"
+		android:text="@string/title_time_limit"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/title_description" />
+	
+	
+	<TextView
+		android:id="@+id/title_location"
+		style="@style/TitleTextWithDrawable"
+		android:layout_width="0dp"
+		android:drawableStart="@drawable/ic_location"
+		android:layout_height="wrap_content"
+		android:text="@string/title_location"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/title_time_limit" />
+	
+	<TextView
+		android:id="@+id/title_points"
+		style="@style/TitleTextWithDrawable"
+		android:layout_width="0dp"
+		android:drawableStart="@drawable/ic_points"
+		android:layout_height="wrap_content"
+		android:text="@string/title_points"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/title_location" />
+	
+	<TextView
+		android:id="@+id/title_assigness"
+		style="@style/TitleTextWithDrawable"
+		android:layout_width="0dp"
+		android:drawableStart="@drawable/ic_guests"
+		android:layout_height="wrap_content"
+		android:text="@string/title_assigness"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/title_points" />
+	
+	
+	<gr.tei.erasmus.pp.eventmate.ui.common.RecyclerViewEmptyViewSupport
+		android:id="@+id/assigness_recycler_view"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content" />
+
+</android.support.constraint.ConstraintLayout>

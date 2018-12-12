@@ -25,6 +25,7 @@ class EventsViewModel : BaseViewModel() {
 			allEvents.clear()
 			try {
 				val events = eventRepository.getAllEvents().await()
+//				val events = eventRepository.getEventsFromServer().await()
 				allEvents.addAll(events)
 				mStates.postValue(EventListState(events))
 			} catch (error: Throwable) {

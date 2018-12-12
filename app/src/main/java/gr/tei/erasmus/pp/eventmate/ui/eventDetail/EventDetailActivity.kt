@@ -1,4 +1,4 @@
-package gr.tei.erasmus.pp.eventmate.ui.events.eventDetail
+package gr.tei.erasmus.pp.eventmate.ui.eventDetail
 
 import android.content.Intent
 import android.graphics.PorterDuff
@@ -11,7 +11,7 @@ import android.view.MenuItem
 import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.ui.base.BaseActivity
 import gr.tei.erasmus.pp.eventmate.ui.events.newEvent.NewEventActivity
-import gr.tei.erasmus.pp.eventmate.ui.tasks.NewTaskActivity
+import gr.tei.erasmus.pp.eventmate.ui.newTask.NewTaskActivity
 import kotlinx.android.synthetic.main.activity_event_detail.*
 
 

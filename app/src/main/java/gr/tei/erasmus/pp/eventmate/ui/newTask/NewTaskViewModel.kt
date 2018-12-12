@@ -1,9 +1,8 @@
-package gr.tei.erasmus.pp.eventmate.ui.tasks
+package gr.tei.erasmus.pp.eventmate.ui.newTask
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import gr.tei.erasmus.pp.eventmate.app.App
-import gr.tei.erasmus.pp.eventmate.data.model.Event
 import gr.tei.erasmus.pp.eventmate.data.model.Task
 import gr.tei.erasmus.pp.eventmate.ui.base.*
 import kotlinx.coroutines.launch

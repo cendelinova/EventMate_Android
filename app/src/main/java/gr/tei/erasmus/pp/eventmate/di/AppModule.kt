@@ -10,6 +10,7 @@ import gr.tei.erasmus.pp.eventmate.data.repository.TaskRepository
 import gr.tei.erasmus.pp.eventmate.data.source.local.room.AppDatabase
 import gr.tei.erasmus.pp.eventmate.data.source.local.room.dao.EventDao
 import gr.tei.erasmus.pp.eventmate.data.source.local.room.dao.TaskDao
+import gr.tei.erasmus.pp.eventmate.helpers.RestHelper
 import gr.tei.erasmus.pp.eventmate.helpers.SharedPreferenceHelper
 import javax.inject.Singleton
 

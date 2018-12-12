@@ -1,15 +1,13 @@
-package gr.tei.erasmus.pp.eventmate.ui.events.eventDetail
+package gr.tei.erasmus.pp.eventmate.ui.eventDetail.tasks
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import gr.tei.erasmus.pp.eventmate.app.App
-import gr.tei.erasmus.pp.eventmate.data.model.Event
 import gr.tei.erasmus.pp.eventmate.data.model.Task
 import gr.tei.erasmus.pp.eventmate.ui.base.BaseViewModel
 import gr.tei.erasmus.pp.eventmate.ui.base.ErrorState
 import gr.tei.erasmus.pp.eventmate.ui.base.LoadingState
 import gr.tei.erasmus.pp.eventmate.ui.base.State
-import gr.tei.erasmus.pp.eventmate.ui.events.EventsViewModel
 import kotlinx.coroutines.launch
 
 class TasksViewModel: BaseViewModel() {
@@ -31,7 +29,11 @@ class TasksViewModel: BaseViewModel() {
 			try {
 				val tasks = taskRepository.getAllTasks().await()
 				allTasks.addAll(tasks)
-				mStates.postValue(TaskListState(tasks))
+				mStates.postValue(
+					TaskListState(
+						tasks
+					)
+				)
 			} catch (error: Throwable) {
 				mStates.postValue(ErrorState(error))
 			}

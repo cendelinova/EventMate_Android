@@ -17,8 +17,10 @@ import android.widget.Toast
 import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.app.App
 import gr.tei.erasmus.pp.eventmate.data.model.Event
+import gr.tei.erasmus.pp.eventmate.helpers.StateHelper.showError
+import gr.tei.erasmus.pp.eventmate.helpers.StateHelper.toggleProgress
 import gr.tei.erasmus.pp.eventmate.ui.base.*
-import gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.EventDetailActivity
+import gr.tei.erasmus.pp.eventmate.ui.eventDetail.EventDetailActivity
 import gr.tei.erasmus.pp.eventmate.ui.events.newEvent.NewEventActivity
 import gr.tei.erasmus.pp.eventmate.ui.mainActivity.MainActivity
 import kotlinx.android.synthetic.main.fragment_events.*
@@ -74,21 +76,6 @@ class EventsFragment : BaseFragment() {
 	}
 	
 	
-	private fun showError(error: Throwable) {
-		Timber.e("Error $error while fetching events")
-		event_recycler_view.visibility = View.GONE
-		toggleProgress(false)
-		Snackbar.make(
-			events_fragment,
-			getString(R.string.loading_error),
-			Snackbar.LENGTH_INDEFINITE
-		).show()
-//			.setAction(R.string.retry) {
-//				startActivity(EventsFragment>().clearTop().clearTask().newTask())
-//			}
-//			.show()
-	}
-	
 	private fun showFilterDialog() {
 		val context = App.COMPONENTS.provideContext()
 		val viewGroup = activity?.findViewById(android.R.id.content) as ViewGroup
@@ -127,10 +114,6 @@ class EventsFragment : BaseFragment() {
 		
 		val swipeHandler = EventSwipeCallback(0, ItemTouchHelper.LEFT, swipeItemListener)
 		ItemTouchHelper(swipeHandler).attachToRecyclerView(event_recycler_view)
-	}
-	
-	private fun toggleProgress(visibility: Boolean) {
-		progress.visibility = if (visibility) View.VISIBLE else View.INVISIBLE
 	}
 	
 	/**
@@ -197,10 +180,10 @@ class EventsFragment : BaseFragment() {
 	// Observer
 	private val observeEventProgressState = Observer<State> { state ->
 		when (state) {
-			is LoadingState -> toggleProgress(true)
-			is ErrorState -> showError(state.error)
+			is LoadingState -> toggleProgress(progress, true)
+			is ErrorState -> showError(state.error, progress, events_fragment)
 			is EventsViewModel.EventListState -> {
-				toggleProgress(false)
+				toggleProgress(progress, false)
 				eventAdapter.updateEventList(state.events)
 			}
 		}

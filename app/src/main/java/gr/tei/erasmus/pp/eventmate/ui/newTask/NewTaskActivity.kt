@@ -1,4 +1,4 @@
-package gr.tei.erasmus.pp.eventmate.ui.tasks
+package gr.tei.erasmus.pp.eventmate.ui.newTask
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
@@ -14,8 +14,7 @@ import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.data.model.Task
 import gr.tei.erasmus.pp.eventmate.helpers.TextInputLayoutHelper
 import gr.tei.erasmus.pp.eventmate.ui.base.*
-import gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.EventDetailActivity
-import gr.tei.erasmus.pp.eventmate.ui.mainActivity.MainActivity
+import gr.tei.erasmus.pp.eventmate.ui.eventDetail.EventDetailActivity
 import gr.tei.erasmus.pp.eventmate.ui.signup.TextInputLayoutAdapter
 import kotlinx.android.synthetic.main.activity_new_task.*
 import timber.log.Timber

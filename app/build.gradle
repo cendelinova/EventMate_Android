@@ -14,9 +14,25 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        buildTypes {
+            debug {
+                buildConfigField "String", "SERVER_URL", '"http://localhost:8080"'
+            }
+
+            debugWithReleaseServer {
+                initWith debug
+                buildConfigField "String", "SERVER_URL", '"http://localhost:8080"'
+            }
+
+//            release {
+//                debuggable false
+//                useProguard true
+//                minifyEnabled true
+//                shrinkResources true
+//                signingConfig signingConfigs.release
+//                proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+//                buildConfigField "String", "SERVER_URL", '"http://localhost:8080"'
+//            }
         }
     }
 }

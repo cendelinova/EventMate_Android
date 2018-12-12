@@ -1,9 +1,11 @@
-package gr.tei.erasmus.pp.eventmate.ui.events.eventDetail
+package gr.tei.erasmus.pp.eventmate.ui.eventDetail
 
 import android.content.Context
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import gr.tei.erasmus.pp.eventmate.R
+import gr.tei.erasmus.pp.eventmate.ui.eventDetail.guests.GuestsFragment
+import gr.tei.erasmus.pp.eventmate.ui.eventDetail.tasks.TasksFragment
 
 class EventDetailFragmentAdapter(
 	private val context: Context,

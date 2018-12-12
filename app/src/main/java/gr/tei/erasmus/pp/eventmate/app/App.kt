@@ -5,9 +5,10 @@ import gr.tei.erasmus.pp.eventmate.BuildConfig
 import gr.tei.erasmus.pp.eventmate.di.AppComponent
 import gr.tei.erasmus.pp.eventmate.di.AppModule
 import gr.tei.erasmus.pp.eventmate.di.DaggerAppComponent
+import gr.tei.erasmus.pp.eventmate.di.NetworkModule
 import timber.log.Timber
 
-class App: Application() {
+class App : Application() {
 	
 	companion object {
 		lateinit var COMPONENTS: AppComponent
@@ -28,6 +29,7 @@ class App: Application() {
 		
 		COMPONENTS = DaggerAppComponent.builder()
 			.appModule(AppModule(this))
+			.networkModule(NetworkModule(BuildConfig.SERVER_URL))
 			.build()
 	}
 	
