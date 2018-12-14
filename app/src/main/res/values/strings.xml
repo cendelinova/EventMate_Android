@@ -180,4 +180,5 @@
 	<string name="title_location">Location</string>
 	<string name="title_points">Points</string>
 	<string name="title_assigness">Assigness</string>
+	<string name="tv_no_assignee">No assignee</string>
 </resources>

@@ -3,72 +3,170 @@
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
-	android:layout_height="match_parent"
-	tools:context=".ui.taskDetail.TaskDetailActivity">
+	android:layout_height="match_parent">
 	
 	<include
 		android:id="@+id/header"
 		layout="@layout/toolbar_task_detail" />
 	
-	<TextView
-		android:id="@+id/title_description"
-		style="@style/TitleTextWithDrawable"
+	<GridLayout
+		android:id="@+id/grid"
 		android:layout_width="0dp"
-		android:drawableStart="@drawable/ic_description"
 		android:layout_height="wrap_content"
-		android:text="@string/title_description"
+		android:useDefaultMargins="false"
+		android:columnCount="2"
+		android:rowCount="9"
+		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@id/header" />
+		app:layout_constraintTop_toBottomOf="@id/header">
+		
+		<TextView
+			android:id="@+id/title_description"
+			style="@style/TitleTextWithDrawable"
+			android:layout_width="wrap_content"
+			android:drawableStart="@drawable/ic_description"
+			android:layout_height="wrap_content"
+			android:text="@string/title_description" />
+		
+		<TextView
+			android:id="@+id/tv_description"
+			style="@style/TaskDetailText"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			tools:text="sgeetebbseeteeteeeteteteteteteteteeteteete" />
+		
+		<include
+			layout="@layout/text_divider"
+			android:layout_columnSpan="2"
+			android:layout_width="match_parent"
+			android:layout_height="1dp" />
+		
+		<TextView
+			android:id="@+id/title_time_limit"
+			style="@style/TitleTextWithDrawable"
+			android:layout_width="wrap_content"
+			android:drawableStart="@drawable/ic_time"
+			android:layout_height="wrap_content"
+			android:text="@string/title_time_limit" />
+		
+		<TextView
+			android:id="@+id/tv_time_limit"
+			style="@style/TaskDetailText"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			tools:text="sgeetebbseeteeteeeteteteteteteteteeteteete" />
+		
+		<include
+			layout="@layout/text_divider"
+			android:layout_columnSpan="2"
+			android:layout_width="match_parent"
+			android:layout_height="1dp" />
+		
+		<TextView
+			android:id="@+id/title_location"
+			style="@style/TitleTextWithDrawable"
+			android:layout_width="wrap_content"
+			android:text="@string/title_location"
+			android:drawableStart="@drawable/ic_location"
+			android:layout_height="wrap_content" />
+		
+		<TextView
+			android:id="@+id/tv_location"
+			style="@style/TaskDetailText"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			tools:text="sgeetebbseeteeteeeteteteteteteteteeteteete" />
+		
+		<include
+			layout="@layout/text_divider"
+			android:layout_columnSpan="2"
+			android:layout_width="match_parent"
+			android:layout_height="1dp" />
+		
+		<TextView
+			android:id="@+id/title_points"
+			style="@style/TitleTextWithDrawable"
+			android:layout_width="wrap_content"
+			android:drawableStart="@drawable/ic_points"
+			android:layout_height="wrap_content"
+			android:text="@string/title_points" />
+		
+		<TextView
+			android:id="@+id/tv_points"
+			style="@style/TaskDetailText"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			tools:text="sgeetebbseeteeteeeteteteteteteteteeteteete" />
+		
+		<include
+			layout="@layout/text_divider"
+			android:layout_columnSpan="2"
+			android:layout_width="match_parent"
+			android:layout_height="1dp" />
+		
+		<TextView
+			android:id="@+id/title_assigness"
+			style="@style/TitleTextWithDrawable"
+			android:layout_width="wrap_content"
+			android:drawableStart="@drawable/ic_guests"
+			android:layout_height="wrap_content"
+			android:text="@string/title_assigness" />
+		
+		<TextView
+			android:id="@+id/tv_assigness"
+			style="@style/TaskDetailText"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			tools:text="sgeetebbseeteeteeeteteteteteteteteeteteete" />
 	
-	<include
-		android:id="@+id/divider"
-		layout="@layout/text_divider" />
+	</GridLayout>
 	
-	<TextView
-		android:id="@+id/title_time_limit"
-		style="@style/TitleTextWithDrawable"
-		android:layout_width="0dp"
-		android:drawableStart="@drawable/ic_time"
+	<ProgressBar
+		android:id="@+id/progress"
+		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:text="@string/title_time_limit"
+		android:visibility="invisible"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@id/title_description" />
+		app:layout_constraintTop_toTopOf="parent" />
 	
-	
-	<TextView
-		android:id="@+id/title_location"
-		style="@style/TitleTextWithDrawable"
-		android:layout_width="0dp"
-		android:drawableStart="@drawable/ic_location"
+	<LinearLayout
+		android:id="@+id/assignee_empty_view"
+		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:text="@string/title_location"
+		android:orientation="vertical"
+		android:layout_marginTop="104dp"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintHorizontal_bias="0.0"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@id/title_time_limit" />
+		app:layout_constraintTop_toBottomOf="@id/grid">
+		
+		<Space
+			android:layout_width="match_parent"
+			android:layout_height="0dp"
+			android:layout_weight="2" />
+		
+		<TextView
+			style="@style/EmptyText"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:text="@string/tv_no_assignee" />
+		
+		<Space
+			android:layout_width="match_parent"
+			android:layout_height="0dp"
+			android:layout_weight="2" />
 	
-	<TextView
-		android:id="@+id/title_points"
-		style="@style/TitleTextWithDrawable"
-		android:layout_width="0dp"
-		android:drawableStart="@drawable/ic_points"
-		android:layout_height="wrap_content"
-		android:text="@string/title_points"
-		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@id/title_location" />
-	
-	<TextView
-		android:id="@+id/title_assigness"
-		style="@style/TitleTextWithDrawable"
-		android:layout_width="0dp"
-		android:drawableStart="@drawable/ic_guests"
-		android:layout_height="wrap_content"
-		android:text="@string/title_assigness"
-		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@id/title_points" />
-	
+	</LinearLayout>
 	
 	<gr.tei.erasmus.pp.eventmate.ui.common.RecyclerViewEmptyViewSupport
-		android:id="@+id/assigness_recycler_view"
+		android:id="@+id/assignee_recycler_view"
 		android:layout_width="0dp"
-		android:layout_height="wrap_content" />
+		android:layout_height="wrap_content"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/grid"/>
+
 
 </android.support.constraint.ConstraintLayout>
