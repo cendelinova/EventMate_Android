@@ -8,12 +8,21 @@ data class Task(
 	val name: String,
 	val points: Int,
 	val description: String?,
-	val place: String?,
+	val location: String?,
+	val timeLimit: Int?,
 	private val assigness: List<User>?
 ) {
 	
-	constructor(id: Long?, eventId: Long, name: String, points: Int, description: String?, place: String?) : this(
-		id, eventId, name, points, description, place, null
+	constructor(
+		id: Long?,
+		eventId: Long,
+		name: String,
+		points: Int,
+		description: String?,
+		place: String?,
+		timeLimit: Int?
+	) : this(
+		id, eventId, name, points, description, place, timeLimit, null
 	)
 	
 	companion object {
@@ -25,6 +34,7 @@ data class Task(
 				points,
 				description,
 				place,
+				timeLimit,
 				null
 			)
 		}
@@ -36,7 +46,8 @@ data class Task(
 				name,
 				points,
 				description,
-				place
+				location,
+				timeLimit
 			)
 		}
 	}

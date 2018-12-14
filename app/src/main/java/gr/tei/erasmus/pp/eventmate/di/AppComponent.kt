@@ -4,9 +4,11 @@ import android.content.Context
 import com.google.gson.Gson
 import dagger.Component
 import gr.tei.erasmus.pp.eventmate.data.repository.EventRepository
+import gr.tei.erasmus.pp.eventmate.data.repository.InvitationRepository
 import gr.tei.erasmus.pp.eventmate.data.repository.TaskRepository
 import gr.tei.erasmus.pp.eventmate.data.source.local.room.AppDatabase
 import gr.tei.erasmus.pp.eventmate.data.source.local.room.dao.EventDao
+import gr.tei.erasmus.pp.eventmate.data.source.local.room.dao.InvitationDao
 import gr.tei.erasmus.pp.eventmate.data.source.local.room.dao.TaskDao
 import gr.tei.erasmus.pp.eventmate.helpers.RestHelper
 import gr.tei.erasmus.pp.eventmate.helpers.SharedPreferenceHelper
@@ -20,9 +22,9 @@ interface AppComponent {
 	fun provideContext(): Context
 	
 	fun provideOkHttpClient(): OkHttpClient
-
+	
 	fun provideRetrofit(): Retrofit
-
+	
 	fun provideGson(): Gson
 	
 	fun provideDatabase(): AppDatabase
@@ -37,6 +39,10 @@ interface AppComponent {
 	
 	fun provideSharedPreferencesHelper(): SharedPreferenceHelper
 	
-	fun provideRestHelper() : RestHelper
+	fun provideRestHelper(): RestHelper
+	
+	fun provideInvitationDao(): InvitationDao
+	
+	fun provideInvitationRepository(): InvitationRepository
 	
 }

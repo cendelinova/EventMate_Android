@@ -2,12 +2,15 @@ package gr.tei.erasmus.pp.eventmate.ui.eventDetail.tasks
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import gr.tei.erasmus.pp.eventmate.R
+import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.EVENT_ID
+import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.TASK_ID
 import gr.tei.erasmus.pp.eventmate.data.model.Task
 import gr.tei.erasmus.pp.eventmate.helpers.StateHelper.showError
 import gr.tei.erasmus.pp.eventmate.helpers.StateHelper.toggleProgress
@@ -15,6 +18,7 @@ import gr.tei.erasmus.pp.eventmate.ui.base.BaseFragment
 import gr.tei.erasmus.pp.eventmate.ui.base.ErrorState
 import gr.tei.erasmus.pp.eventmate.ui.base.LoadingState
 import gr.tei.erasmus.pp.eventmate.ui.base.State
+import gr.tei.erasmus.pp.eventmate.ui.taskDetail.TaskDetailActivity
 import kotlinx.android.synthetic.main.fragment_tasks.*
 import timber.log.Timber
 
@@ -24,6 +28,12 @@ class TasksFragment : BaseFragment() {
 	
 	private val viewModel by lazy { ViewModelProviders.of(this).get(TasksViewModel::class.java) }
 	
+	private var eventId: Long? = null
+	
+	override fun onCreate(savedInstanceState: Bundle?) {
+		super.onCreate(savedInstanceState)
+		eventId = arguments?.getLong(EVENT_ID)
+	}
 	
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 		return inflater.inflate(R.layout.fragment_tasks, container, false)
@@ -33,7 +43,10 @@ class TasksFragment : BaseFragment() {
 		super.onViewCreated(view, savedInstanceState)
 		initializeRecyclerView()
 		observeViewModel()
-		viewModel.getTasks()
+		
+		eventId?.let {
+			viewModel.getTasks(eventId!!)
+		}
 	}
 	
 	/**
@@ -66,7 +79,9 @@ class TasksFragment : BaseFragment() {
 	private val onTaskClick = object :
 		TaskAdapter.TaskListener {
 		override fun onItemClick(task: Task) {
-			//todo show task detail
+			startActivity(Intent(activity, TaskDetailActivity::class.java).apply {
+				putExtra(TASK_ID, task.id)
+			})
 		}
 		
 	}
@@ -82,12 +97,5 @@ class TasksFragment : BaseFragment() {
 			}
 		}
 	}
-
-//	private fun handleFabBtn() {
-//		fab.setOnClickListener {
-//			startActivity(Intent(activity, NewTaskActivity::class.java))
-//		}
-//	}
-	
 	
 }

@@ -10,7 +10,7 @@ import gr.tei.erasmus.pp.eventmate.ui.base.LoadingState
 import gr.tei.erasmus.pp.eventmate.ui.base.State
 import kotlinx.coroutines.launch
 
-class TasksViewModel: BaseViewModel() {
+class TasksViewModel : BaseViewModel() {
 	
 	private val taskRepository by lazy { App.COMPONENTS.provideTaskRepository() }
 	
@@ -22,16 +22,33 @@ class TasksViewModel: BaseViewModel() {
 	private var allTasks = mutableListOf<Task>()
 	
 	
-	fun getTasks() {
+	fun getTasks(eventId: Long) {
 		launch {
 			mStates.postValue(LoadingState)
 			allTasks.clear()
 			try {
-				val tasks = taskRepository.getAllTasks().await()
+				val tasks = taskRepository.getAllTasks(eventId).await()
 				allTasks.addAll(tasks)
 				mStates.postValue(
 					TaskListState(
 						tasks
+					)
+				)
+			} catch (error: Throwable) {
+				mStates.postValue(ErrorState(error))
+			}
+		}
+	}
+	
+	fun getTask(taskId: Long) {
+		launch {
+			mStates.postValue(LoadingState)
+			allTasks.clear()
+			try {
+				val task = taskRepository.getTask(taskId).await()
+				mStates.postValue(
+					TaskListState(
+						mutableListOf(task)
 					)
 				)
 			} catch (error: Throwable) {

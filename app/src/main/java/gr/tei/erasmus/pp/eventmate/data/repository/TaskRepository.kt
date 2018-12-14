@@ -10,13 +10,17 @@ class TaskRepository(private val taskDao: TaskDao) : CoroutineScope {
 	private val job: Job = Job()
 	override val coroutineContext: CoroutineContext = job + Dispatchers.IO
 	
-	fun getAllTasks(): Deferred<MutableList<Task>> =
+	fun getAllTasks(eventId: Long): Deferred<MutableList<Task>> =
 		async {
-			taskDao.getAllTasks()
+			taskDao.getAllTasks(eventId)
 				.map {
 					Task.convertToModel(it)
 				}.toMutableList()
 		}
+	
+	fun getTask(taskId: Long): Deferred<Task> = async {
+		Task.convertToModel(taskDao.getTask(taskId))
+	}
 	
 	fun insert(taskEntity: TaskEntity) = taskDao.insert(taskEntity)
 	

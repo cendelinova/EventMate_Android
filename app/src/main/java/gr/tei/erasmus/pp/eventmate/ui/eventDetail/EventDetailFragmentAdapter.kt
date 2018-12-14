@@ -1,15 +1,18 @@
 package gr.tei.erasmus.pp.eventmate.ui.eventDetail
 
 import android.content.Context
+import android.os.Bundle
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import gr.tei.erasmus.pp.eventmate.R
+import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.EVENT_ID
 import gr.tei.erasmus.pp.eventmate.ui.eventDetail.guests.GuestsFragment
 import gr.tei.erasmus.pp.eventmate.ui.eventDetail.tasks.TasksFragment
 
 class EventDetailFragmentAdapter(
 	private val context: Context,
-	fragmentManager: FragmentManager
+	fragmentManager: FragmentManager,
+	var eventId: Long?
 ) : FragmentPagerAdapter(fragmentManager) {
 	
 	/* Constants **********************************************************************************/
@@ -29,7 +32,11 @@ class EventDetailFragmentAdapter(
 	 * @return Valid fragment to display for given position.
 	 */
 	override fun getItem(position: Int) = when (position) {
-		TASKS_TAB -> TasksFragment()
+		TASKS_TAB -> TasksFragment().apply {
+			arguments = Bundle().apply {
+				putLong(EVENT_ID, eventId!!)
+			}
+		}
 		GUESTS_TAB -> GuestsFragment()
 		else -> throw IndexOutOfBoundsException()
 	}

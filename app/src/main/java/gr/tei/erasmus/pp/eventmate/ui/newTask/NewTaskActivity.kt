@@ -11,6 +11,7 @@ import com.mobsandgeeks.saripaar.ValidationError
 import com.mobsandgeeks.saripaar.Validator
 import com.mobsandgeeks.saripaar.annotation.NotEmpty
 import gr.tei.erasmus.pp.eventmate.R
+import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.EVENT_ID
 import gr.tei.erasmus.pp.eventmate.data.model.Task
 import gr.tei.erasmus.pp.eventmate.helpers.TextInputLayoutHelper
 import gr.tei.erasmus.pp.eventmate.ui.base.*
@@ -31,6 +32,8 @@ class NewTaskActivity : BaseActivity(), Validator.ValidationListener {
 	
 	private var listOfInputs = mutableListOf<TextInputLayout>()
 	
+	private var eventId: Long? = null
+	
 	private val validator: Validator by lazy {
 		Validator(this).also {
 			it.setValidationListener(this@NewTaskActivity)
@@ -45,6 +48,7 @@ class NewTaskActivity : BaseActivity(), Validator.ValidationListener {
 		observeViewModel()
 		initInputs()
 		handleSaveBtn()
+		eventId = intent.getLongExtra(EVENT_ID, 0)
 	}
 	
 	private fun handleSaveBtn() {
@@ -75,16 +79,18 @@ class NewTaskActivity : BaseActivity(), Validator.ValidationListener {
 		val description = TextInputLayoutHelper.collectValueFromInput(input_description)
 		val place = TextInputLayoutHelper.collectValueFromInput(input_place)
 		
-		viewModel.createTask(
-			Task(
-				null,
-				1,
-				name,
-				points,
-				description,
-				place, null
+		eventId?.let {
+			viewModel.createTask(
+				Task(
+					null,
+					eventId!!,
+					name,
+					points,
+					description,
+					place, null
+				)
 			)
-		)
+		}
 	}
 	
 	private fun observeViewModel() {
@@ -127,8 +133,10 @@ class NewTaskActivity : BaseActivity(), Validator.ValidationListener {
 			is ErrorState -> showError(state.error)
 			is FinishedState -> {
 				toggleProgress(false)
-				Toast.makeText(this@NewTaskActivity, R.string.success_task_created, Toast.LENGTH_LONG).show()
-				startActivity(Intent(this@NewTaskActivity, EventDetailActivity::class.java))
+				Toast.makeText(this, R.string.success_task_created, Toast.LENGTH_LONG).show()
+				startActivity(Intent(this, EventDetailActivity::class.java).apply {
+					putExtra(EVENT_ID, eventId)
+				})
 			}
 		}
 	}

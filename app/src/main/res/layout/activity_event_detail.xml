@@ -96,7 +96,6 @@
 					android:layout_marginStart="?attr/actionBarSize"
 					android:layout_marginEnd="?attr/actionBarSize"
 					android:gravity="center"
-					android:text="Tim's stag party"
 					android:textAllCaps="true" />
 			
 			</android.support.v7.widget.Toolbar>

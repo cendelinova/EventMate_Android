@@ -22,16 +22,14 @@
 				android:resource="@xml/picker_provider_paths" />
 		</provider>
 		
-		<activity android:name=".ui.mainActivity.MainActivity" >
+		<activity android:name=".ui.mainActivity.MainActivity">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
 				
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
 		</activity>
-		<activity android:name=".ui.login.LoginActivity">
-
-		</activity>
+		<activity android:name=".ui.login.LoginActivity"></activity>
 		<activity android:name=".ui.signup.SignupActivity" />
 		<activity android:name=".ui.events.newEvent.NewEventActivity" />
 		<activity android:name=".ui.eventDetail.EventDetailActivity" />
@@ -48,9 +46,8 @@
 			android:label="@string/title_activity_new_task"
 			android:theme="@style/AppTheme" />
 		<activity android:name=".ui.userProfile.UserProfileActivity" />
-		<activity android:name=".ui.taskDetail.TaskDetailActivity">
-
-		</activity>
+		<activity android:name=".ui.taskDetail.TaskDetailActivity"></activity>
+		<activity android:name=".ui.inviteGuests.InviteGuestsActivity"></activity>
 	</application>
 
 </manifest>

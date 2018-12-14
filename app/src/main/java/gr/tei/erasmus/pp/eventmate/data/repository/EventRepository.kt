@@ -31,4 +31,5 @@ class EventRepository(private val eventDao: EventDao) : CoroutineScope {
 	
 	fun getEvent(eventId: Long) = eventDao.getEvent(eventId)
 	
+	
 }

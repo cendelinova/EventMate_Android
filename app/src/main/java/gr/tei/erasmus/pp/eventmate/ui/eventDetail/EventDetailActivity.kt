@@ -19,8 +19,10 @@ import gr.tei.erasmus.pp.eventmate.ui.base.BaseActivity
 import gr.tei.erasmus.pp.eventmate.ui.base.ErrorState
 import gr.tei.erasmus.pp.eventmate.ui.base.LoadingState
 import gr.tei.erasmus.pp.eventmate.ui.base.State
+import gr.tei.erasmus.pp.eventmate.ui.eventDetail.EventDetailFragmentAdapter.Companion.TASKS_TAB
 import gr.tei.erasmus.pp.eventmate.ui.events.EventsViewModel
 import gr.tei.erasmus.pp.eventmate.ui.events.newEvent.NewEventActivity
+import gr.tei.erasmus.pp.eventmate.ui.inviteGuests.InviteGuestsActivity
 import gr.tei.erasmus.pp.eventmate.ui.newTask.NewTaskActivity
 import kotlinx.android.synthetic.main.activity_event_detail.*
 
@@ -29,8 +31,7 @@ class EventDetailActivity : BaseActivity() {
 	
 	private val viewModel by lazy { ViewModelProviders.of(this).get(EventsViewModel::class.java) }
 	
-	private var eventId: Long? = null
-	private lateinit var eventName : String
+	var eventId: Long? = null
 	
 	companion object {
 		private const val TITLE_FADE_OUT_RANGE = 0.15F
@@ -51,10 +52,7 @@ class EventDetailActivity : BaseActivity() {
 		setupToolbar(toolbar)
 		setupViewPager()
 		handleToolbar()
-		
-		fab.setOnClickListener {
-			startActivity(Intent(this, NewTaskActivity::class.java))
-		}
+		handleFab()
 	}
 	
 	
@@ -70,7 +68,7 @@ class EventDetailActivity : BaseActivity() {
 	}
 	
 	private fun setupViewPager() {
-		val fragmentAdapter = EventDetailFragmentAdapter(this, supportFragmentManager)
+		val fragmentAdapter = EventDetailFragmentAdapter(this, supportFragmentManager, eventId)
 		view_pager.adapter = fragmentAdapter
 		tabs.setupWithViewPager(view_pager)
 		tabs.addOnTabSelectedListener(selectTabListener)
@@ -91,7 +89,6 @@ class EventDetailActivity : BaseActivity() {
 	
 	private val selectTabListener = object : TabLayout.OnTabSelectedListener {
 		override fun onTabReselected(tab: TabLayout.Tab?) {
-		
 		}
 		
 		override fun onTabUnselected(tab: TabLayout.Tab?) {
@@ -117,8 +114,19 @@ class EventDetailActivity : BaseActivity() {
 		appbar.post { appbar.addOnOffsetChangedListener(onOffsetChangedListener) }
 	}
 	
+	private fun handleFab() {
+		val goalActivity =
+			if (tabs.selectedTabPosition == TASKS_TAB) NewTaskActivity::class.java else InviteGuestsActivity::class.java
+		
+		fab.setOnClickListener {
+			startActivity(Intent(this, goalActivity).apply {
+				putExtra(EVENT_ID, eventId)
+			})
+		}
+	}
+	
 	private fun setupLayout(event: Event) {
-		eventName = event.name
+		event_name_title.text = event.name
 		event_name.text = event.name
 		event_date.text = DateTimeHelper.formatDateTimeString(event.date, DateTimeHelper.DATE_FORMAT)
 		event_time.text = DateTimeHelper.formatDateTimeString(event.date, DateTimeHelper.TIME_FORMAT)
@@ -148,7 +156,6 @@ class EventDetailActivity : BaseActivity() {
 			event_name_title.alpha = Math.abs(scroll / titleFadeOutRange.toFloat() - 1)
 		} else {
 			event_name_title.alpha = 0.0F
-			event_name_title.text = eventName
 		}
 	}
 }

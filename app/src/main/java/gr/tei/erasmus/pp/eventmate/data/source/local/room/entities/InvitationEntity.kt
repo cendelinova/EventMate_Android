@@ -5,9 +5,8 @@ import android.arch.persistence.room.Entity
 import android.arch.persistence.room.ForeignKey
 import android.arch.persistence.room.PrimaryKey
 
-
-@Entity(tableName = "task")
-data class TaskEntity(
+@Entity(tableName = "invitation")
+data class InvitationEntity(
 	@PrimaryKey(autoGenerate = true) var uid: Long?,
 	@ForeignKey(
 		entity = EventEntity::class,
@@ -16,9 +15,6 @@ data class TaskEntity(
 		onDelete = ForeignKey.CASCADE
 	)
 	@ColumnInfo(name = "event_id") var eventId: Long,
-	@ColumnInfo(name = "task_name") var taskName: String,
-	@ColumnInfo(name = "points") var points: Int,
-	@ColumnInfo(name = "description") var description: String?,
-	@ColumnInfo(name = "location") var place: String?,
-	@ColumnInfo(name = "time_limit") var timeLimit: Int?
+	@ColumnInfo(name = "user_name") var userName: String,
+	@ColumnInfo(name = "state") var date: String
 )

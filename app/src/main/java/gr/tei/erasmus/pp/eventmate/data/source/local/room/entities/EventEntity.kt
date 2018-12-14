@@ -9,6 +9,6 @@ data class EventEntity(
 	@PrimaryKey(autoGenerate = true) var uid: Long?,
 	@ColumnInfo(name = "event_name") var eventName: String,
 	@ColumnInfo(name = "date") var date: String,
-	@ColumnInfo(name = "place") var place: String?,
+	@ColumnInfo(name = "location") var place: String?,
 	@ColumnInfo(name = "state") var state: String
 )
