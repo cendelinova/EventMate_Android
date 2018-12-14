@@ -55,6 +55,19 @@ class EventsViewModel : BaseViewModel() {
 		mStates.postValue(EventListState(allEvents))
 	}
 	
+	fun getEvent(eventId: Long) {
+		launch {
+			mStates.postValue(LoadingState)
+			allEvents.clear()
+			try {
+				val event = Event.convertToModel(eventRepository.getEvent(eventId))
+				mStates.postValue(EventListState(mutableListOf(event)))
+			} catch (error: Throwable) {
+				mStates.postValue(ErrorState(error))
+			}
+		}
+	}
+	
 	data class EventListState(val events: MutableList<Event>) : State() {
 		companion object {
 			fun from(list: MutableList<Event>): EventListState {

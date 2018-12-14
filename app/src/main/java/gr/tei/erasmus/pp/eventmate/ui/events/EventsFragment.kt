@@ -16,6 +16,7 @@ import android.widget.RadioGroup
 import android.widget.Toast
 import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.app.App
+import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.EVENT_ID
 import gr.tei.erasmus.pp.eventmate.data.model.Event
 import gr.tei.erasmus.pp.eventmate.helpers.StateHelper.showError
 import gr.tei.erasmus.pp.eventmate.helpers.StateHelper.toggleProgress
@@ -32,7 +33,6 @@ class EventsFragment : BaseFragment() {
 	private lateinit var eventAdapter: EventAdapter
 	
 	private val viewModel by lazy { ViewModelProviders.of(this).get(EventsViewModel::class.java) }
-	
 	
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 		Timber.v("onCreateView() called with: inflater = [$inflater], container = [$container], savedInstanceState = [$savedInstanceState]")
@@ -155,7 +155,9 @@ class EventsFragment : BaseFragment() {
 	
 	private val onEventClick = object : EventListener {
 		override fun onItemClick(event: Event) {
-			startActivity(Intent(activity, EventDetailActivity::class.java))
+			startActivity(Intent(activity, EventDetailActivity::class.java).apply {
+				putExtra(EVENT_ID, event.id)
+			})
 		}
 	}
 	

@@ -28,9 +28,7 @@ class EventRepository(private val eventDao: EventDao) : CoroutineScope {
 	fun delete(eventEntity: EventEntity) = eventDao.delete(eventEntity.uid!!)
 	
 	fun getEventsFromServer() = restHelper.getEvents()
-
-
-//	fun getEventDetail(id: String): Deferred<Event> {
-//
-//	}
+	
+	fun getEvent(eventId: Long) = eventDao.getEvent(eventId)
+	
 }

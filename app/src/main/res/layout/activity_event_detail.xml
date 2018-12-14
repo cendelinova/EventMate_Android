@@ -55,9 +55,7 @@
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_below="@id/event_photo"
-					android:layout_gravity="center"
-					android:text="Tim's stag party"
-					android:textAlignment="center"
+					android:layout_centerHorizontal="true"
 					tools:text="Tim's stage party" />
 				
 				<TextView
@@ -67,43 +65,19 @@
 					android:layout_height="wrap_content"
 					android:layout_below="@id/event_name"
 					android:layout_centerHorizontal="true"
-					android:text="20/7/2018"
-					android:textAlignment="center"
-					android:textSize="@dimen/font_small"
-					tools:text="Tim's stage party" />
+					android:textSize="@dimen/font_small" />
+				
+				<TextView
+					android:id="@+id/event_time"
+					style="@style/MessageTitle"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_below="@id/event_date"
+					android:layout_centerHorizontal="true"
+					android:textSize="@dimen/font_small" />
+			
 			
 			</RelativeLayout>
-			
-			<!--<android.support.v7.widget.Toolbar-->
-			<!--android:id="@+id/toolbar"-->
-			<!--android:layout_width="match_parent"-->
-			<!--android:layout_height="?attr/actionBarSize"-->
-			<!--android:layout_gravity="top"-->
-			<!--android:layout_marginBottom="60dp"-->
-			<!--android:theme="@style/AppTheme.AppBarOverlayNoBackground"-->
-			<!--app:layout_collapseMode="pin"-->
-			<!--app:popupTheme="@style/AppTheme.PopupOverlay">-->
-			<!---->
-			<!--<LinearLayout-->
-			<!--android:layout_width="match_parent"-->
-			<!--android:layout_height="match_parent"-->
-			<!--android:gravity="center">-->
-			<!---->
-			<!--<TextView-->
-			<!--android:id="@+id/event_name_title"-->
-			<!--android:layout_width="wrap_content"-->
-			<!--android:layout_height="wrap_content"-->
-			<!--android:alpha="0"-->
-			<!--android:fontFamily="sans-serif-condensed"-->
-			<!--android:textAllCaps="true"-->
-			<!--android:textColor="@color/black"-->
-			<!--android:textSize="16sp"-->
-			<!--android:textStyle="bold"-->
-			<!--android:text="Tim's stage party"/>-->
-			<!---->
-			<!--</LinearLayout>-->
-			<!---->
-			<!--</android.support.v7.widget.Toolbar>-->
 			
 			<android.support.v7.widget.Toolbar
 				android:id="@+id/toolbar"
@@ -142,6 +116,16 @@
 		</android.support.design.widget.CollapsingToolbarLayout>
 	
 	</android.support.design.widget.AppBarLayout>
+	
+	<ProgressBar
+		android:id="@+id/progress"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:visibility="invisible"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent" />
 	
 	<gr.tei.erasmus.pp.eventmate.ui.base.NonSwipeableViewPager
 		android:id="@+id/view_pager"

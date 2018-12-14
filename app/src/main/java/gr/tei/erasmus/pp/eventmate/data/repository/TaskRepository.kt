@@ -1,10 +1,7 @@
 package gr.tei.erasmus.pp.eventmate.data.repository
 
-import gr.tei.erasmus.pp.eventmate.data.model.Event
 import gr.tei.erasmus.pp.eventmate.data.model.Task
-import gr.tei.erasmus.pp.eventmate.data.source.local.room.dao.EventDao
 import gr.tei.erasmus.pp.eventmate.data.source.local.room.dao.TaskDao
-import gr.tei.erasmus.pp.eventmate.data.source.local.room.entities.EventEntity
 import gr.tei.erasmus.pp.eventmate.data.source.local.room.entities.TaskEntity
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
@@ -15,7 +12,7 @@ class TaskRepository(private val taskDao: TaskDao) : CoroutineScope {
 	
 	fun getAllTasks(): Deferred<MutableList<Task>> =
 		async {
-			taskDao.getAll()
+			taskDao.getAllTasks()
 				.map {
 					Task.convertToModel(it)
 				}.toMutableList()

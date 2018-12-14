@@ -1,15 +1,26 @@
 package gr.tei.erasmus.pp.eventmate.data.model
 
-import android.support.design.widget.TextInputLayout
 import gr.tei.erasmus.pp.eventmate.data.source.local.room.entities.TaskEntity
-import gr.tei.erasmus.pp.eventmate.helpers.DateTimeHelper
 
-data class Task(val id: Long?, val name: String, val points: Int, val description: String, val place: String, private val assigness: List<User>?) {
+data class Task(
+	val id: Long?,
+	val eventId: Long,
+	val name: String,
+	val points: Int,
+	val description: String?,
+	val place: String?,
+	private val assigness: List<User>?
+) {
+	
+	constructor(id: Long?, eventId: Long, name: String, points: Int, description: String?, place: String?) : this(
+		id, eventId, name, points, description, place, null
+	)
 	
 	companion object {
 		fun convertToModel(entity: TaskEntity) = with(entity) {
 			Task(
 				uid,
+				eventId,
 				taskName,
 				points,
 				description,
@@ -21,18 +32,13 @@ data class Task(val id: Long?, val name: String, val points: Int, val descriptio
 		fun convertToEntity(model: Task) = with(model) {
 			TaskEntity(
 				id,
+				eventId,
 				name,
 				points,
 				description,
 				place
 			)
 		}
-		
-//		fun createTask(inputs: MutableList<TextInputLayout>) {
-//			for (input in inputs) {
-//
-//			}
-//		}
 	}
 	
 	enum class TaskState {

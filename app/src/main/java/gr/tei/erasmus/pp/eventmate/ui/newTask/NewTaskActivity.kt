@@ -78,6 +78,7 @@ class NewTaskActivity : BaseActivity(), Validator.ValidationListener {
 		viewModel.createTask(
 			Task(
 				null,
+				1,
 				name,
 				points,
 				description,

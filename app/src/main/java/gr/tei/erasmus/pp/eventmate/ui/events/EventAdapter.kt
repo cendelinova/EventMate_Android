@@ -37,7 +37,10 @@ class EventAdapter(
 			view_foreground.setOnClickListener { eventListener.onItemClick(event) }
 			event_name.text = event.name
 			event_date.text = DateTimeHelper.formatDateTimeString(event.date, DateTimeHelper.DATE_TIME_FORMAT)
-			event_place.text = event.place
+			event_place.text = if (event.place.isNullOrEmpty()) "-" else  event.place
+			//todo prepsat na guests
+			event_guests_count.text = if (event.tasks.isNullOrEmpty()) "0" else event.tasks.size.toString()
+			event_tasks_count.text = if (event.tasks.isNullOrEmpty()) "0" else event.tasks.size.toString()
 		}
 	}
 	
