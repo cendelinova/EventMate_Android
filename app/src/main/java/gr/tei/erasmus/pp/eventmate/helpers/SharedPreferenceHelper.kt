@@ -17,9 +17,13 @@ class SharedPreferenceHelper(context: Context) : ContextWrapper(context.applicat
 	
 	fun loadBoolean(key: String) = sharedPreferences.getBoolean(key, false)
 	
+	fun loadLong(key: String) = sharedPreferences.getLong(key, 0)
+	
 	fun loadString(key: String) = sharedPreferences.getString(key, "")
 	
 	fun saveBoolean(key: String, state: Boolean) = sharedPreferences.edit().putBoolean(key, state).apply()
+	
+	fun saveLong(key: String, state: Long) = sharedPreferences.edit().putLong(key, state).apply()
 	
 	fun saveString(key: String, value: String) = sharedPreferences.edit().putString(key, value).apply()
 	

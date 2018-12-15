@@ -1,8 +1,8 @@
 package gr.tei.erasmus.pp.eventmate.ui.settings
 
 import android.os.Bundle
-import android.support.v7.preference.*
-import android.support.v7.widget.RecyclerView
+import androidx.preference.*
+import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
 import gr.tei.erasmus.pp.eventmate.R

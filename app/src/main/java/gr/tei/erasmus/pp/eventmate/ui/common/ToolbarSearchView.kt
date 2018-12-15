@@ -4,7 +4,7 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.content.Context
 import android.graphics.Color
-import android.support.annotation.ColorInt
+import androidx.annotation.ColorInt
 import android.text.TextWatcher
 import android.util.AttributeSet
 import android.view.KeyEvent

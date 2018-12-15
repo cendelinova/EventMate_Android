@@ -1,8 +1,8 @@
 package gr.tei.erasmus.pp.eventmate.ui.events
 
 import android.graphics.Canvas
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.helper.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.ItemTouchHelper
 import gr.tei.erasmus.pp.eventmate.ui.base.SwipeItemHandler
 import kotlinx.android.synthetic.main.event_item.view.*
 

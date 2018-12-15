@@ -5,19 +5,19 @@
 	android:layout_width="match_parent"
 	android:layout_height="match_parent">
 	
-	<android.support.design.widget.CoordinatorLayout
+	<androidx.coordinatorlayout.widget.CoordinatorLayout
 		
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		tools:context=".ui.newTask.NewTaskActivity">
 		
-		<android.support.constraint.ConstraintLayout
+		<androidx.constraintlayout.widget.ConstraintLayout
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
 			android:focusable="true"
 			android:focusableInTouchMode="true">
 			
-			<android.support.v7.widget.Toolbar
+			<androidx.appcompat.widget.Toolbar
 				android:id="@+id/toolbar"
 				android:layout_width="0dp"
 				android:layout_height="wrap_content"
@@ -36,7 +36,7 @@
 					android:layout_height="wrap_content"
 					android:layout_centerInParent="true"
 					android:text="@string/msg_task_info" />
-			</android.support.v7.widget.Toolbar>
+			</androidx.appcompat.widget.Toolbar>
 			
 			<ProgressBar
 				android:id="@+id/progress"
@@ -78,7 +78,7 @@
 					android:src="@drawable/ic_edit_solid" />
 			</FrameLayout>
 			
-			<android.support.design.widget.TextInputLayout
+			<com.google.android.material.textfield.TextInputLayout
 				android:id="@+id/input_task_name"
 				style="@style/MyEditText"
 				android:layout_width="0dp"
@@ -88,17 +88,17 @@
 				app:layout_constraintStart_toStartOf="parent"
 				app:layout_constraintTop_toBottomOf="@id/photo_layout">
 				
-				<android.support.design.widget.TextInputEditText
+				<com.google.android.material.textfield.TextInputEditText
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
 					android:drawableEnd="@drawable/ic_name"
 					android:drawableTint="@color/grey"
 					android:inputType="text"
 					android:lines="1" />
-			</android.support.design.widget.TextInputLayout>
+			</com.google.android.material.textfield.TextInputLayout>
 			
 			
-			<android.support.design.widget.TextInputLayout
+			<com.google.android.material.textfield.TextInputLayout
 				android:id="@+id/input_points"
 				style="@style/MyEditText"
 				android:layout_width="0dp"
@@ -108,17 +108,17 @@
 				app:layout_constraintStart_toStartOf="parent"
 				app:layout_constraintTop_toBottomOf="@id/input_task_name">
 				
-				<android.support.design.widget.TextInputEditText
+				<com.google.android.material.textfield.TextInputEditText
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
 					android:drawableEnd="@drawable/ic_points"
 					android:drawableTint="@color/grey"
 					android:inputType="numberDecimal"
 					android:lines="1" />
-			</android.support.design.widget.TextInputLayout>
+			</com.google.android.material.textfield.TextInputLayout>
 			
 			
-			<android.support.design.widget.TextInputLayout
+			<com.google.android.material.textfield.TextInputLayout
 				android:id="@+id/input_time"
 				style="@style/MyEditText"
 				android:layout_width="0dp"
@@ -128,16 +128,16 @@
 				app:layout_constraintStart_toStartOf="parent"
 				app:layout_constraintTop_toBottomOf="@id/input_points">
 				
-				<android.support.design.widget.TextInputEditText
+				<com.google.android.material.textfield.TextInputEditText
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
 					android:drawableEnd="@drawable/ic_time"
 					android:drawableTint="@color/grey"
 					android:inputType="numberDecimal"
 					android:lines="1" />
-			</android.support.design.widget.TextInputLayout>
+			</com.google.android.material.textfield.TextInputLayout>
 			
-			<android.support.design.widget.TextInputLayout
+			<com.google.android.material.textfield.TextInputLayout
 				android:id="@+id/input_place"
 				style="@style/MyEditText"
 				android:layout_width="0dp"
@@ -147,16 +147,16 @@
 				app:layout_constraintStart_toStartOf="parent"
 				app:layout_constraintTop_toBottomOf="@id/input_time">
 				
-				<android.support.design.widget.TextInputEditText
+				<com.google.android.material.textfield.TextInputEditText
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
 					android:drawableEnd="@drawable/ic_location"
 					android:drawableTint="@color/grey"
 					android:inputType="text"
 					android:lines="1" />
-			</android.support.design.widget.TextInputLayout>
+			</com.google.android.material.textfield.TextInputLayout>
 			
-			<android.support.design.widget.TextInputLayout
+			<com.google.android.material.textfield.TextInputLayout
 				android:id="@+id/input_description"
 				style="@style/MyEditText"
 				android:layout_width="0dp"
@@ -166,16 +166,16 @@
 				app:layout_constraintStart_toStartOf="parent"
 				app:layout_constraintTop_toBottomOf="@id/input_place">
 				
-				<android.support.design.widget.TextInputEditText
+				<com.google.android.material.textfield.TextInputEditText
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
 					android:drawableEnd="@drawable/ic_description"
 					android:drawableTint="@color/grey"
 					android:inputType="textMultiLine" />
-			</android.support.design.widget.TextInputLayout>
+			</com.google.android.material.textfield.TextInputLayout>
 			
 			
-			<android.support.design.widget.TextInputLayout
+			<com.google.android.material.textfield.TextInputLayout
 				android:id="@+id/input_asigness"
 				style="@style/MyEditText"
 				android:layout_width="0dp"
@@ -185,15 +185,15 @@
 				app:layout_constraintStart_toStartOf="parent"
 				app:layout_constraintTop_toBottomOf="@id/input_description">
 				
-				<android.support.design.widget.TextInputEditText
+				<com.google.android.material.textfield.TextInputEditText
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
 					android:drawableEnd="@drawable/ic_guests"
 					android:drawableTint="@color/grey"
 					android:inputType="text" />
-			</android.support.design.widget.TextInputLayout>
+			</com.google.android.material.textfield.TextInputLayout>
 			
-			<android.support.v7.widget.AppCompatButton
+			<androidx.appcompat.widget.AppCompatButton
 				android:id="@+id/btn_save_task"
 				style="@style/Button"
 				android:layout_width="wrap_content"
@@ -204,8 +204,8 @@
 				app:layout_constraintStart_toStartOf="parent"
 				app:layout_constraintTop_toBottomOf="@id/input_asigness" />
 		
-		</android.support.constraint.ConstraintLayout>
-	</android.support.design.widget.CoordinatorLayout>
+		</androidx.constraintlayout.widget.ConstraintLayout>
+	</androidx.coordinatorlayout.widget.CoordinatorLayout>
 	
 </ScrollView>
 

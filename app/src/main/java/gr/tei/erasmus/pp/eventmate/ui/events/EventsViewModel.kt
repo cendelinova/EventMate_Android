@@ -1,7 +1,7 @@
 package gr.tei.erasmus.pp.eventmate.ui.events
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import gr.tei.erasmus.pp.eventmate.app.App
 import gr.tei.erasmus.pp.eventmate.data.model.Event
 import gr.tei.erasmus.pp.eventmate.ui.base.BaseViewModel

@@ -1,7 +1,7 @@
 package gr.tei.erasmus.pp.eventmate.ui.profile
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
@@ -20,6 +20,7 @@ import gr.tei.erasmus.pp.eventmate.ui.mainActivity.MainActivity
 import gr.tei.erasmus.pp.eventmate.ui.settings.SettingsActivity
 import gr.tei.erasmus.pp.eventmate.ui.userProfile.UserProfileActivity
 import kotlinx.android.synthetic.main.fragment_profile.*
+import kotlinx.android.synthetic.main.user_profile.*
 import timber.log.Timber
 
 
@@ -42,15 +43,15 @@ class ProfileFragment : BaseFragment() {
 		viewModel.getUser(2)
 	}
 	
-	override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+	override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
 		activity?.menuInflater?.run {
 			inflate(R.menu.menu_fragment_profile, menu)
 		}
 		super.onCreateOptionsMenu(menu, inflater)
 	}
 	
-	override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-		when (item?.itemId) {
+	override fun onOptionsItemSelected(item: MenuItem): Boolean {
+		when (item.itemId) {
 			R.id.settings -> openActivity(SettingsActivity::class.java)
 			R.id.game_rank -> openActivity(GameRankActivity::class.java)
 			R.id.help -> openActivity(HelpActivity::class.java)
@@ -86,7 +87,16 @@ class ProfileFragment : BaseFragment() {
 			is ErrorState -> StateHelper.showError(state.error, progress, profile_fragment)
 			is UserViewModel.UserListState -> {
 				StateHelper.toggleProgress(progress, false)
+				setupLayout(state.users[0])
 			}
+		}
+	}
+	
+	private fun setupLayout(user: User) {
+		with(user) {
+			tv_user_name.text = name
+			tv_user_email.text = email
+			tv_count_earned_points.text = score.toString()
 		}
 	}
 }

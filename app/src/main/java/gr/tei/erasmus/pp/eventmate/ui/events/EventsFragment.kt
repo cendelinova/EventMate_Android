@@ -1,16 +1,16 @@
 package gr.tei.erasmus.pp.eventmate.ui.events
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v4.content.ContextCompat
-import android.support.v7.app.AlertDialog
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.helper.ItemTouchHelper
+import com.google.android.material.snackbar.Snackbar
+import androidx.core.content.ContextCompat
+import androidx.appcompat.app.AlertDialog
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.ItemTouchHelper
 import android.view.*
 import android.widget.RadioGroup
 import android.widget.Toast
@@ -41,12 +41,12 @@ class EventsFragment : BaseFragment() {
 		return inflater.inflate(R.layout.fragment_events, null)
 	}
 	
-	override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+	override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
 		inflater?.inflate(R.menu.menu_fragment_events, menu)
 		super.onCreateOptionsMenu(menu, inflater)
 	}
 	
-	override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+	override fun onOptionsItemSelected(item: MenuItem): Boolean {
 		if (item?.itemId == R.id.filter) showFilterDialog()
 		return super.onOptionsItemSelected(item)
 	}
@@ -125,10 +125,10 @@ class EventsFragment : BaseFragment() {
 			val event = viewModel.getEventList()[viewHolder.adapterPosition]
 			val deletedPosition = viewHolder.adapterPosition
 			with(event) {
-				Snackbar.make(
+				com.google.android.material.snackbar.Snackbar.make(
 					events_fragment,
 					getString(R.string.event_item_removed, name),
-					Snackbar.LENGTH_LONG
+					com.google.android.material.snackbar.Snackbar.LENGTH_LONG
 				).apply {
 					setAction(getString(R.string.undo)) {
 						viewModel.addToEventList(

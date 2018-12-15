@@ -1,7 +1,7 @@
 <resources>
 	
 	<!-- Base application theme. -->
-	<style name="AppTheme" parent="Theme.AppCompat.Light">
+	<style name="AppTheme" parent="Theme.MaterialComponents.Light">
 		<item name="colorPrimary">@color/colorPrimary</item>
 		<item name="colorPrimaryDark">@color/colorPrimaryDark</item>
 		<item name="colorAccent">@color/colorAccent</item>
@@ -9,16 +9,16 @@
 		<item name="windowNoTitle">true</item>
 	</style>
 	
-	<style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light">
+	<style name="AppTheme.PopupOverlay" parent="ThemeOverlay.MaterialComponents.Light">
 		<item name="android:textColor">@color/primary_text_color</item>
 		<item name="android:colorBackground">@color/white</item>
 	</style>
 	
-	<style name="AppTheme.AppBarOverlayNoBackground" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+	<style name="AppTheme.AppBarOverlayNoBackground" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar">
 		<item name="colorControlNormal">@color/primary_text_color</item>
 	</style>
 	
-	<style name="Button" parent="Widget.AppCompat.Button.Colored">
+	<style name="Button" parent="Widget.MaterialComponents.Button">
 		<item name="android:layout_marginBottom">@dimen/spacing_normal</item>
 		<item name="android:layout_marginTop">@dimen/spacing_normal</item>
 	</style>
@@ -35,11 +35,9 @@
 		<item name="windowNoTitle">true</item>
 	</style>
 	
-	<style name="MyRadioButtonStyle" parent="Widget.AppCompat.CompoundButton.RadioButton">
+	<style name="MyRadioButtonStyle" parent="Widget.MaterialComponents.CompoundButton.RadioButton">
 		<item name="android:colorControlActivated">@color/colorAccent</item>
 		<item name="android:textSize">@dimen/font_normal</item>
 	</style>
-	
-	<style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
 </resources>

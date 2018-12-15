@@ -1,7 +1,7 @@
 package gr.tei.erasmus.pp.eventmate.data.source.local.room
 
-import android.arch.persistence.room.Database
-import android.arch.persistence.room.RoomDatabase
+import androidx.room.Database
+import androidx.room.RoomDatabase
 import gr.tei.erasmus.pp.eventmate.data.source.local.room.dao.EventDao
 import gr.tei.erasmus.pp.eventmate.data.source.local.room.dao.InvitationDao
 import gr.tei.erasmus.pp.eventmate.data.source.local.room.dao.TaskDao

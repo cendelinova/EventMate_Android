@@ -1,6 +1,6 @@
 package gr.tei.erasmus.pp.eventmate.ui.help
 
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.ui.base.BaseActivity

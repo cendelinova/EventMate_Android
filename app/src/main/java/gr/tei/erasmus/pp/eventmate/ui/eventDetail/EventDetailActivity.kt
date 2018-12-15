@@ -1,13 +1,13 @@
 package gr.tei.erasmus.pp.eventmate.ui.eventDetail
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.graphics.PorterDuff
 import android.os.Bundle
-import android.support.design.widget.AppBarLayout
-import android.support.design.widget.TabLayout
-import android.support.v4.content.ContextCompat
+import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.tabs.TabLayout
+import androidx.core.content.ContextCompat
 import android.view.Menu
 import android.view.MenuItem
 import gr.tei.erasmus.pp.eventmate.R

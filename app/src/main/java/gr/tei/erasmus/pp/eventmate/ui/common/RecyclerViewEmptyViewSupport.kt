@@ -1,12 +1,11 @@
 package gr.tei.erasmus.pp.eventmate.ui.common
 
 import android.content.Context
-import android.support.v7.widget.RecyclerView
 import android.util.AttributeSet
 import android.view.View
-import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView
+import androidx.recyclerview.widget.RecyclerView
 
-class RecyclerViewEmptyViewSupport : FastScrollRecyclerView {
+class RecyclerViewEmptyViewSupport : RecyclerView {
 	
 	/* Public attributes **************************************************************************/
 	
@@ -39,7 +38,7 @@ class RecyclerViewEmptyViewSupport : FastScrollRecyclerView {
 	
 	/* Public methods *****************************************************************************/
 	
-	override fun setAdapter(adapter: RecyclerView.Adapter<*>?) {
+	override fun setAdapter(adapter: Adapter<*>?) {
 		super.setAdapter(adapter)
 		adapter?.registerAdapterDataObserver(emptyObserver)
 		emptyObserver.onChanged()

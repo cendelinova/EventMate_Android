@@ -1,7 +1,7 @@
 package gr.tei.erasmus.pp.eventmate.ui.mainActivity
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.ui.base.BaseActivity
 import gr.tei.erasmus.pp.eventmate.ui.events.EventsFragment

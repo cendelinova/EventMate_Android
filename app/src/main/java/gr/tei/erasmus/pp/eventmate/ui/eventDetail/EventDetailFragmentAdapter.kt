@@ -2,8 +2,8 @@ package gr.tei.erasmus.pp.eventmate.ui.eventDetail
 
 import android.content.Context
 import android.os.Bundle
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentPagerAdapter
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentPagerAdapter
 import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.EVENT_ID
 import gr.tei.erasmus.pp.eventmate.ui.eventDetail.guests.GuestsFragment
