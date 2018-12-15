@@ -10,6 +10,11 @@ import android.widget.Toast
 import com.mobsandgeeks.saripaar.ValidationError
 import com.mobsandgeeks.saripaar.Validator
 import com.mobsandgeeks.saripaar.annotation.NotEmpty
+import com.squareup.picasso.Picasso
+import com.vansuita.pickimage.bean.PickResult
+import com.vansuita.pickimage.bundle.PickSetup
+import com.vansuita.pickimage.dialog.PickImageDialog
+import com.vansuita.pickimage.listeners.IPickResult
 import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.EVENT_ID
 import gr.tei.erasmus.pp.eventmate.data.model.Task
@@ -20,7 +25,7 @@ import gr.tei.erasmus.pp.eventmate.ui.signup.TextInputLayoutAdapter
 import kotlinx.android.synthetic.main.activity_new_task.*
 import timber.log.Timber
 
-class NewTaskActivity : BaseActivity(), Validator.ValidationListener {
+class NewTaskActivity : BaseActivity(), Validator.ValidationListener, IPickResult {
 	
 	@NotEmpty(messageResId = R.string.error_required_field)
 	private lateinit var taskName: TextInputLayout
@@ -46,9 +51,24 @@ class NewTaskActivity : BaseActivity(), Validator.ValidationListener {
 		setContentView(R.layout.activity_new_task)
 		setupToolbar(toolbar)
 		observeViewModel()
+		setupChoosingPhotoDialog()
 		initInputs()
 		handleSaveBtn()
 		eventId = intent.getLongExtra(EVENT_ID, 0)
+	}
+	
+	override fun onPickResult(pickResult: PickResult?) {
+		pickResult?.let {
+			Picasso.get().load(pickResult.uri).into(task_photo)
+		}
+	}
+	
+	private fun setupChoosingPhotoDialog() {
+		task_photo.setOnClickListener {
+			PickImageDialog.build(PickSetup().apply {
+				setTitle(R.string.choose_photo)
+			}).show(this)
+		}
 	}
 	
 	private fun handleSaveBtn() {

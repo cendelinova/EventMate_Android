@@ -8,6 +8,7 @@ import dagger.Provides
 import gr.tei.erasmus.pp.eventmate.data.repository.EventRepository
 import gr.tei.erasmus.pp.eventmate.data.repository.InvitationRepository
 import gr.tei.erasmus.pp.eventmate.data.repository.TaskRepository
+import gr.tei.erasmus.pp.eventmate.data.repository.UserRepository
 import gr.tei.erasmus.pp.eventmate.data.source.local.room.AppDatabase
 import gr.tei.erasmus.pp.eventmate.data.source.local.room.dao.EventDao
 import gr.tei.erasmus.pp.eventmate.data.source.local.room.dao.InvitationDao
@@ -58,7 +59,6 @@ class AppModule(context: Context) : ContextWrapper(context) {
 	@Singleton
 	fun provideSharedPreferenceHelper(context: Context) = SharedPreferenceHelper(context)
 	
-	
 	@Provides
 	@Singleton
 	fun provideInvitationDao(roomDatabase: AppDatabase) = roomDatabase.invitationDao()
@@ -66,6 +66,10 @@ class AppModule(context: Context) : ContextWrapper(context) {
 	@Provides
 	@Singleton
 	fun provideInvitationRepository(invitationDao: InvitationDao) = InvitationRepository(invitationDao)
+	
+	@Provides
+	@Singleton
+	fun provideUserRepository(restHelper: RestHelper) = UserRepository(restHelper)
 	
 	
 	

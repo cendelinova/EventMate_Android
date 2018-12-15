@@ -6,7 +6,6 @@ import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,7 +26,7 @@ class GuestsFragment : BaseFragment() {
 	
 	private lateinit var guestAdapter: GuestAdapter
 	
-	private val viewModel by lazy { ViewModelProviders.of(this).get(GuestsViewModel::class.java) }
+	private val viewModel by lazy { ViewModelProviders.of(this).get(UserViewModel::class.java) }
 	
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 		return inflater.inflate(R.layout.fragment_guests, container, false)
@@ -49,7 +48,7 @@ class GuestsFragment : BaseFragment() {
 		guestAdapter = GuestAdapter(
 			context!!,
 			onUserClick,
-			mutableListOf(User("blablik"), User ("nanan"), User("daaaa"), User("daslsi"), User("sesmem"))
+			mutableListOf()
 		)
 		
 		with(guest_recycler_view) {
@@ -78,12 +77,11 @@ class GuestsFragment : BaseFragment() {
 		when (state) {
 			is LoadingState -> toggleProgress(progress, true)
 			is ErrorState -> showError(state.error, progress, guests_fragment)
-			is GuestsViewModel.UserListState -> {
+			is UserViewModel.UserListState -> {
 				toggleProgress(progress, false)
 				guestAdapter.updateUserList(state.users)
 			}
 		}
 	}
-	
 	
 }

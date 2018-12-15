@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
+	
+	<ImageView
+		android:id="@+id/profile_background"
+		android:layout_width="0dp"
+		android:layout_height="260dp"
+		android:alpha="0.8"
+		android:scaleType="fitXY"
+		android:src="@drawable/profile_background"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent" />
+	
+	<de.hdodenhof.circleimageview.CircleImageView
+		android:id="@+id/profile_image"
+		android:layout_width="0dp"
+		android:layout_height="160dp"
+		android:layout_marginTop="@dimen/spacing_normal"
+		android:src="@drawable/ic_user_placeholder"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent" />
+	
+	<TextView
+		android:id="@+id/tv_user_name"
+		style="@style/UserText"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="@dimen/spacing_normal"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/profile_image"
+		tools:text="Claudia Mu" />
+	
+	<TextView
+		android:id="@+id/tv_user_email"
+		style="@style/UserText"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:textAllCaps="false"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/tv_user_name"
+		tools:text="claudia@gmail.com" />
+	
+	<TextView
+		android:id="@+id/tv_congrats_msg"
+		style="@style/BiggerMessageText"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="4dp"
+		android:text="@string/mgs_congrats"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintHorizontal_bias="0.0"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/profile_background" />
+	
+	<TextView
+		android:id="@+id/tv_count_organized_events"
+		style="@style/CountMessageText"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="@dimen/spacing_normal"
+		android:text="0"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/tv_congrats_msg"
+		tools:text="0" />
+	
+	<TextView
+		style="@style/TextDescription"
+		android:layout_width="0dp"
+		android:layout_height="40dp"
+		android:gravity="center_vertical"
+		android:text="@string/tv_organized_events"
+		app:layout_constraintBottom_toBottomOf="@+id/tv_count_organized_events"
+		app:layout_constraintStart_toEndOf="@id/tv_count_organized_events"
+		app:layout_constraintTop_toTopOf="@+id/tv_count_organized_events"
+		app:layout_constraintVertical_bias="0.0"
+		tools:text="@string/tv_organized_events" />
+	
+	<TextView
+		android:id="@+id/tv_count_attended_events"
+		style="@style/CountMessageText"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="@dimen/spacing_normal"
+		android:text="5"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/tv_count_organized_events"
+		tools:text="5" />
+	
+	<TextView
+		android:id="@+id/textView"
+		style="@style/TextDescription"
+		android:layout_width="0dp"
+		android:layout_height="40dp"
+		android:gravity="center_vertical"
+		android:text="@string/tv_attended_events"
+		app:layout_constraintBottom_toBottomOf="@+id/tv_count_attended_events"
+		app:layout_constraintStart_toEndOf="@id/tv_count_attended_events"
+		app:layout_constraintTop_toTopOf="@+id/tv_count_attended_events"
+		app:layout_constraintVertical_bias="0.0"
+		tools:text="@string/tv_attended_events" />
+	
+	<TextView
+		android:id="@+id/tv_count_earned_points"
+		style="@style/CountMessageText"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="@dimen/spacing_normal"
+		android:text="3"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/tv_count_attended_events"
+		tools:text="3" />
+	
+	<TextView
+		style="@style/TextDescription"
+		android:layout_width="0dp"
+		android:layout_height="40dp"
+		android:gravity="center_vertical"
+		android:text="@string/tv_earned_points"
+		app:layout_constraintBottom_toBottomOf="@id/tv_count_earned_points"
+		app:layout_constraintStart_toEndOf="@id/tv_count_earned_points"
+		app:layout_constraintTop_toTopOf="@+id/tv_count_earned_points"
+		app:layout_constraintVertical_bias="0.0"
+		tools:text="@string/tv_earned_points" />
+	
+	<RelativeLayout
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_marginRight="@dimen/spacing_normal"
+		android:layout_marginBottom="@dimen/spacing_normal"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent">
+		
+		<ImageView
+			android:id="@+id/ic_rank"
+			android:layout_width="@dimen/rank_icon_size"
+			android:layout_height="@dimen/rank_icon_size"
+			android:src="@drawable/ic_rank_chicken" />
+		
+		<TextView
+			android:id="@+id/tv_rank_title"
+			style="@style/MessageTitle"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_below="@id/ic_rank"
+			android:layout_centerHorizontal="true"
+			android:layout_marginTop="@dimen/spacing_tiny"
+			android:text="chicken"
+			android:textAlignment="center" />
+	
+	</RelativeLayout>
+
+
+</android.support.constraint.ConstraintLayout>

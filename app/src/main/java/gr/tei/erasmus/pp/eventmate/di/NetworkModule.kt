@@ -1,10 +1,10 @@
 package gr.tei.erasmus.pp.eventmate.di
 
-import android.content.Context
 import com.google.gson.Gson
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import dagger.Module
 import dagger.Provides
+import gr.tei.erasmus.pp.eventmate.helpers.BasicAuthInterceptor
 import gr.tei.erasmus.pp.eventmate.helpers.RestHelper
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -15,7 +15,8 @@ import javax.inject.Singleton
 class NetworkModule(private val restApiUrl: String) {
 	@Provides
 	@Singleton
-	fun provideOkHttpClient(): OkHttpClient = OkHttpClient.Builder().build()
+	fun provideOkHttpClient(): OkHttpClient =
+		OkHttpClient.Builder().addInterceptor(BasicAuthInterceptor("user1", "pass")).build()
 	
 	@Provides
 	@Singleton

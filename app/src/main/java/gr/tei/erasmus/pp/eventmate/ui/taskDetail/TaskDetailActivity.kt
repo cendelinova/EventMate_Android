@@ -5,15 +5,13 @@ import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.LinearLayoutManager
-import android.view.View
-import android.widget.LinearLayout
 import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.TASK_ID
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.USER_ID
 import gr.tei.erasmus.pp.eventmate.data.model.Task
 import gr.tei.erasmus.pp.eventmate.data.model.User
 import gr.tei.erasmus.pp.eventmate.helpers.StateHelper
+import gr.tei.erasmus.pp.eventmate.helpers.TextInputLayoutHelper.getDefaultTextIfEmpty
 import gr.tei.erasmus.pp.eventmate.ui.base.BaseActivity
 import gr.tei.erasmus.pp.eventmate.ui.base.ErrorState
 import gr.tei.erasmus.pp.eventmate.ui.base.LoadingState
@@ -86,7 +84,8 @@ class TaskDetailActivity : BaseActivity() {
 		guestAdapter = GuestAdapter(
 			this,
 			onUserClick,
-			mutableListOf(User("blablik"), User("nanan"), User("daaaa"), User("daslsi"), User("sesmem"))
+//			mutableListOf(User("blablik"), User("nanan"), User("daaaa"), User("daslsi"), User("sesmem"))
+			mutableListOf()
 		)
 		
 		with(assignee_recycler_view) {
@@ -100,9 +99,9 @@ class TaskDetailActivity : BaseActivity() {
 	private fun setupLayout(task: Task) {
 		with(task) {
 			task_name.text = name
-			tv_description.text = description
-			tv_time_limit.text = timeLimit?.toString()
-			tv_location.text = location
+			tv_description.text = getDefaultTextIfEmpty(description)
+			tv_time_limit.text = getDefaultTextIfEmpty(timeLimit?.toString())
+			tv_location.text = getDefaultTextIfEmpty(location)
 			tv_points.text = points.toString()
 			
 		}

@@ -18,8 +18,6 @@ class FutureTimeRule(private val pickedDate: DateTime?) {
 			
 			return pickedDateTime.isAfterNow
 		}
-		
-		return false
 	}
 	
 }

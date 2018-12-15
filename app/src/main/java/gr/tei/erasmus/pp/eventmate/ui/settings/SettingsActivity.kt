@@ -47,7 +47,6 @@ class SettingsActivity : BaseActivity() {
 			val childCount = view.childCount
 			for (i in 0 until childCount) {
 				setZeroPaddingToLayoutChildren(view.getChildAt(i))
-				val padding = (resources.getDimension(R.dimen.spacing_small) / resources.displayMetrics.density).toInt()
 				view.setPadding(0, 0, 0, 0)
 			}
 		}

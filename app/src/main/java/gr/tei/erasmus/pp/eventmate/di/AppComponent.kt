@@ -6,6 +6,7 @@ import dagger.Component
 import gr.tei.erasmus.pp.eventmate.data.repository.EventRepository
 import gr.tei.erasmus.pp.eventmate.data.repository.InvitationRepository
 import gr.tei.erasmus.pp.eventmate.data.repository.TaskRepository
+import gr.tei.erasmus.pp.eventmate.data.repository.UserRepository
 import gr.tei.erasmus.pp.eventmate.data.source.local.room.AppDatabase
 import gr.tei.erasmus.pp.eventmate.data.source.local.room.dao.EventDao
 import gr.tei.erasmus.pp.eventmate.data.source.local.room.dao.InvitationDao
@@ -44,5 +45,7 @@ interface AppComponent {
 	fun provideInvitationDao(): InvitationDao
 	
 	fun provideInvitationRepository(): InvitationRepository
+	
+	fun provideUserRepository() : UserRepository
 	
 }

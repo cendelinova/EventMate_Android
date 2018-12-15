@@ -1,5 +1,8 @@
 package gr.tei.erasmus.pp.eventmate.ui.signup
 
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModel
+import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.TextInputLayout
@@ -16,10 +19,17 @@ import com.vansuita.pickimage.bundle.PickSetup
 import com.vansuita.pickimage.dialog.PickImageDialog
 import com.vansuita.pickimage.listeners.IPickResult
 import gr.tei.erasmus.pp.eventmate.R
+import gr.tei.erasmus.pp.eventmate.app.App
+import gr.tei.erasmus.pp.eventmate.helpers.StateHelper
 import gr.tei.erasmus.pp.eventmate.helpers.TextInputLayoutHelper
 import gr.tei.erasmus.pp.eventmate.ui.base.BaseActivity
+import gr.tei.erasmus.pp.eventmate.ui.base.ErrorState
+import gr.tei.erasmus.pp.eventmate.ui.base.LoadingState
+import gr.tei.erasmus.pp.eventmate.ui.base.State
+import gr.tei.erasmus.pp.eventmate.ui.eventDetail.guests.UserViewModel
 import gr.tei.erasmus.pp.eventmate.ui.mainActivity.MainActivity
 import kotlinx.android.synthetic.main.activity_signup.*
+import kotlinx.android.synthetic.main.fragment_guests.*
 
 
 class SignupActivity : BaseActivity(), Validator.ValidationListener, IPickResult {
@@ -46,12 +56,14 @@ class SignupActivity : BaseActivity(), Validator.ValidationListener, IPickResult
 		}
 	}
 	
+	private val viewModel by lazy { ViewModelProviders.of(this).get(UserViewModel::class.java) }
+	
 	private var listOfInputs: MutableList<TextInputLayout> = mutableListOf()
 	
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_signup)
-		
+		observeViewModel()
 		setupToolbar(toolbar)
 		initInputs()
 		handleSignUpButton()
@@ -74,6 +86,7 @@ class SignupActivity : BaseActivity(), Validator.ValidationListener, IPickResult
 	}
 	
 	override fun onValidationSucceeded() {
+		viewModel.register()
 		Toast.makeText(this, "Yay! we got it right!", Toast.LENGTH_SHORT).show()
 		startActivity(Intent(this, MainActivity::class.java))
 		
@@ -82,6 +95,12 @@ class SignupActivity : BaseActivity(), Validator.ValidationListener, IPickResult
 	override fun onPickResult(pickResult: PickResult?) {
 		pickResult?.let {
 			Picasso.get().load(pickResult.uri).into(profile_photo)
+		}
+	}
+	
+	private fun observeViewModel() {
+		with(viewModel) {
+			observe(states, observeUserProgressState)
 		}
 	}
 	
@@ -106,6 +125,17 @@ class SignupActivity : BaseActivity(), Validator.ValidationListener, IPickResult
 			PickImageDialog.build(PickSetup().apply {
 				setTitle(R.string.choose_photo)
 			}).show(this)
+		}
+	}
+	
+	private val observeUserProgressState = Observer<State> { state ->
+		when (state) {
+			is LoadingState -> StateHelper.toggleProgress(progress, true)
+			is ErrorState -> StateHelper.showError(state.error, progress, guests_fragment)
+			is UserViewModel.UserListState -> {
+				StateHelper.toggleProgress(progress, false)
+//				guestAdapter.updateUserList(state.users)
+			}
 		}
 	}
 }

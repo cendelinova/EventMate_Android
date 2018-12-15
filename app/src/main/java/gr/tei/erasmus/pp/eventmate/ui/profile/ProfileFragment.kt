@@ -1,18 +1,32 @@
 package gr.tei.erasmus.pp.eventmate.ui.profile
 
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import gr.tei.erasmus.pp.eventmate.R
+import gr.tei.erasmus.pp.eventmate.data.model.User
+import gr.tei.erasmus.pp.eventmate.helpers.StateHelper
 import gr.tei.erasmus.pp.eventmate.ui.base.BaseFragment
+import gr.tei.erasmus.pp.eventmate.ui.base.ErrorState
+import gr.tei.erasmus.pp.eventmate.ui.base.LoadingState
+import gr.tei.erasmus.pp.eventmate.ui.base.State
+import gr.tei.erasmus.pp.eventmate.ui.eventDetail.guests.GuestAdapter
+import gr.tei.erasmus.pp.eventmate.ui.eventDetail.guests.UserViewModel
 import gr.tei.erasmus.pp.eventmate.ui.gameRank.GameRankActivity
 import gr.tei.erasmus.pp.eventmate.ui.help.HelpActivity
 import gr.tei.erasmus.pp.eventmate.ui.mainActivity.MainActivity
 import gr.tei.erasmus.pp.eventmate.ui.settings.SettingsActivity
+import gr.tei.erasmus.pp.eventmate.ui.userProfile.UserProfileActivity
+import kotlinx.android.synthetic.main.fragment_profile.*
 import timber.log.Timber
 
 
 class ProfileFragment : BaseFragment() {
+	
+	private val viewModel by lazy { ViewModelProviders.of(this).get(UserViewModel::class.java) }
+	
 	
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 		Timber.v("onCreateView() called with: inflater = [$inflater], container = [$container], savedInstanceState = [$savedInstanceState]")
@@ -22,6 +36,11 @@ class ProfileFragment : BaseFragment() {
 		return inflater.inflate(R.layout.fragment_profile, null)
 	}
 	
+	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+		super.onViewCreated(view, savedInstanceState)
+		observeViewModel()
+		viewModel.getUser(2)
+	}
 	
 	override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
 		activity?.menuInflater?.run {
@@ -45,5 +64,29 @@ class ProfileFragment : BaseFragment() {
 	
 	private fun logOut() {
 		// todo logout
+	}
+	
+	private fun observeViewModel() {
+		with(viewModel) {
+			observe(states, observeUserProgressState)
+		}
+	}
+	
+	
+	private val onUserClick = object :
+		GuestAdapter.GuestListener {
+		override fun onUserClick(user: User) {
+			startActivity(Intent(this@ProfileFragment.activity, UserProfileActivity::class.java))
+		}
+	}
+	
+	private val observeUserProgressState = Observer<State> { state ->
+		when (state) {
+			is LoadingState -> StateHelper.toggleProgress(progress, true)
+			is ErrorState -> StateHelper.showError(state.error, progress, profile_fragment)
+			is UserViewModel.UserListState -> {
+				StateHelper.toggleProgress(progress, false)
+			}
+		}
 	}
 }

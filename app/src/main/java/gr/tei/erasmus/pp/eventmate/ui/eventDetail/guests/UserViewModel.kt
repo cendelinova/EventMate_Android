@@ -2,12 +2,19 @@ package gr.tei.erasmus.pp.eventmate.ui.eventDetail.guests
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
+import gr.tei.erasmus.pp.eventmate.app.App
 import gr.tei.erasmus.pp.eventmate.data.model.Task
 import gr.tei.erasmus.pp.eventmate.data.model.User
 import gr.tei.erasmus.pp.eventmate.ui.base.BaseViewModel
+import gr.tei.erasmus.pp.eventmate.ui.base.ErrorState
+import gr.tei.erasmus.pp.eventmate.ui.base.LoadingState
 import gr.tei.erasmus.pp.eventmate.ui.base.State
+import kotlinx.coroutines.launch
 
-class GuestsViewModel: BaseViewModel() {
+class UserViewModel : BaseViewModel() {
+	
+	private val userRepository by lazy { App.COMPONENTS.provideUserRepository() }
+	
 	private val mStates = MutableLiveData<State>()
 	val states: LiveData<State>
 		get() = mStates
@@ -15,6 +22,22 @@ class GuestsViewModel: BaseViewModel() {
 	private var allUsers = mutableListOf<Task>()
 	
 	fun getGuests() {
+	
+	}
+	
+	fun getUser(userId: Long) {
+		launch {
+			mStates.postValue(LoadingState)
+			try {
+				val user = userRepository.getUser(userId).await()
+				mStates.postValue(UserListState(mutableListOf(user)))
+			} catch (error: Throwable) {
+				mStates.postValue(ErrorState(error))
+			}
+		}
+	}
+	
+	fun register() {
 	
 	}
 	
