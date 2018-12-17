@@ -1,10 +1,12 @@
 package gr.tei.erasmus.pp.eventmate.ui.settings
 
 import android.os.Bundle
-import androidx.preference.*
-import androidx.recyclerview.widget.RecyclerView
 import android.view.View
-import android.view.ViewGroup
+import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.PreferenceGroupAdapter
+import androidx.preference.PreferenceScreen
+import androidx.preference.PreferenceViewHolder
+import androidx.recyclerview.widget.RecyclerView
 import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_settings.*
@@ -35,21 +37,10 @@ class SettingsActivity : BaseActivity() {
 					
 					holder.itemView.findViewById<View?>(R.id.icon_frame)?.visibility = View.GONE
 					
-					if (preference is PreferenceCategory) setZeroPaddingToLayoutChildren(holder.itemView)
 				}
 			}
 		}
 		
-		
-		private fun setZeroPaddingToLayoutChildren(view: View) {
-			if (view !is ViewGroup)
-				return
-			val childCount = view.childCount
-			for (i in 0 until childCount) {
-				setZeroPaddingToLayoutChildren(view.getChildAt(i))
-				view.setPadding(0, 0, 0, 0)
-			}
-		}
 		
 	}
 	

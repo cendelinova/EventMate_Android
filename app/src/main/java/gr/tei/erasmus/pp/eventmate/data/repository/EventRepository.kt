@@ -5,6 +5,7 @@ import gr.tei.erasmus.pp.eventmate.data.model.Event
 import gr.tei.erasmus.pp.eventmate.data.model.EventRequest
 import gr.tei.erasmus.pp.eventmate.data.source.local.room.dao.EventDao
 import gr.tei.erasmus.pp.eventmate.data.source.local.room.entities.EventEntity
+import timber.log.Timber
 
 
 class EventRepository(private val eventDao: EventDao, private val taskRepository: TaskRepository) {
@@ -30,6 +31,7 @@ class EventRepository(private val eventDao: EventDao, private val taskRepository
 	
 	suspend fun insert(event: EventRequest) {
 		val result = restHelper.insertEvent(event).await()
+		Timber.v("Result of adding new event $result")
 		if (result.isSuccessful && result.body() != null) {
 			eventDao.insert(Event.convertToEntity(result.body()!!))
 		}

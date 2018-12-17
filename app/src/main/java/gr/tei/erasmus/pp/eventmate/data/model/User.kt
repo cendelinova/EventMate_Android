@@ -10,6 +10,19 @@ data class User(
 	val attendedEvents: Int,
 	val organizedEvents: Int
 ) {
+	
+	constructor(userName: String) : this(
+		null,
+		userName,
+		null,
+		"",
+		0,
+		null,
+		0,
+		0
+	)
+	
+	
 	constructor(userName: String, password: String?, email: String, photo: String?) : this(
 		null,
 		userName,
@@ -20,6 +33,7 @@ data class User(
 		0,
 		0
 	)
+	
 	
 }
 

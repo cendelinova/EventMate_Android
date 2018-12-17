@@ -1,15 +1,14 @@
 package gr.tei.erasmus.pp.eventmate.ui.eventDetail.guests
 
 
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
-import androidx.recyclerview.widget.GridLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.GridLayoutManager
 import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.data.model.User
 import gr.tei.erasmus.pp.eventmate.helpers.StateHelper.showError
@@ -48,7 +47,7 @@ class GuestsFragment : BaseFragment() {
 		guestAdapter = GuestAdapter(
 			context!!,
 			onUserClick,
-			mutableListOf()
+			mutableListOf(User("James Watson"), User("Bill Smith"), User("Jane Wathrin"), User("Bob John"))
 		)
 		
 		with(guest_recycler_view) {

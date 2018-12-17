@@ -15,15 +15,16 @@ class DateTimeHelper {
 		
 		fun isToday(dateTime: DateTime): Boolean = (dateTime.toLocalDate()) == (LocalDate())
 		
-		fun parseDateTimeFromString(dateTimeString: String?, format: String): DateTime? {
-			val formatter = getFormatter(format)
-			
+		fun parseDateTimeFromString(dateTimeString: String?, format: String? = null): DateTime? {
 			if (dateTimeString.isNullOrEmpty()) return null
 			
 			var parsedDateTime: DateTime? = null
 			
 			try {
-				parsedDateTime = DateTime.parse(dateTimeString)
+				parsedDateTime = if (format == null) DateTime.parse(dateTimeString) else DateTime.parse(
+					dateTimeString,
+					getFormatter(format)
+				)
 			} catch (ignored: ParseException) {
 				Timber.e(ignored)
 			}
@@ -41,7 +42,7 @@ class DateTimeHelper {
 		}
 		
 		fun formatDateTimeString(dateTimeString: String, format: String): String {
-			val dateTime = parseDateTimeFromString(dateTimeString, FULL_DATE_TIME_FORMAT)
+			val dateTime = parseDateTimeFromString(dateTimeString)
 			return convertDateTimeToString(dateTime, format)
 		}
 		

@@ -8,7 +8,7 @@
 	<androidx.cardview.widget.CardView
 		android:id="@+id/view_background"
 		android:layout_width="match_parent"
-		android:layout_height="120dp"
+		android:layout_height="110dp"
 		android:layout_marginStart="@dimen/spacing_normal"
 		android:layout_marginEnd="@dimen/spacing_normal"
 		android:layout_marginBottom="@dimen/spacing_tiny"
@@ -40,7 +40,7 @@
 	<androidx.cardview.widget.CardView
 		android:id="@+id/view_foreground"
 		android:layout_width="match_parent"
-		android:layout_height="120dp"
+		android:layout_height="110dp"
 		android:layout_marginStart="@dimen/spacing_normal"
 		android:layout_marginEnd="@dimen/spacing_normal"
 		android:layout_marginBottom="@dimen/spacing_tiny"
@@ -92,6 +92,7 @@
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
 					android:layout_marginBottom="@dimen/spacing_tiny"
+					android:textColor="@color/colorPrimary"
 					tools:text="Bartender selfie" />
 				
 				<TextView

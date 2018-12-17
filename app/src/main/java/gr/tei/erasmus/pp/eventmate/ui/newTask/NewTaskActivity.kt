@@ -12,6 +12,8 @@ import com.mobsandgeeks.saripaar.Validator
 import com.mobsandgeeks.saripaar.annotation.NotEmpty
 import com.squareup.picasso.Picasso
 import com.vansuita.pickimage.bean.PickResult
+import com.vansuita.pickimage.bundle.PickSetup
+import com.vansuita.pickimage.dialog.PickImageDialog
 import com.vansuita.pickimage.listeners.IPickResult
 import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.EVENT_ID
@@ -62,11 +64,11 @@ class NewTaskActivity : BaseActivity(), Validator.ValidationListener, IPickResul
 	}
 	
 	private fun setupChoosingPhotoDialog() {
-//		task_photo.setOnClickListener {
-//			PickImageDialog.build(PickSetup().apply {
-//				setTitle(R.string.choose_photo)
-//			}).show(this)
-//		}
+		task_photo.setOnClickListener {
+			PickImageDialog.build(PickSetup().apply {
+				setTitle(R.string.choose_photo)
+			}).show(this)
+		}
 	}
 	
 	private fun handleSaveBtn() {

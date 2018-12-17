@@ -21,11 +21,10 @@ class TaskRepository(private val restHelper: RestHelper, private val taskDao: Ta
 	
 	suspend fun insert(task: TaskRequest) {
 		val result = restHelper.insertTask(task).await()
+		Timber.v("Result of adding new task $result")
 		if (result.isSuccessful && result.body() != null) {
 			Timber.v("Success add new task ${result.body()}")
-			Task.convertToEntity(result.body()!!).apply {
-				eventId = task.eventId
-			}.also {
+			Task.convertToEntity(result.body()!!).also {
 				taskDao.insert(it)
 			}
 		}
