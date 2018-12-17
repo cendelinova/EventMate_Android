@@ -48,7 +48,7 @@
 			android:layout_below="@id/toolbar">
 			
 			
-			<ImageView
+			<de.hdodenhof.circleimageview.CircleImageView
 				android:id="@+id/profile_photo"
 				android:layout_width="@dimen/profile_photo_size"
 				android:layout_height="@dimen/profile_photo_size"

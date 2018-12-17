@@ -3,7 +3,7 @@ package gr.tei.erasmus.pp.eventmate.ui.events.newEvent
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import gr.tei.erasmus.pp.eventmate.app.App
-import gr.tei.erasmus.pp.eventmate.data.model.Event
+import gr.tei.erasmus.pp.eventmate.data.model.EventRequest
 import gr.tei.erasmus.pp.eventmate.ui.base.*
 import kotlinx.coroutines.launch
 
@@ -16,7 +16,7 @@ class NewEventViewModel : BaseViewModel() {
 		get() = mStates
 	
 	
-	fun createEvent(newEvent: Event) {
+	fun createEvent(newEvent: EventRequest) {
 		launch {
 			mStates.postValue(LoadingState)
 			try {

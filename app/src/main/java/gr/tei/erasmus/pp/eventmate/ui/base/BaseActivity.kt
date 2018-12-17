@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import android.view.MenuItem
 import android.view.WindowManager
+import androidx.fragment.app.FragmentActivity
 
 abstract class BaseActivity : AppCompatActivity() {
 	

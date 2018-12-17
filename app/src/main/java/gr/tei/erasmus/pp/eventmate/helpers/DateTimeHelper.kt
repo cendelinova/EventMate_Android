@@ -23,7 +23,7 @@ class DateTimeHelper {
 			var parsedDateTime: DateTime? = null
 			
 			try {
-				parsedDateTime = formatter.parseDateTime(dateTimeString)
+				parsedDateTime = DateTime.parse(dateTimeString)
 			} catch (ignored: ParseException) {
 				Timber.e(ignored)
 			}

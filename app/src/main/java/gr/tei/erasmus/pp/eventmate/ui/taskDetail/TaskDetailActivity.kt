@@ -101,7 +101,7 @@ class TaskDetailActivity : BaseActivity() {
 			task_name.text = name
 			tv_description.text = getDefaultTextIfEmpty(description)
 			tv_time_limit.text = getDefaultTextIfEmpty(timeLimit?.toString())
-			tv_location.text = getDefaultTextIfEmpty(location)
+			tv_location.text = getDefaultTextIfEmpty(place)
 			tv_points.text = points.toString()
 			
 		}

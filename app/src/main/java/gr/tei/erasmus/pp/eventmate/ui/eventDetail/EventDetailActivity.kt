@@ -139,7 +139,7 @@ class EventDetailActivity : BaseActivity() {
 			is ErrorState -> StateHelper.showError(state.error, progress, event_detail)
 			is EventsViewModel.EventListState -> {
 				StateHelper.toggleProgress(progress, false)
-				setupLayout(state.events[0])
+//				setupLayout(state.events[0])
 			}
 		}
 	}

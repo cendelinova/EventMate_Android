@@ -1,23 +1,21 @@
 package gr.tei.erasmus.pp.eventmate.ui.newTask
 
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
-import com.google.android.material.textfield.TextInputLayout
 import android.view.View
 import android.widget.Toast
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import com.google.android.material.textfield.TextInputLayout
 import com.mobsandgeeks.saripaar.ValidationError
 import com.mobsandgeeks.saripaar.Validator
 import com.mobsandgeeks.saripaar.annotation.NotEmpty
 import com.squareup.picasso.Picasso
 import com.vansuita.pickimage.bean.PickResult
-import com.vansuita.pickimage.bundle.PickSetup
-import com.vansuita.pickimage.dialog.PickImageDialog
 import com.vansuita.pickimage.listeners.IPickResult
 import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.EVENT_ID
-import gr.tei.erasmus.pp.eventmate.data.model.Task
+import gr.tei.erasmus.pp.eventmate.data.model.TaskRequest
 import gr.tei.erasmus.pp.eventmate.helpers.TextInputLayoutHelper
 import gr.tei.erasmus.pp.eventmate.ui.base.*
 import gr.tei.erasmus.pp.eventmate.ui.eventDetail.EventDetailActivity
@@ -64,11 +62,11 @@ class NewTaskActivity : BaseActivity(), Validator.ValidationListener, IPickResul
 	}
 	
 	private fun setupChoosingPhotoDialog() {
-		task_photo.setOnClickListener {
-			PickImageDialog.build(PickSetup().apply {
-				setTitle(R.string.choose_photo)
-			}).show(this)
-		}
+//		task_photo.setOnClickListener {
+//			PickImageDialog.build(PickSetup().apply {
+//				setTitle(R.string.choose_photo)
+//			}).show(this)
+//		}
 	}
 	
 	private fun handleSaveBtn() {
@@ -98,16 +96,20 @@ class NewTaskActivity : BaseActivity(), Validator.ValidationListener, IPickResul
 		val points = TextInputLayoutHelper.collectValueFromInput(input_points).toInt()
 		val description = TextInputLayoutHelper.collectValueFromInput(input_description)
 		val place = TextInputLayoutHelper.collectValueFromInput(input_place)
+		val timeLimit =
+			if (TextInputLayoutHelper.collectValueFromInput(input_time).isEmpty()) null else TextInputLayoutHelper.collectValueFromInput(
+				input_time
+			).toInt()
 		
 		eventId?.let {
 			viewModel.createTask(
-				Task(
-					null,
+				TaskRequest(
 					eventId!!,
 					name,
-					points,
+					place,
 					description,
-					place, null
+					points,
+					timeLimit, null
 				)
 			)
 		}
@@ -160,6 +162,4 @@ class NewTaskActivity : BaseActivity(), Validator.ValidationListener, IPickResul
 			}
 		}
 	}
-	
-	
 }

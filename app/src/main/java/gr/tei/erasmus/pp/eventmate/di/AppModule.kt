@@ -1,8 +1,8 @@
 package gr.tei.erasmus.pp.eventmate.di
 
-import androidx.room.Room
 import android.content.Context
 import android.content.ContextWrapper
+import androidx.room.Room
 import dagger.Module
 import dagger.Provides
 import gr.tei.erasmus.pp.eventmate.data.repository.EventRepository
@@ -53,7 +53,7 @@ class AppModule(context: Context) : ContextWrapper(context) {
 	
 	@Provides
 	@Singleton
-	fun provideTaskRepository(taskDao: TaskDao) = TaskRepository(taskDao)
+	fun provideTaskRepository(restHelper: RestHelper, taskDao: TaskDao) = TaskRepository(restHelper, taskDao)
 	
 	@Provides
 	@Singleton
@@ -70,7 +70,6 @@ class AppModule(context: Context) : ContextWrapper(context) {
 	@Provides
 	@Singleton
 	fun provideUserRepository(restHelper: RestHelper) = UserRepository(restHelper)
-	
 	
 	
 }

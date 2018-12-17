@@ -1,19 +1,19 @@
 package gr.tei.erasmus.pp.eventmate.ui.events
 
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
-import androidx.core.content.ContextCompat
-import androidx.appcompat.app.AlertDialog
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.ItemTouchHelper
 import android.view.*
 import android.widget.RadioGroup
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.app.App
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.EVENT_ID
@@ -42,12 +42,12 @@ class EventsFragment : BaseFragment() {
 	}
 	
 	override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-		inflater?.inflate(R.menu.menu_fragment_events, menu)
+		inflater.inflate(R.menu.menu_fragment_events, menu)
 		super.onCreateOptionsMenu(menu, inflater)
 	}
 	
 	override fun onOptionsItemSelected(item: MenuItem): Boolean {
-		if (item?.itemId == R.id.filter) showFilterDialog()
+		if (item.itemId == R.id.filter) showFilterDialog()
 		return super.onOptionsItemSelected(item)
 	}
 	
@@ -139,8 +139,8 @@ class EventsFragment : BaseFragment() {
 					setActionTextColor(ContextCompat.getColor(context, R.color.colorAccent))
 					addCallback(moveFabBackDown())
 				}.show()
-				
-				viewModel.deleteEvent(this)
+
+//				viewModel.deleteEvent(this)
 			}
 		}
 	}

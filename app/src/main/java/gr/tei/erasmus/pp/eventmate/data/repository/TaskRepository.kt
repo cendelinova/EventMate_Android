@@ -1,28 +1,32 @@
 package gr.tei.erasmus.pp.eventmate.data.repository
 
 import gr.tei.erasmus.pp.eventmate.data.model.Task
+import gr.tei.erasmus.pp.eventmate.data.model.TaskRequest
 import gr.tei.erasmus.pp.eventmate.data.source.local.room.dao.TaskDao
 import gr.tei.erasmus.pp.eventmate.data.source.local.room.entities.TaskEntity
-import kotlinx.coroutines.*
-import kotlin.coroutines.CoroutineContext
+import gr.tei.erasmus.pp.eventmate.helpers.RestHelper
+import timber.log.Timber
 
-class TaskRepository(private val taskDao: TaskDao) : CoroutineScope {
-	private val job: Job = Job()
-	override val coroutineContext: CoroutineContext = job + Dispatchers.IO
+class TaskRepository(private val restHelper: RestHelper, private val taskDao: TaskDao) {
 	
-	fun getAllTasks(eventId: Long): Deferred<MutableList<Task>> =
-		async {
-			taskDao.getAllTasks(eventId)
-				.map {
-					Task.convertToModel(it)
-				}.toMutableList()
+	suspend fun getAllTasks(eventId: Long): MutableList<Task> = taskDao.getAllTasks(eventId)
+		.map {
+			Task.convertToModel(it)
+		}.toMutableList()
+	
+	fun getTask(taskId: Long): Task = Task.convertToModel(taskDao.getTask(taskId))
+	
+	suspend fun insert(task: TaskRequest) {
+		val result = restHelper.insertTask(task).await()
+		if (result.isSuccessful && result.body() != null) {
+			Timber.v("Success add new task ${result.body()}")
+			Task.convertToEntity(result.body()!!).apply {
+				eventId = task.eventId
+			}.also {
+				taskDao.insert(it)
+			}
 		}
-	
-	fun getTask(taskId: Long): Deferred<Task> = async {
-		Task.convertToModel(taskDao.getTask(taskId))
 	}
-	
-	fun insert(taskEntity: TaskEntity) = taskDao.insert(taskEntity)
 	
 	fun delete(taskEntity: TaskEntity) = taskDao.delete(taskEntity.uid!!)
 	

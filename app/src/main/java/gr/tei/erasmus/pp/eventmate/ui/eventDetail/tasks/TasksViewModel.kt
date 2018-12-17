@@ -27,7 +27,7 @@ class TasksViewModel : BaseViewModel() {
 			mStates.postValue(LoadingState)
 			allTasks.clear()
 			try {
-				val tasks = taskRepository.getAllTasks(eventId).await()
+				val tasks = taskRepository.getAllTasks(eventId)
 				allTasks.addAll(tasks)
 				mStates.postValue(
 					TaskListState(
@@ -45,7 +45,7 @@ class TasksViewModel : BaseViewModel() {
 			mStates.postValue(LoadingState)
 			allTasks.clear()
 			try {
-				val task = taskRepository.getTask(taskId).await()
+				val task = taskRepository.getTask(taskId)
 				mStates.postValue(
 					TaskListState(
 						mutableListOf(task)

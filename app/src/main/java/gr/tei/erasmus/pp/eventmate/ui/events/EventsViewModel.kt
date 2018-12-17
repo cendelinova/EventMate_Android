@@ -9,6 +9,7 @@ import gr.tei.erasmus.pp.eventmate.ui.base.ErrorState
 import gr.tei.erasmus.pp.eventmate.ui.base.LoadingState
 import gr.tei.erasmus.pp.eventmate.ui.base.State
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class EventsViewModel : BaseViewModel() {
 	private val eventRepository by lazy { App.COMPONENTS.provideEventRepository() }
@@ -24,10 +25,15 @@ class EventsViewModel : BaseViewModel() {
 			mStates.postValue(LoadingState)
 			allEvents.clear()
 			try {
-				val events = eventRepository.getAllEvents().await()
-//				val events = eventRepository.getEventsFromServer().await()
-				allEvents.addAll(events)
-				mStates.postValue(EventListState(events))
+//				val events = eventRepository.getAllEvents().await()
+				val result = eventRepository.getMyEvents().await()
+				Timber.v("result je ${result.body()}")
+				if (result.isSuccessful && result.body() != null) {
+					val events = result.body()!!
+					allEvents.addAll(events)
+					mStates.postValue(EventListState(events))
+				}
+
 			} catch (error: Throwable) {
 				mStates.postValue(ErrorState(error))
 			}
@@ -38,9 +44,8 @@ class EventsViewModel : BaseViewModel() {
 		launch {
 			mStates.postValue(LoadingState)
 			try {
-				eventRepository.delete(Event.convertToEntity(event))
+//				eventRepository.delete(Event.convertToEntity(event))
 				allEvents.remove(event)
-				val events = eventRepository.getAllEvents().await()
 				mStates.postValue(EventListState(allEvents))
 			} catch (error: Throwable) {
 				mStates.postValue(ErrorState(error))
@@ -56,16 +61,16 @@ class EventsViewModel : BaseViewModel() {
 	}
 	
 	fun getEvent(eventId: Long) {
-		launch {
-			mStates.postValue(LoadingState)
-			allEvents.clear()
-			try {
-				val event = Event.convertToModel(eventRepository.getEvent(eventId))
-				mStates.postValue(EventListState(mutableListOf(event)))
-			} catch (error: Throwable) {
-				mStates.postValue(ErrorState(error))
-			}
-		}
+//		launch {
+//			mStates.postValue(LoadingState)
+//			allEvents.clear()
+//			try {
+//				val event = Event.convertToModel(eventRepository.getEvent(eventId))
+//				mStates.postValue(EventListState(mutableListOf(event)))
+//			} catch (error: Throwable) {
+//				mStates.postValue(ErrorState(error))
+//			}
+//		}
 	}
 	
 	data class EventListState(val events: MutableList<Event>) : State() {
