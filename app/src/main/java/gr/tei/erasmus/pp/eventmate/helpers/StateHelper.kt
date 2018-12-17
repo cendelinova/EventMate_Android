@@ -1,8 +1,10 @@
 package gr.tei.erasmus.pp.eventmate.helpers
 
-import com.google.android.material.snackbar.Snackbar
+import android.content.res.Resources
 import android.view.View
 import android.widget.ProgressBar
+import com.google.android.material.snackbar.Snackbar
+import gr.tei.erasmus.pp.eventmate.R
 import timber.log.Timber
 
 object StateHelper {
@@ -21,8 +23,7 @@ object StateHelper {
 		toggleProgress(progress, false)
 		Snackbar.make(
 			view,
-			"balala",
-//			Resources.getSystem().getString(R.string.loading_error),
+			Resources.getSystem().getString(R.string.loading_error),
 			Snackbar.LENGTH_INDEFINITE
 		).show()
 		

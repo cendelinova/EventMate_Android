@@ -1,8 +1,8 @@
 package gr.tei.erasmus.pp.eventmate.ui.userProfile
 
+import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import android.os.Bundle
 import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.USER_ID
 import gr.tei.erasmus.pp.eventmate.data.model.User
@@ -43,9 +43,11 @@ class UserProfileActivity : BaseActivity() {
 	
 	private fun setupLayout(user: User) {
 		with(user) {
-			tv_user_name.text = name
+			tv_user_name.text = userName
 			tv_user_email.text = email
 			tv_count_earned_points.text = score.toString()
+			tv_count_attended_events.text = attendedEvents.toString()
+			tv_count_organized_events.text = organizedEvents.toString()
 		}
 	}
 	

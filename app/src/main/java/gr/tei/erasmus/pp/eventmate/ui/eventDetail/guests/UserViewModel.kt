@@ -5,10 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import gr.tei.erasmus.pp.eventmate.app.App
 import gr.tei.erasmus.pp.eventmate.data.model.Task
 import gr.tei.erasmus.pp.eventmate.data.model.User
-import gr.tei.erasmus.pp.eventmate.ui.base.BaseViewModel
-import gr.tei.erasmus.pp.eventmate.ui.base.ErrorState
-import gr.tei.erasmus.pp.eventmate.ui.base.LoadingState
-import gr.tei.erasmus.pp.eventmate.ui.base.State
+import gr.tei.erasmus.pp.eventmate.ui.base.*
 import kotlinx.coroutines.launch
 
 class UserViewModel : BaseViewModel() {
@@ -37,8 +34,16 @@ class UserViewModel : BaseViewModel() {
 		}
 	}
 	
-	fun register() {
-	
+	fun register(user: User) {
+		launch {
+			mStates.postValue(LoadingState)
+			try {
+				userRepository.register(user).await()
+				mStates.postValue(FinishedState)
+			} catch (error: Throwable) {
+				mStates.postValue(ErrorState(error))
+			}
+		}
 	}
 	
 	data class UserListState(val users: MutableList<User>) : State() {

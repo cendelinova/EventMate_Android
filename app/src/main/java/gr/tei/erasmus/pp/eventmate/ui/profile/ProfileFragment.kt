@@ -1,10 +1,10 @@
 package gr.tei.erasmus.pp.eventmate.ui.profile
 
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.data.model.User
 import gr.tei.erasmus.pp.eventmate.helpers.StateHelper
@@ -96,10 +96,11 @@ class ProfileFragment : BaseFragment() {
 	private fun setupLayout(user: User) {
 		profile_fragment.visibility = View.VISIBLE
 		with(user) {
-			tv_user_name.text = name
+			tv_user_name.text = userName
 			tv_user_email.text = email
 			tv_count_earned_points.text = score.toString()
-
+			tv_count_attended_events.text = attendedEvents.toString()
+			tv_count_organized_events.text = organizedEvents.toString()
 		}
 	}
 }

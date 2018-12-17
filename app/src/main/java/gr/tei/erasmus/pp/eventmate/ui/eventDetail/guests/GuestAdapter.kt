@@ -27,7 +27,7 @@ class GuestAdapter(
 	private fun displayGuestEntry(viewHolder: GuestViewHolder, user: User) {
 		with(viewHolder.itemView) {
 			guest_item.setOnClickListener { guestListener.onUserClick(user) }
-			user_name.text = user.name
+			user_name.text = user.userName
 		}
 	}
 	

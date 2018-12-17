@@ -4,9 +4,10 @@
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
+	android:id="@+id/sign_up_activity"
 	tools:context=".ui.signup.SignupActivity">
 	
-	<LinearLayout
+	<RelativeLayout
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:orientation="vertical">
@@ -30,20 +31,27 @@
 		
 		</androidx.appcompat.widget.Toolbar>
 		
+		<ProgressBar
+			android:id="@+id/progress"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:visibility="invisible"
+			android:layout_centerInParent="true" />
+		
 		<LinearLayout
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:focusable="true"
 			android:focusableInTouchMode="true"
 			android:gravity="center_horizontal"
-			android:orientation="vertical">
+			android:orientation="vertical"
+			android:layout_below="@id/toolbar">
 			
 			
 			<ImageView
 				android:id="@+id/profile_photo"
 				android:layout_width="@dimen/profile_photo_size"
 				android:layout_height="@dimen/profile_photo_size"
-				android:layout_marginTop="@dimen/spacing_large"
 				android:layout_marginBottom="@dimen/spacing_large"
 				android:clickable="true"
 				android:focusable="true"
@@ -115,11 +123,10 @@
 				style="@style/Button"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:padding="@dimen/spacing_normal"
 				android:text="@string/btn_signup" />
 		
 		</LinearLayout>
 	
-	</LinearLayout>
+	</RelativeLayout>
 
 </ScrollView>
