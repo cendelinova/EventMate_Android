@@ -46,7 +46,7 @@ class AppModule(context: Context) : ContextWrapper(context) {
 	
 	@Provides
 	@Singleton
-	fun provideEventRepository(eventDao: EventDao) = EventRepository(eventDao)
+	fun provideEventRepository(eventDao: EventDao, taskRepository: TaskRepository) = EventRepository(eventDao, taskRepository)
 	
 	@Provides
 	@Singleton

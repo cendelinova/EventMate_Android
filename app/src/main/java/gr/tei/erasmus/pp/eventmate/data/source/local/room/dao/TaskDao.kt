@@ -4,7 +4,6 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import gr.tei.erasmus.pp.eventmate.data.model.Task
 import gr.tei.erasmus.pp.eventmate.data.source.local.room.entities.TaskEntity
 
 @Dao
@@ -23,4 +22,8 @@ interface TaskDao {
 	
 	@Query("SELECT * FROM task WHERE uid = :taskId ")
 	fun getTask(taskId: Long) : TaskEntity
+	
+	@Insert(onConflict = OnConflictStrategy.REPLACE)
+	@JvmSuppressWildcards
+	fun insertAll(taskEntities: List<TaskEntity>)
 }

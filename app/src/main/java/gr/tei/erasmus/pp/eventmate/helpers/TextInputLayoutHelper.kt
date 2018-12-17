@@ -23,6 +23,6 @@ object TextInputLayoutHelper {
 		hint = "$hint *"
 	}
 	
-	fun getDefaultTextIfEmpty(text: String?) = if (text.isNullOrEmpty()) "-" else text
+	fun getDefaultTextIfEmpty(text: String?) = if (text.isNullOrEmpty() || text.contains("null", false)) "-" else text
 	
 }

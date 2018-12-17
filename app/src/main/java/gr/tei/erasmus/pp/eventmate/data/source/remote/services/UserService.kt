@@ -10,7 +10,7 @@ import retrofit2.http.POST
 import retrofit2.http.Path
 
 interface UserService {
-	@GET("/users/detail/{id}")
+	@GET("/user/{id}")
 	fun getUser(@Path("id") id: Long): Deferred<User>
 	
 	@GET("/me")

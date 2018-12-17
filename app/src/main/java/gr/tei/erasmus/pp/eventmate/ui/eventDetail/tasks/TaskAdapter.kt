@@ -1,12 +1,13 @@
 package gr.tei.erasmus.pp.eventmate.ui.eventDetail.tasks
 
 import android.content.Context
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.data.model.Task
+import gr.tei.erasmus.pp.eventmate.helpers.TextInputLayoutHelper
 import kotlinx.android.synthetic.main.task_item.view.*
 import timber.log.Timber
 
@@ -36,6 +37,8 @@ class TaskAdapter(
 			task_name.text = task.name
 			task_points.text = task.points.toString()
 			task_description.text = task.description
+			task_location.text = TextInputLayoutHelper.getDefaultTextIfEmpty(task.place)
+			task_limit.text = TextInputLayoutHelper.getDefaultTextIfEmpty(task.timeLimit.toString())
 		}
 	}
 	

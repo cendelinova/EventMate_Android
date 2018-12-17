@@ -9,7 +9,7 @@ import gr.tei.erasmus.pp.eventmate.data.source.local.room.entities.EventEntity
 import gr.tei.erasmus.pp.eventmate.data.source.local.room.entities.InvitationEntity
 import gr.tei.erasmus.pp.eventmate.data.source.local.room.entities.TaskEntity
 
-@Database(entities = [(EventEntity::class), TaskEntity::class, InvitationEntity::class], version = 3, exportSchema = false)
+@Database(entities = [(EventEntity::class), TaskEntity::class, InvitationEntity::class], version = 4, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 	abstract fun eventDao(): EventDao
 	abstract fun taskDao(): TaskDao

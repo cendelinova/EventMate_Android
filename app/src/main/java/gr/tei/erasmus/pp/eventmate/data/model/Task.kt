@@ -3,8 +3,8 @@ package gr.tei.erasmus.pp.eventmate.data.model
 import gr.tei.erasmus.pp.eventmate.data.source.local.room.entities.TaskEntity
 
 data class Task(
-	val id: Long?,
-	val eventId: Long?,
+	val id: Long,
+	val eventId: Long,
 	val name: String,
 	val points: Int,
 	val description: String?,
@@ -14,18 +14,18 @@ data class Task(
 	private val assigness: List<User>?
 ) {
 	
-	constructor(
-		name: String,
-		points: Int,
-		description: String?,
-		place: String?,
-		timeLimit: Int?
-	) : this(
-		null, null, name, points, description, place, timeLimit, null, null
-	)
+//	constructor(
+//		name: String,
+//		points: Int,
+//		description: String?,
+//		place: String?,
+//		timeLimit: Int?
+//	) : this(
+//		0, 0, name, points, description, place, timeLimit, null, null
+//	)
 	
 	constructor(
-		id: Long?,
+		id: Long,
 		eventId: Long,
 		name: String,
 		points: Int,
@@ -35,6 +35,7 @@ data class Task(
 	) : this(
 		id, eventId, name, points, description, place, timeLimit, null, null
 	)
+	
 	
 	companion object {
 		fun convertToModel(entity: TaskEntity) = with(entity) {
@@ -53,7 +54,7 @@ data class Task(
 		fun convertToEntity(model: Task) = with(model) {
 			TaskEntity(
 				id,
-				eventId!!,
+				eventId,
 				name,
 				points,
 				description,

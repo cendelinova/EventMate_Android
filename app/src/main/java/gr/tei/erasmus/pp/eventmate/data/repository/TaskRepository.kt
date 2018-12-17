@@ -1,5 +1,6 @@
 package gr.tei.erasmus.pp.eventmate.data.repository
 
+import gr.tei.erasmus.pp.eventmate.data.model.Event
 import gr.tei.erasmus.pp.eventmate.data.model.Task
 import gr.tei.erasmus.pp.eventmate.data.model.TaskRequest
 import gr.tei.erasmus.pp.eventmate.data.source.local.room.dao.TaskDao
@@ -30,6 +31,13 @@ class TaskRepository(private val restHelper: RestHelper, private val taskDao: Ta
 		}
 	}
 	
-	fun delete(taskEntity: TaskEntity) = taskDao.delete(taskEntity.uid!!)
+	fun delete(taskEntity: TaskEntity) = taskDao.delete(taskEntity.uid)
+	
+	fun saveEventTasks(event: Event) {
+		val tasks = event.tasks?.map { Task.convertToEntity(it) }
+		tasks?.let {
+			taskDao.insertAll(it)
+		}
+	}
 	
 }

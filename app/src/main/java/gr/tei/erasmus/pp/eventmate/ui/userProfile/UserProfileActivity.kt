@@ -31,7 +31,7 @@ class UserProfileActivity : BaseActivity() {
 		observeViewModel()
 		
 		userId?.let {
-			viewModel.getUser(2)
+			viewModel.getUser(userId!!)
 		}
 	}
 	

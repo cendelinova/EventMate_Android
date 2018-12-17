@@ -5,14 +5,9 @@ import gr.tei.erasmus.pp.eventmate.data.model.Event
 import gr.tei.erasmus.pp.eventmate.data.model.EventRequest
 import gr.tei.erasmus.pp.eventmate.data.source.local.room.dao.EventDao
 import gr.tei.erasmus.pp.eventmate.data.source.local.room.entities.EventEntity
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlin.coroutines.CoroutineContext
 
 
-class EventRepository(private val eventDao: EventDao) {
+class EventRepository(private val eventDao: EventDao, private val taskRepository: TaskRepository) {
 	
 	private val restHelper by lazy { App.COMPONENTS.provideRestHelper() }
 	
@@ -21,8 +16,13 @@ class EventRepository(private val eventDao: EventDao) {
 	suspend fun getMyEvents(): MutableList<Event>? {
 		val result = restHelper.getEvents().await()
 		if (result.isSuccessful && result.body() != null) {
+			// save events locally
 			val events = result.body()!!.map { Event.convertToEntity(it) }
 			eventDao.insertAll(events)
+			for (event in result.body()!!) {
+				// save event's tasks locally
+				event.tasks?.let { taskRepository.saveEventTasks(event) }
+			}
 		}
 		
 		return result.body()
@@ -35,7 +35,7 @@ class EventRepository(private val eventDao: EventDao) {
 		}
 	}
 	
-	fun delete(eventEntity: EventEntity) = eventDao.delete(eventEntity.uid!!)
+	fun delete(eventEntity: EventEntity) = eventDao.delete(eventEntity.uid)
 	
 	
 	fun getEvent(eventId: Long) = eventDao.getEvent(eventId)

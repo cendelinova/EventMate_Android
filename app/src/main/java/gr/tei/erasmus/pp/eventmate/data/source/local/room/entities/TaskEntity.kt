@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "task")
 data class TaskEntity(
-	@PrimaryKey(autoGenerate = true) var uid: Long?,
+	@PrimaryKey var uid: Long,
 	@ForeignKey(
 		entity = EventEntity::class,
 		parentColumns = ["uid"],
