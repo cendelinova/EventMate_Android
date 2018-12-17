@@ -4,7 +4,9 @@
 	<style name="AppTheme" parent="Theme.MaterialComponents.Light">
 		<item name="colorPrimary">@color/colorPrimary</item>
 		<item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+		<item name="colorSecondary">@color/colorAccent</item>
 		<item name="colorAccent">@color/colorAccent</item>
+		<item name="colorOnSecondary">@color/white</item>
 		<item name="windowActionBar">false</item>
 		<item name="windowNoTitle">true</item>
 	</style>
@@ -18,7 +20,7 @@
 		<item name="colorControlNormal">@color/primary_text_color</item>
 	</style>
 	
-	<style name="Button" parent="Widget.MaterialComponents.Button">
+	<style name="Button" parent="@style/Widget.MaterialComponents.Button">
 		<item name="android:layout_marginBottom">@dimen/spacing_normal</item>
 		<item name="android:layout_marginTop">@dimen/spacing_normal</item>
 	</style>
@@ -27,6 +29,7 @@
 		<item name="android:layout_marginLeft">@dimen/spacing_normal</item>
 		<item name="android:layout_marginRight">@dimen/spacing_normal</item>
 		<item name="android:layout_marginTop">@dimen/spacing_small</item>
+		<item name="android:colorControlActivated">@color/colorAccent</item>
 	</style>
 	
 	<style name="AppTheme.NoActionBar">

@@ -13,6 +13,8 @@
 		android:id="@+id/conversation_photo"
 		android:layout_width="@dimen/small_profile_photo_size"
 		android:layout_height="@dimen/small_profile_photo_size"
+		android:clickable="true"
+		android:focusable="true"
 		android:src="@drawable/ic_user_placeholder" />
 	
 	<TextView

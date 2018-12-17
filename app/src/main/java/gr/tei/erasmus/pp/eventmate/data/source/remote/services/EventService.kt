@@ -15,6 +15,6 @@ interface EventService {
 	@GET("/event/{id}")
 	fun getEvent(@Path("id") id: Long): Deferred<Event>
 	
-	@POST
+	@POST("/event")
 	fun insertEvent(@Body event: Event): Deferred<Response<Unit>>
 }

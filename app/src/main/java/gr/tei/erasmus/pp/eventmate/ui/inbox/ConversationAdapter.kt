@@ -1,11 +1,10 @@
 package gr.tei.erasmus.pp.eventmate.ui.inbox
 
 import android.content.Context
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.squareup.picasso.Picasso
+import androidx.recyclerview.widget.RecyclerView
 import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.data.model.Conversation
 import kotlinx.android.synthetic.main.conversation_item.view.*
@@ -19,7 +18,13 @@ class ConversationAdapter(
 	override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ConversationViewHolder {
 		Timber.d("onCreateViewHolder() called with parent = [$viewGroup], viewType = [$viewType]")
 		
-		return ConversationViewHolder(LayoutInflater.from(context).inflate(R.layout.conversation_item, viewGroup, false))
+		return ConversationViewHolder(
+			LayoutInflater.from(context).inflate(
+				R.layout.conversation_item,
+				viewGroup,
+				false
+			)
+		)
 	}
 	
 	override fun getItemCount() = conversations.size
@@ -34,6 +39,11 @@ class ConversationAdapter(
 		
 		with(viewHolder.itemView) {
 			conversation_item.setOnClickListener { conversationListener.onConversationClick(conversation) }
+			conversation_photo.setOnClickListener {
+				if (!conversation.isGroup && conversation.userId != null) {
+					conversationListener.onUserPhotoClick(conversation.userId)
+				}
+			}
 //			Picasso.get().load(conversation.photo).into(conversation_photo)
 			conversation_name.text = conversation.name
 			message.text = conversation.lastMessageText
@@ -51,8 +61,10 @@ class ConversationAdapter(
 	
 	interface ConversationListener {
 		fun onConversationClick(conversation: Conversation)
+		fun onUserPhotoClick(userId: Long)
 	}
 	
 	
 	inner class ConversationViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 }
+

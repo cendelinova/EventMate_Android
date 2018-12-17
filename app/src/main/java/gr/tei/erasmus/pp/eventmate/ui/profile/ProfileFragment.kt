@@ -40,6 +40,7 @@ class ProfileFragment : BaseFragment() {
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 		observeViewModel()
+		profile_fragment.visibility = View.INVISIBLE
 		viewModel.getUser(2)
 	}
 	
@@ -93,10 +94,12 @@ class ProfileFragment : BaseFragment() {
 	}
 	
 	private fun setupLayout(user: User) {
+		profile_fragment.visibility = View.VISIBLE
 		with(user) {
 			tv_user_name.text = name
 			tv_user_email.text = email
 			tv_count_earned_points.text = score.toString()
+
 		}
 	}
 }
