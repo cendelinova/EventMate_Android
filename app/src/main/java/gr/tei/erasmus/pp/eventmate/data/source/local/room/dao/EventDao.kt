@@ -11,6 +11,10 @@ interface EventDao {
 	@Insert(onConflict = OnConflictStrategy.REPLACE)
 	fun insert(eventEntity: EventEntity)
 	
+	@Insert(onConflict = OnConflictStrategy.REPLACE)
+	@JvmSuppressWildcards
+	fun insertAll(eventEntity: List<EventEntity>)
+	
 	@Query("SELECT * FROM event")
 	fun getAll(): MutableList<EventEntity>
 	

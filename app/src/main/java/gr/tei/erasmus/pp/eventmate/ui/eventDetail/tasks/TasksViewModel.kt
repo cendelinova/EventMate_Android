@@ -45,7 +45,7 @@ class TasksViewModel : BaseViewModel() {
 			mStates.postValue(LoadingState)
 			allTasks.clear()
 			try {
-				val task = taskRepository.getTask(taskId)
+				val task = taskRepository.getTaskFromServer(taskId).await()
 				mStates.postValue(
 					TaskListState(
 						mutableListOf(task)

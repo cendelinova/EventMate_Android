@@ -34,7 +34,8 @@ class AppModule(context: Context) : ContextWrapper(context) {
 	@Singleton
 	fun provideDatabase(context: Context): AppDatabase {
 		roomDatabase =
-				Room.databaseBuilder(context, AppDatabase::class.java, DATABASE_NAME).allowMainThreadQueries().build()
+				Room.databaseBuilder(context, AppDatabase::class.java, DATABASE_NAME).allowMainThreadQueries()
+					.fallbackToDestructiveMigration().build()
 		return roomDatabase
 	}
 	

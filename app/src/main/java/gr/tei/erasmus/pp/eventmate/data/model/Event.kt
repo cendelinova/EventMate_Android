@@ -13,44 +13,39 @@ data class Event(
 	val invitationsCount: Int,
 	val photo: String?,
 	val tasks: MutableList<Task>?,
-	val state: Event.EventState,
-	val reports: MutableList<Report>,
-	val invitations: MutableList<Invitation>,
-	val guests: MutableList<User>,
-	val eventOwner: User,
-	val permissions: MutableList<Permission>) {
-	
-
-//
-//	constructor(id: Long?, name: String, date: String, place: String?, state: EventState) : this(
-//		id, name, null, date, place, null,
-//		state, null, null
-//	)
-//
-//	constructor(id: Long?, name: String, date: String, place: String, photo: String) : this(
-//		id, name, null, date, place, null,
-//		EventState.EDITABLE, null, photo
-//	)
+	val state: EventState,
+	val reports: MutableList<Report>?,
+	val invitations: MutableList<Invitation>?,
+	val guests: MutableList<User>?,
+	val eventOwner: User?,
+	val permissions: MutableList<Permission>?
+) {
+	constructor(id: Long, name: String, date: String, place: String) : this(
+		id, name, place, date, 0, 0,
+		0, 0, null, null, EventState.EDITABLE, null, null, null, null, null
+	)
 	
 	companion object {
-//		fun convertToModel(entity: EventEntity) = with(entity) {
-//			Event(
-//				uid,
-//				eventName,
-//				date,
-//				place
-//			)
-//		}
-//
-//		fun convertToEntity(model: Event) = with(model) {
-//			EventEntity(
-//				id,
-//				name,
-//				date,
-//				place,
-//				state.name
-//			)
-//		}
+		fun convertToModel(entity: EventEntity) = with(entity) {
+			Event(
+				uid,
+				eventName,
+				date,
+				place
+			)
+		}
+		
+		fun convertToEntity(model: Event) = with(model) {
+			EventEntity(
+				id,
+				name,
+				date,
+				place,
+				state.name,
+				taskCount,
+				usersCount
+			)
+		}
 	}
 	
 	enum class EventState {

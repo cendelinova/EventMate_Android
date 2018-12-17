@@ -16,6 +16,8 @@ class TaskRepository(private val restHelper: RestHelper, private val taskDao: Ta
 	
 	fun getTask(taskId: Long): Task = Task.convertToModel(taskDao.getTask(taskId))
 	
+	suspend fun getTaskFromServer(taskId: Long) = restHelper.getTask(taskId)
+	
 	suspend fun insert(task: TaskRequest) {
 		val result = restHelper.insertTask(task).await()
 		if (result.isSuccessful && result.body() != null) {

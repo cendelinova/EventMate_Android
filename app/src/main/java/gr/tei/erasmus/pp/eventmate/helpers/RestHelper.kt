@@ -18,7 +18,8 @@ class RestHelper(retrofit: Retrofit) {
 	fun getEvents() = eventService.getEvents()
 	fun insertEvent(event: EventRequest) = eventService.insertEvent(event)
 	
-	fun insertTask(task: TaskRequest) = taskService.insertTask(16, task)
+	fun insertTask(task: TaskRequest) = taskService.insertTask(task.eventId, task)
+	fun getTask(taskId: Long) = taskService.getTask(taskId)
 	
 	fun getUser(userId: Long) = userService.getUser(userId)
 	fun registerUser(user: User) = userService.registerUser(user)

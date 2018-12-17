@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.ProgressBar
 import com.google.android.material.snackbar.Snackbar
 import gr.tei.erasmus.pp.eventmate.R
+import gr.tei.erasmus.pp.eventmate.app.App
 import timber.log.Timber
 
 object StateHelper {
@@ -19,11 +20,13 @@ object StateHelper {
 	}
 	
 	fun showError(error: Throwable, progress: ProgressBar, view: View) {
+		val context = App.COMPONENTS.provideContext()
+		
 		Timber.e("Error $error while fetching")
 		toggleProgress(progress, false)
 		Snackbar.make(
 			view,
-			Resources.getSystem().getString(R.string.loading_error),
+			context.getString(R.string.loading_error),
 			Snackbar.LENGTH_INDEFINITE
 		).show()
 		

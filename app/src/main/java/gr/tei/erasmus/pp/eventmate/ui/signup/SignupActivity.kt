@@ -87,8 +87,8 @@ class SignupActivity : BaseActivity(), Validator.ValidationListener, IPickResult
 		val email = TextInputLayoutHelper.collectValueFromInput(input_email)
 		val password = TextInputLayoutHelper.collectValueFromInput(input_password)
 		
-		val photo = ImageHelper.getStringImage(ImageHelper.convertImageViewToBitmap(profile_photo))
-		viewModel.register(User(userName, password, email, photo))
+//		val photo = ImageHelper.getStringImage(ImageHelper.convertImageViewToBitmap(profile_photo))
+		viewModel.register(User(userName, password, email, null))
 	}
 	
 	override fun onPickResult(pickResult: PickResult?) {
