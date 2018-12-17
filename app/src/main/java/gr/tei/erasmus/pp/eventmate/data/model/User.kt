@@ -1,7 +1,7 @@
 package gr.tei.erasmus.pp.eventmate.data.model
 
 data class User(
-	val uid: Long?,
+	val id: Long?,
 	val userName: String,
 	val password: String?,
 	val email: String,

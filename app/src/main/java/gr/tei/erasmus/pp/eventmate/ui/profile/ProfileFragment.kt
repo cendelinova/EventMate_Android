@@ -6,6 +6,8 @@ import android.view.*
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import gr.tei.erasmus.pp.eventmate.R
+import gr.tei.erasmus.pp.eventmate.app.App
+import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.USER_ID
 import gr.tei.erasmus.pp.eventmate.data.model.User
 import gr.tei.erasmus.pp.eventmate.helpers.StateHelper
 import gr.tei.erasmus.pp.eventmate.ui.base.BaseFragment
@@ -27,7 +29,7 @@ import timber.log.Timber
 class ProfileFragment : BaseFragment() {
 	
 	private val viewModel by lazy { ViewModelProviders.of(this).get(UserViewModel::class.java) }
-	
+	private val sharedPreferenceHelper by lazy { App.COMPONENTS.provideSharedPreferencesHelper() }
 	
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 		Timber.v("onCreateView() called with: inflater = [$inflater], container = [$container], savedInstanceState = [$savedInstanceState]")
@@ -41,7 +43,7 @@ class ProfileFragment : BaseFragment() {
 		super.onViewCreated(view, savedInstanceState)
 		observeViewModel()
 		profile_fragment.visibility = View.INVISIBLE
-		viewModel.getUser(2)
+		viewModel.getMyProfile()
 	}
 	
 	override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

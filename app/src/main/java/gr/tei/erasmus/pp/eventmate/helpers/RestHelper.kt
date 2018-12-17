@@ -2,7 +2,7 @@ package gr.tei.erasmus.pp.eventmate.helpers
 
 import gr.tei.erasmus.pp.eventmate.data.model.EventRequest
 import gr.tei.erasmus.pp.eventmate.data.model.TaskRequest
-import gr.tei.erasmus.pp.eventmate.data.model.User
+import gr.tei.erasmus.pp.eventmate.data.model.UserRequest
 import gr.tei.erasmus.pp.eventmate.data.source.remote.services.EventService
 import gr.tei.erasmus.pp.eventmate.data.source.remote.services.TaskService
 import gr.tei.erasmus.pp.eventmate.data.source.remote.services.UserService
@@ -22,7 +22,8 @@ class RestHelper(retrofit: Retrofit) {
 	fun getTask(taskId: Long) = taskService.getTask(taskId)
 	
 	fun getUser(userId: Long) = userService.getUser(userId)
-	fun registerUser(user: User) = userService.registerUser(user)
+	fun registerUser(user: UserRequest) = userService.registerUser(user)
+	fun getMyProfile() = userService.getMyProfile()
 	
 	
 }

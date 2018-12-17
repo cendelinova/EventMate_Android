@@ -69,7 +69,7 @@ class TaskDetailActivity : BaseActivity() {
 	private val onUserClick = object : GuestAdapter.GuestListener {
 		override fun onUserClick(user: User) {
 			startActivity(Intent(this@TaskDetailActivity, UserProfileActivity::class.java).apply {
-				putExtra(USER_ID, user.uid)
+				putExtra(USER_ID, user.id)
 			})
 		}
 		
