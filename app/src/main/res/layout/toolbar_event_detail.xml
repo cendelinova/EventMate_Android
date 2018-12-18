@@ -26,12 +26,13 @@
 		android:columnCount="2"
 		android:rowCount="4"
 		android:layout_margin="@dimen/spacing_normal"
+		android:layout_marginTop="8dp"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toTopOf="parent">
 		
 		<TextView
-			android:id="@+id/task_name"
+			android:id="@+id/event_name"
 			android:textStyle="bold"
 			android:textAllCaps="true"
 			android:textSize="@dimen/font_large"
@@ -40,47 +41,26 @@
 			android:layout_height="wrap_content"
 			android:layout_marginStart="?actionBarSize"
 			android:ellipsize="end"
-			android:maxLines="2" />
+			android:maxLines="2"
+			tools:text="Tim's stag party" />
 		
-		<FrameLayout
-			android:id="@+id/photo_layout"
-			android:layout_width="95dp"
-			android:layout_height="95dp"
-			android:layout_gravity="end"
-			android:layout_rowSpan="4">
-			
-			<ImageView
-				android:id="@+id/task_photo"
-				android:layout_width="@dimen/bigger_icon_size"
-				android:layout_height="84dp"
-				android:layout_gravity="top|center_horizontal"
-				android:background="?selectableItemBackground"
-				android:clickable="true"
-				android:focusable="true"
-				android:scaleType="fitXY"
-				android:src="@drawable/ic_event_placeholder" />
-			
-			<ImageView
-				android:id="@+id/task_status_icon"
-				android:layout_width="24dp"
-				android:layout_height="24dp"
-				android:layout_gravity="bottom|end"
-				android:layout_marginEnd="3dp"
-				android:layout_marginBottom="5dp"
-				android:background="@drawable/edit_badge"
-				android:scaleType="center"
-				android:src="@drawable/ic_edit_solid" />
-		</FrameLayout>
+		<ImageView
+			android:id="@+id/event_photo"
+			android:layout_width="@dimen/bigger_icon_size"
+			android:layout_height="84dp"
+			android:layout_gravity="top|center_horizontal"
+			android:background="?selectableItemBackground"
+			android:clickable="true"
+			android:focusable="true"
+			android:scaleType="fitXY"
+			android:src="@drawable/ic_event_placeholder" />
 		
 		<TextView
-			android:id="@+id/tasks_status"
-			android:layout_rowSpan="1"
-			android:layout_columnWeight="1"
-			android:layout_marginTop="@dimen/spacing_tiny"
+			android:layout_columnWeight="2"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			tools:text="Task is ready to play"
-			android:layout_gravity="center_horizontal"/>
+			android:layout_gravity="center_vertical"
+			tools:text="Task is ready to play" />
 	
 	
 	</GridLayout>

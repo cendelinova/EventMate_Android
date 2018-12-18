@@ -182,4 +182,5 @@
 	<string name="title_assigness">Assigness</string>
 	<string name="tv_no_assignee">No assignee</string>
 	<string name="success_sign_up">Successful sign up</string>
+	<string name="tv_no_reports">No reports</string>
 </resources>
