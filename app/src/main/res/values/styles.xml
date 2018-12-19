@@ -42,5 +42,17 @@
 		<item name="android:colorControlActivated">@color/colorAccent</item>
 		<item name="android:textSize">@dimen/font_normal</item>
 	</style>
+	
+	
+	<style name="ChipStyle" parent="Widget.MaterialComponents.Chip.Entry">
+		<item name="chipBackgroundColor">@color/white</item>
+		<item name="chipStrokeColor">@color/primary_text_color</item>
+		<item name="chipStrokeWidth">1dp</item>
+		<item name="chipIcon">@drawable/ic_user_placeholder</item>
+		<item name="closeIconVisible">false</item>
+		<item name="android:ellipsize">end</item>
+		<item name="android:layout_width">wrap_content</item>
+		<item name="android:layout_height">wrap_content</item>
+	</style>
 
 </resources>

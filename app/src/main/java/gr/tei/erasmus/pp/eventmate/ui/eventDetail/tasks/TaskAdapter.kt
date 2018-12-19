@@ -37,8 +37,8 @@ class TaskAdapter(
 			task_name.text = task.name
 			task_points.text = task.points.toString()
 			task_description.text = task.description
-			task_location.text = TextInputLayoutHelper.getDefaultTextIfEmpty(task.place)
-			task_limit.text = TextInputLayoutHelper.getDefaultTextIfEmpty(task.timeLimit.toString())
+//			task_location.text = TextInputLayoutHelper.getDefaultTextIfEmpty(task.place)
+//			task_limit.text = TextInputLayoutHelper.getDefaultTextIfEmpty(task.timeLimit.toString())
 		}
 	}
 	

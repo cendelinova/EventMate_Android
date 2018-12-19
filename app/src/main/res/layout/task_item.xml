@@ -8,7 +8,7 @@
 	<androidx.cardview.widget.CardView
 		android:id="@+id/view_background"
 		android:layout_width="match_parent"
-		android:layout_height="110dp"
+		android:layout_height="100dp"
 		android:layout_marginStart="@dimen/spacing_normal"
 		android:layout_marginEnd="@dimen/spacing_normal"
 		android:layout_marginBottom="@dimen/spacing_tiny"
@@ -37,33 +37,34 @@
 	
 	</androidx.cardview.widget.CardView>
 	
+	<!-- Content card-->
 	<androidx.cardview.widget.CardView
 		android:id="@+id/view_foreground"
 		android:layout_width="match_parent"
-		android:layout_height="110dp"
+		android:layout_height="wrap_content"
 		android:layout_marginStart="@dimen/spacing_normal"
 		android:layout_marginEnd="@dimen/spacing_normal"
 		android:layout_marginBottom="@dimen/spacing_tiny"
-		android:foreground="?attr/selectableItemBackground"
 		app:cardBackgroundColor="@color/card_view_background"
 		app:cardCornerRadius="5dp"
 		app:cardElevation="0dp">
 		
-		<RelativeLayout
+		<LinearLayout
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
-			android:layout_margin="@dimen/spacing_small">
+			android:orientation="vertical">
 			
 			<RelativeLayout
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:layout_marginStart="@dimen/spacing_small">
+				android:layout_margin="@dimen/spacing_small"
+				android:orientation="vertical">
 				
 				<LinearLayout
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
-					android:layout_alignParentEnd="true"
-					android:orientation="horizontal">
+					android:orientation="horizontal"
+					android:layout_alignParentEnd="true">
 					
 					<de.hdodenhof.circleimageview.CircleImageView
 						android:id="@+id/assignee1"
@@ -91,7 +92,7 @@
 					style="@style/NameTitle"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
-					android:layout_marginBottom="@dimen/spacing_tiny"
+					android:layout_marginBottom="@dimen/spacing_small"
 					android:textColor="@color/colorPrimary"
 					tools:text="Bartender selfie" />
 				
@@ -102,7 +103,7 @@
 					android:layout_below="@id/task_name"
 					android:ellipsize="end"
 					android:maxLines="1"
-					android:layout_marginBottom="@dimen/spacing_small"
+					android:layout_toEndOf="@id/task_points"
 					tools:text="Take a selfie with bartender" />
 				
 				<TextView
@@ -110,35 +111,41 @@
 					style="@style/SmallTextWithDrawable"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
-					android:layout_below="@id/task_description"
+					android:layout_below="@id/task_name"
 					android:drawableStart="@drawable/ic_points"
 					tools:text="20" />
-				
-				<TextView
-					android:id="@+id/task_location"
-					style="@style/SmallTextWithDrawable"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:layout_below="@id/task_description"
-					android:layout_toEndOf="@id/task_points"
-					android:drawableStart="@drawable/ic_location"
-					tools:text="Brno" />
-				
-				<TextView
-					android:id="@+id/task_limit"
-					style="@style/SmallTextWithDrawable"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:layout_below="@id/task_description"
-					android:layout_toEndOf="@id/task_location"
-					android:drawableStart="@drawable/ic_time"
-					tools:text="15:00" />
+			
 			
 			</RelativeLayout>
+			
+			<LinearLayout
+				android:id="@+id/expand_row"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="horizontal"
+				android:clickable="true"
+				android:focusable="true"
+				android:background="?selectableItemBackground">
+				
+				<Space
+					android:layout_width="0dp"
+					android:layout_height="0dp"
+					android:layout_weight="1" />
+				
+				<ImageView
+					android:id="@+id/ic_arrow"
+					android:layout_width="@dimen/icon_size"
+					android:layout_height="@dimen/icon_size"
+					android:layout_gravity="center_vertical"
+					android:layout_marginEnd="5dp"
+					android:src="@drawable/ic_arrow_down" />
+			
+			</LinearLayout>
+			
+			<include layout="@layout/task_item_expanded" />
 		
 		
-		</RelativeLayout>
-	
+		</LinearLayout>
 	</androidx.cardview.widget.CardView>
 
 </FrameLayout>
