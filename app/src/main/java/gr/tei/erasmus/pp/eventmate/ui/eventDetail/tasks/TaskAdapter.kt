@@ -9,6 +9,7 @@ import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.data.model.Task
 import gr.tei.erasmus.pp.eventmate.helpers.TextInputLayoutHelper
 import kotlinx.android.synthetic.main.task_item.view.*
+import kotlinx.android.synthetic.main.task_item_expanded.view.*
 import timber.log.Timber
 
 class TaskAdapter(
@@ -33,12 +34,19 @@ class TaskAdapter(
 	
 	private fun displayTaskEntry(viewHolder: TaskViewHolder, task: Task) {
 		with(viewHolder.itemView) {
-			view_foreground.setOnClickListener { taskListener.onItemClick(task) }
+			view_foreground.setOnClickListener { taskListener.onTaskClick(task) }
+			expand_row.setOnClickListener { taskListener.onToggleLayout(true) }
+			collapsed_view.setOnClickListener { taskListener.onToggleLayout(false)}
+			
 			task_name.text = task.name
 			task_points.text = task.points.toString()
 			task_description.text = task.description
-//			task_location.text = TextInputLayoutHelper.getDefaultTextIfEmpty(task.place)
-//			task_limit.text = TextInputLayoutHelper.getDefaultTextIfEmpty(task.timeLimit.toString())
+			
+			if (collapsing_view.visibility == View.VISIBLE) {
+				task_location.text = TextInputLayoutHelper.getDefaultTextIfEmpty(task.place)
+				task_limit.text = TextInputLayoutHelper.getDefaultTextIfEmpty(task.timeLimit.toString())
+			}
+
 		}
 	}
 	
@@ -54,7 +62,8 @@ class TaskAdapter(
 	inner class TaskViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 	
 	interface TaskListener {
-		abstract fun onItemClick(task: Task)
+		fun onTaskClick(task: Task)
+		fun onToggleLayout(expand: Boolean)
 	}
 	
 }

@@ -9,7 +9,6 @@ import gr.tei.erasmus.pp.eventmate.ui.base.ErrorState
 import gr.tei.erasmus.pp.eventmate.ui.base.LoadingState
 import gr.tei.erasmus.pp.eventmate.ui.base.State
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
 class EventsViewModel : BaseViewModel() {
 	private val eventRepository by lazy { App.COMPONENTS.provideEventRepository() }
@@ -25,7 +24,7 @@ class EventsViewModel : BaseViewModel() {
 			mStates.postValue(LoadingState)
 			allEvents.clear()
 			try {
-				val events = eventRepository.getMyEvents()
+				val events = eventRepository.getAllEvents().map { Event.convertToModel(it) }.toMutableList()
 				events?.run {
 					allEvents.addAll(events)
 					mStates.postValue(EventListState(events))

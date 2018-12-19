@@ -1,13 +1,13 @@
 package gr.tei.erasmus.pp.eventmate.ui.eventDetail.tasks
 
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
-import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
 import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.EVENT_ID
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.TASK_ID
@@ -20,6 +20,8 @@ import gr.tei.erasmus.pp.eventmate.ui.base.LoadingState
 import gr.tei.erasmus.pp.eventmate.ui.base.State
 import gr.tei.erasmus.pp.eventmate.ui.taskDetail.TaskDetailActivity
 import kotlinx.android.synthetic.main.fragment_tasks.*
+import kotlinx.android.synthetic.main.task_item.*
+import kotlinx.android.synthetic.main.task_item_expanded.*
 import timber.log.Timber
 
 class TasksFragment : BaseFragment() {
@@ -57,7 +59,7 @@ class TasksFragment : BaseFragment() {
 		
 		taskAdapter = TaskAdapter(
 			context!!,
-			onTaskClick,
+			taskItemListener,
 			mutableListOf()
 		)
 		
@@ -76,9 +78,19 @@ class TasksFragment : BaseFragment() {
 	}
 	
 	
-	private val onTaskClick = object :
+	private val taskItemListener = object :
 		TaskAdapter.TaskListener {
-		override fun onItemClick(task: Task) {
+		override fun onToggleLayout(expand: Boolean) {
+			if (expand) {
+				expand_row.visibility = View.INVISIBLE
+				collapsed_view.visibility = View.VISIBLE
+			} else {
+				expand_row.visibility = View.VISIBLE
+				collapsed_view.visibility = View.GONE
+			}
+		}
+		
+		override fun onTaskClick(task: Task) {
 			startActivity(Intent(activity, TaskDetailActivity::class.java).apply {
 				putExtra(TASK_ID, task.id)
 			})
