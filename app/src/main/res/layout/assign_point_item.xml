@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:orientation="horizontal"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:layout_margin="@dimen/spacing_normal">
+	
+	<de.hdodenhof.circleimageview.CircleImageView
+		android:id="@+id/profile_photo"
+		android:layout_width="@dimen/profile_photo_size"
+		android:layout_height="@dimen/profile_photo_size"
+		android:src="@drawable/ic_user_placeholder" />
+	
+	<TextView
+		android:id="@+id/user_name"
+		style="@style/MessageTitle"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="@dimen/spacing_normal"
+		android:layout_marginBottom="@dimen/spacing_large"
+		app:layout_constraintBottom_toTopOf="@+id/indicatorSeekBar"
+		app:layout_constraintStart_toEndOf="@+id/profile_photo"
+		tools:text="Bill Thomas" />
+	
+	<com.warkiz.widget.IndicatorSeekBar
+		android:id="@+id/indicatorSeekBar"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_marginBottom="20dp"
+		app:isb_indicator_color="@color/colorAccent"
+		app:isb_indicator_text_color="@color/colorAccent"
+		app:isb_indicator_text_size="18sp"
+		app:isb_max="100"
+		app:isb_min="0.0"
+		app:isb_progress="50"
+		app:isb_seek_smoothly="true"
+		app:isb_show_indicator="circular_bubble"
+		app:isb_show_tick_marks_type="oval"
+		app:isb_tick_texts_size="15sp"
+		app:isb_track_background_size="2dp"
+		app:isb_track_progress_color="@color/colorAccent"
+		app:isb_track_progress_size="2dp"
+		app:layout_constraintBottom_toBottomOf="@+id/profile_photo"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintHorizontal_bias="0.0"
+		app:layout_constraintStart_toEndOf="@+id/profile_photo" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

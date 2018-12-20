@@ -50,7 +50,8 @@
 		<activity android:name=".ui.userProfile.UserProfileActivity" />
 		<activity android:name=".ui.taskDetail.TaskDetailActivity" />
 		<activity android:name=".ui.inviteGuests.InviteGuestsActivity" />
-		<activity android:name=".ui.report.ReportListActivity"></activity>
+		<activity android:name=".ui.report.ReportListActivity" />
+		<activity android:name=".ui.assignPoints.AssignPointsActivity"></activity>
 	</application>
 
 </manifest>

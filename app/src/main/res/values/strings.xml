@@ -184,4 +184,5 @@
 	<string name="success_sign_up">Successful sign up</string>
 	<string name="tv_no_reports">No reports</string>
 	<string name="name">Name</string>
+	<string name="msg_time_assign_points">It\'s time to assign points</string>
 </resources>
