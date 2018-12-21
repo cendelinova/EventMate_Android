@@ -91,9 +91,13 @@ class TasksFragment : BaseFragment() {
 		}
 		
 		override fun onTaskClick(task: Task) {
-			startActivity(Intent(activity, TaskDetailActivity::class.java).apply {
-				putExtra(TASK_ID, task.id)
-			})
+			if (collapsed_view.visibility == View.GONE) startActivity(
+				Intent(
+					activity,
+					TaskDetailActivity::class.java
+				).apply {
+					putExtra(TASK_ID, task.id)
+				})
 		}
 		
 	}

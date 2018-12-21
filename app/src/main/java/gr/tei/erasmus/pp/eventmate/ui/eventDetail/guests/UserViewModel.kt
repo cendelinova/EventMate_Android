@@ -1,5 +1,6 @@
 package gr.tei.erasmus.pp.eventmate.ui.eventDetail.guests
 
+import android.accounts.AccountManager
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import gr.tei.erasmus.pp.eventmate.app.App
@@ -40,26 +41,15 @@ class UserViewModel : BaseViewModel() {
 		launch {
 			mStates.postValue(LoadingState)
 			try {
-				val response = userRepository.register(user).await()
-				
-				if (response.isSuccessful && response.body() != null) {
-					response.body()?.id?.let {
-						Timber.v("Saved userId $it")
-						userRepository.saveUserId(it)
-					}
+				val result = userRepository.register(user).await()
+				if (result.isSuccessful && result.body() != null) {
+					userRepository.saveUserCredentials(user.email, user.password)
 				}
 				mStates.postValue(FinishedState)
 			} catch (error: Throwable) {
 				mStates.postValue(ErrorState(error))
 			}
 		}
-	}
-	
-	private fun storeUserCredentials(user: User) {
-		// todo bude email
-//		val account = Account(user.userName, your_account_type)
-//		val accountManager = AccountManager.get(App.COMPONENTS.provideContext())
-//		accountManager.addAccountExplicitly(account, mPassword, null)
 	}
 	
 	fun getMyProfile() {

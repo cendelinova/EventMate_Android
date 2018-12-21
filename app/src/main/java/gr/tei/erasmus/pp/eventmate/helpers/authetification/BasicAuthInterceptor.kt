@@ -1,4 +1,4 @@
-package gr.tei.erasmus.pp.eventmate.helpers
+package gr.tei.erasmus.pp.eventmate.helpers.authetification
 
 import okhttp3.Credentials
 import okhttp3.Interceptor

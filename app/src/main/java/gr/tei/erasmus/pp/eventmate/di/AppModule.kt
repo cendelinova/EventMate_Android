@@ -46,7 +46,8 @@ class AppModule(context: Context) : ContextWrapper(context) {
 	
 	@Provides
 	@Singleton
-	fun provideEventRepository(eventDao: EventDao, taskRepository: TaskRepository) = EventRepository(eventDao, taskRepository)
+	fun provideEventRepository(eventDao: EventDao, taskRepository: TaskRepository) =
+		EventRepository(eventDao, taskRepository)
 	
 	@Provides
 	@Singleton
@@ -70,7 +71,7 @@ class AppModule(context: Context) : ContextWrapper(context) {
 	
 	@Provides
 	@Singleton
-	fun provideUserRepository(restHelper: RestHelper) = UserRepository(restHelper)
+	fun provideUserRepository(context: Context, restHelper: RestHelper) = UserRepository(context, restHelper)
 	
 	
 }

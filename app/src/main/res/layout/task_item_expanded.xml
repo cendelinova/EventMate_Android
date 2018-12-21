@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:tools="http://schemas.android.com/tools"
-	xmlns:app="http://schemas.android.com/apk/res-auto"
 	android:id="@+id/collapsed_view"
 	android:orientation="vertical"
 	android:layout_width="match_parent"
 	android:background="@color/white"
 	android:layout_height="match_parent"
+	android:clickable="false"
+	android:focusable="false"
 	android:visibility="gone">
 	
 	<GridLayout
@@ -42,6 +43,7 @@
 			android:layout_columnSpan="2"
 			android:clickable="false"
 			android:focusable="false"
+			android:elevation="0dp"
 			android:background="@android:color/transparent">
 			
 			<com.google.android.material.chip.Chip

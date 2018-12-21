@@ -36,7 +36,7 @@ class TaskAdapter(
 		with(viewHolder.itemView) {
 			view_foreground.setOnClickListener { taskListener.onTaskClick(task) }
 			expand_row.setOnClickListener { taskListener.onToggleLayout(true) }
-			collapsed_view.setOnClickListener { taskListener.onToggleLayout(false)}
+			collapsing_view.setOnClickListener { taskListener.onToggleLayout(false) }
 			
 			task_name.text = task.name
 			task_points.text = task.points.toString()
@@ -46,7 +46,7 @@ class TaskAdapter(
 				task_location.text = TextInputLayoutHelper.getDefaultTextIfEmpty(task.place)
 				task_limit.text = TextInputLayoutHelper.getDefaultTextIfEmpty(task.timeLimit.toString())
 			}
-
+			
 		}
 	}
 	

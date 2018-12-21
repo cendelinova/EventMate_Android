@@ -5,7 +5,7 @@ import com.google.gson.GsonBuilder
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import dagger.Module
 import dagger.Provides
-import gr.tei.erasmus.pp.eventmate.helpers.BasicAuthInterceptor
+import gr.tei.erasmus.pp.eventmate.helpers.authetification.BasicAuthInterceptor
 import gr.tei.erasmus.pp.eventmate.helpers.RestHelper
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -17,7 +17,9 @@ class NetworkModule(private val restApiUrl: String) {
 	@Provides
 	@Singleton
 	fun provideOkHttpClient(): OkHttpClient =
-		OkHttpClient.Builder().addInterceptor(BasicAuthInterceptor("user1", "pass")).build()
+		OkHttpClient.Builder().addInterceptor(
+			BasicAuthInterceptor("user1@email", "pass")
+		).build()
 	
 	@Provides
 	@Singleton
