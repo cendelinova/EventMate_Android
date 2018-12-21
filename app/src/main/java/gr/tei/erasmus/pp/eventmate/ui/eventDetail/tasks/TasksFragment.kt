@@ -20,8 +20,6 @@ import gr.tei.erasmus.pp.eventmate.ui.base.LoadingState
 import gr.tei.erasmus.pp.eventmate.ui.base.State
 import gr.tei.erasmus.pp.eventmate.ui.taskDetail.TaskDetailActivity
 import kotlinx.android.synthetic.main.fragment_tasks.*
-import kotlinx.android.synthetic.main.task_item.*
-import kotlinx.android.synthetic.main.task_item_expanded.*
 import timber.log.Timber
 
 class TasksFragment : BaseFragment() {
@@ -80,18 +78,8 @@ class TasksFragment : BaseFragment() {
 	
 	private val taskItemListener = object :
 		TaskAdapter.TaskListener {
-		override fun onToggleLayout(expand: Boolean) {
-			if (expand) {
-				expand_row.visibility = View.INVISIBLE
-				collapsed_view.visibility = View.VISIBLE
-			} else {
-				expand_row.visibility = View.VISIBLE
-				collapsed_view.visibility = View.GONE
-			}
-		}
-		
 		override fun onTaskClick(task: Task) {
-			if (collapsed_view.visibility == View.GONE) startActivity(
+			startActivity(
 				Intent(
 					activity,
 					TaskDetailActivity::class.java

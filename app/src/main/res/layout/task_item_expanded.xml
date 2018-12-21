@@ -8,6 +8,7 @@
 	android:layout_height="match_parent"
 	android:clickable="false"
 	android:focusable="false"
+	android:animateLayoutChanges="true"
 	android:visibility="gone">
 	
 	<GridLayout

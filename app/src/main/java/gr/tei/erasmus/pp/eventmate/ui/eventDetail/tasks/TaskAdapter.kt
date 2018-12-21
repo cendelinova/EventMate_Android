@@ -35,8 +35,8 @@ class TaskAdapter(
 	private fun displayTaskEntry(viewHolder: TaskViewHolder, task: Task) {
 		with(viewHolder.itemView) {
 			view_foreground.setOnClickListener { taskListener.onTaskClick(task) }
-			expand_row.setOnClickListener { taskListener.onToggleLayout(true) }
-			collapsing_view.setOnClickListener { taskListener.onToggleLayout(false) }
+			expand_row.setOnClickListener { handleToggle(this, true) }
+			collapsing_view.setOnClickListener { handleToggle(this, false) }
 			
 			task_name.text = task.name
 			task_points.text = task.points.toString()
@@ -47,6 +47,18 @@ class TaskAdapter(
 				task_limit.text = TextInputLayoutHelper.getDefaultTextIfEmpty(task.timeLimit.toString())
 			}
 			
+		}
+	}
+	
+	private fun handleToggle(itemView: View, expand: Boolean) {
+		with(itemView) {
+			if (expand) {
+				expand_row.visibility = View.INVISIBLE
+				collapsed_view.visibility = View.VISIBLE
+			} else {
+				expand_row.visibility = View.VISIBLE
+				collapsed_view.visibility = View.GONE
+			}
 		}
 	}
 	
@@ -63,7 +75,6 @@ class TaskAdapter(
 	
 	interface TaskListener {
 		fun onTaskClick(task: Task)
-		fun onToggleLayout(expand: Boolean)
 	}
 	
 }
