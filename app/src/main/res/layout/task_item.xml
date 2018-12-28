@@ -146,6 +146,8 @@
 			
 			</LinearLayout>
 			
+			
+			
 			<include layout="@layout/task_item_expanded" />
 		
 		

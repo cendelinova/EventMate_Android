@@ -18,4 +18,7 @@ interface UserService {
 	
 	@POST("/public/register")
 	fun registerUser(@Body user: UserRequest): Deferred<Response<User>>
+	
+	@GET("/event/{eventId}/guests")
+	fun getEventGuests(@Path("eventId") eventId: Long): Deferred<Response<MutableList<User>>>
 }

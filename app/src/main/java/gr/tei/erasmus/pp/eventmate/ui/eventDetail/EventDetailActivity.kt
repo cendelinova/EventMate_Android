@@ -1,15 +1,15 @@
 package gr.tei.erasmus.pp.eventmate.ui.eventDetail
 
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.graphics.PorterDuff
 import android.os.Bundle
-import com.google.android.material.appbar.AppBarLayout
-import com.google.android.material.tabs.TabLayout
-import androidx.core.content.ContextCompat
 import android.view.Menu
 import android.view.MenuItem
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.tabs.TabLayout
 import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.EVENT_ID
 import gr.tei.erasmus.pp.eventmate.data.model.Event
@@ -63,7 +63,16 @@ class EventDetailActivity : BaseActivity() {
 	}
 	
 	override fun onOptionsItemSelected(item: MenuItem): Boolean {
-		if (item.itemId == R.id.edit) startActivity(Intent(this@EventDetailActivity, NewEventActivity::class.java))
+		if (item.itemId == R.id.edit) startActivity(
+			Intent(
+				this@EventDetailActivity,
+				NewEventActivity::class.java
+			).apply {
+				putExtra(
+					EVENT_ID, eventId
+				)
+			})
+//		else if (item.itemId == R.id.delete)
 		return super.onOptionsItemSelected(item)
 	}
 	

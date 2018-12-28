@@ -24,6 +24,7 @@ class RestHelper(retrofit: Retrofit) {
 	fun getUser(userId: Long) = userService.getUser(userId)
 	fun registerUser(user: UserRequest) = userService.registerUser(user)
 	fun getMyProfile() = userService.getMyProfile()
+	fun getEventGuests(eventId: Long) = userService.getEventGuests(eventId)
 	
 	
 }

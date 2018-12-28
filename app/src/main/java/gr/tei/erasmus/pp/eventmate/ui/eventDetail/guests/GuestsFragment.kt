@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import gr.tei.erasmus.pp.eventmate.R
+import gr.tei.erasmus.pp.eventmate.constants.Constants
 import gr.tei.erasmus.pp.eventmate.data.model.User
 import gr.tei.erasmus.pp.eventmate.helpers.StateHelper.showError
 import gr.tei.erasmus.pp.eventmate.helpers.StateHelper.toggleProgress
@@ -25,7 +26,14 @@ class GuestsFragment : BaseFragment() {
 	
 	private lateinit var guestAdapter: GuestAdapter
 	
+	private var eventId: Long? = null
+	
 	private val viewModel by lazy { ViewModelProviders.of(this).get(UserViewModel::class.java) }
+	
+	override fun onCreate(savedInstanceState: Bundle?) {
+		super.onCreate(savedInstanceState)
+		eventId = arguments?.getLong(Constants.EVENT_ID)
+	}
 	
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 		return inflater.inflate(R.layout.fragment_guests, container, false)
@@ -35,7 +43,11 @@ class GuestsFragment : BaseFragment() {
 		super.onViewCreated(view, savedInstanceState)
 		initializeRecyclerView()
 		observeViewModel()
-//		viewModel.getGuests()
+		
+		eventId?.let {
+			viewModel.getGuests(it)
+		}
+		
 	}
 	
 	/**
@@ -47,7 +59,7 @@ class GuestsFragment : BaseFragment() {
 		guestAdapter = GuestAdapter(
 			context!!,
 			onUserClick,
-			mutableListOf(User("James Watson"), User("Bill Smith"), User("Jane Wathrin"), User("Bob John"))
+			mutableListOf()
 		)
 		
 		with(guest_recycler_view) {

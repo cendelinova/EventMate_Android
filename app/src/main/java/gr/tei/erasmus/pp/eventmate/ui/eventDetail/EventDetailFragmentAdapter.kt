@@ -37,7 +37,11 @@ class EventDetailFragmentAdapter(
 				putLong(EVENT_ID, eventId!!)
 			}
 		}
-		GUESTS_TAB -> GuestsFragment()
+		GUESTS_TAB -> GuestsFragment().apply {
+			arguments = Bundle().apply {
+				putLong(EVENT_ID, eventId!!)
+			}
+		}
 		else -> throw IndexOutOfBoundsException()
 	}
 	

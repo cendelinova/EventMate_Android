@@ -5,8 +5,5 @@ class Constants {
 		const val EVENT_ID = "eventId"
 		const val TASK_ID = "taskId"
 		const val USER_ID = "userId"
-		const val USER_NAME = "userName"
-		const val USER_EMAIL = "userEmail"
-		const val MY_USER_ID = "myUserId"
 	}
 }

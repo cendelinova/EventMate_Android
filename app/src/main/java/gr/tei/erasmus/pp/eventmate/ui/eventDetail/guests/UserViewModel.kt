@@ -1,6 +1,5 @@
 package gr.tei.erasmus.pp.eventmate.ui.eventDetail.guests
 
-import android.accounts.AccountManager
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import gr.tei.erasmus.pp.eventmate.app.App
@@ -9,7 +8,6 @@ import gr.tei.erasmus.pp.eventmate.data.model.User
 import gr.tei.erasmus.pp.eventmate.data.model.UserRequest
 import gr.tei.erasmus.pp.eventmate.ui.base.*
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
 class UserViewModel : BaseViewModel() {
 	
@@ -21,8 +19,18 @@ class UserViewModel : BaseViewModel() {
 	
 	private var allUsers = mutableListOf<Task>()
 	
-	fun getGuests() {
-	
+	fun getGuests(eventId: Long) {
+		launch {
+			mStates.postValue(LoadingState)
+			try {
+				val response = userRepository.getGuests(eventId).await()
+				if (response.isSuccessful && response.body() != null) {
+					mStates.postValue(UserListState(response.body()!!))
+				}
+			} catch (error: Throwable) {
+				mStates.postValue(ErrorState(error))
+			}
+		}
 	}
 	
 	fun getUser(userId: Long) {
@@ -45,6 +53,7 @@ class UserViewModel : BaseViewModel() {
 				if (result.isSuccessful && result.body() != null) {
 					userRepository.saveUserCredentials(user.email, user.password)
 				}
+				
 				mStates.postValue(FinishedState)
 			} catch (error: Throwable) {
 				mStates.postValue(ErrorState(error))

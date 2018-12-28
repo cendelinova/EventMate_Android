@@ -40,11 +40,6 @@ class UserRepository(private val context: Context, private val restHelper: RestH
 //		}
 //	}
 	
-	fun saveUserId(userId: Long) {
-		val sharedPreferenceHelper = App.COMPONENTS.provideSharedPreferencesHelper()
-		sharedPreferenceHelper.saveLong(USER_ID, userId)
-	}
-	
 	fun getMyProfile() = restHelper.getMyProfile()
 	
 	fun saveUserCredentials(userEmail: String, password: String) {
@@ -52,4 +47,6 @@ class UserRepository(private val context: Context, private val restHelper: RestH
 		val account = Account(userEmail, TYPE_ACCOUNT)
 		accountManager.addAccountExplicitly(account, password, null)
 	}
+	
+	fun getGuests(eventId: Long) = restHelper.getEventGuests(eventId)
 }
