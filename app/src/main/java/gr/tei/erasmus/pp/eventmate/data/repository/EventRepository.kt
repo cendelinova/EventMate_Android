@@ -45,7 +45,13 @@ class EventRepository(private val eventDao: EventDao, private val taskRepository
 		}
 	}
 	
-	fun delete(eventEntity: EventEntity) = eventDao.delete(eventEntity.uid)
+	suspend fun delete(eventId: Long) {
+		val result = restHelper.deleteEvent(eventId).await()
+		Timber.v("Result of deleting  event $result")
+		if (result.isSuccessful) {
+			eventDao.delete(eventId)
+		}
+	}
 	
 	
 	fun getEvent(eventId: Long) = eventDao.getEvent(eventId)

@@ -185,4 +185,6 @@
 	<string name="tv_no_reports">No reports</string>
 	<string name="name">Name</string>
 	<string name="msg_time_assign_points">It\'s time to assign points</string>
+	<string name="title_delete_event">Delete event</string>
+	<string name="message_wish_delete_event">Do you really want to delete this event?</string>
 </resources>

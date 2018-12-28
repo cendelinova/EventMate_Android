@@ -18,4 +18,7 @@ interface EventService {
 	
 	@PUT("/event/{id}")
 	fun updateEvent(@Path("id") id: Long, @Body event: EventRequest): Deferred<Response<Event>>
+	
+	@DELETE("/event/{id}")
+	fun deleteEvent(@Path("id") id: Long): Deferred<Response<Unit>>
 }

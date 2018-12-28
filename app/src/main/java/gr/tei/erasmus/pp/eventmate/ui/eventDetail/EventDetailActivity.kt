@@ -5,6 +5,7 @@ import android.graphics.PorterDuff
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -72,7 +73,9 @@ class EventDetailActivity : BaseActivity() {
 					EVENT_ID, eventId
 				)
 			})
-//		else if (item.itemId == R.id.delete)
+		else if (item.itemId == R.id.delete) {
+			showDeleteDialog()
+		}
 		return super.onOptionsItemSelected(item)
 	}
 	
@@ -132,6 +135,23 @@ class EventDetailActivity : BaseActivity() {
 				putExtra(EVENT_ID, eventId)
 			})
 		}
+	}
+	
+	private fun showDeleteDialog() {
+		AlertDialog.Builder(this).apply {
+			setPositiveButton(R.string.btn_confirm) { dialog, which ->
+				eventId?.let {
+					viewModel.deleteEvent(it)
+				}
+			}
+			setNegativeButton(
+				R.string.btn_cancel
+			) { dialog, which -> dialog.dismiss() }
+			setMessage(R.string.message_wish_delete_event)
+			setTitle(R.string.title_delete_event)
+		}.also {
+			it.create()
+		}.show()
 	}
 	
 	private fun setupLayout(event: Event) {

@@ -139,8 +139,7 @@ class EventsFragment : BaseFragment() {
 					setActionTextColor(ContextCompat.getColor(context, R.color.colorAccent))
 					addCallback(moveFabBackDown())
 				}.show()
-				
-				viewModel.deleteEvent(this)
+				viewModel.deleteEvent(event.id)
 			}
 		}
 	}

@@ -33,12 +33,11 @@ class EventsViewModel : BaseViewModel() {
 		}
 	}
 	
-	fun deleteEvent(event: Event) {
+	fun deleteEvent(eventId: Long) {
 		launch {
 			mStates.postValue(LoadingState)
 			try {
-				eventRepository.delete(Event.convertToEntity(event))
-				allEvents.remove(event)
+				eventRepository.delete(eventId)
 				mStates.postValue(EventListState(allEvents))
 			} catch (error: Throwable) {
 				mStates.postValue(ErrorState(error))
