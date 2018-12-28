@@ -4,10 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import gr.tei.erasmus.pp.eventmate.app.App
 import gr.tei.erasmus.pp.eventmate.data.model.Event
-import gr.tei.erasmus.pp.eventmate.ui.base.BaseViewModel
-import gr.tei.erasmus.pp.eventmate.ui.base.ErrorState
-import gr.tei.erasmus.pp.eventmate.ui.base.LoadingState
-import gr.tei.erasmus.pp.eventmate.ui.base.State
+import gr.tei.erasmus.pp.eventmate.data.model.EventRequest
+import gr.tei.erasmus.pp.eventmate.ui.base.*
 import kotlinx.coroutines.launch
 
 class EventsViewModel : BaseViewModel() {
@@ -25,7 +23,7 @@ class EventsViewModel : BaseViewModel() {
 			allEvents.clear()
 			try {
 				val events = eventRepository.getAllEvents().map { Event.convertToModel(it) }.toMutableList()
-				events?.run {
+				events.run {
 					allEvents.addAll(events)
 					mStates.postValue(EventListState(events))
 				}
@@ -48,6 +46,18 @@ class EventsViewModel : BaseViewModel() {
 		}
 	}
 	
+	fun createEvent(newEvent: EventRequest) {
+		launch {
+			mStates.postValue(LoadingState)
+			try {
+				eventRepository.insert(newEvent)
+				mStates.postValue(FinishedState)
+			} catch (error: Throwable) {
+				mStates.postValue(ErrorState(error))
+			}
+		}
+	}
+	
 	fun getEventList() = allEvents
 	
 	fun addToEventList(deletedItem: Event, deletedIndex: Int) {
@@ -62,6 +72,18 @@ class EventsViewModel : BaseViewModel() {
 			try {
 				val event = Event.convertToModel(eventRepository.getEvent(eventId))
 				mStates.postValue(EventListState(mutableListOf(event)))
+			} catch (error: Throwable) {
+				mStates.postValue(ErrorState(error))
+			}
+		}
+	}
+	
+	fun updateEvent(updatedEvent: EventRequest) {
+		launch {
+			mStates.postValue(LoadingState)
+			try {
+				eventRepository.update(updatedEvent)
+				mStates.postValue(FinishedState)
 			} catch (error: Throwable) {
 				mStates.postValue(ErrorState(error))
 			}

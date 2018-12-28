@@ -13,7 +13,6 @@ data class Event(
 	val invitationsCount: Int,
 	val photo: String?,
 	val tasks: MutableList<Task>?,
-	val state: EventState,
 	val reports: MutableList<Report>?,
 	val invitations: MutableList<Invitation>?,
 	val guests: MutableList<User>?,
@@ -22,7 +21,7 @@ data class Event(
 ) {
 	constructor(id: Long, name: String, date: String, place: String) : this(
 		id, name, place, date, 0, 0,
-		0, 0, null, null, EventState.EDITABLE, null, null, null, null, null
+		0, 0, null, null, null, null, null, null, null
 	)
 	
 	companion object {
@@ -41,7 +40,7 @@ data class Event(
 				name,
 				date,
 				place,
-				state.name,
+				"bla",
 				taskCount,
 				usersCount
 			)

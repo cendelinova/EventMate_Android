@@ -4,10 +4,7 @@ import gr.tei.erasmus.pp.eventmate.data.model.Event
 import gr.tei.erasmus.pp.eventmate.data.model.EventRequest
 import kotlinx.coroutines.Deferred
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
+import retrofit2.http.*
 
 interface EventService {
 	@GET("/me/events")
@@ -18,4 +15,7 @@ interface EventService {
 	
 	@POST("/event")
 	fun insertEvent(@Body event: EventRequest): Deferred<Response<Event>>
+	
+	@PUT("/event/{id}")
+	fun updateEvent(@Path("id") id: Long, @Body event: EventRequest): Deferred<Response<Event>>
 }

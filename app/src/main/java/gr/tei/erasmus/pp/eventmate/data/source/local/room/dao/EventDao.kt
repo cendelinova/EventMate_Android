@@ -1,15 +1,15 @@
 package gr.tei.erasmus.pp.eventmate.data.source.local.room.dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import gr.tei.erasmus.pp.eventmate.data.source.local.room.entities.EventEntity
 
 @Dao
 interface EventDao {
 	@Insert(onConflict = OnConflictStrategy.REPLACE)
 	fun insert(eventEntity: EventEntity)
+	
+	@Update
+	fun update(eventEntity: EventEntity)
 	
 	@Insert(onConflict = OnConflictStrategy.REPLACE)
 	@JvmSuppressWildcards

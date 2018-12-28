@@ -37,6 +37,14 @@ class EventRepository(private val eventDao: EventDao, private val taskRepository
 		}
 	}
 	
+	suspend fun update(event: EventRequest) {
+		val result = restHelper.updateEvent(event)?.await()
+		Timber.v("Result of updating new event $result")
+		if (result?.isSuccessful == true && result.body() != null) {
+			eventDao.update(Event.convertToEntity(result.body()!!))
+		}
+	}
+	
 	fun delete(eventEntity: EventEntity) = eventDao.delete(eventEntity.uid)
 	
 	
