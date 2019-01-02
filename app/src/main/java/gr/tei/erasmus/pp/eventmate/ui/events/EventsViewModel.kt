@@ -22,10 +22,10 @@ class EventsViewModel : BaseViewModel() {
 			mStates.postValue(LoadingState)
 			allEvents.clear()
 			try {
-				val events = eventRepository.getAllEvents().map { Event.convertToModel(it) }.toMutableList()
-				events.run {
-					allEvents.addAll(events)
-					mStates.postValue(EventListState(events))
+				val events = eventRepository.getMyEvents()
+				events?.run {
+					allEvents.addAll(this)
+					mStates.postValue(EventListState(this))
 				}
 			} catch (error: Throwable) {
 				mStates.postValue(ErrorState(error))
@@ -38,7 +38,12 @@ class EventsViewModel : BaseViewModel() {
 			mStates.postValue(LoadingState)
 			try {
 				eventRepository.delete(eventId)
-				mStates.postValue(EventListState(allEvents))
+				val event = allEvents.find { event -> event.id == eventId }
+				event?.let {
+					allEvents.remove(it)
+					mStates.postValue(EventListState(allEvents, it.name))
+				}
+				mStates.postValue(DeletedState)
 			} catch (error: Throwable) {
 				mStates.postValue(ErrorState(error))
 			}
@@ -59,15 +64,9 @@ class EventsViewModel : BaseViewModel() {
 	
 	fun getEventList() = allEvents
 	
-	fun addToEventList(deletedItem: Event, deletedIndex: Int) {
-		allEvents.add(deletedIndex, deletedItem)
-		mStates.postValue(EventListState(allEvents))
-	}
-	
 	fun getEvent(eventId: Long) {
 		launch {
 			mStates.postValue(LoadingState)
-			allEvents.clear()
 			try {
 				val event = Event.convertToModel(eventRepository.getEvent(eventId))
 				mStates.postValue(EventListState(mutableListOf(event)))
@@ -89,14 +88,9 @@ class EventsViewModel : BaseViewModel() {
 		}
 	}
 	
-	data class EventListState(val events: MutableList<Event>) : State() {
-		companion object {
-			fun from(list: MutableList<Event>): EventListState {
-				return if (list.isEmpty()) error("event list should not be empty")
-				else {
-					EventListState(list)
-				}
-			}
-		}
-	}
+	data class EventListState(
+		val events: MutableList<Event>,
+		val deleteEventName: String? = null
+	) : State()
+	
 }

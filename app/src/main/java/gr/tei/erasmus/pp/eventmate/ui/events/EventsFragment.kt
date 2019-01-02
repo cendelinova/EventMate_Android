@@ -7,7 +7,6 @@ import android.view.*
 import android.widget.RadioGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -121,32 +120,8 @@ class EventsFragment : BaseFragment() {
 	 */
 	private fun deleteSwipe(viewHolder: RecyclerView.ViewHolder?) {
 		if (viewHolder is EventAdapter.EventViewHolder) {
-			
 			val event = viewModel.getEventList()[viewHolder.adapterPosition]
-			val deletedPosition = viewHolder.adapterPosition
-			with(event) {
-				com.google.android.material.snackbar.Snackbar.make(
-					events_fragment,
-					getString(R.string.event_item_removed, name),
-					com.google.android.material.snackbar.Snackbar.LENGTH_LONG
-				).apply {
-					setAction(getString(R.string.undo)) {
-						viewModel.addToEventList(
-							this@with,
-							deletedPosition
-						)
-					}
-					setActionTextColor(ContextCompat.getColor(context, R.color.colorAccent))
-					addCallback(moveFabBackDown())
-				}.show()
-				viewModel.deleteEvent(event.id)
-			}
-		}
-	}
-	
-	private fun moveFabBackDown() = object : Snackbar.Callback() {
-		override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
-			fab?.translationY = 0.0f
+			viewModel.deleteEvent(event.id)
 		}
 	}
 	
@@ -186,6 +161,13 @@ class EventsFragment : BaseFragment() {
 			is EventsViewModel.EventListState -> {
 				toggleProgress(progress, false)
 				eventAdapter.updateEventList(state.events)
+				state.deleteEventName?.let {
+					Snackbar.make(
+						events_fragment,
+						getString(R.string.event_item_removed, it),
+						Snackbar.LENGTH_LONG
+					).show()
+				}
 			}
 		}
 	}

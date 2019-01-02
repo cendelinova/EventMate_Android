@@ -1,11 +1,11 @@
 package gr.tei.erasmus.pp.eventmate.ui.eventDetail
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.PorterDuff
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -15,15 +15,14 @@ import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.EVENT_ID
 import gr.tei.erasmus.pp.eventmate.data.model.Event
 import gr.tei.erasmus.pp.eventmate.helpers.DateTimeHelper
+import gr.tei.erasmus.pp.eventmate.helpers.DialogHelper
 import gr.tei.erasmus.pp.eventmate.helpers.StateHelper
-import gr.tei.erasmus.pp.eventmate.ui.base.BaseActivity
-import gr.tei.erasmus.pp.eventmate.ui.base.ErrorState
-import gr.tei.erasmus.pp.eventmate.ui.base.LoadingState
-import gr.tei.erasmus.pp.eventmate.ui.base.State
+import gr.tei.erasmus.pp.eventmate.ui.base.*
 import gr.tei.erasmus.pp.eventmate.ui.eventDetail.EventDetailFragmentAdapter.Companion.TASKS_TAB
 import gr.tei.erasmus.pp.eventmate.ui.events.EventsViewModel
 import gr.tei.erasmus.pp.eventmate.ui.events.newEvent.NewEventActivity
 import gr.tei.erasmus.pp.eventmate.ui.inviteGuests.InviteGuestsActivity
+import gr.tei.erasmus.pp.eventmate.ui.mainActivity.MainActivity
 import gr.tei.erasmus.pp.eventmate.ui.newTask.NewTaskActivity
 import kotlinx.android.synthetic.main.activity_event_detail.*
 
@@ -74,7 +73,11 @@ class EventDetailActivity : BaseActivity() {
 				)
 			})
 		else if (item.itemId == R.id.delete) {
-			showDeleteDialog()
+			DialogHelper.showDeleteDialog(this, DialogInterface.OnClickListener { _, _ ->
+				eventId?.let {
+					viewModel.deleteEvent(it)
+				}
+			})
 		}
 		return super.onOptionsItemSelected(item)
 	}
@@ -137,22 +140,6 @@ class EventDetailActivity : BaseActivity() {
 		}
 	}
 	
-	private fun showDeleteDialog() {
-		AlertDialog.Builder(this).apply {
-			setPositiveButton(R.string.btn_confirm) { dialog, which ->
-				eventId?.let {
-					viewModel.deleteEvent(it)
-				}
-			}
-			setNegativeButton(
-				R.string.btn_cancel
-			) { dialog, which -> dialog.dismiss() }
-			setMessage(R.string.message_wish_delete_event)
-			setTitle(R.string.title_delete_event)
-		}.also {
-			it.create()
-		}.show()
-	}
 	
 	private fun setupLayout(event: Event) {
 		event_name_title.text = event.name
@@ -166,6 +153,10 @@ class EventDetailActivity : BaseActivity() {
 		when (state) {
 			is LoadingState -> StateHelper.toggleProgress(progress, true)
 			is ErrorState -> StateHelper.showError(state.error, progress, event_detail)
+			is DeletedState -> {
+				StateHelper.toggleProgress(progress, true)
+				startActivity(Intent(this, MainActivity::class.java))
+			}
 			is EventsViewModel.EventListState -> {
 				StateHelper.toggleProgress(progress, false)
 				setupLayout(state.events[0])

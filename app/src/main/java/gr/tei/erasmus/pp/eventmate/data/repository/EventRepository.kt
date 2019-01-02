@@ -16,6 +16,7 @@ class EventRepository(private val eventDao: EventDao, private val taskRepository
 	
 	suspend fun getMyEvents(): MutableList<Event>? {
 		val result = restHelper.getEvents().await()
+		Timber.d("Get my Events $result")
 		if (result.isSuccessful && result.body() != null) {
 			// save events locally
 			val events = result.body()!!.map { Event.convertToEntity(it) }
@@ -51,6 +52,7 @@ class EventRepository(private val eventDao: EventDao, private val taskRepository
 		if (result.isSuccessful) {
 			eventDao.delete(eventId)
 		}
+		
 	}
 	
 	

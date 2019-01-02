@@ -16,6 +16,10 @@ object LoadingState : State()
  */
 object FinishedState : State()
 
+
+object DeletedState : State()
+
+
 /**
  * Generic Error state
  * @param error - caught error
