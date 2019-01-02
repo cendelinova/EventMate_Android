@@ -16,7 +16,7 @@ import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.app.App
 import gr.tei.erasmus.pp.eventmate.constants.Constants
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.EVENT_ID
-import gr.tei.erasmus.pp.eventmate.constants.Constants.EVENT_FILTER.*
+import gr.tei.erasmus.pp.eventmate.constants.Constants.EventFilter.*
 import gr.tei.erasmus.pp.eventmate.data.model.Event
 import gr.tei.erasmus.pp.eventmate.data.model.Event.EventState.*
 import gr.tei.erasmus.pp.eventmate.helpers.StateHelper.showError
@@ -34,6 +34,7 @@ class EventsFragment : BaseFragment() {
 	private lateinit var eventAdapter: EventAdapter
 	
 	private val viewModel by lazy { ViewModelProviders.of(this).get(EventsViewModel::class.java) }
+	private val sharedPreferenceHelper = App.COMPONENTS.provideSharedPreferencesHelper()
 	
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 		Timber.v("onCreateView() called with: inflater = [$inflater], container = [$container], savedInstanceState = [$savedInstanceState]")
@@ -80,15 +81,49 @@ class EventsFragment : BaseFragment() {
 	
 	private fun prepareChips() {
 		filter_who.setOnCloseIconClickListener {
-			eventAdapter.updateEventList(viewModel.filterEvents(UNDEFINED_FILTER, FINISHED))
+			val newList: MutableList<Event>
+			if (filter_state.visibility == View.VISIBLE) {
+				filters.visibility = View.VISIBLE
+				
+				newList = viewModel.filterEvents(
+					UNDEFINED_FILTER,
+					Event.EventState.valueOf(sharedPreferenceHelper.loadString(Constants.FILTER_EVENT_STATE))
+				)
+				
+			} else {
+				filters.visibility = View.GONE
+				newList = viewModel.filterEvents(
+					UNDEFINED_FILTER,
+					UNDEFINED_STATE
+				)
+			}
+			
 			filter_who.visibility = View.GONE
-			filters.visibility = if (filter_state.visibility == View.VISIBLE) View.VISIBLE else View.GONE
+			eventAdapter.updateEventList(newList)
 		}
 		
 		filter_state.setOnCloseIconClickListener {
-			eventAdapter.updateEventList(viewModel.filterEvents(UNDEFINED_FILTER, UNDEFINED_STATE))
+			val newList: MutableList<Event>
+			
+			if (filter_who.visibility == View.VISIBLE) {
+				filters.visibility = View.VISIBLE
+				
+				newList = viewModel.filterEvents(
+					Constants.EventFilter.valueOf(sharedPreferenceHelper.loadString(Constants.FILTER_EVENT_ROLE)),
+					UNDEFINED_STATE
+				)
+				
+			} else {
+				filters.visibility = View.GONE
+				newList = viewModel.filterEvents(
+					UNDEFINED_FILTER,
+					UNDEFINED_STATE
+				)
+			}
+			
 			filter_state.visibility = View.GONE
-			filters.visibility = if (filter_who.visibility == View.VISIBLE) View.VISIBLE else View.GONE
+			eventAdapter.updateEventList(newList)
+			
 		}
 	}
 	
@@ -165,7 +200,7 @@ class EventsFragment : BaseFragment() {
 		
 		if (roleFilterId == -1 && eventStateFilterId == -1) return@OnClickListener
 		
-		val roleFilter: Constants.EVENT_FILTER = roleFilterId?.run {
+		val roleFilter: Constants.EventFilter = roleFilterId?.run {
 			when (this) {
 				R.id.event_guest -> GUEST_FILTER
 				R.id.event_owner -> OWNER_FILTER

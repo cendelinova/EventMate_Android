@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import gr.tei.erasmus.pp.eventmate.app.App
 import gr.tei.erasmus.pp.eventmate.constants.Constants
-import gr.tei.erasmus.pp.eventmate.constants.Constants.EVENT_FILTER.*
+import gr.tei.erasmus.pp.eventmate.constants.Constants.EventFilter.*
 import gr.tei.erasmus.pp.eventmate.data.model.Event
 import gr.tei.erasmus.pp.eventmate.data.model.Event.EventState.UNDEFINED_STATE
 import gr.tei.erasmus.pp.eventmate.data.model.EventRequest
@@ -92,7 +92,7 @@ class EventsViewModel : BaseViewModel() {
 	}
 	
 	fun filterEvents(
-		filterRole: Constants.EVENT_FILTER?,
+		filterRole: Constants.EventFilter?,
 		eventStateFilter: Event.EventState
 	): MutableList<Event> {
 		var filteredEvents: List<Event> = allEvents
@@ -111,6 +111,14 @@ class EventsViewModel : BaseViewModel() {
 			filteredEvents = allEvents.filter { e -> e.state == eventStateFilter.name }
 		}
 		
+		val sharedPreferenceHelper = App.COMPONENTS.provideSharedPreferencesHelper()
+		
+		filterRole?.let {
+			sharedPreferenceHelper.saveString(Constants.FILTER_EVENT_ROLE, it.name)
+			
+		}
+		
+		sharedPreferenceHelper.saveString(Constants.FILTER_EVENT_STATE, eventStateFilter.name)
 		
 		return filteredEvents.toMutableList()
 	}
