@@ -19,7 +19,7 @@
 	<string name="hint_search">Search</string>
 	<string name="tv_no_events">No events</string>
 	<string name="event_owner">Event owner</string>
-	<string name="event_assignee">Event assignee</string>
+	<string name="event_guest">Event guest</string>
 	<string name="event_status_editable">Editable</string>
 	<string name="event_status_ready_to_play">Ready to play</string>
 	<string name="event_status_in_play">In play</string>
@@ -187,4 +187,5 @@
 	<string name="msg_time_assign_points">It\'s time to assign points</string>
 	<string name="title_delete_event">Delete event</string>
 	<string name="message_wish_delete_event">Do you really want to delete this event?</string>
+	<string name="active_filters">Active filters</string>
 </resources>

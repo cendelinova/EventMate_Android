@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import android.widget.RadioGroup
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -15,8 +14,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.app.App
+import gr.tei.erasmus.pp.eventmate.constants.Constants
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.EVENT_ID
+import gr.tei.erasmus.pp.eventmate.constants.Constants.EVENT_FILTER.*
 import gr.tei.erasmus.pp.eventmate.data.model.Event
+import gr.tei.erasmus.pp.eventmate.data.model.Event.EventState.*
 import gr.tei.erasmus.pp.eventmate.helpers.StateHelper.showError
 import gr.tei.erasmus.pp.eventmate.helpers.StateHelper.toggleProgress
 import gr.tei.erasmus.pp.eventmate.ui.base.*
@@ -37,6 +39,7 @@ class EventsFragment : BaseFragment() {
 		Timber.v("onCreateView() called with: inflater = [$inflater], container = [$container], savedInstanceState = [$savedInstanceState]")
 		
 		setHasOptionsMenu(true)
+		
 		return inflater.inflate(R.layout.fragment_events, null)
 	}
 	
@@ -60,6 +63,7 @@ class EventsFragment : BaseFragment() {
 		observeViewModel()
 		viewModel.getEvents()
 		setupSwipeAction()
+		prepareChips()
 	}
 	
 	private fun observeViewModel() {
@@ -74,6 +78,19 @@ class EventsFragment : BaseFragment() {
 		}
 	}
 	
+	private fun prepareChips() {
+		filter_who.setOnCloseIconClickListener {
+			eventAdapter.updateEventList(viewModel.filterEvents(UNDEFINED_FILTER, FINISHED))
+			filter_who.visibility = View.GONE
+			filters.visibility = if (filter_state.visibility == View.VISIBLE) View.VISIBLE else View.GONE
+		}
+		
+		filter_state.setOnCloseIconClickListener {
+			eventAdapter.updateEventList(viewModel.filterEvents(UNDEFINED_FILTER, UNDEFINED_STATE))
+			filter_state.visibility = View.GONE
+			filters.visibility = if (filter_who.visibility == View.VISIBLE) View.VISIBLE else View.GONE
+		}
+	}
 	
 	private fun showFilterDialog() {
 		val context = App.COMPONENTS.provideContext()
@@ -142,12 +159,47 @@ class EventsFragment : BaseFragment() {
 	}
 	
 	private val applyFilterListener = DialogInterface.OnClickListener { dialog, _ ->
-		Toast.makeText(
-			activity,
-			(dialog as AlertDialog).findViewById<RadioGroup>(R.id.filter_who)?.checkedRadioButtonId!!,
-			Toast.LENGTH_LONG
-		).show()
+		val roleFilterId = (dialog as AlertDialog).findViewById<RadioGroup>(R.id.filter_who)?.checkedRadioButtonId
+		val eventStateFilterId =
+			(dialog as AlertDialog).findViewById<RadioGroup>(R.id.filter_event_status)?.checkedRadioButtonId
+		
+		if (roleFilterId == -1 && eventStateFilterId == -1) return@OnClickListener
+		
+		val roleFilter: Constants.EVENT_FILTER = roleFilterId?.run {
+			when (this) {
+				R.id.event_guest -> GUEST_FILTER
+				R.id.event_owner -> OWNER_FILTER
+				else -> UNDEFINED_FILTER
+			}
+		}!!
+		
+		val eventStateFilter: Event.EventState = eventStateFilterId?.run {
+			when (this) {
+				R.id.editable -> EDITABLE
+				R.id.ready_to_play -> READY_TO_PLAY
+				R.id.in_play -> IN_PLAY
+				R.id.evaluation -> UNDER_EVALUATION
+				R.id.finished -> FINISHED
+				else -> UNDEFINED_STATE
+			}
+		}!!
+		
+		filters.visibility = View.VISIBLE
+		
+		if (roleFilter != UNDEFINED_FILTER) {
+			filter_who.text = roleFilter.text
+			filter_who.visibility = View.VISIBLE
+		}
+		
+		if (eventStateFilter != UNDEFINED_STATE) {
+			filter_state.text = eventStateFilter.text
+			filter_state.visibility = View.VISIBLE
+		}
+		
+		eventAdapter.updateEventList(viewModel.filterEvents(roleFilter, eventStateFilter))
+		
 	}
+	
 	
 	private val cancelFilterListener = DialogInterface.OnClickListener { dialog, _ ->
 		dialog.cancel()

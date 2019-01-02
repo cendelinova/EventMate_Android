@@ -20,15 +20,17 @@
 			android:textAllCaps="true" />
 		
 		<RadioButton
+			android:id="@+id/event_owner"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:text="@string/event_owner"
 			android:theme="@style/MyRadioButtonStyle"/>
 		
 		<RadioButton
+			android:id="@+id/event_guest"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:text="@string/event_assignee"
+			android:text="@string/event_guest"
 			android:theme="@style/MyRadioButtonStyle"/>
 	</RadioGroup>
 	
@@ -46,30 +48,35 @@
 			android:textAllCaps="true" />
 		
 		<RadioButton
+			android:id="@+id/editable"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:text="@string/event_status_editable"
 			android:theme="@style/MyRadioButtonStyle"/>
 		
 		<RadioButton
+			android:id="@+id/ready_to_play"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:theme="@style/MyRadioButtonStyle"
 			android:text="@string/event_status_ready_to_play" />
 		
 		<RadioButton
+			android:id="@+id/in_play"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:text="@string/event_status_in_play"
 			android:theme="@style/MyRadioButtonStyle"/>
 		
 		<RadioButton
+			android:id="@+id/evaluation"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:text="@string/event_status_evaluation"
 			android:theme="@style/MyRadioButtonStyle"/>
 		
 		<RadioButton
+			android:id="@+id/finished"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:text="@string/event_status_finished"

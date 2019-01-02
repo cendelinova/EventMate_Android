@@ -3,7 +3,10 @@ package gr.tei.erasmus.pp.eventmate.ui.events
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import gr.tei.erasmus.pp.eventmate.app.App
+import gr.tei.erasmus.pp.eventmate.constants.Constants
+import gr.tei.erasmus.pp.eventmate.constants.Constants.EVENT_FILTER.*
 import gr.tei.erasmus.pp.eventmate.data.model.Event
+import gr.tei.erasmus.pp.eventmate.data.model.Event.EventState.UNDEFINED_STATE
 import gr.tei.erasmus.pp.eventmate.data.model.EventRequest
 import gr.tei.erasmus.pp.eventmate.ui.base.*
 import kotlinx.coroutines.launch
@@ -86,6 +89,30 @@ class EventsViewModel : BaseViewModel() {
 				mStates.postValue(ErrorState(error))
 			}
 		}
+	}
+	
+	fun filterEvents(
+		filterRole: Constants.EVENT_FILTER?,
+		eventStateFilter: Event.EventState
+	): MutableList<Event> {
+		var filteredEvents: List<Event> = allEvents
+		
+		if (filterRole == UNDEFINED_FILTER && eventStateFilter == UNDEFINED_STATE) return allEvents
+		
+		if (filterRole == OWNER_FILTER && eventStateFilter != UNDEFINED_STATE) {
+			filteredEvents = allEvents.filter { e -> e.eventOwner?.id == 1L && e.state == eventStateFilter.name }
+		} else if (filterRole == GUEST_FILTER && eventStateFilter != UNDEFINED_STATE) {
+			filteredEvents = allEvents.filter { e -> e.eventOwner?.id != 1L && e.state == eventStateFilter.name }
+		} else if (filterRole == OWNER_FILTER) {
+			filteredEvents = allEvents.filter { e -> e.eventOwner?.id == 1L }
+		} else if (filterRole == GUEST_FILTER) {
+			filteredEvents = allEvents.filter { e -> e.eventOwner?.id != 1L }
+		} else if (filterRole == UNDEFINED_FILTER && eventStateFilter != UNDEFINED_STATE) {
+			filteredEvents = allEvents.filter { e -> e.state == eventStateFilter.name }
+		}
+		
+		
+		return filteredEvents.toMutableList()
 	}
 	
 	data class EventListState(

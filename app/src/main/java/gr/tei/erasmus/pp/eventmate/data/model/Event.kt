@@ -12,6 +12,7 @@ data class Event(
 	val reportsCount: Int,
 	val invitationsCount: Int,
 	val photo: String?,
+	val state: String,
 	val tasks: MutableList<Task>?,
 	val reports: MutableList<Report>?,
 	val invitations: MutableList<Invitation>?,
@@ -21,7 +22,7 @@ data class Event(
 ) {
 	constructor(id: Long, name: String, date: String, place: String) : this(
 		id, name, place, date, 0, 0,
-		0, 0, null, null, null, null, null, null, null
+		0, 0, null, EventState.READY_TO_PLAY.name, null, null, null, null, null, null
 	)
 	
 	companion object {
@@ -47,11 +48,13 @@ data class Event(
 		}
 	}
 	
-	enum class EventState {
-		EDITABLE,
-		READY_TO_PLAY,
-		UNDER_EVALUATION,
-		FINISHED
+	enum class EventState(val text: String) {
+		EDITABLE("Editable"),
+		READY_TO_PLAY("Ready to play"),
+		IN_PLAY("In play"),
+		UNDER_EVALUATION("Under evaluation"),
+		FINISHED("Finished"),
+		UNDEFINED_STATE("Undefined")
 	}
 	
 }
