@@ -1,47 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_height="match_parent"
 	android:layout_width="match_parent"
-	android:layout_height="match_parent">
+	tools:context=".ui.newTask.NewTaskActivity">
 	
-	<androidx.coordinatorlayout.widget.CoordinatorLayout
+	<com.google.android.material.appbar.AppBarLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:fitsSystemWindows="true"
+		android:background="@android:color/transparent"
+		android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+		app:elevation="0dp">
 		
+		<androidx.appcompat.widget.Toolbar
+			android:id="@+id/toolbar"
+			android:background="@color/white"
+			android:layout_height="wrap_content"
+			android:layout_width="match_parent"
+			android:elevation="0dp"
+			android:theme="@style/AppTheme.AppBarOverlayNoBackground"
+			app:popupTheme="@style/AppTheme.PopupOverlay">
+			
+			<TextView
+				android:id="@+id/my_title"
+				style="@style/MessageTitle"
+				android:layout_centerInParent="true"
+				android:layout_height="wrap_content"
+				android:layout_width="wrap_content"
+				android:text="@string/msg_task_info" />
+		</androidx.appcompat.widget.Toolbar>
+	
+	
+	</com.google.android.material.appbar.AppBarLayout>
+	
+	<androidx.core.widget.NestedScrollView
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		tools:context=".ui.newTask.NewTaskActivity">
+		app:layout_behavior="@string/appbar_scrolling_view_behavior">
 		
 		<androidx.constraintlayout.widget.ConstraintLayout
-			android:layout_width="match_parent"
-			android:layout_height="match_parent"
 			android:focusable="true"
-			android:focusableInTouchMode="true">
-			
-			<androidx.appcompat.widget.Toolbar
-				android:id="@+id/toolbar"
-				android:layout_width="0dp"
-				android:layout_height="wrap_content"
-				android:background="@android:color/transparent"
-				android:elevation="2dp"
-				android:theme="@style/AppTheme.AppBarOverlayNoBackground"
-				app:layout_constraintEnd_toEndOf="parent"
-				app:layout_constraintStart_toStartOf="parent"
-				app:layout_constraintTop_toTopOf="parent"
-				app:popupTheme="@style/AppTheme.PopupOverlay">
-				
-				<TextView
-					android:id="@+id/my_title"
-					style="@style/MessageTitle"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:layout_centerInParent="true"
-					android:text="@string/msg_task_info" />
-			</androidx.appcompat.widget.Toolbar>
+			android:focusableInTouchMode="true"
+			android:layout_height="wrap_content"
+			android:layout_width="match_parent">
 			
 			<ProgressBar
 				android:id="@+id/progress"
-				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
+				android:layout_width="wrap_content"
 				android:visibility="invisible"
 				app:layout_constraintBottom_toBottomOf="parent"
 				app:layout_constraintEnd_toEndOf="parent"
@@ -50,31 +59,30 @@
 			
 			<FrameLayout
 				android:id="@+id/photo_layout"
-				android:layout_width="120dp"
 				android:layout_height="110dp"
+				android:layout_width="120dp"
 				app:layout_constraintEnd_toEndOf="parent"
-				app:layout_constraintStart_toStartOf="parent"
-				app:layout_constraintTop_toBottomOf="@id/toolbar">
+				app:layout_constraintStart_toStartOf="parent">
 				
 				<com.makeramen.roundedimageview.RoundedImageView
 					android:id="@+id/task_photo"
-					android:layout_width="@dimen/profile_photo_size"
-					android:layout_height="@dimen/profile_photo_size"
-					android:layout_gravity="top|center_horizontal"
 					android:background="?selectableItemBackground"
 					android:clickable="true"
 					android:focusable="true"
-					android:scaleType="centerCrop"
+					android:layout_gravity="top|center_horizontal"
+					android:layout_height="@dimen/profile_photo_size"
+					android:layout_width="@dimen/profile_photo_size"
+					android:scaleType="fitXY"
 					android:src="@drawable/ic_task_placeholder"
 					app:riv_corner_radius="@dimen/radius" />
 				
 				<ImageView
-					android:layout_width="24dp"
-					android:layout_height="24dp"
-					android:layout_gravity="bottom|end"
-					android:layout_marginEnd="3dp"
-					android:layout_marginBottom="5dp"
 					android:background="@drawable/edit_badge"
+					android:layout_gravity="bottom|end"
+					android:layout_height="24dp"
+					android:layout_marginBottom="5dp"
+					android:layout_marginEnd="3dp"
+					android:layout_width="24dp"
 					android:scaleType="center"
 					android:src="@drawable/ic_edit_solid" />
 			</FrameLayout>
@@ -82,19 +90,19 @@
 			<com.google.android.material.textfield.TextInputLayout
 				android:id="@+id/input_task_name"
 				style="@style/MyEditText"
-				android:layout_width="0dp"
-				android:layout_height="wrap_content"
 				android:hint="@string/hint_task_name"
+				android:layout_height="wrap_content"
+				android:layout_width="0dp"
 				app:layout_constraintEnd_toEndOf="parent"
 				app:layout_constraintStart_toStartOf="parent"
 				app:layout_constraintTop_toBottomOf="@id/photo_layout">
 				
 				<com.google.android.material.textfield.TextInputEditText
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
 					android:drawableEnd="@drawable/ic_name"
 					android:drawableTint="@color/grey"
 					android:inputType="text"
+					android:layout_height="wrap_content"
+					android:layout_width="match_parent"
 					android:lines="1" />
 			</com.google.android.material.textfield.TextInputLayout>
 			
@@ -102,19 +110,19 @@
 			<com.google.android.material.textfield.TextInputLayout
 				android:id="@+id/input_points"
 				style="@style/MyEditText"
-				android:layout_width="0dp"
-				android:layout_height="wrap_content"
 				android:hint="@string/hint_points"
+				android:layout_height="wrap_content"
+				android:layout_width="0dp"
 				app:layout_constraintEnd_toEndOf="parent"
 				app:layout_constraintStart_toStartOf="parent"
 				app:layout_constraintTop_toBottomOf="@id/input_task_name">
 				
 				<com.google.android.material.textfield.TextInputEditText
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
 					android:drawableEnd="@drawable/ic_points"
 					android:drawableTint="@color/grey"
 					android:inputType="numberDecimal"
+					android:layout_height="wrap_content"
+					android:layout_width="match_parent"
 					android:lines="1" />
 			</com.google.android.material.textfield.TextInputLayout>
 			
@@ -122,91 +130,94 @@
 			<com.google.android.material.textfield.TextInputLayout
 				android:id="@+id/input_time"
 				style="@style/MyEditText"
-				android:layout_width="0dp"
-				android:layout_height="wrap_content"
 				android:hint="@string/hint_task_time"
+				android:layout_height="wrap_content"
+				android:layout_width="0dp"
 				app:layout_constraintEnd_toEndOf="parent"
 				app:layout_constraintStart_toStartOf="parent"
 				app:layout_constraintTop_toBottomOf="@id/input_points">
 				
 				<com.google.android.material.textfield.TextInputEditText
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
 					android:drawableEnd="@drawable/ic_time"
 					android:drawableTint="@color/grey"
 					android:inputType="numberDecimal"
+					android:layout_height="wrap_content"
+					android:layout_width="match_parent"
 					android:lines="1" />
 			</com.google.android.material.textfield.TextInputLayout>
 			
 			<com.google.android.material.textfield.TextInputLayout
 				android:id="@+id/input_place"
 				style="@style/MyEditText"
-				android:layout_width="0dp"
-				android:layout_height="wrap_content"
 				android:hint="@string/hint_place"
+				android:layout_height="wrap_content"
+				android:layout_width="0dp"
 				app:layout_constraintEnd_toEndOf="parent"
 				app:layout_constraintStart_toStartOf="parent"
 				app:layout_constraintTop_toBottomOf="@id/input_time">
 				
 				<com.google.android.material.textfield.TextInputEditText
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
 					android:drawableEnd="@drawable/ic_location"
 					android:drawableTint="@color/grey"
 					android:inputType="text"
+					android:layout_height="wrap_content"
+					android:layout_width="match_parent"
 					android:lines="1" />
 			</com.google.android.material.textfield.TextInputLayout>
 			
 			<com.google.android.material.textfield.TextInputLayout
 				android:id="@+id/input_description"
 				style="@style/MyEditText"
-				android:layout_width="0dp"
-				android:layout_height="wrap_content"
 				android:hint="@string/hint_description"
+				android:layout_height="wrap_content"
+				android:layout_width="0dp"
 				app:layout_constraintEnd_toEndOf="parent"
 				app:layout_constraintStart_toStartOf="parent"
 				app:layout_constraintTop_toBottomOf="@id/input_place">
 				
 				<com.google.android.material.textfield.TextInputEditText
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
 					android:drawableEnd="@drawable/ic_description"
 					android:drawableTint="@color/grey"
-					android:inputType="textMultiLine" />
+					android:inputType="textMultiLine"
+					android:layout_height="wrap_content"
+					android:layout_width="match_parent" />
 			</com.google.android.material.textfield.TextInputLayout>
 			
 			
 			<com.google.android.material.textfield.TextInputLayout
 				android:id="@+id/input_asigness"
 				style="@style/MyEditText"
-				android:layout_width="0dp"
-				android:layout_height="wrap_content"
 				android:hint="@string/hint_asigness"
+				android:layout_height="wrap_content"
+				android:layout_width="0dp"
 				app:layout_constraintEnd_toEndOf="parent"
 				app:layout_constraintStart_toStartOf="parent"
 				app:layout_constraintTop_toBottomOf="@id/input_description">
 				
 				<com.google.android.material.textfield.TextInputEditText
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
 					android:drawableEnd="@drawable/ic_guests"
 					android:drawableTint="@color/grey"
-					android:inputType="text" />
+					android:inputType="text"
+					android:layout_height="wrap_content"
+					android:layout_width="match_parent" />
 			</com.google.android.material.textfield.TextInputLayout>
 			
 			<androidx.appcompat.widget.AppCompatButton
 				android:id="@+id/btn_save_task"
 				style="@style/Button"
-				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_marginTop="@dimen/spacing_normal"
+				android:layout_width="wrap_content"
 				android:text="@string/btn_create_task"
 				app:layout_constraintEnd_toEndOf="parent"
 				app:layout_constraintStart_toStartOf="parent"
 				app:layout_constraintTop_toBottomOf="@id/input_asigness" />
 		
 		</androidx.constraintlayout.widget.ConstraintLayout>
-	</androidx.coordinatorlayout.widget.CoordinatorLayout>
+	
+	</androidx.core.widget.NestedScrollView>
 
-</ScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
+	
+
 

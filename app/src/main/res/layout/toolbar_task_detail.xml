@@ -57,7 +57,7 @@
 				android:background="?selectableItemBackground"
 				android:clickable="true"
 				android:focusable="true"
-				android:scaleType="centerCrop"
+				android:scaleType="fitXY"
 				android:src="@drawable/ic_task_placeholder"
 				app:riv_corner_radius="@dimen/radius" />
 			
