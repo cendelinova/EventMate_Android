@@ -98,6 +98,10 @@ dependencies {
     implementation 'com.makeramen:roundedimageview:2.3.0'
 
 
+    implementation 'com.daimajia.easing:library:2.0@aar'
+    implementation 'com.daimajia.androidanimations:library:2.3@aar'
+
+
     // Room library
     implementation 'androidx.room:room-runtime:2.1.0-alpha03'
     annotationProcessor 'androidx.room:room-compiler:2.1.0-alpha03'

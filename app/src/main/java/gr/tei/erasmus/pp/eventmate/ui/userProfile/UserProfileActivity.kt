@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProviders
 import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.USER_ID
 import gr.tei.erasmus.pp.eventmate.data.model.User
+import gr.tei.erasmus.pp.eventmate.helpers.ImageHelper
 import gr.tei.erasmus.pp.eventmate.helpers.StateHelper.showError
 import gr.tei.erasmus.pp.eventmate.helpers.StateHelper.toggleProgress
 import gr.tei.erasmus.pp.eventmate.ui.base.BaseActivity
@@ -48,6 +49,10 @@ class UserProfileActivity : BaseActivity() {
 			tv_count_earned_points.text = score.toString()
 			tv_count_attended_events.text = attendedEvents.toString()
 			tv_count_organized_events.text = organizedEvents.toString()
+			
+			photo?.let {
+				profile_image.setImageBitmap(ImageHelper.getImageFromString(it))
+			}
 		}
 	}
 	

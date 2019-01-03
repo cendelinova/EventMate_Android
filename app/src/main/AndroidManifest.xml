@@ -60,7 +60,13 @@
 		<activity android:name=".ui.userProfile.UserProfileActivity" />
 		<activity android:name=".ui.taskDetail.TaskDetailActivity" />
 		<activity android:name=".ui.inviteGuests.InviteGuestsActivity" />
-		<activity android:name=".ui.report.ReportListActivity" />
+		<activity android:name=".ui.report.ReportListActivity">
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN" />
+				
+				<category android:name="android.intent.category.LAUNCHER" />
+			</intent-filter>
+		</activity>
 		<activity android:name=".ui.assignPoints.AssignPointsActivity">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />

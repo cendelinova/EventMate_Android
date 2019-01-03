@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.data.model.Report
+import kotlinx.android.synthetic.main.report_item.view.*
 import timber.log.Timber
 
 class ReportAdapter(
@@ -27,13 +28,19 @@ class ReportAdapter(
 	
 	private fun displayReportEntry(viewHolder: ReportViewHolder, report: Report) {
 		with(viewHolder.itemView) {
-		
+			setOnClickListener { reportListener.onReportClick(this, true) }
+			btn_delete.setOnClickListener { reportListener.onReportDelete(report) }
+			btn_download.setOnClickListener { reportListener.onReportDownload(report) }
+			btn_share.setOnClickListener { reportListener.onReportShare(report) }
 		}
 	}
 	
 	inner class ReportViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 	
 	interface ReportListener {
-		fun onItemClick(report: Report)
+		fun onReportShare(report: Report)
+		fun onReportDownload(report: Report)
+		fun onReportDelete(report: Report)
+		fun onReportClick(itemView: View, slideIn: Boolean)
 	}
 }

@@ -2,6 +2,7 @@ package gr.tei.erasmus.pp.eventmate.helpers
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.drawable.BitmapDrawable
 import android.util.Base64
 import android.widget.ImageView
 import com.makeramen.roundedimageview.RoundedDrawable
@@ -22,4 +23,8 @@ object ImageHelper {
 	}
 	
 	fun convertImageViewToBitmap(v: ImageView) = (v.drawable as RoundedDrawable).sourceBitmap
+	
+	fun getBitmap(v: ImageView): Bitmap {
+		return (v.drawable as BitmapDrawable).bitmap
+	}
 }

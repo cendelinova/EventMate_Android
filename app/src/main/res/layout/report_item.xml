@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
-	android:layout_height="match_parent">
+	android:layout_height="wrap_content">
 	
 	<androidx.cardview.widget.CardView
 		android:id="@+id/view_background"
@@ -12,28 +12,45 @@
 		android:layout_marginStart="@dimen/spacing_normal"
 		android:layout_marginEnd="@dimen/spacing_normal"
 		android:layout_marginBottom="@dimen/spacing_tiny"
-		app:cardBackgroundColor="@color/darkPink"
+		app:cardBackgroundColor="@color/card_view_foreground"
 		app:cardCornerRadius="5dp"
 		app:cardElevation="0dp">
 		
-		<RelativeLayout
+		<LinearLayout
 			android:layout_width="match_parent"
-			android:layout_height="match_parent">
+			android:layout_height="match_parent"
+			android:weightSum="3"
+			android:gravity="center_vertical">
 			
 			<TextView
-				android:layout_width="wrap_content"
+				android:id="@+id/btn_share"
+				style="@style/ReportIcon"
+				android:layout_width="0dp"
 				android:layout_height="wrap_content"
-				android:layout_alignParentEnd="true"
-				android:layout_centerVertical="true"
-				android:layout_marginEnd="@dimen/spacing_normal"
-				android:drawableTop="@drawable/ic_delete"
-				android:fontFamily="sans-serif-condensed"
-				android:text="@string/delete"
-				android:textColor="#ffffff"
-				android:textSize="@dimen/font_small"
-				android:textStyle="normal" />
+				android:layout_weight="1"
+				android:drawableTop="@drawable/ic_share"
+				android:text="@string/share" />
+			
+			<TextView
+				android:id="@+id/btn_download"
+				style="@style/ReportIcon"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:drawableTop="@drawable/ic_download"
+				android:text="@string/download" />
+			
+			<TextView
+				android:id="@+id/btn_delete"
+				style="@style/ReportIcon"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:drawableTop="@drawable/ic_delete_black"
+				android:drawablePadding="@dimen/spacing_small"
+				android:text="@string/delete" />
 		
-		</RelativeLayout>
+		</LinearLayout>
 	
 	</androidx.cardview.widget.CardView>
 	
@@ -45,7 +62,7 @@
 		android:layout_marginEnd="@dimen/spacing_normal"
 		android:layout_marginBottom="@dimen/spacing_tiny"
 		android:foreground="?attr/selectableItemBackground"
-		app:cardBackgroundColor="@color/card_view_background"
+		app:cardBackgroundColor="@color/card_view_foreground"
 		app:cardCornerRadius="5dp"
 		app:cardElevation="0dp">
 		
@@ -111,4 +128,4 @@
 	
 	</androidx.cardview.widget.CardView>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

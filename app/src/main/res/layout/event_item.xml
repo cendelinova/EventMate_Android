@@ -26,7 +26,7 @@
 				android:layout_alignParentEnd="true"
 				android:layout_centerVertical="true"
 				android:layout_marginEnd="@dimen/spacing_normal"
-				android:drawableTop="@drawable/ic_delete"
+				android:drawableTop="@drawable/ic_delete_white"
 				android:fontFamily="sans-serif-condensed"
 				android:text="@string/delete"
 				android:textColor="#ffffff"
@@ -45,7 +45,7 @@
 		android:layout_marginEnd="@dimen/spacing_normal"
 		android:layout_marginBottom="@dimen/spacing_tiny"
 		android:foreground="?attr/selectableItemBackground"
-		app:cardBackgroundColor="@color/card_view_background"
+		app:cardBackgroundColor="@color/card_view_foreground"
 		app:cardCornerRadius="5dp"
 		app:cardElevation="0dp">
 		

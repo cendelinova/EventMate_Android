@@ -14,9 +14,12 @@ import com.mobsandgeeks.saripaar.annotation.NotEmpty
 import com.mobsandgeeks.saripaar.annotation.Password
 import com.squareup.picasso.Picasso
 import com.vansuita.pickimage.bean.PickResult
+import com.vansuita.pickimage.bundle.PickSetup
+import com.vansuita.pickimage.dialog.PickImageDialog
 import com.vansuita.pickimage.listeners.IPickResult
 import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.data.model.UserRequest
+import gr.tei.erasmus.pp.eventmate.helpers.ImageHelper
 import gr.tei.erasmus.pp.eventmate.helpers.StateHelper
 import gr.tei.erasmus.pp.eventmate.helpers.TextInputLayoutHelper
 import gr.tei.erasmus.pp.eventmate.ui.base.*
@@ -41,6 +44,8 @@ class SignupActivity : BaseActivity(), Validator.ValidationListener, IPickResult
 	@NotEmpty(messageResId = R.string.error_required_field)
 	@ConfirmPassword(messageResId = R.string.error_password_not_equal)
 	private lateinit var repeatPassword: TextInputLayout
+	
+	private var photoChosen: Boolean = false
 	
 	private val validator: Validator by lazy {
 		Validator(this@SignupActivity).also {
@@ -82,14 +87,18 @@ class SignupActivity : BaseActivity(), Validator.ValidationListener, IPickResult
 		val userName = TextInputLayoutHelper.collectValueFromInput(input_name)
 		val email = TextInputLayoutHelper.collectValueFromInput(input_email)
 		val password = TextInputLayoutHelper.collectValueFromInput(input_password)
-
-//		val photo = ImageHelper.getStringImage(ImageHelper.convertImageViewToBitmap(profile_photo))
-		viewModel.register(UserRequest(userName, password, email, null))
+		var photo: String? = null
+		if (photoChosen) {
+			photo = ImageHelper.getStringImage(ImageHelper.getBitmap(profile_photo))
+		}
+		viewModel.register(UserRequest(userName, password, email, photo ?: photo))
 	}
+	
 	
 	override fun onPickResult(pickResult: PickResult?) {
 		pickResult?.let {
 			Picasso.get().load(pickResult.uri).into(profile_photo)
+			photoChosen = true
 		}
 	}
 	
@@ -116,11 +125,11 @@ class SignupActivity : BaseActivity(), Validator.ValidationListener, IPickResult
 	}
 	
 	private fun setupChoosingPhotoDialog() {
-//		profile_photo.setOnClickListener {
-//			PickImageDialog.build(PickSetup().apply {
-//				setTitle(R.string.choose_photo)
-//			}).show(this)
-//		}
+		profile_photo.setOnClickListener {
+			PickImageDialog.build(PickSetup().apply {
+				setTitle(R.string.choose_photo)
+			}).show(this)
+		}
 	}
 	
 	private val observeUserProgressState = Observer<State> { state ->

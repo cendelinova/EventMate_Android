@@ -188,4 +188,6 @@
 	<string name="title_delete_event">Delete event</string>
 	<string name="message_wish_delete_event">Do you really want to delete this event?</string>
 	<string name="active_filters">Active filters</string>
+	<string name="share">Share</string>
+	<string name="download">Download</string>
 </resources>
