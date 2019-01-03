@@ -12,6 +12,8 @@ data class EventEntity(
 	@ColumnInfo(name = "location") var place: String,
 	@ColumnInfo(name = "state") var state: String,
 	@ColumnInfo(name = "tasks_count") var tasksCount: Int,
-	@ColumnInfo(name = "users_count") var usersCount: Int
+	@ColumnInfo(name = "users_count") var usersCount: Int,
+//	@ColumnInfo(typeAffinity = ColumnInfo.BLOB, name = "photo") var photo: ByteArray? = null
+	@ColumnInfo(name = "photo") var photo: String? = null
 
 )

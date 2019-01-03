@@ -20,9 +20,17 @@ data class Event(
 	val eventOwner: User?,
 	val permissions: MutableList<Permission>?
 ) {
-	constructor(id: Long, name: String, date: String, place: String) : this(
-		id, name, place, date, 0, 0,
-		0, 0, null, EventState.READY_TO_PLAY.name, null, null, null, null, null, null
+	constructor(
+		id: Long,
+		name: String,
+		date: String,
+		place: String,
+		tasksCount: Int,
+		usersCount: Int,
+		photo: String?
+	) : this(
+		id, name, place, date, tasksCount, usersCount,
+		0, 0, photo, EventState.READY_TO_PLAY.name, null, null, null, null, null, null
 	)
 	
 	companion object {
@@ -31,7 +39,10 @@ data class Event(
 				uid,
 				eventName,
 				date,
-				place
+				place,
+				tasksCount,
+				usersCount,
+				photo ?: photo
 			)
 		}
 		
@@ -41,9 +52,10 @@ data class Event(
 				name,
 				date,
 				place,
-				"bla",
+				state,
 				taskCount,
-				usersCount
+				usersCount,
+				photo ?: photo
 			)
 		}
 	}

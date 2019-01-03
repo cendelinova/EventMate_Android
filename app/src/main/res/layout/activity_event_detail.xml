@@ -40,14 +40,15 @@
 				app:layout_collapseMode="parallax"
 				app:layout_collapseParallaxMultiplier="0.9">
 				
-				<ImageView
+				<com.makeramen.roundedimageview.RoundedImageView
 					android:id="@+id/event_photo"
 					android:layout_width="@dimen/profile_photo_size"
 					android:layout_height="@dimen/profile_photo_size"
 					android:layout_alignParentTop="true"
 					android:layout_centerHorizontal="true"
 					android:scaleType="fitXY"
-					android:src="@drawable/ic_event_placeholder" />
+					android:src="@drawable/ic_event_placeholder"
+					app:riv_corner_radius="@dimen/radius" />
 				
 				<TextView
 					android:id="@+id/event_name"

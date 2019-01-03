@@ -18,6 +18,7 @@ import com.vansuita.pickimage.listeners.IPickResult
 import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.EVENT_ID
 import gr.tei.erasmus.pp.eventmate.data.model.TaskRequest
+import gr.tei.erasmus.pp.eventmate.helpers.ImageHelper
 import gr.tei.erasmus.pp.eventmate.helpers.TextInputLayoutHelper
 import gr.tei.erasmus.pp.eventmate.ui.base.*
 import gr.tei.erasmus.pp.eventmate.ui.eventDetail.EventDetailActivity
@@ -103,6 +104,8 @@ class NewTaskActivity : BaseActivity(), Validator.ValidationListener, IPickResul
 				input_time
 			).toInt()
 		
+		val photo = ImageHelper.getStringImage(ImageHelper.convertImageViewToBitmap(task_photo))
+		
 		eventId?.let {
 			viewModel.createTask(
 				TaskRequest(
@@ -111,7 +114,7 @@ class NewTaskActivity : BaseActivity(), Validator.ValidationListener, IPickResul
 					place,
 					description,
 					points,
-					timeLimit, null
+					timeLimit, photo
 				)
 			)
 		}

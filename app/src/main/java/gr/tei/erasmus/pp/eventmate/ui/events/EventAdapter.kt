@@ -1,14 +1,14 @@
 package gr.tei.erasmus.pp.eventmate.ui.events
 
 import android.content.Context
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.squareup.picasso.Picasso
+import androidx.recyclerview.widget.RecyclerView
 import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.data.model.Event
 import gr.tei.erasmus.pp.eventmate.helpers.DateTimeHelper
+import gr.tei.erasmus.pp.eventmate.helpers.ImageHelper
 import kotlinx.android.synthetic.main.event_item.view.*
 import timber.log.Timber
 
@@ -37,9 +37,13 @@ class EventAdapter(
 			view_foreground.setOnClickListener { eventListener.onItemClick(event) }
 			event_name.text = event.name
 			event_date.text = DateTimeHelper.formatDateTimeString(event.date, DateTimeHelper.DATE_TIME_FORMAT)
-			event_place.text = if (event.place.isEmpty()) "-" else  event.place
+			event_place.text = if (event.place.isEmpty()) "-" else event.place
 			event_guests_count.text = event.usersCount.toString()
 			event_tasks_count.text = event.taskCount.toString()
+			
+			event.photo?.let {
+				event_photo.setImageBitmap(ImageHelper.getImageFromString(it))
+			}
 		}
 	}
 	

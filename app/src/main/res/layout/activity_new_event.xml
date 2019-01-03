@@ -50,16 +50,13 @@
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toBottomOf="@id/toolbar">
 			
-			<ImageView
+			<com.makeramen.roundedimageview.RoundedImageView
 				android:id="@+id/event_photo"
+				style="@style/EditableRoundedImage"
 				android:layout_width="@dimen/profile_photo_size"
 				android:layout_height="@dimen/profile_photo_size"
-				android:layout_gravity="top|center_horizontal"
-				android:background="?selectableItemBackground"
-				android:clickable="true"
-				android:focusable="true"
-				android:scaleType="fitXY"
-				android:src="@drawable/ic_event_placeholder" />
+				android:src="@drawable/ic_event_placeholder"
+				app:riv_corner_radius="@dimen/radius" />
 			
 			<ImageView
 				android:layout_width="24dp"

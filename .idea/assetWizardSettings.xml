@@ -33,10 +33,13 @@
                         </option>
                         <option name="values">
                           <map>
+                            <entry key="assetSourceType" value="FILE" />
                             <entry key="color" value="ffffff" />
-                            <entry key="outputName" value="ic_done" />
+                            <entry key="height" value="504" />
+                            <entry key="outputName" value="ic_task_placeholder" />
                             <entry key="overrideSize" value="true" />
-                            <entry key="sourceFile" value="C:\Users\cendp\Documents\School\Software Engineering\Project\icons\tasks.svg" />
+                            <entry key="sourceFile" value="C:\Users\cendp\Downloads\clipboard.svg" />
+                            <entry key="width" value="504" />
                           </map>
                         </option>
                       </PersistentState>

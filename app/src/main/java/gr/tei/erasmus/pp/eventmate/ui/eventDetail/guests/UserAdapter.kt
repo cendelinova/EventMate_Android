@@ -9,11 +9,11 @@ import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.data.model.User
 import kotlinx.android.synthetic.main.guest_item.view.*
 
-class GuestAdapter(
+class UserAdapter(
 	private val context: Context,
 	private val guestListener: GuestListener,
 	private var guests: MutableList<User>
-) : RecyclerView.Adapter<GuestAdapter.GuestViewHolder>() {
+) : RecyclerView.Adapter<UserAdapter.GuestViewHolder>() {
 	override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): GuestViewHolder {
 		return GuestViewHolder(LayoutInflater.from(context).inflate(R.layout.guest_item, viewGroup, false))
 	}

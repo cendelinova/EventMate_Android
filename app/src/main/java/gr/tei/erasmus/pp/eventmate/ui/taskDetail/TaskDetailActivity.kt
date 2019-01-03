@@ -1,22 +1,23 @@
 package gr.tei.erasmus.pp.eventmate.ui.taskDetail
 
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.TASK_ID
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.USER_ID
 import gr.tei.erasmus.pp.eventmate.data.model.Task
 import gr.tei.erasmus.pp.eventmate.data.model.User
+import gr.tei.erasmus.pp.eventmate.helpers.ImageHelper
 import gr.tei.erasmus.pp.eventmate.helpers.StateHelper
 import gr.tei.erasmus.pp.eventmate.helpers.TextInputLayoutHelper.getDefaultTextIfEmpty
 import gr.tei.erasmus.pp.eventmate.ui.base.BaseActivity
 import gr.tei.erasmus.pp.eventmate.ui.base.ErrorState
 import gr.tei.erasmus.pp.eventmate.ui.base.LoadingState
 import gr.tei.erasmus.pp.eventmate.ui.base.State
-import gr.tei.erasmus.pp.eventmate.ui.eventDetail.guests.GuestAdapter
+import gr.tei.erasmus.pp.eventmate.ui.eventDetail.guests.UserAdapter
 import gr.tei.erasmus.pp.eventmate.ui.eventDetail.tasks.TasksViewModel
 import gr.tei.erasmus.pp.eventmate.ui.userProfile.UserProfileActivity
 import kotlinx.android.synthetic.main.activity_task_detail.*
@@ -27,7 +28,7 @@ class TaskDetailActivity : BaseActivity() {
 	
 	private var taskId: Long? = null
 	
-	private lateinit var guestAdapter: GuestAdapter
+	private lateinit var assignessAdapter: UserAdapter
 	
 	private val viewModel by lazy { ViewModelProviders.of(this).get(TasksViewModel::class.java) }
 	
@@ -66,7 +67,7 @@ class TaskDetailActivity : BaseActivity() {
 		}
 	}
 	
-	private val onUserClick = object : GuestAdapter.GuestListener {
+	private val onUserClick = object : UserAdapter.GuestListener {
 		override fun onUserClick(user: User) {
 			startActivity(Intent(this@TaskDetailActivity, UserProfileActivity::class.java).apply {
 				putExtra(USER_ID, user.id)
@@ -81,7 +82,7 @@ class TaskDetailActivity : BaseActivity() {
 	private fun initializeRecyclerView() {
 		Timber.v("initializeRecyclerView() called")
 		
-		guestAdapter = GuestAdapter(
+		assignessAdapter = UserAdapter(
 			this,
 			onUserClick,
 //			mutableListOf(User("blablik"), User("nanan"), User("daaaa"), User("daslsi"), User("sesmem"))
@@ -92,7 +93,7 @@ class TaskDetailActivity : BaseActivity() {
 			setHasFixedSize(true)
 			setEmptyView(assignee_empty_view)
 			layoutManager = GridLayoutManager(context!!, 3)
-			adapter = guestAdapter
+			adapter = assignessAdapter
 		}
 	}
 	
@@ -103,7 +104,9 @@ class TaskDetailActivity : BaseActivity() {
 			tv_time_limit.text = getDefaultTextIfEmpty(timeLimit?.toString())
 			tv_location.text = getDefaultTextIfEmpty(place)
 			tv_points.text = points.toString()
-			
+			photo?.let {
+				task_photo.setImageBitmap(ImageHelper.getImageFromString(it))
+			}
 		}
 	}
 }

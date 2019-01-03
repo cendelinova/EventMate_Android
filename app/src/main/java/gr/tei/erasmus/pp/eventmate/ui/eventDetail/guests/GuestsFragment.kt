@@ -24,7 +24,7 @@ import timber.log.Timber
 
 class GuestsFragment : BaseFragment() {
 	
-	private lateinit var guestAdapter: GuestAdapter
+	private lateinit var guestAdapter: UserAdapter
 	
 	private var eventId: Long? = null
 	
@@ -56,7 +56,7 @@ class GuestsFragment : BaseFragment() {
 	private fun initializeRecyclerView() {
 		Timber.v("initializeRecyclerView() called")
 		
-		guestAdapter = GuestAdapter(
+		guestAdapter = UserAdapter(
 			context!!,
 			onUserClick,
 			mutableListOf()
@@ -78,7 +78,7 @@ class GuestsFragment : BaseFragment() {
 	
 	
 	private val onUserClick = object :
-		GuestAdapter.GuestListener {
+		UserAdapter.GuestListener {
 		override fun onUserClick(user: User) {
 			startActivity(Intent(this@GuestsFragment.activity, UserProfileActivity::class.java))
 		}

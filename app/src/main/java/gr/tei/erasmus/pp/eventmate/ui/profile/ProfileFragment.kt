@@ -7,14 +7,13 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.app.App
-import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.USER_ID
 import gr.tei.erasmus.pp.eventmate.data.model.User
 import gr.tei.erasmus.pp.eventmate.helpers.StateHelper
 import gr.tei.erasmus.pp.eventmate.ui.base.BaseFragment
 import gr.tei.erasmus.pp.eventmate.ui.base.ErrorState
 import gr.tei.erasmus.pp.eventmate.ui.base.LoadingState
 import gr.tei.erasmus.pp.eventmate.ui.base.State
-import gr.tei.erasmus.pp.eventmate.ui.eventDetail.guests.GuestAdapter
+import gr.tei.erasmus.pp.eventmate.ui.eventDetail.guests.UserAdapter
 import gr.tei.erasmus.pp.eventmate.ui.eventDetail.guests.UserViewModel
 import gr.tei.erasmus.pp.eventmate.ui.gameRank.GameRankActivity
 import gr.tei.erasmus.pp.eventmate.ui.help.HelpActivity
@@ -78,7 +77,7 @@ class ProfileFragment : BaseFragment() {
 	
 	
 	private val onUserClick = object :
-		GuestAdapter.GuestListener {
+		UserAdapter.GuestListener {
 		override fun onUserClick(user: User) {
 			startActivity(Intent(this@ProfileFragment.activity, UserProfileActivity::class.java))
 		}

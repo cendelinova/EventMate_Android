@@ -43,6 +43,14 @@
 		<item name="android:textSize">@dimen/font_normal</item>
 	</style>
 	
+	<style name="EditableRoundedImage">
+		<item name="android:clickable">true</item>
+		<item name="android:focusable">true</item>
+		<item name="android:layout_gravity">top|center_horizontal</item>
+		<item name="android:background">?selectableItemBackground</item>
+		<item name="android:scaleType">fitXY</item>
+	</style>
+	
 	
 	<style name="ChipStyle" parent="Widget.MaterialComponents.Chip.Entry">
 		<item name="chipBackgroundColor">@color/white</item>

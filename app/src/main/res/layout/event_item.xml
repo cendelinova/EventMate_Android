@@ -54,11 +54,13 @@
 			android:layout_height="match_parent"
 			android:layout_margin="@dimen/spacing_small">
 			
-			<ImageView
+			<com.makeramen.roundedimageview.RoundedImageView
 				android:id="@+id/event_photo"
 				android:layout_width="@dimen/bigger_icon_size"
 				android:layout_height="@dimen/bigger_icon_size"
-				android:src="@drawable/ic_event_placeholder" />
+				android:scaleType="fitXY"
+				android:src="@drawable/ic_event_placeholder"
+				app:riv_corner_radius="@dimen/radius" />
 			
 			<RelativeLayout
 				android:layout_width="match_parent"
