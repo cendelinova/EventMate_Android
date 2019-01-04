@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.data.model.Report
+import gr.tei.erasmus.pp.eventmate.helpers.ImageHelper
 import kotlinx.android.synthetic.main.report_item.view.*
 import timber.log.Timber
 
@@ -28,11 +29,27 @@ class ReportAdapter(
 	
 	private fun displayReportEntry(viewHolder: ReportViewHolder, report: Report) {
 		with(viewHolder.itemView) {
-			setOnClickListener { reportListener.onReportClick(this, true) }
+			setOnClickListener {
+				if (report_item.getChildAt(0).id == R.id.view_background) {
+					reportListener.onReportClick(this, true)
+				} else {
+					reportListener.onReportClick(this, false)
+				}
+			}
+			report.photo?.let {
+				report_photo.setImageBitmap(ImageHelper.getImageFromString(it))
+			}
+			
+			report_name.text = report.name
+			report_description.text = report.description
+			
+			
 			btn_delete.setOnClickListener { reportListener.onReportDelete(report) }
 			btn_download.setOnClickListener { reportListener.onReportDownload(report) }
 			btn_share.setOnClickListener { reportListener.onReportShare(report) }
+			
 		}
+		
 	}
 	
 	inner class ReportViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)

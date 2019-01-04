@@ -2,6 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/report_item"
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content">
 	
@@ -118,7 +119,7 @@
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_below="@id/report_name"
-					android:maxLines="2"
+					android:maxLines="4"
 					android:ellipsize="end"
 					tools:text="All boring stuff... Great night guys!" />
 			

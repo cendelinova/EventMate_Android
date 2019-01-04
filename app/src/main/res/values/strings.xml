@@ -190,4 +190,20 @@
 	<string name="active_filters">Active filters</string>
 	<string name="share">Share</string>
 	<string name="download">Download</string>
+	<string name="msg_report_marker">Event report design</string>
+	<string name="hint_report_name">Report name</string>
+	<string name="hint_report_comment">Your comment</string>
+	<string name="btn_generate_report">Generate report</string>
+	<string name="category">Category</string>
+	<string name="full_report">Full summary</string>
+	<string name="certificate">Certificate</string>
+	<string name="display_options">Display options</string>
+	<string name="show_event_info">Show <b><font fgcolor='#064f68'>event information</font></b></string>
+	<string name="display_guests">Display <b><font fgcolor='#064f68'>guests</font></b></string>
+	<string name="include_tasks">Include <b><font fgcolor='#064f68'>tasks</font></b></string>
+	<string name="event_date">Event date</string>
+	<string name="event_place">Event place</string>
+	<string name="report_creator">Report creator</string>
+	<string name="report_created_date">Report created date</string>
+	<string name="mgs_report_info">WHAT INFORMATION WOULD YOU LIKE TO INCLUDE?</string>
 </resources>

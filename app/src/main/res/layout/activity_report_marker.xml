@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_height="match_parent"
+	android:layout_width="match_parent"
+	tools:context=".ui.newTask.NewTaskActivity">
+	
+	<com.google.android.material.appbar.AppBarLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:fitsSystemWindows="true"
+		android:background="@android:color/transparent"
+		android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+		app:elevation="0dp">
+		
+		<androidx.appcompat.widget.Toolbar
+			android:id="@+id/toolbar"
+			android:background="@color/white"
+			android:layout_height="wrap_content"
+			android:layout_width="match_parent"
+			android:elevation="0dp"
+			android:theme="@style/AppTheme.AppBarOverlayNoBackground"
+			app:popupTheme="@style/AppTheme.PopupOverlay">
+			
+			<TextView
+				android:id="@+id/my_title"
+				style="@style/MessageTitle"
+				android:layout_centerInParent="true"
+				android:layout_height="wrap_content"
+				android:layout_width="wrap_content"
+				android:text="@string/msg_report_marker" />
+		</androidx.appcompat.widget.Toolbar>
+	
+	
+	</com.google.android.material.appbar.AppBarLayout>
+	
+	<androidx.core.widget.NestedScrollView
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		app:layout_behavior="@string/appbar_scrolling_view_behavior">
+		
+		<androidx.constraintlayout.widget.ConstraintLayout
+			android:focusable="true"
+			android:focusableInTouchMode="true"
+			android:layout_height="wrap_content"
+			android:layout_width="match_parent">
+			
+			<ProgressBar
+				android:id="@+id/progress"
+				android:layout_height="wrap_content"
+				android:layout_width="wrap_content"
+				android:visibility="invisible"
+				app:layout_constraintBottom_toBottomOf="parent"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toTopOf="parent" />
+			
+			
+			<com.google.android.material.textfield.TextInputLayout
+				android:id="@+id/input_report_name"
+				style="@style/MyEditText"
+				android:hint="@string/hint_report_name"
+				android:layout_height="wrap_content"
+				android:layout_width="0dp"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent">
+				
+				<com.google.android.material.textfield.TextInputEditText
+					android:drawableTint="@color/grey"
+					android:inputType="text"
+					android:layout_height="wrap_content"
+					android:layout_width="match_parent"
+					android:lines="1" />
+			</com.google.android.material.textfield.TextInputLayout>
+			
+			
+			<com.google.android.material.textfield.TextInputLayout
+				android:id="@+id/input_report_comment"
+				style="@style/MyEditText"
+				android:hint="@string/hint_report_comment"
+				android:layout_height="wrap_content"
+				android:layout_width="0dp"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toBottomOf="@id/input_report_name">
+				
+				<com.google.android.material.textfield.TextInputEditText
+					android:drawableTint="@color/grey"
+					android:inputType="textMultiLine"
+					android:layout_height="wrap_content"
+					android:layout_width="match_parent"
+					android:lines="1"
+					android:gravity="top"
+					android:maxLines="10"
+					android:minLines="6" />
+			</com.google.android.material.textfield.TextInputLayout>
+			
+			<TextView
+				android:id="@+id/header_category"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:text="@string/category"
+				android:layout_marginTop="@dimen/spacing_small"
+				android:layout_marginStart="@dimen/spacing_normal"
+				android:textSize="@dimen/font_large"
+				android:textAllCaps="true"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toBottomOf="@id/input_report_comment" />
+			
+			<RadioGroup
+				android:id="@+id/report_category"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:orientation="horizontal"
+				android:layout_marginStart="@dimen/spacing_normal"
+				android:weightSum="2"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toBottomOf="@id/header_category">
+				
+				<RadioButton
+					android:id="@+id/full_report"
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:text="@string/full_report"
+					android:layout_weight="1"
+					android:theme="@style/MyRadioButtonStyle" />
+				
+				<RadioButton
+					android:id="@+id/certificate"
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:layout_weight="1"
+					android:text="@string/certificate"
+					android:theme="@style/MyRadioButtonStyle" />
+			</RadioGroup>
+			
+			
+			<LinearLayout
+				android:id="@+id/summary_options"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:orientation="vertical"
+				android:layout_marginStart="@dimen/spacing_normal"
+				android:layout_marginEnd="@dimen/spacing_normal"
+				android:layout_marginTop="@dimen/spacing_small"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toBottomOf="@id/report_category">
+				
+				<TextView
+					android:id="@+id/header_display_info"
+					android:layout_height="wrap_content"
+					android:layout_width="match_parent"
+					android:textSize="@dimen/font_large"
+					android:text="@string/display_options"
+					android:layout_marginBottom="@dimen/spacing_small"
+					android:textAllCaps="true" />
+				
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"
+					android:orientation="horizontal">
+					
+					<TextView
+						android:id="@+id/tv_show_event_info"
+						style="@style/CheckboxText"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:text="@string/show_event_info" />
+					
+					<Space
+						android:layout_width="0dp"
+						android:layout_weight="1"
+						android:layout_height="wrap_content" />
+					
+					<CheckBox
+						android:id="@+id/show_event_info"
+						style="@style/CheckboxStyle"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_gravity="center_vertical" />
+				
+				</LinearLayout>
+				
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"
+					android:orientation="horizontal">
+					
+					<TextView
+						android:id="@+id/tv_display_guests"
+						style="@style/CheckboxText"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:text="@string/display_guests" />
+					
+					<Space
+						android:layout_width="0dp"
+						android:layout_weight="1"
+						android:layout_height="wrap_content" />
+					
+					<CheckBox
+						android:id="@+id/display_guests"
+						style="@style/CheckboxStyle"
+						android:layout_gravity="center_vertical"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content" />
+				</LinearLayout>
+				
+				
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"
+					android:orientation="horizontal">
+					
+					<TextView
+						android:id="@+id/tv_include_tasks"
+						style="@style/CheckboxText"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:text="@string/include_tasks" />
+					
+					<Space
+						android:layout_width="0dp"
+						android:layout_weight="1"
+						android:layout_height="wrap_content" />
+					
+					<CheckBox
+						android:id="@+id/include_tasks"
+						style="@style/CheckboxStyle"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_gravity="center_vertical" />
+				</LinearLayout>
+			
+			
+			</LinearLayout>
+			
+			
+			<androidx.appcompat.widget.AppCompatButton
+				android:id="@+id/btn_generate_report"
+				style="@style/Button"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="@dimen/spacing_normal"
+				android:layout_width="wrap_content"
+				android:text="@string/btn_generate_report"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toBottomOf="@id/summary_options" />
+		
+		</androidx.constraintlayout.widget.ConstraintLayout>
+	
+	</androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
+

@@ -1,5 +1,6 @@
 package gr.tei.erasmus.pp.eventmate.ui.report
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProviders
@@ -38,7 +39,7 @@ class ReportListActivity : BaseActivity() {
 	
 	private fun handleAddFab() {
 		fab.setOnClickListener {
-			//			startActivity(Intent(this, NewEventActivity::class.java))
+			startActivity(Intent(this, ReportMarkerActivity::class.java))
 		}
 	}
 	
@@ -51,7 +52,10 @@ class ReportListActivity : BaseActivity() {
 		reportAdapter = ReportAdapter(
 			this,
 			onReportClick,
-			mutableListOf(Report("Certificate for Tim", "awesome party"), Report("More certificate", "blbba"))
+			mutableListOf(
+				Report("Certificate for Tim", "awesome party", null),
+				Report("More certificate", "blbba", null)
+			)
 		)
 		
 		with(reports_recycler_view) {
