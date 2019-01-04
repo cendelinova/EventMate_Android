@@ -3,6 +3,7 @@ package gr.tei.erasmus.pp.eventmate.ui.report
 import android.os.Bundle
 import android.view.LayoutInflater
 import gr.tei.erasmus.pp.eventmate.R
+import gr.tei.erasmus.pp.eventmate.data.model.User
 import gr.tei.erasmus.pp.eventmate.helpers.DialogHelper
 import gr.tei.erasmus.pp.eventmate.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_report_marker.*
@@ -25,10 +26,20 @@ class ReportMarkerActivity : BaseActivity() {
 				null
 			)
 		}
-		tv_display_guests.setOnClickListener { }
+		tv_display_guests.setOnClickListener {
+			DialogHelper.showDialogWithAdapter(
+				this,
+				ReportGuestAdapter(
+					this@ReportMarkerActivity, null, mutableListOf(User("pepa"), User("jenda"), User("evik"))
+				),
+				LayoutInflater.from(this).inflate(R.layout.report_guest_dialog, null),
+				null
+			)
+			
+		}
 		tv_include_tasks.setOnClickListener { }
 		
 	}
 	
-	
 }
+

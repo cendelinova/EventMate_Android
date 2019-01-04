@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:orientation="vertical"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:padding="@dimen/spacing_normal">
+	
+	<TextView
+		android:id="@+id/my_title"
+		style="@style/MessageTitle"
+		android:layout_height="wrap_content"
+		android:layout_width="wrap_content"
+		android:textSize="@dimen/font_normal"
+		android:layout_marginBottom="@dimen/spacing_normal"
+		android:text="@string/msg_report_guests" />
+	
+	<LinearLayout
+		android:id="@+id/guest_empty_view"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:orientation="vertical">
+		
+		<Space
+			android:layout_width="match_parent"
+			android:layout_height="0dp"
+			android:layout_weight="2" />
+		
+		<TextView
+			style="@style/EmptyText"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:text="@string/tv_no_guests" />
+		
+		<Space
+			android:layout_width="match_parent"
+			android:layout_height="0dp"
+			android:layout_weight="2" />
+	
+	</LinearLayout>
+	
+	<gr.tei.erasmus.pp.eventmate.ui.common.RecyclerViewEmptyViewSupport
+		android:id="@+id/guest_recycler_view"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:scrollbars="none"
+		app:fastScrollThumbColor="@color/colorAccent" />
+
+</LinearLayout>
