@@ -35,7 +35,6 @@ class ReportMarkerActivity : BaseActivity() {
 				LayoutInflater.from(this).inflate(R.layout.report_guest_dialog, null),
 				null
 			)
-			
 		}
 		tv_include_tasks.setOnClickListener { }
 		

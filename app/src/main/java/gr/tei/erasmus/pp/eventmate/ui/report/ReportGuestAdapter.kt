@@ -34,6 +34,9 @@ class ReportGuestAdapter(
 			user.photo?.let {
 				user_photo.setImageBitmap(ImageHelper.getImageFromString(it))
 			}
+			setOnClickListener {
+				checkbox.isChecked = !checkbox.isChecked
+			}
 //			checkbox.
 		}
 		

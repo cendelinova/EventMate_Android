@@ -4,11 +4,13 @@ import android.content.Context
 import android.content.DialogInterface
 import android.view.View
 import androidx.appcompat.app.AlertDialog
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.WhichButton
+import com.afollestad.materialdialogs.actions.getActionButton
+import com.afollestad.materialdialogs.customview.customView
+import com.afollestad.materialdialogs.list.customListAdapter
 import gr.tei.erasmus.pp.eventmate.R
-import gr.tei.erasmus.pp.eventmate.ui.report.ReportGuestAdapter
-import kotlinx.android.synthetic.main.report_guest_dialog.view.*
 
 
 object DialogHelper {
@@ -39,26 +41,18 @@ object DialogHelper {
 	
 	fun showDialogWithAdapter(
 		context: Context,
-		adapter: ReportGuestAdapter,
+		adapter: RecyclerView.Adapter<*>,
 		customView: View,
 		callback: DialogInterface.OnClickListener?
 	) {
 		
-		with(customView.guest_recycler_view) {
-			setHasFixedSize(true)
-			setEmptyView(customView.guest_empty_view)
-			layoutManager = LinearLayoutManager(context).apply { orientation = RecyclerView.VERTICAL }
-			this.adapter = adapter
+		MaterialDialog(context).show {
+			customView(view = customView, scrollable = true)
+			customListAdapter(adapter)
+			positiveButton(R.string.btn_confirm)
+			negativeButton(R.string.btn_cancel)
+			getActionButton(WhichButton.POSITIVE).updateTextColor(context.getColor(R.color.colorPrimary))
 		}
 		
-		AlertDialog.Builder(context).apply {
-			setView(customView)
-			setPositiveButton(R.string.btn_confirm, callback)
-			setNegativeButton(
-				R.string.btn_cancel
-			) { dialog, _ -> dialog.dismiss() }
-		}.also {
-			it.create()
-		}.show()
 	}
 }

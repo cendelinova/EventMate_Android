@@ -7,17 +7,18 @@
 	<de.hdodenhof.circleimageview.CircleImageView
 		android:id="@+id/user_photo"
 		android:layout_gravity="center_vertical"
-		android:layout_width="@dimen/icon_size"
-		android:layout_height="@dimen/icon_size"
+		android:layout_width="30dp"
+		android:layout_height="30dp"
+		android:layout_marginStart="@dimen/spacing_normal"
 		android:src="@drawable/ic_user_placeholder" />
 	
 	<TextView
 		android:id="@+id/user_name"
+		android:textColor="@color/black"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_gravity="center_vertical"
-		android:layout_marginStart="@dimen/spacing_normal"
-		android:text="sejesmsei" />
+		android:layout_marginStart="@dimen/spacing_normal" />
 	
 	<Space
 		android:layout_width="0dp"

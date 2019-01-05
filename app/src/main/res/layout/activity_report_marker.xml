@@ -103,7 +103,7 @@
 				android:text="@string/category"
 				android:layout_marginTop="@dimen/spacing_small"
 				android:layout_marginStart="@dimen/spacing_normal"
-				android:textSize="@dimen/font_large"
+				android:textSize="@dimen/font_normal"
 				android:textAllCaps="true"
 				app:layout_constraintStart_toStartOf="parent"
 				app:layout_constraintTop_toBottomOf="@id/input_report_comment" />
@@ -153,7 +153,7 @@
 					android:id="@+id/header_display_info"
 					android:layout_height="wrap_content"
 					android:layout_width="match_parent"
-					android:textSize="@dimen/font_large"
+					android:textSize="@dimen/font_normal"
 					android:text="@string/display_options"
 					android:layout_marginBottom="@dimen/spacing_small"
 					android:textAllCaps="true" />
