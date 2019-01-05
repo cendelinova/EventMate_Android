@@ -207,4 +207,5 @@
 	<string name="report_created_date">Report created date</string>
 	<string name="mgs_report_info">WHAT INFORMATION WOULD YOU LIKE TO INCLUDE?</string>
 	<string name="msg_report_guests">WHO WILL BE IN YOUR REPORT?</string>
+	<string name="msg_report_tasks">WHICH TASKS WOULD YOU LIKE TO INCLUDE?</string>
 </resources>

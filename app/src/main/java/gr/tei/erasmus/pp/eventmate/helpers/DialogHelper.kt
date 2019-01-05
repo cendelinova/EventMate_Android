@@ -11,6 +11,7 @@ import com.afollestad.materialdialogs.actions.getActionButton
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.list.customListAdapter
 import gr.tei.erasmus.pp.eventmate.R
+import kotlinx.android.synthetic.main.report_pick_dialog.view.*
 
 
 object DialogHelper {
@@ -43,15 +44,20 @@ object DialogHelper {
 		context: Context,
 		adapter: RecyclerView.Adapter<*>,
 		customView: View,
-		callback: DialogInterface.OnClickListener?
+		title: String,
+		callback: View.OnClickListener?
 	) {
 		
 		MaterialDialog(context).show {
+			customView.my_title.text = title
 			customView(view = customView, scrollable = true)
 			customListAdapter(adapter)
 			positiveButton(R.string.btn_confirm)
 			negativeButton(R.string.btn_cancel)
-			getActionButton(WhichButton.POSITIVE).updateTextColor(context.getColor(R.color.colorPrimary))
+			getActionButton(WhichButton.POSITIVE).setOnClickListener {
+				callback?.onClick(it)
+				this.dismiss()
+			}
 		}
 		
 	}

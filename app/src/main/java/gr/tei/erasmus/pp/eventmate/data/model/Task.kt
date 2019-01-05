@@ -11,18 +11,16 @@ data class Task(
 	val place: String?,
 	val timeLimit: Int?,
 	val photo: String?,
-	private val assigness: List<User>?
+	private val assigness: List<User>?,
+	var checked: Boolean = false
 ) {
 	
-//	constructor(
-//		name: String,
-//		points: Int,
-//		description: String?,
-//		place: String?,
-//		timeLimit: Int?
-//	) : this(
-//		0, 0, name, points, description, place, timeLimit, null, null
-//	)
+	constructor(
+		id: Long,
+		name: String
+	) : this(
+		id, 0, name, 0, null, null, null, null, null
+	)
 	
 	constructor(
 		id: Long,

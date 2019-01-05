@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import gr.tei.erasmus.pp.eventmate.R
-import gr.tei.erasmus.pp.eventmate.data.model.Report
 import gr.tei.erasmus.pp.eventmate.data.model.User
 import gr.tei.erasmus.pp.eventmate.helpers.ImageHelper
 import kotlinx.android.synthetic.main.report_guest_item.view.*
@@ -37,7 +36,11 @@ class ReportGuestAdapter(
 			setOnClickListener {
 				checkbox.isChecked = !checkbox.isChecked
 			}
-//			checkbox.
+			checkbox.isChecked = user.checked
+			checkbox.setOnCheckedChangeListener { _, isChecked ->
+				user.checked = isChecked
+				reportListener?.onReportGuestPick(user.id, isChecked)
+			}
 		}
 		
 	}
@@ -45,9 +48,6 @@ class ReportGuestAdapter(
 	inner class ReportGuestViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 	
 	interface ReportListener {
-		fun onReportShare(report: Report)
-		fun onReportDownload(report: Report)
-		fun onReportDelete(report: Report)
-		fun onReportClick(itemView: View, slideIn: Boolean)
+		fun onReportGuestPick(userId: Long?, isChecked: Boolean)
 	}
 }

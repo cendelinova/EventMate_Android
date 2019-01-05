@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:orientation="horizontal"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content">
+	
+	<com.makeramen.roundedimageview.RoundedImageView
+		android:id="@+id/task_photo"
+		android:layout_gravity="center_vertical"
+		android:layout_width="30dp"
+		android:layout_height="30dp"
+		android:layout_marginStart="@dimen/spacing_normal"
+		android:src="@drawable/ic_task_placeholder"
+		app:riv_corner_radius="@dimen/radius" />
+	
+	<TextView
+		android:id="@+id/task_name"
+		android:textColor="@color/black"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_gravity="center_vertical"
+		android:layout_marginStart="@dimen/spacing_normal" />
+	
+	<Space
+		android:layout_width="0dp"
+		android:layout_weight="1"
+		android:layout_height="wrap_content" />
+	
+	<CheckBox
+		android:id="@+id/checkbox"
+		style="@style/CheckboxDialogStyle"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content" />
+
+</LinearLayout>
