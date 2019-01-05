@@ -24,7 +24,6 @@
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:text="@string/event_owner"
-			android:layout_marginBottom="-15dp"
 			android:theme="@style/MyRadioButtonStyle"/>
 		
 		<RadioButton
@@ -32,8 +31,6 @@
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:text="@string/event_guest"
-			android:layout_marginBottom="-15dp"
-			
 			android:theme="@style/MyRadioButtonStyle"/>
 	</RadioGroup>
 	
@@ -55,15 +52,12 @@
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:text="@string/event_status_editable"
-			android:layout_marginBottom="-15dp"
 			android:theme="@style/MyRadioButtonStyle"/>
 		
 		<RadioButton
 			android:id="@+id/ready_to_play"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:layout_marginBottom="-15dp"
-			
 			android:theme="@style/MyRadioButtonStyle"
 			android:text="@string/event_status_ready_to_play" />
 		
@@ -72,7 +66,6 @@
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:text="@string/event_status_in_play"
-			android:layout_marginBottom="-15dp"
 			android:theme="@style/MyRadioButtonStyle"/>
 		
 		<RadioButton
@@ -80,8 +73,6 @@
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:text="@string/event_status_evaluation"
-			android:layout_marginBottom="-15dp"
-			
 			android:theme="@style/MyRadioButtonStyle"/>
 		
 		<RadioButton

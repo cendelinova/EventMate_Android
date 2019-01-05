@@ -27,6 +27,12 @@ class ReportMarkerActivity : BaseActivity() {
 		setupListeners()
 	}
 	
+	private fun handleReportCreation() {
+		btn_generate_report.setOnClickListener {
+			// todo viewmodel create call
+		}
+	}
+	
 	private fun setupListeners() {
 		tv_show_event_info.setOnClickListener {
 			DialogHelper.showCustomDialog(

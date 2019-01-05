@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/report_item"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content">
+	
+	<androidx.cardview.widget.CardView
+		android:id="@+id/view_background"
+		android:layout_width="match_parent"
+		android:layout_height="100dp"
+		android:layout_marginStart="@dimen/spacing_normal"
+		android:layout_marginEnd="@dimen/spacing_normal"
+		android:layout_marginBottom="@dimen/spacing_tiny"
+		app:cardBackgroundColor="@color/card_view_foreground"
+		app:cardCornerRadius="5dp"
+		app:cardElevation="0dp">
+		
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:weightSum="3"
+			android:gravity="center_vertical">
+			
+			<TextView
+				android:id="@+id/btn_share"
+				style="@style/ReportIcon"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:drawableTop="@drawable/ic_share"
+				android:text="@string/share" />
+			
+			<TextView
+				android:id="@+id/btn_download"
+				style="@style/ReportIcon"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:drawableTop="@drawable/ic_download"
+				android:text="@string/download" />
+			
+			<TextView
+				android:id="@+id/btn_delete"
+				style="@style/ReportIcon"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:drawableTop="@drawable/ic_delete_black"
+				android:drawablePadding="@dimen/spacing_small"
+				android:text="@string/delete" />
+		
+		</LinearLayout>
+	
+	</androidx.cardview.widget.CardView>
+	
+	<androidx.cardview.widget.CardView
+		android:id="@+id/view_foreground"
+		android:layout_width="match_parent"
+		android:layout_height="100dp"
+		android:layout_marginStart="@dimen/spacing_normal"
+		android:layout_marginEnd="@dimen/spacing_normal"
+		android:layout_marginBottom="@dimen/spacing_tiny"
+		android:foreground="?attr/selectableItemBackground"
+		app:cardBackgroundColor="@color/card_view_foreground"
+		app:cardCornerRadius="5dp"
+		app:cardElevation="0dp">
+		
+		<RelativeLayout
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:layout_margin="@dimen/spacing_small">
+			
+			<ImageView
+				android:id="@+id/submission_icon"
+				android:layout_width="@dimen/bigger_icon_size"
+				android:layout_height="@dimen/bigger_icon_size"
+				android:layout_gravity="top|center_horizontal"
+				android:background="?selectableItemBackground"
+				android:clickable="true"
+				android:focusable="true"
+				android:scaleType="fitXY"
+				android:src="@drawable/ic_photo" />
+			
+			<RelativeLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginStart="@dimen/spacing_small"
+				android:layout_toEndOf="@id/submission_icon">
+				
+				<TextView
+					android:id="@+id/submission_name"
+					style="@style/NameTitle"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginBottom="@dimen/spacing_tiny"
+					tools:text="Tim's stag party" />
+				
+				<TextView
+					android:id="@+id/submission_description"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_below="@id/submission_name"
+					android:maxLines="4"
+					android:ellipsize="end"
+					tools:text="All boring stuff... Great night guys!" />
+			
+			</RelativeLayout>
+		
+		</RelativeLayout>
+	
+	</androidx.cardview.widget.CardView>
+
+</FrameLayout>
