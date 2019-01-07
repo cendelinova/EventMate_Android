@@ -13,10 +13,11 @@ import android.provider.MediaStore
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
-import cafe.adriel.androidaudiorecorder.AndroidAudioRecorder
-import cafe.adriel.androidaudiorecorder.model.AudioChannel
-import cafe.adriel.androidaudiorecorder.model.AudioSampleRate
-import cafe.adriel.androidaudiorecorder.model.AudioSource
+//import cafe.adriel.androidaudiorecorder.AndroidAudioRecorder
+//import cafe.adriel.androidaudiorecorder.AudioRecorderActivity
+//import cafe.adriel.androidaudiorecorder.model.AudioChannel
+//import cafe.adriel.androidaudiorecorder.model.AudioSampleRate
+//import cafe.adriel.androidaudiorecorder.model.AudioSource
 import com.squareup.picasso.Picasso
 import com.vansuita.pickimage.bean.PickResult
 import com.vansuita.pickimage.bundle.PickSetup
@@ -37,7 +38,7 @@ import java.text.DateFormat
 import java.util.*
 
 
-class AssigneeSubmissionListActivity : BaseActivity(), IPickResult {
+class AssigneeSubmissionListActivity : AppCompatActivity(), IPickResult {
 	
 	private lateinit var submissionAdapter: SubmissionAdapter
 	
@@ -154,7 +155,7 @@ class AssigneeSubmissionListActivity : BaseActivity(), IPickResult {
 		with(submission_recycler_view) {
 			setHasFixedSize(true)
 			setEmptyView(submission_empty_view)
-			layoutManager = LinearLayoutManager(context!!)
+			layoutManager = LinearLayoutManager(context)
 			adapter = submissionAdapter
 		}
 	}
@@ -174,16 +175,16 @@ class AssigneeSubmissionListActivity : BaseActivity(), IPickResult {
 	
 	private fun openAudioRecord() {
 		val filePath = Environment.getExternalStorageDirectory().toString() + "/recorded_audio.wav"
-		AndroidAudioRecorder.with(this)
-			.setFilePath(filePath)
-			.setColor(ContextCompat.getColor(this, R.color.colorPrimary))
-			.setRequestCode(REQUEST_AUDIO_RECORD)
-			.setSource(AudioSource.MIC)
-			.setChannel(AudioChannel.STEREO)
-			.setSampleRate(AudioSampleRate.HZ_48000)
-			.setAutoStart(true)
-			.setKeepDisplayOn(true)
-			.record()
+//		AndroidAudioRecorder.with(this)
+//			.setFilePath(filePath)
+//			.setColor(ContextCompat.getColor(this, R.color.colorPrimary))
+//			.setRequestCode(REQUEST_AUDIO_RECORD)
+//			.setSource(AudioSource.MIC)
+//			.setChannel(AudioChannel.STEREO)
+//			.setSampleRate(AudioSampleRate.HZ_48000)
+//			.setAutoStart(true)
+//			.setKeepDisplayOn(true)
+//			.record()
 	}
 	
 	

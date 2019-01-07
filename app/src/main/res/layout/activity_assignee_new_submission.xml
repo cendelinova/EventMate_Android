@@ -98,6 +98,11 @@
 					android:maxHeight="350dp"
 					android:adjustViewBounds="true"
 					app:riv_corner_radius="@dimen/radius" />
+				
+				<com.keenfin.audioview.AudioView
+					android:id="@+id/audio_view"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"/>
 			
 			</LinearLayout>
 			

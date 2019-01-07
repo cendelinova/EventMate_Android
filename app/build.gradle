@@ -41,85 +41,64 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.1.0-alpha01'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-alpha2'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-alpha3'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'com.google.android.material:material:1.1.0-alpha02'
-    implementation 'androidx.preference:preference:1.1.0-alpha01'
-
+    implementation 'androidx.preference:preference:1.1.0-alpha02'
     // Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
     implementation 'com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2'
-
     // Kotlin coroutine
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.0.1'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.0.0'
-
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.0'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.1.0'
     // ViewModel and LiveData
     implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
-
     // Logging
     implementation 'com.jakewharton.timber:timber:4.7.1'
-
     // Dagger
     implementation 'com.google.dagger:dagger:2.17'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     kapt 'com.google.dagger:dagger-compiler:2.17'
     implementation 'com.google.code.findbugs:jsr305:3.0.2'
-
     // FastScroll recycleview
     implementation 'com.simplecityapps:recyclerview-fastscroll:1.0.16'
-
     // Gson
     implementation 'com.google.code.gson:gson:2.8.5'
-
     // Input validation
     implementation 'com.mobsandgeeks:android-saripaar:2.0.0'
     kapt 'com.mobsandgeeks:android-saripaar:2.0.0'
-
     // Joda time
     implementation 'joda-time:joda-time:2.10.1'
-
     // Circle photo
     implementation 'de.hdodenhof:circleimageview:2.2.0'
-
     // Picasso photo
     implementation 'com.squareup.picasso:picasso:2.71828'
-
     // Dialog image
     implementation 'com.github.jrvansuita:PickImage:2.2.4'
-
     implementation 'com.github.warkiz.widget:indicatorseekbar:2.1.2'
-
     // Rounded imageview
     implementation 'com.makeramen:roundedimageview:2.3.0'
-
     implementation 'com.daimajia.easing:library:2.0@aar'
     implementation 'com.daimajia.androidanimations:library:2.3@aar'
-
     // dialogs
     implementation 'com.afollestad.material-dialogs:core:2.0.0-rc7'
-
     // Custom floating action button
     implementation 'com.github.kobakei:MaterialFabSpeedDial:1.2.0'
-
-    implementation 'com.github.adrielcafe:AndroidAudioRecorder:0.3.0'
-
-    implementation 'bg.devlabs.fullscreenvideoview:library:1.0.0'
-
-
+    // audio recorder
+    // audio
+    implementation 'com.4ert:audioview:0.4'
     // Room library
     implementation 'androidx.room:room-runtime:2.1.0-alpha03'
     annotationProcessor 'androidx.room:room-compiler:2.1.0-alpha03'
     androidTestImplementation 'androidx.room:room-testing:2.1.0-alpha03'
     kapt 'androidx.lifecycle:lifecycle-compiler:2.0.0'
     kapt 'androidx.room:room-compiler:2.1.0-alpha03'
-
-
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+    implementation project(':AndroidAudioRecorder')
 }

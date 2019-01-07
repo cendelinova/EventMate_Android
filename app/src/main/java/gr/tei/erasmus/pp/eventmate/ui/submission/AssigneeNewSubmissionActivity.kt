@@ -52,25 +52,25 @@ class AssigneeNewSubmissionActivity : BaseActivity() {
 //			video_view.requestFocus()
 //			video_view.seekTo(1)
 			
-			val data1: Uri = Uri.parse(intent.getStringExtra(PHOTO))
-			
-			Picasso.get().load(data1).into(photo)
-			
-			photo.setOnClickListener {
-				val layout =
-					LayoutInflater.from(this@AssigneeNewSubmissionActivity).inflate(R.layout.dialog_photo_preview, null)
-						.also {
-							it.photo.setImageURI(data1)
-						}
-				val dialog = AlertDialog.Builder(this).apply {
-					setView(layout)
-				}.create()
-				
-				layout.btn_close.setOnClickListener {
-					dialog.dismiss()
-				}
-				dialog.show()
-			}
+//			val data1: Uri = Uri.parse(intent.getStringExtra(PHOTO))
+//
+//			Picasso.get().load(data1).into(photo)
+//
+//			photo.setOnClickListener {
+//				val layout =
+//					LayoutInflater.from(this@AssigneeNewSubmissionActivity).inflate(R.layout.dialog_photo_preview, null)
+//						.also {
+//							it.photo.setImageURI(data1)
+//						}
+//				val dialog = AlertDialog.Builder(this).apply {
+//					setView(layout)
+//				}.create()
+//
+//				layout.btn_close.setOnClickListener {
+//					dialog.dismiss()
+//				}
+//				dialog.show()
+//			}
 			
 		}
 	}
