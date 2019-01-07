@@ -35,8 +35,8 @@
                           <map>
                             <entry key="assetSourceType" value="FILE" />
                             <entry key="color" value="ffffff" />
-                            <entry key="outputName" value="ic_audio_type" />
-                            <entry key="sourceFile" value="C:\Users\cendp\Downloads\volume.svg" />
+                            <entry key="outputName" value="ic_pause_button_around" />
+                            <entry key="sourceFile" value="C:\Users\cendp\Downloads\pause.svg" />
                           </map>
                         </option>
                       </PersistentState>

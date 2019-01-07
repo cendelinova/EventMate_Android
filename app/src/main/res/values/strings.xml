@@ -212,4 +212,8 @@
 	<string name="take_photo">Take photo</string>
 	<string name="record_video">Record video</string>
 	<string name="record_audio">Record audio</string>
+	<string name="msg_submission">New submission</string>
+	<string name="hint_submission_name">Submission name</string>
+	<string name="hint_submission_comment">Your comment</string>
+	<string name="btn_send_submission">Send submission</string>
 </resources>

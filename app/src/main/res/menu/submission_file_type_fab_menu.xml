@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 <item
-	android:id="@+id/action_new_number_or_range"
+	android:id="@+id/action_take_photo"
 	android:icon="@drawable/ic_camera"
 	android:title="@string/take_photo"/>
 
 <item
-	android:id="@+id/action_from_log"
+	android:id="@+id/action_record_video"
 	android:icon="@drawable/ic_video_type"
 	android:title="@string/record_video"/>
 
 <item
-	android:id="@+id/action_from_contact_list"
+	android:id="@+id/action_record_audio"
 	android:icon="@drawable/ic_audio_type"
 	android:title="@string/record_audio"/>
 

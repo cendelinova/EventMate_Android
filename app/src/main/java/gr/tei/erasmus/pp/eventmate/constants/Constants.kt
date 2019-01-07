@@ -7,6 +7,9 @@ class Constants {
 		const val USER_ID = "userId"
 		const val FILTER_EVENT_STATE = "eventStateFilter"
 		const val FILTER_EVENT_ROLE = "eventRoleFilter"
+		const val VIDEO = "video"
+		const val AUDIO = "audio"
+		const val PHOTO = "audio"
 	}
 	
 	enum class EventFilter(val text: String) {

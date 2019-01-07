@@ -106,6 +106,10 @@ dependencies {
     // Custom floating action button
     implementation 'com.github.kobakei:MaterialFabSpeedDial:1.2.0'
 
+    implementation 'com.github.adrielcafe:AndroidAudioRecorder:0.3.0'
+
+    implementation 'bg.devlabs.fullscreenvideoview:library:1.0.0'
+
 
     // Room library
     implementation 'androidx.room:room-runtime:2.1.0-alpha03'
