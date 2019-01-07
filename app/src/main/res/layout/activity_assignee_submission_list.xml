@@ -4,7 +4,7 @@
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	tools:context=".ui.submissionFile.AssigneeSubmissionListActivity">
+	tools:context=".ui.submission.AssigneeSubmissionListActivity">
 	
 	<include
 		android:id="@+id/header"
@@ -89,14 +89,15 @@
 	
 	</LinearLayout>
 	
-	<com.google.android.material.floatingactionbutton.FloatingActionButton
+	<io.github.kobakei.materialfabspeeddial.FabSpeedDial
 		android:id="@+id/fab"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:layout_margin="@dimen/spacing_normal"
 		android:src="@drawable/ic_add"
 		app:layout_constraintBottom_toBottomOf="parent"
-		app:layout_constraintEnd_toEndOf="parent" />
-
-
+		app:layout_constraintEnd_toEndOf="parent"
+		app:fab_miniFabBackgroundColor="@color/colorPrimary"
+		app:fab_miniFabTextColor="@color/black"
+		app:fab_menu="@menu/submission_file_type_fab_menu"/>
+	
 </androidx.constraintlayout.widget.ConstraintLayout>

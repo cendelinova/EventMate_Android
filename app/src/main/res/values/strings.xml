@@ -208,5 +208,8 @@
 	<string name="mgs_report_info">WHAT INFORMATION WOULD YOU LIKE TO INCLUDE?</string>
 	<string name="msg_report_guests">WHO WILL BE IN YOUR REPORT?</string>
 	<string name="msg_report_tasks">WHICH TASKS WOULD YOU LIKE TO INCLUDE?</string>
-	<string name="tv_no_submission">No submissionFile</string>
+	<string name="tv_no_submission">No submission file</string>
+	<string name="take_photo">Take photo</string>
+	<string name="record_video">Record video</string>
+	<string name="record_audio">Record audio</string>
 </resources>
