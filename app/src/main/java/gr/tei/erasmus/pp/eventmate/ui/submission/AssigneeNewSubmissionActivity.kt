@@ -2,14 +2,18 @@ package gr.tei.erasmus.pp.eventmate.ui.submission
 
 import android.net.Uri
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
-import android.widget.MediaController
+import androidx.appcompat.app.AlertDialog
+import com.squareup.picasso.Picasso
 import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.AUDIO
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.PHOTO
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.VIDEO
 import gr.tei.erasmus.pp.eventmate.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_assignee_new_submission.*
+import kotlinx.android.synthetic.main.dialog_photo_preview.view.*
+
 
 class AssigneeNewSubmissionActivity : BaseActivity() {
 	
@@ -39,14 +43,35 @@ class AssigneeNewSubmissionActivity : BaseActivity() {
 	
 	private fun parseIntent() {
 		if (intent.hasExtra(PHOTO) || intent.hasExtra(VIDEO) || intent.hasExtra(AUDIO)) {
-			val data: Uri = Uri.parse(intent.getStringExtra(VIDEO))
+//			val data: Uri = Uri.parse(intent.getStringExtra(VIDEO))
+//
+//			video_view.setVideoURI(data)
+//			video_view.setMediaController(MediaController(this).apply {
+//				setAnchorView(video_view)
+//			})
+//			video_view.requestFocus()
+//			video_view.seekTo(1)
 			
-			video_view.setVideoURI(data)
-			video_view.setMediaController(MediaController(this).apply {
-				setAnchorView(video_view)
-			})
-			video_view.requestFocus()
-			video_view.seekTo(1)
+			val data1: Uri = Uri.parse(intent.getStringExtra(PHOTO))
+			
+			Picasso.get().load(data1).into(photo)
+			
+			photo.setOnClickListener {
+				val layout =
+					LayoutInflater.from(this@AssigneeNewSubmissionActivity).inflate(R.layout.dialog_photo_preview, null)
+						.also {
+							it.photo.setImageURI(data1)
+						}
+				val dialog = AlertDialog.Builder(this).apply {
+					setView(layout)
+				}.create()
+				
+				layout.btn_close.setOnClickListener {
+					dialog.dismiss()
+				}
+				dialog.show()
+			}
+			
 		}
 	}
 }

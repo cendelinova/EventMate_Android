@@ -5,6 +5,7 @@ import android.content.Intent
 import android.media.AudioFormat
 import android.media.AudioRecord
 import android.media.MediaRecorder
+import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.provider.ContactsContract
@@ -16,16 +17,27 @@ import cafe.adriel.androidaudiorecorder.AndroidAudioRecorder
 import cafe.adriel.androidaudiorecorder.model.AudioChannel
 import cafe.adriel.androidaudiorecorder.model.AudioSampleRate
 import cafe.adriel.androidaudiorecorder.model.AudioSource
+import com.squareup.picasso.Picasso
+import com.vansuita.pickimage.bean.PickResult
+import com.vansuita.pickimage.bundle.PickSetup
+import com.vansuita.pickimage.dialog.PickImageDialog
+import com.vansuita.pickimage.listeners.IPickResult
 import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.AUDIO
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.PHOTO
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.VIDEO
 import gr.tei.erasmus.pp.eventmate.data.model.SubmissionFile
+import gr.tei.erasmus.pp.eventmate.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_assignee_submission_list.*
+import kotlinx.android.synthetic.main.activity_new_task.*
 import timber.log.Timber
+import java.io.File
+import java.io.IOException
+import java.text.DateFormat
+import java.util.*
 
 
-class AssigneeSubmissionListActivity : AppCompatActivity() {
+class AssigneeSubmissionListActivity : BaseActivity(), IPickResult {
 	
 	private lateinit var submissionAdapter: SubmissionAdapter
 	
@@ -55,12 +67,18 @@ class AssigneeSubmissionListActivity : AppCompatActivity() {
 		
 	}
 	
-	private fun dispatchTakePhotoIntent() {
-		Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePhotoIntent ->
-			takePhotoIntent.resolveActivity(packageManager)?.also {
-				startActivityForResult(takePhotoIntent, REQUEST_PHOTO_CAPTURE)
-			}
+	override fun onPickResult(pickResult: PickResult?) {
+		pickResult?.let {
+			val intent = Intent(this, AssigneeNewSubmissionActivity::class.java)
+			intent.putExtra(PHOTO, pickResult.uri.toString())
+			startActivity(intent)
 		}
+	}
+	
+	private fun dispatchTakePhotoIntent() {
+		PickImageDialog.build(PickSetup().apply {
+			setTitle(R.string.choose_photo)
+		}).show(this)
 	}
 	
 	private fun dispatchTakeVideoIntent() {
@@ -70,14 +88,6 @@ class AssigneeSubmissionListActivity : AppCompatActivity() {
 			}
 		}
 	}
-
-//	override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
-//		if (requestCode == Companion.REQUEST_VIDEO_CAPTURE && resultCode == RESULT_OK) {
-//			val videoUri: Uri = intent!!.data!!
-//			camera.setVideoURI(videoUri)
-//		}
-//	}
-	
 	
 	override fun onStart() {
 		super.onStart()
@@ -183,7 +193,6 @@ class AssigneeSubmissionListActivity : AppCompatActivity() {
 		if (resultCode == Activity.RESULT_OK) {
 			val intent = Intent(this, AssigneeNewSubmissionActivity::class.java)
 			when (requestCode) {
-				REQUEST_PHOTO_CAPTURE -> intent.putExtra(PHOTO, data?.extras)
 				REQUEST_AUDIO_RECORD -> intent.putExtra(AUDIO, data)
 				REQUEST_VIDEO_CAPTURE -> intent.putExtra(VIDEO, data?.data.toString())
 			}

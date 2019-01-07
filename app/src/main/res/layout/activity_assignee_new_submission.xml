@@ -56,31 +56,50 @@
 				app:layout_constraintStart_toStartOf="parent"
 				app:layout_constraintTop_toTopOf="parent" />
 			
-			<FrameLayout
-				android:id="@+id/video_layout"
-				android:layout_height="250dp"
+			<LinearLayout
+				android:id="@+id/submission_file"
 				android:layout_width="0dp"
-				android:background="@color/colorAccent"
-				android:layout_margin="@dimen/spacing_normal"
+				android:layout_height="wrap_content"
+				android:layout_marginStart="@dimen/spacing_normal"
+				android:layout_marginEnd="@dimen/spacing_normal"
+				android:layout_marginBottom="@dimen/spacing_normal"
+				android:orientation="vertical"
 				app:layout_constraintEnd_toEndOf="parent"
 				app:layout_constraintStart_toStartOf="parent"
 				app:layout_constraintTop_toTopOf="parent">
 				
-				<gr.tei.erasmus.pp.eventmate.ui.base.MyVideoView
-					android:id="@+id/video_view"
+				<FrameLayout
+					android:id="@+id/video_layout"
+					android:visibility="gone"
 					android:layout_height="match_parent"
-					android:layout_width="match_parent"
-					android:adjustViewBounds="true" />
+					android:layout_width="match_parent">
+					
+					<gr.tei.erasmus.pp.eventmate.ui.base.MyVideoView
+						android:id="@+id/video_view"
+						android:layout_height="match_parent"
+						android:layout_width="match_parent"
+						android:adjustViewBounds="true" />
+					
+					<ImageView
+						android:id="@+id/btn_play"
+						android:layout_width="@dimen/bigger_icon_size"
+						android:layout_height="@dimen/bigger_icon_size"
+						android:layout_gravity="center"
+						android:src="@drawable/ic_play_button_around" />
 				
-				<ImageView
-					android:id="@+id/btn_play"
-					android:layout_width="@dimen/bigger_icon_size"
-					android:layout_height="@dimen/bigger_icon_size"
-					android:layout_gravity="center"
-					android:src="@drawable/ic_play_button_around" />
+				</FrameLayout>
+				
+				<com.makeramen.roundedimageview.RoundedImageView
+					android:id="@+id/photo"
+					android:layout_width="250dp"
+					android:layout_gravity="center_horizontal"
+					android:layout_height="wrap_content"
+					android:scaleType="fitXY"
+					android:maxHeight="350dp"
+					android:adjustViewBounds="true"
+					app:riv_corner_radius="@dimen/radius" />
 			
-			</FrameLayout>
-			
+			</LinearLayout>
 			
 			<com.google.android.material.textfield.TextInputLayout
 				android:id="@+id/input_submission_name"
@@ -90,7 +109,7 @@
 				android:layout_width="0dp"
 				app:layout_constraintEnd_toEndOf="parent"
 				app:layout_constraintStart_toStartOf="parent"
-				app:layout_constraintTop_toBottomOf="@id/video_layout">
+				app:layout_constraintTop_toBottomOf="@id/submission_file">
 				
 				<com.google.android.material.textfield.TextInputEditText
 					android:drawableTint="@color/grey"
