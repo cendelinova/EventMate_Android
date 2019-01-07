@@ -27,15 +27,9 @@ android {
                 buildConfigField "String", "SERVER_URL", '"http://192.168.137.1:8080/'
             }
 
-//            release {
-//                debuggable false
-//                useProguard true
-//                minifyEnabled true
-//                shrinkResources true
-//                signingConfig signingConfigs.release
-//                proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-//                buildConfigField "String", "SERVER_URL", '"http://localhost:8080"'
-//            }
+            release {
+                buildConfigField "String", "SERVER_URL", '"http://localhost:8080"'
+            }
         }
     }
 }
@@ -100,5 +94,6 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+
     implementation project(':AndroidAudioRecorder')
 }

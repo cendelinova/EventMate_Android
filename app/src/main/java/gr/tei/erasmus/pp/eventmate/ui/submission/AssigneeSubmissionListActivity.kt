@@ -13,11 +13,14 @@ import android.provider.MediaStore
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
-//import cafe.adriel.androidaudiorecorder.AndroidAudioRecorder
-//import cafe.adriel.androidaudiorecorder.AudioRecorderActivity
+import cafe.adriel.androidaudiorecorder.AndroidAudioRecorder
 //import cafe.adriel.androidaudiorecorder.model.AudioChannel
 //import cafe.adriel.androidaudiorecorder.model.AudioSampleRate
-//import cafe.adriel.androidaudiorecorder.model.AudioSource
+//import cafe.adriel.androidaudiorecorder.AndroidAudioRecorder
+import cafe.adriel.androidaudiorecorder.AudioRecorderActivity
+import cafe.adriel.androidaudiorecorder.model.AudioChannel
+import cafe.adriel.androidaudiorecorder.model.AudioSampleRate
+import cafe.adriel.androidaudiorecorder.model.AudioSource
 import com.squareup.picasso.Picasso
 import com.vansuita.pickimage.bean.PickResult
 import com.vansuita.pickimage.bundle.PickSetup
@@ -175,16 +178,16 @@ class AssigneeSubmissionListActivity : AppCompatActivity(), IPickResult {
 	
 	private fun openAudioRecord() {
 		val filePath = Environment.getExternalStorageDirectory().toString() + "/recorded_audio.wav"
-//		AndroidAudioRecorder.with(this)
-//			.setFilePath(filePath)
-//			.setColor(ContextCompat.getColor(this, R.color.colorPrimary))
-//			.setRequestCode(REQUEST_AUDIO_RECORD)
-//			.setSource(AudioSource.MIC)
-//			.setChannel(AudioChannel.STEREO)
-//			.setSampleRate(AudioSampleRate.HZ_48000)
-//			.setAutoStart(true)
-//			.setKeepDisplayOn(true)
-//			.record()
+		AndroidAudioRecorder.with(this)
+			.setFilePath(filePath)
+			.setColor(ContextCompat.getColor(this, R.color.colorPrimary))
+			.setRequestCode(REQUEST_AUDIO_RECORD)
+			.setSource(AudioSource.MIC)
+			.setChannel(AudioChannel.STEREO)
+			.setSampleRate(AudioSampleRate.HZ_48000)
+			.setAutoStart(false)
+			.setKeepDisplayOn(true)
+			.record()
 	}
 	
 	
@@ -194,7 +197,7 @@ class AssigneeSubmissionListActivity : AppCompatActivity(), IPickResult {
 		if (resultCode == Activity.RESULT_OK) {
 			val intent = Intent(this, AssigneeNewSubmissionActivity::class.java)
 			when (requestCode) {
-				REQUEST_AUDIO_RECORD -> intent.putExtra(AUDIO, data)
+				REQUEST_AUDIO_RECORD -> intent.putExtra(AUDIO, data?.data.toString())
 				REQUEST_VIDEO_CAPTURE -> intent.putExtra(VIDEO, data?.data.toString())
 			}
 			

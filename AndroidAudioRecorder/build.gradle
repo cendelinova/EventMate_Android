@@ -1,2 +1,42 @@
-configurations.maybeCreate("default")
-artifacts.add("default", file('AndroidAudioRecorder.jar'))
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 28
+    defaultConfig {
+        minSdkVersion 23
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+
+    buildTypes {
+        buildTypes {
+            debug {
+                buildConfigField "String", "SERVER_URL", '"http://192.168.137.1:8080/"'
+            }
+
+            debugWithReleaseServer {
+                initWith debug
+                buildConfigField "String", "SERVER_URL", '"http://192.168.137.1:8080/'
+            }
+
+            release {
+                buildConfigField "String", "SERVER_URL", '"http://localhost:8080"'
+            }
+        }
+    }
+
+    dependencies {
+        implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+        implementation 'androidx.appcompat:appcompat:1.0.0-alpha1'
+        testImplementation 'junit:junit:4.12'
+        androidTestImplementation 'androidx.test:runner:1.1.0-alpha3'
+        androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-alpha3'
+        implementation 'com.cleveroad:audiovisualization:1.0.1'
+        implementation 'com.kailashdabhi:om-recorder:1.1.0'
+
+    }
+}

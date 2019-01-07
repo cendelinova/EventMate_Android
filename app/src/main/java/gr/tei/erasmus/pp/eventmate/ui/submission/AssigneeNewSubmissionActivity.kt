@@ -1,5 +1,7 @@
 package gr.tei.erasmus.pp.eventmate.ui.submission
 
+import android.media.AudioManager
+import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -43,6 +45,14 @@ class AssigneeNewSubmissionActivity : BaseActivity() {
 	
 	private fun parseIntent() {
 		if (intent.hasExtra(PHOTO) || intent.hasExtra(VIDEO) || intent.hasExtra(AUDIO)) {
+			
+			val data : Uri = Uri.parse(intent.getStringExtra(AUDIO))
+			val mediaPlayer: MediaPlayer? = MediaPlayer().apply {
+				setAudioStreamType(AudioManager.STREAM_MUSIC)
+				setDataSource(applicationContext, data)
+				prepare()
+				start()
+			}
 //			val data: Uri = Uri.parse(intent.getStringExtra(VIDEO))
 //
 //			video_view.setVideoURI(data)
