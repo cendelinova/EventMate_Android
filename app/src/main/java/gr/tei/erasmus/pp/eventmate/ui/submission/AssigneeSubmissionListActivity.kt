@@ -37,6 +37,7 @@ import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.VIDEO
 import gr.tei.erasmus.pp.eventmate.data.model.SubmissionExtra
 import gr.tei.erasmus.pp.eventmate.data.model.SubmissionFile
 import gr.tei.erasmus.pp.eventmate.data.model.SubmissionResponse
+import gr.tei.erasmus.pp.eventmate.helpers.DialogHelper
 import gr.tei.erasmus.pp.eventmate.helpers.ImageHelper
 import gr.tei.erasmus.pp.eventmate.helpers.StateHelper
 import gr.tei.erasmus.pp.eventmate.ui.base.BaseActivity
@@ -52,7 +53,6 @@ import timber.log.Timber
 class AssigneeSubmissionListActivity : BaseActivity(), IPickResult {
 	
 	private val viewModel by lazy { ViewModelProviders.of(this).get(SubmissionViewModel::class.java) }
-	
 	
 	private lateinit var submissionAdapter: SubmissionAdapter
 	
@@ -107,7 +107,7 @@ class AssigneeSubmissionListActivity : BaseActivity(), IPickResult {
 			is ErrorState -> StateHelper.showError(state.error, progress, main)
 			is SubmissionViewModel.SubmissionState -> {
 				StateHelper.toggleProgress(progress, false)
-				setupLayout(state.submissions[0])
+				setupLayout(state.submissionResponses[0])
 			}
 		}
 	}
@@ -127,7 +127,7 @@ class AssigneeSubmissionListActivity : BaseActivity(), IPickResult {
 			
 			val builder = SpannableStringBuilder().also {
 				val startString = getString(R.string.assignee_submission)
-				SpannableString(startString + " " + submitter.userName).apply {
+				SpannableString(startString + " " + submitter?.userName).apply {
 					
 					setSpan(
 						ForegroundColorSpan(getColor(R.color.colorAccent)),
@@ -249,7 +249,27 @@ class AssigneeSubmissionListActivity : BaseActivity(), IPickResult {
 		}
 		
 		override fun onSubmissionView(submissionFile: SubmissionFile) {
-		
+			when (SubmissionFile.FileType.valueOf(submissionFile.type)) {
+				SubmissionFile.FileType.PHOTO -> DialogHelper.showDialogWithPhotoPreview(
+					this@AssigneeSubmissionListActivity,
+					layoutInflater,
+					null,
+					submissionFile.data
+				)
+				
+				SubmissionFile.FileType.VIDEO -> {
+					DialogHelper.showDialogWithVideoPreview(
+						this@AssigneeSubmissionListActivity,
+						layoutInflater,
+						null,
+						submissionFile.data
+					)
+				}
+				
+				SubmissionFile.FileType.AUDIO -> {
+					// todo audio
+				}
+			}
 		}
 		
 		override fun onSubmissionDownload(submissionFile: SubmissionFile) {

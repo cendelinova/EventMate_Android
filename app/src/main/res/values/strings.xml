@@ -208,7 +208,7 @@
 	<string name="mgs_report_info">WHAT INFORMATION WOULD YOU LIKE TO INCLUDE?</string>
 	<string name="msg_report_guests">WHO WILL BE IN YOUR REPORT?</string>
 	<string name="msg_report_tasks">WHICH TASKS WOULD YOU LIKE TO INCLUDE?</string>
-	<string name="tv_no_submission">No submission file</string>
+	<string name="tv_no_submission">No submission file yet</string>
 	<string name="take_photo">Take photo</string>
 	<string name="record_video">Record video</string>
 	<string name="record_audio">Record audio</string>
@@ -219,7 +219,7 @@
 	<string name="camera_audio_permission_msg">\"Both camera and audio permission are needed to take pictures of your submissions</string>
 	<string name="camera_audio_permission_title"><![CDATA[Camera & audio permission]]></string>
 	<string name="needed_camera_permission">Camera and audio access is needed to take pictures of submissions</string>
-	<string name="assignee_submission">Task submission of</string>
+	<string name="assignee_submission">Task submissions of</string>
 	<string name="photo_proof">Photo proof</string>
 	<string name="video_proof">Video proof</string>
 	<string name="audio_proof">Audio proof</string>

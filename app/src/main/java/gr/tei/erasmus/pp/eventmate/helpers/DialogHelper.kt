@@ -2,6 +2,8 @@ package gr.tei.erasmus.pp.eventmate.helpers
 
 import android.content.Context
 import android.content.DialogInterface
+import android.net.Uri
+import android.view.LayoutInflater
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
@@ -11,6 +13,9 @@ import com.afollestad.materialdialogs.actions.getActionButton
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.list.customListAdapter
 import gr.tei.erasmus.pp.eventmate.R
+import kotlinx.android.synthetic.main.dialog_photo_preview.view.*
+import kotlinx.android.synthetic.main.dialog_photo_preview.view.btn_close
+import kotlinx.android.synthetic.main.dialog_video_preview.view.*
 import kotlinx.android.synthetic.main.report_pick_dialog.view.*
 
 
@@ -59,6 +64,68 @@ object DialogHelper {
 				this.dismiss()
 			}
 		}
+	}
+	
+	fun showDialogWithPhotoPreview(
+		context: Context,
+		layoutInflater: LayoutInflater,
+		uri: Uri? = null,
+		photoString: String? = null
+	) {
+		val layout =
+			layoutInflater.inflate(R.layout.dialog_photo_preview, null)
+				.also {
+					uri?.let { uri ->
+						it.photo.setImageURI(uri)
+					}
+					
+					photoString?.let { photoString ->
+						it.photo.setImageBitmap(ImageHelper.getImageFromString(photoString))
+					}
+					
+				}
+		val dialog = AlertDialog.Builder(context).apply {
+			setView(layout)
+		}.create()
+		
+		with(dialog) {
+			layout.btn_close.setOnClickListener {
+				this.dismiss()
+			}
+			show()
+		}
+	}
+	
+	fun showDialogWithVideoPreview(
+		context: Context,
+		layoutInflater: LayoutInflater,
+		uri: Uri? = null,
+		data: String? = null
+	) {
+		val layout =
+			layoutInflater.inflate(R.layout.dialog_photo_preview, null)
+				.also {
+					with(it.video_view) {
+						//			setVideoURI(data)
+						setMediaController(android.widget.MediaController(context).apply {
+							setAnchorView(this)
+						})
+						requestFocus()
+//			seekTo(1)
+					}
+//		toggleVideoButtons()
+				}
+		val dialog = AlertDialog.Builder(context).apply {
+			setView(layout)
+		}.create()
+		
+		with(dialog) {
+			layout.btn_close.setOnClickListener {
+				this.dismiss()
+			}
+			show()
+		}
 		
 	}
+	
 }
