@@ -82,9 +82,12 @@ dependencies {
     implementation 'com.afollestad.material-dialogs:core:2.0.0-rc7'
     // Custom floating action button
     implementation 'com.github.kobakei:MaterialFabSpeedDial:1.2.0'
-    // audio recorder
     // audio
-    implementation 'com.4ert:audioview:0.4'
+    implementation 'net.the4thdimension:audio-wife:1.0.3'
+
+    // permission helper
+    implementation 'com.karumi:dexter:5.0.0'
+
     // Room library
     implementation 'androidx.room:room-runtime:2.1.0-alpha03'
     annotationProcessor 'androidx.room:room-compiler:2.1.0-alpha03'

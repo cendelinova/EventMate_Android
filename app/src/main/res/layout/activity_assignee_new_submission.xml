@@ -70,8 +70,7 @@
 				
 				<FrameLayout
 					android:id="@+id/video_layout"
-					android:visibility="gone"
-					android:layout_height="match_parent"
+					android:layout_height="wrap_content"
 					android:layout_width="match_parent">
 					
 					<gr.tei.erasmus.pp.eventmate.ui.base.MyVideoView
@@ -99,11 +98,12 @@
 					android:adjustViewBounds="true"
 					app:riv_corner_radius="@dimen/radius" />
 				
-				<com.keenfin.audioview.AudioView
-					android:id="@+id/audio_view"
+				<LinearLayout
+					android:id="@+id/audio_layout"
 					android:layout_width="match_parent"
-					android:layout_height="wrap_content"/>
-			
+					android:layout_height="wrap_content"
+					android:orientation="horizontal" />
+				
 			</LinearLayout>
 			
 			<com.google.android.material.textfield.TextInputLayout

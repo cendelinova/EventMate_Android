@@ -1,27 +1,22 @@
 package gr.tei.erasmus.pp.eventmate.ui.submission
 
+//import cafe.adriel.androidaudiorecorder.model.AudioChannel
+//import cafe.adriel.androidaudiorecorder.model.AudioSampleRate
+//import cafe.adriel.androidaudiorecorder.AndroidAudioRecorder
 import android.app.Activity
 import android.content.Intent
 import android.media.AudioFormat
 import android.media.AudioRecord
 import android.media.MediaRecorder
-import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
-import android.provider.ContactsContract
 import android.provider.MediaStore
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import cafe.adriel.androidaudiorecorder.AndroidAudioRecorder
-//import cafe.adriel.androidaudiorecorder.model.AudioChannel
-//import cafe.adriel.androidaudiorecorder.model.AudioSampleRate
-//import cafe.adriel.androidaudiorecorder.AndroidAudioRecorder
-import cafe.adriel.androidaudiorecorder.AudioRecorderActivity
 import cafe.adriel.androidaudiorecorder.model.AudioChannel
 import cafe.adriel.androidaudiorecorder.model.AudioSampleRate
 import cafe.adriel.androidaudiorecorder.model.AudioSource
-import com.squareup.picasso.Picasso
 import com.vansuita.pickimage.bean.PickResult
 import com.vansuita.pickimage.bundle.PickSetup
 import com.vansuita.pickimage.dialog.PickImageDialog
@@ -31,17 +26,13 @@ import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.AUDIO
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.PHOTO
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.VIDEO
 import gr.tei.erasmus.pp.eventmate.data.model.SubmissionFile
+import gr.tei.erasmus.pp.eventmate.helpers.PermissionHelper
 import gr.tei.erasmus.pp.eventmate.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_assignee_submission_list.*
-import kotlinx.android.synthetic.main.activity_new_task.*
 import timber.log.Timber
-import java.io.File
-import java.io.IOException
-import java.text.DateFormat
-import java.util.*
 
 
-class AssigneeSubmissionListActivity : AppCompatActivity(), IPickResult {
+class AssigneeSubmissionListActivity : BaseActivity(), IPickResult {
 	
 	private lateinit var submissionAdapter: SubmissionAdapter
 	
@@ -51,12 +42,13 @@ class AssigneeSubmissionListActivity : AppCompatActivity(), IPickResult {
 		const val REQUEST_AUDIO_RECORD = 3
 	}
 	
-	
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_assignee_submission_list)
 		
 		initializeRecyclerView()
+		
+		PermissionHelper.showPermissionDialog(this, this, main)
 		
 		fab.addOnMenuItemClickListener { _, _, id ->
 			when (id) {
