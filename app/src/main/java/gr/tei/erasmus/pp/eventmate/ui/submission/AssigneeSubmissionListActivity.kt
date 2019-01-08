@@ -125,7 +125,7 @@ class AssigneeSubmissionListActivity : BaseActivity(), IPickResult {
 			}
 			
 			
-			val builder = SpannableStringBuilder().also {
+			SpannableStringBuilder().also {
 				val startString = getString(R.string.assignee_submission)
 				SpannableString(startString + " " + submitter?.userName).apply {
 					
@@ -157,7 +157,7 @@ class AssigneeSubmissionListActivity : BaseActivity(), IPickResult {
 		if (intent.hasExtra(SUBMISSION_EXTRA) && intent.getParcelableExtra<SubmissionExtra>(SUBMISSION_EXTRA) != null) {
 			val data = intent.getParcelableExtra<SubmissionExtra>(SUBMISSION_EXTRA)
 			// todo real data
-			viewModel.getUserTaskSubmissions(2, 8)
+			viewModel.getUserTaskSubmissions(3, 8)
 		}
 	}
 	
