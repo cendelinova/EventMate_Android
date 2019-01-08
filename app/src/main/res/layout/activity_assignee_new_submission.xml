@@ -68,14 +68,16 @@
 				app:layout_constraintStart_toStartOf="parent"
 				app:layout_constraintTop_toTopOf="parent">
 				
-				<FrameLayout
+				
+				<androidx.cardview.widget.CardView
 					android:id="@+id/video_layout"
 					android:layout_height="wrap_content"
-					android:layout_width="match_parent">
+					android:layout_width="wrap_content"
+					app:cardCornerRadius="@dimen/radius">
 					
 					<gr.tei.erasmus.pp.eventmate.ui.base.MyVideoView
 						android:id="@+id/video_view"
-						android:layout_height="match_parent"
+						android:layout_height="250dp"
 						android:layout_width="match_parent"
 						android:adjustViewBounds="true" />
 					
@@ -85,8 +87,8 @@
 						android:layout_height="@dimen/bigger_icon_size"
 						android:layout_gravity="center"
 						android:src="@drawable/ic_play_button_around" />
+				</androidx.cardview.widget.CardView>
 				
-				</FrameLayout>
 				
 				<com.makeramen.roundedimageview.RoundedImageView
 					android:id="@+id/photo"
@@ -103,7 +105,7 @@
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
 					android:orientation="horizontal" />
-				
+			
 			</LinearLayout>
 			
 			<com.google.android.material.textfield.TextInputLayout
