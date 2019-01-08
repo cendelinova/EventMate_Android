@@ -1,8 +1,9 @@
 package gr.tei.erasmus.pp.eventmate.data.model
 
 import gr.tei.erasmus.pp.eventmate.R
+import java.util.*
 
-data class SubmissionFile(val id: Long, val name: String?, val comment: String?, val type: String) {
+data class SubmissionFile(val id: Long, val name: String?, val comment: String?, val type: String, val created: Date) {
 	
 	
 	enum class FileType(var icon: Int, var defaultString: Int) {

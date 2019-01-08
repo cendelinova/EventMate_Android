@@ -71,6 +71,9 @@
 		<item name="android:textColor">@color/black</item>
 		<item name="android:textSize">@dimen/font_small</item>
 		<item name="android:textStyle">normal</item>
+		<item name="android:clickable">true</item>
+		<item name="android:focusable">true</item>
+		<item name="android:foreground">?selectableItemBackground</item>
 	</style>
 	
 	

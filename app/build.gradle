@@ -88,6 +88,10 @@ dependencies {
     // permission helper
     implementation 'com.karumi:dexter:5.0.0'
 
+    // pretty time formatting
+    implementation 'org.ocpsoft.prettytime:prettytime:4.0.1.Final'
+
+
     // Room library
     implementation 'androidx.room:room-runtime:2.1.0-alpha03'
     annotationProcessor 'androidx.room:room-compiler:2.1.0-alpha03'

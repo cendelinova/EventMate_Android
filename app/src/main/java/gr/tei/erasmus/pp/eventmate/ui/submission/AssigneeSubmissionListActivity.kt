@@ -2,6 +2,7 @@ package gr.tei.erasmus.pp.eventmate.ui.submission
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Typeface
 import android.media.AudioFormat
 import android.media.AudioRecord
 import android.media.MediaRecorder
@@ -11,7 +12,9 @@ import android.provider.MediaStore
 import android.text.SpannableString
 import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
+import android.text.style.StyleSpan
 import android.view.View
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -125,14 +128,23 @@ class AssigneeSubmissionListActivity : BaseActivity(), IPickResult {
 			val builder = SpannableStringBuilder().also {
 				val startString = getString(R.string.assignee_submission)
 				SpannableString(startString + " " + submitter.userName).apply {
+					
 					setSpan(
 						ForegroundColorSpan(getColor(R.color.colorAccent)),
 						startString.length + 1,
 						startString.length + 1 + submitter.userName.length,
 						0
 					)
+					
+					setSpan(
+						StyleSpan(Typeface.BOLD),
+						startString.length + 1,
+						startString.length + 1 + submitter.userName.length,
+						0
+					)
+					
 					it.append(this)
-					tasks_status.text = it.toString()
+					tasks_status.setText(it, TextView.BufferType.SPANNABLE)
 				}
 			}
 			
@@ -216,24 +228,24 @@ class AssigneeSubmissionListActivity : BaseActivity(), IPickResult {
 	
 	private val submissionListener = object : SubmissionAdapter.SubmissionListener {
 		override fun onSubmissionClick(itemView: View, slideIn: Boolean) {
-				if (slideIn) {
-					YoYo.with(Techniques.SlideInLeft)
-						.duration(700)
-						.repeat(0)
-						.onStart {
-							itemView.view_background.bringToFront()
-						}
-						.playOn(itemView.view_background)
-					
-				} else {
-					YoYo.with(Techniques.SlideOutRight)
-						.duration(700)
-						.repeat(0)
-						.onEnd {
-							itemView.view_foreground.bringToFront()
-						}
-						.playOn(itemView.view_background)
-				}
+			if (slideIn) {
+				YoYo.with(Techniques.SlideInLeft)
+					.duration(700)
+					.repeat(0)
+					.onStart {
+						itemView.view_background.bringToFront()
+					}
+					.playOn(itemView.view_background)
+				
+			} else {
+				YoYo.with(Techniques.SlideOutRight)
+					.duration(700)
+					.repeat(0)
+					.onEnd {
+						itemView.view_foreground.bringToFront()
+					}
+					.playOn(itemView.view_background)
+			}
 		}
 		
 		override fun onSubmissionView(submissionFile: SubmissionFile) {

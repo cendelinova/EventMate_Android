@@ -8,7 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.data.model.SubmissionFile
 import kotlinx.android.synthetic.main.submission_item.view.*
+import org.ocpsoft.prettytime.PrettyTime
 import timber.log.Timber
+import java.util.*
 
 class SubmissionAdapter(
 	private val context: Context,
@@ -43,6 +45,8 @@ class SubmissionAdapter(
 			submissionFile.comment?.let {
 				submission_description.text = it
 			}
+			
+			created.text = PrettyTime().apply { locale = Locale.ENGLISH }.format(submissionFile.created)
 			
 			btn_delete.setOnClickListener { submissionListener.onSubmissionDelete(submissionFile) }
 			btn_download.setOnClickListener { submissionListener.onSubmissionDownload(submissionFile) }
