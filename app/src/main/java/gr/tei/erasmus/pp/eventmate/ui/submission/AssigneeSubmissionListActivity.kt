@@ -1,8 +1,5 @@
 package gr.tei.erasmus.pp.eventmate.ui.submission
 
-//import cafe.adriel.androidaudiorecorder.model.AudioChannel
-//import cafe.adriel.androidaudiorecorder.model.AudioSampleRate
-//import cafe.adriel.androidaudiorecorder.AndroidAudioRecorder
 import android.app.Activity
 import android.content.Intent
 import android.media.AudioFormat
@@ -12,6 +9,8 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import cafe.adriel.androidaudiorecorder.AndroidAudioRecorder
 import cafe.adriel.androidaudiorecorder.model.AudioChannel
@@ -24,15 +23,23 @@ import com.vansuita.pickimage.listeners.IPickResult
 import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.AUDIO
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.PHOTO
+import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.SUBMISSION_EXTRA
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.VIDEO
+import gr.tei.erasmus.pp.eventmate.data.model.SubmissionExtra
 import gr.tei.erasmus.pp.eventmate.data.model.SubmissionFile
-import gr.tei.erasmus.pp.eventmate.helpers.PermissionHelper
+import gr.tei.erasmus.pp.eventmate.helpers.StateHelper
 import gr.tei.erasmus.pp.eventmate.ui.base.BaseActivity
+import gr.tei.erasmus.pp.eventmate.ui.base.ErrorState
+import gr.tei.erasmus.pp.eventmate.ui.base.LoadingState
+import gr.tei.erasmus.pp.eventmate.ui.base.State
 import kotlinx.android.synthetic.main.activity_assignee_submission_list.*
 import timber.log.Timber
 
 
 class AssigneeSubmissionListActivity : BaseActivity(), IPickResult {
+	
+	private val viewModel by lazy { ViewModelProviders.of(this).get(SubmissionViewModel::class.java) }
+	
 	
 	private lateinit var submissionAdapter: SubmissionAdapter
 	
@@ -48,7 +55,9 @@ class AssigneeSubmissionListActivity : BaseActivity(), IPickResult {
 		
 		initializeRecyclerView()
 		
-		PermissionHelper.showPermissionDialog(this, this, main)
+		observeViewModel()
+		
+		parseIntent()
 		
 		fab.addOnMenuItemClickListener { _, _, id ->
 			when (id) {
@@ -71,6 +80,30 @@ class AssigneeSubmissionListActivity : BaseActivity(), IPickResult {
 		}
 	}
 	
+	private fun observeViewModel() {
+		with(viewModel) {
+			observe(states, observeSubmissionState)
+		}
+	}
+	
+	private val observeSubmissionState = Observer<State> { state ->
+		when (state) {
+			is LoadingState -> StateHelper.toggleProgress(progress, true)
+			is ErrorState -> StateHelper.showError(state.error, progress, main)
+			is SubmissionViewModel.SubmissionState -> {
+				StateHelper.toggleProgress(progress, false)
+				
+			}
+		}
+	}
+	
+	private fun parseIntent() {
+		if (intent.hasExtra(SUBMISSION_EXTRA) && intent.getParcelableExtra<SubmissionExtra>(SUBMISSION_EXTRA) != null) {
+			val data = intent.getParcelableExtra<SubmissionExtra>(SUBMISSION_EXTRA)
+			viewModel.getUserTaskSubmissions(2,8)
+		}
+	}
+	
 	private fun dispatchTakePhotoIntent() {
 		PickImageDialog.build(PickSetup().apply {
 			setTitle(R.string.choose_photo)
@@ -85,13 +118,9 @@ class AssigneeSubmissionListActivity : BaseActivity(), IPickResult {
 		}
 	}
 	
-	override fun onStart() {
-		super.onStart()
-	}
-	
 	private val mSampleRates = intArrayOf(8000, 11025, 22050, 44100)
 	
-	fun findAudioRecord(): AudioRecord? {
+	private fun findAudioRecord(): AudioRecord? {
 		for (rate in mSampleRates) {
 			for (audioFormat in intArrayOf(AudioFormat.ENCODING_PCM_8BIT, AudioFormat.ENCODING_PCM_16BIT)) {
 				for (channelConfig in intArrayOf(AudioFormat.CHANNEL_IN_MONO, AudioFormat.CHANNEL_IN_STEREO)) {
@@ -123,21 +152,6 @@ class AssigneeSubmissionListActivity : BaseActivity(), IPickResult {
 		}
 		return null
 	}
-	
-	
-	override fun onResume() {
-		super.onResume()
-	}
-	
-	
-	override fun onPause() {
-		super.onPause()
-	}
-	
-	override fun onStop() {
-		super.onStop()
-	}
-	
 	
 	/**
 	 * We have blacklist items obtained, initialize recyclerView and display them.

@@ -62,7 +62,13 @@
 			android:label="@string/title_activity_new_task"
 			android:theme="@style/AppTheme" />
 		<activity android:name=".ui.userProfile.UserProfileActivity" />
-		<activity android:name=".ui.taskDetail.TaskDetailActivity" />
+		<activity android:name=".ui.taskDetail.TaskDetailActivity">
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN" />
+				
+				<category android:name="android.intent.category.LAUNCHER" />
+			</intent-filter>
+		</activity>
 		<activity android:name=".ui.inviteGuests.InviteGuestsActivity" />
 		<activity android:name=".ui.report.ReportListActivity">
 			<intent-filter>
@@ -80,13 +86,6 @@
 		</activity>
 		<activity android:name=".ui.report.ReportMarkerActivity" />
 		<activity android:name=".ui.submission.AssigneeSubmissionListActivity">
-			<intent-filter>
-				<action android:name="android.intent.action.MAIN" />
-				
-				<category android:name="android.intent.category.LAUNCHER" />
-			</intent-filter>
-		</activity>
-		<activity android:name=".ui.submission.VideoCapture">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
 				

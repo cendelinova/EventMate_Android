@@ -14,7 +14,6 @@ class TasksViewModel : BaseViewModel() {
 	
 	private val taskRepository by lazy { App.COMPONENTS.provideTaskRepository() }
 	
-	
 	private val mStates = MutableLiveData<State>()
 	val states: LiveData<State>
 		get() = mStates

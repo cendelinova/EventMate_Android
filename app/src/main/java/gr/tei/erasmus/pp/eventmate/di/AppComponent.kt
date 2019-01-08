@@ -3,10 +3,7 @@ package gr.tei.erasmus.pp.eventmate.di
 import android.content.Context
 import com.google.gson.Gson
 import dagger.Component
-import gr.tei.erasmus.pp.eventmate.data.repository.EventRepository
-import gr.tei.erasmus.pp.eventmate.data.repository.InvitationRepository
-import gr.tei.erasmus.pp.eventmate.data.repository.TaskRepository
-import gr.tei.erasmus.pp.eventmate.data.repository.UserRepository
+import gr.tei.erasmus.pp.eventmate.data.repository.*
 import gr.tei.erasmus.pp.eventmate.data.source.local.room.AppDatabase
 import gr.tei.erasmus.pp.eventmate.data.source.local.room.dao.EventDao
 import gr.tei.erasmus.pp.eventmate.data.source.local.room.dao.InvitationDao
@@ -37,6 +34,8 @@ interface AppComponent {
 	fun provideEventRepository(): EventRepository
 	
 	fun provideTaskRepository(): TaskRepository
+	
+	fun provideSubmissionRepository(): SubmissionRepository
 	
 	fun provideSharedPreferencesHelper(): SharedPreferenceHelper
 	

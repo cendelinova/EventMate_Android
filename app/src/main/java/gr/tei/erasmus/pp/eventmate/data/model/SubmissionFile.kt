@@ -2,7 +2,7 @@ package gr.tei.erasmus.pp.eventmate.data.model
 
 import gr.tei.erasmus.pp.eventmate.R
 
-data class SubmissionFile(val name: String, val type: String) {
+data class SubmissionFile(val id: Long, val name: String, val type: String) {
 	
 	
 	

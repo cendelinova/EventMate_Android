@@ -5,10 +5,7 @@ import android.content.ContextWrapper
 import androidx.room.Room
 import dagger.Module
 import dagger.Provides
-import gr.tei.erasmus.pp.eventmate.data.repository.EventRepository
-import gr.tei.erasmus.pp.eventmate.data.repository.InvitationRepository
-import gr.tei.erasmus.pp.eventmate.data.repository.TaskRepository
-import gr.tei.erasmus.pp.eventmate.data.repository.UserRepository
+import gr.tei.erasmus.pp.eventmate.data.repository.*
 import gr.tei.erasmus.pp.eventmate.data.source.local.room.AppDatabase
 import gr.tei.erasmus.pp.eventmate.data.source.local.room.dao.EventDao
 import gr.tei.erasmus.pp.eventmate.data.source.local.room.dao.InvitationDao
@@ -72,6 +69,11 @@ class AppModule(context: Context) : ContextWrapper(context) {
 	@Provides
 	@Singleton
 	fun provideUserRepository(context: Context, restHelper: RestHelper) = UserRepository(context, restHelper)
+	
+	@Provides
+	@Singleton
+	fun provideSubmissionRepository(context: Context, restHelper: RestHelper) =
+		SubmissionRepository(context, restHelper)
 	
 	
 }

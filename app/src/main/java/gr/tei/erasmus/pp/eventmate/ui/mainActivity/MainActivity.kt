@@ -3,10 +3,12 @@ package gr.tei.erasmus.pp.eventmate.ui.mainActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import gr.tei.erasmus.pp.eventmate.R
+import gr.tei.erasmus.pp.eventmate.helpers.PermissionHelper
 import gr.tei.erasmus.pp.eventmate.ui.base.BaseActivity
 import gr.tei.erasmus.pp.eventmate.ui.events.EventsFragment
 import gr.tei.erasmus.pp.eventmate.ui.inbox.InboxFragment
 import gr.tei.erasmus.pp.eventmate.ui.profile.ProfileFragment
+import kotlinx.android.synthetic.main.activity_assignee_submission_list.*
 import kotlinx.android.synthetic.main.activity_main.*
 import timber.log.Timber
 
@@ -18,6 +20,9 @@ class MainActivity : BaseActivity() {
 		Timber.v("onCreate() called with: savedInstanceState = [$savedInstanceState]")
 		
 		setContentView(R.layout.activity_main)
+		
+		PermissionHelper.showPermissionDialog(this, this, main)
+		
 		setupToolbar(toolbar, false)
 		setupPages()
 		loadFragment(EventsFragment())

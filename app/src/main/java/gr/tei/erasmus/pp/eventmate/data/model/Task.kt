@@ -11,7 +11,7 @@ data class Task(
 	val place: String?,
 	val timeLimit: Int?,
 	val photo: String?,
-	private val assigness: List<User>?,
+	val assigness: List<User>?,
 	var checked: Boolean = false
 ) {
 	

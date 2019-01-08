@@ -6,8 +6,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import gr.tei.erasmus.pp.eventmate.R
+import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.SUBMISSION_EXTRA
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.TASK_ID
-import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.USER_ID
+import gr.tei.erasmus.pp.eventmate.data.model.SubmissionExtra
 import gr.tei.erasmus.pp.eventmate.data.model.Task
 import gr.tei.erasmus.pp.eventmate.data.model.User
 import gr.tei.erasmus.pp.eventmate.helpers.ImageHelper
@@ -19,7 +20,7 @@ import gr.tei.erasmus.pp.eventmate.ui.base.LoadingState
 import gr.tei.erasmus.pp.eventmate.ui.base.State
 import gr.tei.erasmus.pp.eventmate.ui.eventDetail.guests.UserAdapter
 import gr.tei.erasmus.pp.eventmate.ui.eventDetail.tasks.TasksViewModel
-import gr.tei.erasmus.pp.eventmate.ui.userProfile.UserProfileActivity
+import gr.tei.erasmus.pp.eventmate.ui.submission.AssigneeSubmissionListActivity
 import kotlinx.android.synthetic.main.activity_task_detail.*
 import kotlinx.android.synthetic.main.toolbar_task_detail.*
 import timber.log.Timber
@@ -30,6 +31,8 @@ class TaskDetailActivity : BaseActivity() {
 	
 	private lateinit var assignessAdapter: UserAdapter
 	
+	private lateinit var task: Task
+	
 	private val viewModel by lazy { ViewModelProviders.of(this).get(TasksViewModel::class.java) }
 	
 	
@@ -37,16 +40,17 @@ class TaskDetailActivity : BaseActivity() {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_task_detail)
 		
+		initializeRecyclerView()
 		setupToolbar(toolbar)
 		taskId = intent.getLongExtra(TASK_ID, 0)
 		
 		observeViewModel()
 		
 		taskId?.let {
-			viewModel.getTask(taskId!!)
+			//			viewModel.getTask(taskId!!)
+			viewModel.getTask(8)
 		}
 		
-		initializeRecyclerView()
 	}
 	
 	private fun observeViewModel() {
@@ -63,14 +67,20 @@ class TaskDetailActivity : BaseActivity() {
 			is TasksViewModel.TaskListState -> {
 				StateHelper.toggleProgress(progress, false)
 				setupLayout(state.tasks[0])
+				task = state.tasks[0]
 			}
 		}
 	}
 	
 	private val onUserClick = object : UserAdapter.GuestListener {
 		override fun onUserClick(user: User) {
-			startActivity(Intent(this@TaskDetailActivity, UserProfileActivity::class.java).apply {
-				putExtra(USER_ID, user.id)
+
+//			startActivity(Intent(this@TaskDetailActivity, UserProfileActivity::class.java).apply {
+//				putExtra(USER_ID, user.id)
+//			})
+			
+			startActivity(Intent(this@TaskDetailActivity, AssigneeSubmissionListActivity::class.java).apply {
+				putExtra(SUBMISSION_EXTRA, SubmissionExtra(user.id!!, task.id))
 			})
 		}
 		
@@ -85,7 +95,6 @@ class TaskDetailActivity : BaseActivity() {
 		assignessAdapter = UserAdapter(
 			this,
 			onUserClick,
-//			mutableListOf(User("blablik"), User("nanan"), User("daaaa"), User("daslsi"), User("sesmem"))
 			mutableListOf()
 		)
 		
@@ -106,6 +115,10 @@ class TaskDetailActivity : BaseActivity() {
 			tv_points.text = points.toString()
 			photo?.let {
 				task_photo.setImageBitmap(ImageHelper.getImageFromString(it))
+			}
+			
+			if (assigness.isNullOrEmpty()) {
+				assignessAdapter.updateUserList(assigness!!.toMutableList())
 			}
 		}
 	}
