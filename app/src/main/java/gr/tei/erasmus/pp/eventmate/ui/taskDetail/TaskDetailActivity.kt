@@ -117,8 +117,8 @@ class TaskDetailActivity : BaseActivity() {
 				task_photo.setImageBitmap(ImageHelper.getImageFromString(it))
 			}
 			
-			if (assigness.isNullOrEmpty()) {
-				assignessAdapter.updateUserList(assigness!!.toMutableList())
+			if (!assignees.isNullOrEmpty()) {
+				assignessAdapter.updateUserList(assignees.toMutableList())
 			}
 		}
 	}
