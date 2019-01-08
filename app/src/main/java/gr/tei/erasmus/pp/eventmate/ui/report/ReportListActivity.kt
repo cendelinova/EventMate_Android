@@ -70,16 +70,16 @@ class ReportListActivity : BaseActivity() {
 	
 	private val onReportClick = object : ReportAdapter.ReportListener {
 		override fun onReportShare(report: Report) {
-			Timber.d("onReportShare called")
+			Timber.d("onSubmissionView called")
 		}
 		
 		override fun onReportDownload(report: Report) {
-			Timber.d("onReportDownload called")
+			Timber.d("onSubmissionDownload called")
 			
 		}
 		
 		override fun onReportDelete(report: Report) {
-			Timber.d("onReportDelete called")
+			Timber.d("onSubmissionDelete called")
 			
 		}
 		

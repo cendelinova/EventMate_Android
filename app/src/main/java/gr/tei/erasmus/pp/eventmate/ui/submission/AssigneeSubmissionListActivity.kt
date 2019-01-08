@@ -8,6 +8,10 @@ import android.media.MediaRecorder
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.text.SpannableString
+import android.text.SpannableStringBuilder
+import android.text.style.ForegroundColorSpan
+import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -16,6 +20,8 @@ import cafe.adriel.androidaudiorecorder.AndroidAudioRecorder
 import cafe.adriel.androidaudiorecorder.model.AudioChannel
 import cafe.adriel.androidaudiorecorder.model.AudioSampleRate
 import cafe.adriel.androidaudiorecorder.model.AudioSource
+import com.daimajia.androidanimations.library.Techniques
+import com.daimajia.androidanimations.library.YoYo
 import com.vansuita.pickimage.bean.PickResult
 import com.vansuita.pickimage.bundle.PickSetup
 import com.vansuita.pickimage.dialog.PickImageDialog
@@ -27,12 +33,16 @@ import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.SUBMISSION_EXTR
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.VIDEO
 import gr.tei.erasmus.pp.eventmate.data.model.SubmissionExtra
 import gr.tei.erasmus.pp.eventmate.data.model.SubmissionFile
+import gr.tei.erasmus.pp.eventmate.data.model.SubmissionResponse
+import gr.tei.erasmus.pp.eventmate.helpers.ImageHelper
 import gr.tei.erasmus.pp.eventmate.helpers.StateHelper
 import gr.tei.erasmus.pp.eventmate.ui.base.BaseActivity
 import gr.tei.erasmus.pp.eventmate.ui.base.ErrorState
 import gr.tei.erasmus.pp.eventmate.ui.base.LoadingState
 import gr.tei.erasmus.pp.eventmate.ui.base.State
 import kotlinx.android.synthetic.main.activity_assignee_submission_list.*
+import kotlinx.android.synthetic.main.submission_item.view.*
+import kotlinx.android.synthetic.main.toolbar_task_detail.*
 import timber.log.Timber
 
 
@@ -54,6 +64,8 @@ class AssigneeSubmissionListActivity : BaseActivity(), IPickResult {
 		setContentView(R.layout.activity_assignee_submission_list)
 		
 		initializeRecyclerView()
+		
+		setupToolbar(toolbar)
 		
 		observeViewModel()
 		
@@ -92,15 +104,48 @@ class AssigneeSubmissionListActivity : BaseActivity(), IPickResult {
 			is ErrorState -> StateHelper.showError(state.error, progress, main)
 			is SubmissionViewModel.SubmissionState -> {
 				StateHelper.toggleProgress(progress, false)
-				
+				setupLayout(state.submissions[0])
 			}
+		}
+	}
+	
+	private fun setupLayout(submissionResponse: SubmissionResponse) {
+		with(submissionResponse) {
+			task_name.text = taskName
+			taskPhoto?.let {
+				task_photo.setImageBitmap(ImageHelper.getImageFromString(it))
+			}
+			submissionAdapter.updateSubmissionList(content.toMutableList())
+			
+			taskDescription?.let {
+				tv_description.text = taskDescription
+			}
+			
+			
+			val builder = SpannableStringBuilder().also {
+				val startString = getString(R.string.assignee_submission)
+				SpannableString(startString + " " + submitter.userName).apply {
+					setSpan(
+						ForegroundColorSpan(getColor(R.color.colorAccent)),
+						startString.length + 1,
+						startString.length + 1 + submitter.userName.length,
+						0
+					)
+					it.append(this)
+					tasks_status.text = it.toString()
+				}
+			}
+			
+			task_status_icon.visibility = View.GONE
+			
 		}
 	}
 	
 	private fun parseIntent() {
 		if (intent.hasExtra(SUBMISSION_EXTRA) && intent.getParcelableExtra<SubmissionExtra>(SUBMISSION_EXTRA) != null) {
 			val data = intent.getParcelableExtra<SubmissionExtra>(SUBMISSION_EXTRA)
-			viewModel.getUserTaskSubmissions(2,8)
+			// todo real data
+			viewModel.getUserTaskSubmissions(2, 8)
 		}
 	}
 	
@@ -170,14 +215,35 @@ class AssigneeSubmissionListActivity : BaseActivity(), IPickResult {
 	}
 	
 	private val submissionListener = object : SubmissionAdapter.SubmissionListener {
-		override fun onReportShare(submissionFile: SubmissionFile) {
+		override fun onSubmissionClick(itemView: View, slideIn: Boolean) {
+				if (slideIn) {
+					YoYo.with(Techniques.SlideInLeft)
+						.duration(700)
+						.repeat(0)
+						.onStart {
+							itemView.view_background.bringToFront()
+						}
+						.playOn(itemView.view_background)
+					
+				} else {
+					YoYo.with(Techniques.SlideOutRight)
+						.duration(700)
+						.repeat(0)
+						.onEnd {
+							itemView.view_foreground.bringToFront()
+						}
+						.playOn(itemView.view_background)
+				}
+		}
+		
+		override fun onSubmissionView(submissionFile: SubmissionFile) {
 		
 		}
 		
-		override fun onReportDownload(submissionFile: SubmissionFile) {
+		override fun onSubmissionDownload(submissionFile: SubmissionFile) {
 		}
 		
-		override fun onReportDelete(submissionFile: SubmissionFile) {
+		override fun onSubmissionDelete(submissionFile: SubmissionFile) {
 		}
 		
 	}

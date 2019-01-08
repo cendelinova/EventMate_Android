@@ -219,4 +219,9 @@
 	<string name="camera_audio_permission_msg">\"Both camera and audio permission are needed to take pictures of your submissions</string>
 	<string name="camera_audio_permission_title"><![CDATA[Camera & audio permission]]></string>
 	<string name="needed_camera_permission">Camera and audio access is needed to take pictures of submissions</string>
+	<string name="assignee_submission">Task submission of</string>
+	<string name="photo_proof">Photo proof</string>
+	<string name="video_proof">Video proof</string>
+	<string name="audio_proof">Audio proof</string>
+	<string name="view">View</string>
 </resources>

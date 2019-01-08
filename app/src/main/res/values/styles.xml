@@ -65,7 +65,7 @@
 		<item name="android:scaleType">fitXY</item>
 	</style>
 	
-	<style name="ReportIcon">
+	<style name="SlidingIconStyle">
 		<item name="android:textAlignment">center</item>
 		<item name="android:drawablePadding">@dimen/spacing_small</item>
 		<item name="android:textColor">@color/black</item>

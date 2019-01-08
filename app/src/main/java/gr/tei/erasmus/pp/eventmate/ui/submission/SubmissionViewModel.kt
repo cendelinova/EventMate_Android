@@ -22,7 +22,6 @@ class SubmissionViewModel : BaseViewModel() {
 			mStates.postValue(LoadingState)
 			try {
 				val response = submissionRepository.getSubmissions(userId, taskId).await()
-				// todo poslat dal
 				if (response.isSuccessful && response.body() != null) {
 					mStates.postValue(
 						SubmissionState(
@@ -36,7 +35,7 @@ class SubmissionViewModel : BaseViewModel() {
 		}
 	}
 	
-	data class SubmissionState(val tasks: MutableList<SubmissionResponse>) : State() {
+	data class SubmissionState(val submissions: MutableList<SubmissionResponse>) : State() {
 		companion object {
 			fun from(list: MutableList<SubmissionResponse>): SubmissionState {
 				return if (list.isEmpty()) error("submission list should not be empty")

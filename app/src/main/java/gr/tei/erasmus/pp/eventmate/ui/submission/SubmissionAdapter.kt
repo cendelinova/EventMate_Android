@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.data.model.SubmissionFile
+import kotlinx.android.synthetic.main.submission_item.view.*
 import timber.log.Timber
 
 class SubmissionAdapter(
@@ -27,16 +28,40 @@ class SubmissionAdapter(
 	
 	private fun displayReportEntry(viewHolder: SubmissionViewHolder, submissionFile: SubmissionFile) {
 		with(viewHolder.itemView) {
+			setOnClickListener {
+				if (submission_item.getChildAt(0).id == R.id.view_background) {
+					submissionListener.onSubmissionClick(this, true)
+				} else {
+					submissionListener.onSubmissionClick(this, false)
+				}
+			}
 			
+			submission_icon.setImageResource(SubmissionFile.FileType.valueOf(submissionFile.type).icon)
+			submission_name.text = submissionFile.name ?:
+					context.getString(SubmissionFile.FileType.valueOf(submissionFile.type).defaultString)
+			
+			submissionFile.comment?.let {
+				submission_description.text = it
+			}
+			
+			btn_delete.setOnClickListener { submissionListener.onSubmissionDelete(submissionFile) }
+			btn_download.setOnClickListener { submissionListener.onSubmissionDownload(submissionFile) }
+			btn_view.setOnClickListener { submissionListener.onSubmissionView(submissionFile) }
 		}
 		
+	}
+	
+	fun updateSubmissionList(newList: MutableList<SubmissionFile>) {
+		submissionFiles = newList
+		notifyDataSetChanged()
 	}
 	
 	inner class SubmissionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 	
 	interface SubmissionListener {
-		fun onReportShare(submissionFile: SubmissionFile)
-		fun onReportDownload(submissionFile: SubmissionFile)
-		fun onReportDelete(submissionFile: SubmissionFile)
+		fun onSubmissionView(submissionFile: SubmissionFile)
+		fun onSubmissionDownload(submissionFile: SubmissionFile)
+		fun onSubmissionDelete(submissionFile: SubmissionFile)
+		fun onSubmissionClick(itemView: View, slideIn: Boolean)
 	}
 }

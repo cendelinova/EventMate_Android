@@ -46,7 +46,7 @@ class ReportAdapter(
 			
 			btn_delete.setOnClickListener { reportListener.onReportDelete(report) }
 			btn_download.setOnClickListener { reportListener.onReportDownload(report) }
-			btn_share.setOnClickListener { reportListener.onReportShare(report) }
+			btn_view.setOnClickListener { reportListener.onReportShare(report) }
 			
 		}
 		
