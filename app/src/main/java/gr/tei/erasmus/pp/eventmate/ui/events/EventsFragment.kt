@@ -22,7 +22,7 @@ import gr.tei.erasmus.pp.eventmate.data.model.Event.EventState.*
 import gr.tei.erasmus.pp.eventmate.helpers.StateHelper.showError
 import gr.tei.erasmus.pp.eventmate.helpers.StateHelper.toggleProgress
 import gr.tei.erasmus.pp.eventmate.ui.base.*
-import gr.tei.erasmus.pp.eventmate.ui.eventDetail.EventDetailActivity
+import gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.EventDetailActivity
 import gr.tei.erasmus.pp.eventmate.ui.events.newEvent.NewEventActivity
 import gr.tei.erasmus.pp.eventmate.ui.mainActivity.MainActivity
 import kotlinx.android.synthetic.main.fragment_events.*

@@ -1,4 +1,4 @@
-package gr.tei.erasmus.pp.eventmate.ui.eventDetail.guests
+package gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.guests
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -25,7 +25,11 @@ class UserViewModel : BaseViewModel() {
 			try {
 				val response = userRepository.getGuests(eventId).await()
 				if (response.isSuccessful && response.body() != null) {
-					mStates.postValue(UserListState(response.body()!!))
+					mStates.postValue(
+						UserListState(
+							response.body()!!
+						)
+					)
 				}
 			} catch (error: Throwable) {
 				mStates.postValue(ErrorState(error))
@@ -38,7 +42,11 @@ class UserViewModel : BaseViewModel() {
 			mStates.postValue(LoadingState)
 			try {
 				val user = userRepository.getUser(userId).await()
-				mStates.postValue(UserListState(mutableListOf(user)))
+				mStates.postValue(
+					UserListState(
+						mutableListOf(user)
+					)
+				)
 			} catch (error: Throwable) {
 				mStates.postValue(ErrorState(error))
 			}
@@ -66,7 +74,11 @@ class UserViewModel : BaseViewModel() {
 			mStates.postValue(LoadingState)
 			try {
 				val user = userRepository.getMyProfile().await()
-				mStates.postValue(UserListState(mutableListOf(user)))
+				mStates.postValue(
+					UserListState(
+						mutableListOf(user)
+					)
+				)
 			} catch (error: Throwable) {
 				mStates.postValue(ErrorState(error))
 			}

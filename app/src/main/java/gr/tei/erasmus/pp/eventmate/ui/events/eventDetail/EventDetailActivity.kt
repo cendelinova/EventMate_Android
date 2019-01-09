@@ -1,4 +1,4 @@
-package gr.tei.erasmus.pp.eventmate.ui.eventDetail
+package gr.tei.erasmus.pp.eventmate.ui.events.eventDetail
 
 import android.content.DialogInterface
 import android.content.Intent
@@ -19,7 +19,7 @@ import gr.tei.erasmus.pp.eventmate.helpers.DialogHelper
 import gr.tei.erasmus.pp.eventmate.helpers.FileHelper
 import gr.tei.erasmus.pp.eventmate.helpers.StateHelper
 import gr.tei.erasmus.pp.eventmate.ui.base.*
-import gr.tei.erasmus.pp.eventmate.ui.eventDetail.EventDetailFragmentAdapter.Companion.TASKS_TAB
+import gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.EventDetailFragmentAdapter.Companion.TASKS_TAB
 import gr.tei.erasmus.pp.eventmate.ui.events.EventsViewModel
 import gr.tei.erasmus.pp.eventmate.ui.events.newEvent.NewEventActivity
 import gr.tei.erasmus.pp.eventmate.ui.inviteGuests.InviteGuestsActivity
@@ -84,7 +84,11 @@ class EventDetailActivity : BaseActivity() {
 	}
 	
 	private fun setupViewPager() {
-		val fragmentAdapter = EventDetailFragmentAdapter(this, supportFragmentManager, eventId)
+		val fragmentAdapter = EventDetailFragmentAdapter(
+			this,
+			supportFragmentManager,
+			eventId
+		)
 		view_pager.adapter = fragmentAdapter
 		tabs.setupWithViewPager(view_pager)
 		tabs.addOnTabSelectedListener(selectTabListener)

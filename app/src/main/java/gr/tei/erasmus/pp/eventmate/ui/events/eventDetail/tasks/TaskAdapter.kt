@@ -1,4 +1,4 @@
-package gr.tei.erasmus.pp.eventmate.ui.eventDetail.tasks
+package gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.tasks
 
 import android.content.Context
 import android.view.LayoutInflater

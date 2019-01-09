@@ -1,4 +1,4 @@
-package gr.tei.erasmus.pp.eventmate.ui.eventDetail
+package gr.tei.erasmus.pp.eventmate.ui.events.eventDetail
 
 import android.content.Context
 import android.os.Bundle
@@ -6,8 +6,8 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.EVENT_ID
-import gr.tei.erasmus.pp.eventmate.ui.eventDetail.guests.GuestsFragment
-import gr.tei.erasmus.pp.eventmate.ui.eventDetail.tasks.TasksFragment
+import gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.guests.GuestsFragment
+import gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.tasks.TasksFragment
 
 class EventDetailFragmentAdapter(
 	private val context: Context,
@@ -48,7 +48,8 @@ class EventDetailFragmentAdapter(
 	/**
 	 * Get the total number of tabs.
 	 */
-	override fun getCount() = TAB_COUNT
+	override fun getCount() =
+		TAB_COUNT
 	
 	/**
 	 * Get valid title fot given position.

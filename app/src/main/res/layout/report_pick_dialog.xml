@@ -14,12 +14,19 @@
 		android:text="@string/msg_report_guests"
 		android:layout_centerHorizontal="true" />
 	
+	<androidx.appcompat.widget.SearchView
+		android:id="@+id/search_view"
+		android:layout_marginTop="@dimen/spacing_large"
+		android:layout_width="match_parent"
+		app:queryHint="@string/hint_search"
+		android:layout_height="wrap_content" />
+	
 	<androidx.recyclerview.widget.RecyclerView
 		android:id="@+id/guest_recycler_view"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:scrollbars="none"
-		android:layout_below="@id/my_title"
+		android:layout_below="@id/search_view"
 		app:fastScrollThumbColor="@color/colorAccent" />
 
 

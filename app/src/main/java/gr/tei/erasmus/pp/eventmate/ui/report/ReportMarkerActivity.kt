@@ -3,10 +3,13 @@ package gr.tei.erasmus.pp.eventmate.ui.report
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import androidx.appcompat.widget.SearchView.OnQueryTextListener
+import androidx.recyclerview.widget.RecyclerView
 import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.data.model.Task
 import gr.tei.erasmus.pp.eventmate.data.model.User
 import gr.tei.erasmus.pp.eventmate.helpers.DialogHelper
+import gr.tei.erasmus.pp.eventmate.ui.base.AbstractFilterAdapter
 import gr.tei.erasmus.pp.eventmate.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_report_marker.*
 
@@ -42,25 +45,28 @@ class ReportMarkerActivity : BaseActivity() {
 			)
 		}
 		tv_display_guests.setOnClickListener {
+			val reportGuestAdapter = ReportGuestAdapter(
+				this@ReportMarkerActivity,
+				reportGuestListener, users
+			)
+			
 			DialogHelper.showDialogWithAdapter(
-				this,
-				ReportGuestAdapter(
-					this@ReportMarkerActivity,
-					reportGuestListener, users
-				), LayoutInflater.from(this).inflate(R.layout.report_pick_dialog, null),
-				getString(R.string.msg_report_guests), confirmGuestListener
+				this, reportGuestAdapter,
+				LayoutInflater.from(this).inflate(R.layout.report_pick_dialog, null),
+				getString(R.string.msg_report_guests), confirmGuestListener, getQueryTextListener(reportGuestAdapter)
 			)
 		}
 		tv_include_tasks.setOnClickListener {
+			val reportTaskAdapter = ReportTaskAdapter(
+				this@ReportMarkerActivity,
+				reportTaskListener,
+				tasks
+			)
 			DialogHelper.showDialogWithAdapter(
 				this,
-				ReportTaskAdapter(
-					this@ReportMarkerActivity,
-					reportTaskListener,
-					tasks
-				),
+				reportTaskAdapter,
 				LayoutInflater.from(this).inflate(R.layout.report_pick_dialog, null),
-				getString(R.string.msg_report_tasks), confirmTasksListener
+				getString(R.string.msg_report_tasks), confirmTasksListener, getQueryTextListener(reportTaskAdapter)
 			)
 		}
 		
@@ -127,6 +133,19 @@ class ReportMarkerActivity : BaseActivity() {
 	private val confirmTasksListener = View.OnClickListener {
 		include_tasks.isChecked = !listOfTaskIds.isEmpty()
 	}
+	
+	private fun getQueryTextListener(adapter: AbstractFilterAdapter): OnQueryTextListener =
+		object : OnQueryTextListener {
+			override fun onQueryTextSubmit(query: String?): Boolean {
+				return false
+			}
+			
+			override fun onQueryTextChange(newText: String?): Boolean {
+				adapter.filter?.filter(newText)
+				return false
+			}
+			
+		}
 	
 }
 

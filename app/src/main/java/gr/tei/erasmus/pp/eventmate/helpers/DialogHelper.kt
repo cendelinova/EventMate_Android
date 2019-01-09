@@ -6,6 +6,7 @@ import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.WhichButton
@@ -56,17 +57,19 @@ object DialogHelper {
 		adapter: RecyclerView.Adapter<*>,
 		customView: View,
 		title: String,
-		callback: View.OnClickListener?
+		onClickListener: View.OnClickListener?,
+		queryListener: SearchView.OnQueryTextListener?
 	) {
 		
 		MaterialDialog(context).show {
 			customView.my_title.text = title
+			customView.search_view.setOnQueryTextListener(queryListener)
 			customView(view = customView, scrollable = true)
 			customListAdapter(adapter)
 			positiveButton(R.string.btn_confirm)
 			negativeButton(R.string.btn_cancel)
 			getActionButton(WhichButton.POSITIVE).setOnClickListener {
-				callback?.onClick(it)
+				onClickListener?.onClick(it)
 				this.dismiss()
 			}
 		}

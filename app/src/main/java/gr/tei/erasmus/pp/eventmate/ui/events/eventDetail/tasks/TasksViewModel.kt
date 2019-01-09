@@ -1,4 +1,4 @@
-package gr.tei.erasmus.pp.eventmate.ui.eventDetail.tasks
+package gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.tasks
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

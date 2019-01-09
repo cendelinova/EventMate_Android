@@ -9,7 +9,7 @@ import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.helpers.PermissionHelper
 import gr.tei.erasmus.pp.eventmate.ui.assignPoints.AssignPointViewModel
 import gr.tei.erasmus.pp.eventmate.ui.base.NoToolbarActivity
-import gr.tei.erasmus.pp.eventmate.ui.eventDetail.guests.UserViewModel
+import gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.guests.UserViewModel
 import gr.tei.erasmus.pp.eventmate.ui.mainActivity.MainActivity
 import gr.tei.erasmus.pp.eventmate.ui.signup.SignupActivity
 import kotlinx.android.synthetic.main.activity_assignee_submission_list.*

@@ -18,8 +18,8 @@ import gr.tei.erasmus.pp.eventmate.ui.base.BaseActivity
 import gr.tei.erasmus.pp.eventmate.ui.base.ErrorState
 import gr.tei.erasmus.pp.eventmate.ui.base.LoadingState
 import gr.tei.erasmus.pp.eventmate.ui.base.State
-import gr.tei.erasmus.pp.eventmate.ui.eventDetail.guests.UserAdapter
-import gr.tei.erasmus.pp.eventmate.ui.eventDetail.tasks.TasksViewModel
+import gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.guests.UserAdapter
+import gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.tasks.TasksViewModel
 import gr.tei.erasmus.pp.eventmate.ui.submission.AssigneeSubmissionListActivity
 import kotlinx.android.synthetic.main.activity_task_detail.*
 import kotlinx.android.synthetic.main.toolbar_task_detail.*

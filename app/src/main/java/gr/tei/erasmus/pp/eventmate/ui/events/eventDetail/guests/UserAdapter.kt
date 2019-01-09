@@ -1,4 +1,4 @@
-package gr.tei.erasmus.pp.eventmate.ui.eventDetail.guests
+package gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.guests
 
 import android.content.Context
 import androidx.recyclerview.widget.RecyclerView

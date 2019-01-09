@@ -48,13 +48,12 @@
 		</activity>
 		<activity android:name=".ui.signup.SignupActivity" />
 		<activity android:name=".ui.events.newEvent.NewEventActivity" />
-		<activity android:name=".ui.eventDetail.EventDetailActivity" />
+		<activity android:name=".ui.events.eventDetail.EventDetailActivity" />
 		<activity
 			android:name=".ui.settings.SettingsActivity"
 			android:label="@string/title_activity_settings"
 			android:theme="@style/AppTheme.NoActionBar" />
 		<activity android:name=".ui.gameRank.GameRankActivity" />
-		<activity android:name=".ui.help.HelpActivity" />
 		<activity android:name=".ui.inbox.conversationDetail.ConversationDetailActivity" />
 		<activity android:name=".ui.inbox.newMessage.NewMessageActivity" />
 		<activity
@@ -63,11 +62,7 @@
 			android:theme="@style/AppTheme" />
 		<activity android:name=".ui.userProfile.UserProfileActivity" />
 		<activity android:name=".ui.taskDetail.TaskDetailActivity">
-			<intent-filter>
-				<action android:name="android.intent.action.MAIN" />
-				
-				<category android:name="android.intent.category.LAUNCHER" />
-			</intent-filter>
+		
 		</activity>
 		<activity android:name=".ui.inviteGuests.InviteGuestsActivity" />
 		<activity android:name=".ui.report.ReportListActivity">
@@ -84,7 +79,13 @@
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
 		</activity>
-		<activity android:name=".ui.report.ReportMarkerActivity" />
+		<activity android:name=".ui.report.ReportMarkerActivity">
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN" />
+				
+				<category android:name="android.intent.category.LAUNCHER" />
+			</intent-filter>
+		</activity>
 		<activity android:name=".ui.submission.AssigneeSubmissionListActivity">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
