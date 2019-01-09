@@ -7,6 +7,7 @@ import gr.tei.erasmus.pp.eventmate.data.model.SubmissionFile
 import gr.tei.erasmus.pp.eventmate.data.model.SubmissionResponse
 import gr.tei.erasmus.pp.eventmate.ui.base.*
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class SubmissionViewModel : BaseViewModel() {
 	private val submissionRepository by lazy { App.COMPONENTS.provideSubmissionRepository() }
@@ -34,6 +35,7 @@ class SubmissionViewModel : BaseViewModel() {
 			mStates.postValue(LoadingState)
 			try {
 				val response = submissionRepository.saveNewSubmissionFile(taskId, submissionFile).await()
+				Timber.d("saveNewSubmissionFile() $response ${response.isSuccessful}")
 				if (response.isSuccessful && response.body() != null) {
 					mStates.postValue(FinishedState)
 				}

@@ -1,9 +1,11 @@
 package gr.tei.erasmus.pp.eventmate.ui.submission
 
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.MediaController
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.snackbar.Snackbar
@@ -11,7 +13,9 @@ import com.squareup.picasso.Picasso
 import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.AUDIO
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.PHOTO
+import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.SUBMISSION_EXTRA
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.VIDEO
+import gr.tei.erasmus.pp.eventmate.data.model.SubmissionExtra
 import gr.tei.erasmus.pp.eventmate.data.model.SubmissionFile
 import gr.tei.erasmus.pp.eventmate.helpers.DialogHelper
 import gr.tei.erasmus.pp.eventmate.helpers.FileHelper
@@ -78,7 +82,14 @@ class AssigneeNewSubmissionActivity : BaseActivity() {
 		when (state) {
 			is LoadingState -> StateHelper.toggleProgress(progress, true)
 			is ErrorState -> StateHelper.showError(state.error, progress, main)
-			is FinishedState -> StateHelper.toggleProgress(progress, false)
+			is FinishedState -> {
+				StateHelper.toggleProgress(progress, false)
+				Toast.makeText(this, R.string.success_file_uploaded, Toast.LENGTH_LONG).show()
+				startActivity(Intent(this, AssigneeSubmissionListActivity::class.java).apply {
+					// todo real data
+					putExtra(SUBMISSION_EXTRA, SubmissionExtra(3, 8))
+				})
+			}
 			is SubmissionViewModel.SubmissionState -> {
 				StateHelper.toggleProgress(progress, false)
 			}
