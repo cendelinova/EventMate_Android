@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.data.model.Report
-import gr.tei.erasmus.pp.eventmate.helpers.ImageHelper
+import gr.tei.erasmus.pp.eventmate.helpers.FileHelper
 import kotlinx.android.synthetic.main.report_item.view.*
 import timber.log.Timber
 
@@ -37,7 +37,7 @@ class ReportAdapter(
 				}
 			}
 			report.photo?.let {
-				report_photo.setImageBitmap(ImageHelper.getImageFromString(it))
+				report_photo.setImageBitmap(FileHelper.decodeImage(it))
 			}
 			
 			report_name.text = report.name

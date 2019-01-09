@@ -19,7 +19,7 @@ import com.vansuita.pickimage.dialog.PickImageDialog
 import com.vansuita.pickimage.listeners.IPickResult
 import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.data.model.UserRequest
-import gr.tei.erasmus.pp.eventmate.helpers.ImageHelper
+import gr.tei.erasmus.pp.eventmate.helpers.FileHelper
 import gr.tei.erasmus.pp.eventmate.helpers.StateHelper
 import gr.tei.erasmus.pp.eventmate.helpers.TextInputLayoutHelper
 import gr.tei.erasmus.pp.eventmate.ui.base.*
@@ -89,7 +89,7 @@ class SignupActivity : BaseActivity(), Validator.ValidationListener, IPickResult
 		val password = TextInputLayoutHelper.collectValueFromInput(input_password)
 		var photo: String? = null
 		if (photoChosen) {
-			photo = ImageHelper.getStringImage(ImageHelper.getBitmap(profile_photo))
+			photo = FileHelper.encodeImage(FileHelper.getBitmap(profile_photo))
 		}
 		viewModel.register(UserRequest(userName, password, email, photo ?: photo))
 	}

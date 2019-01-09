@@ -59,8 +59,8 @@
 		android:id="@+id/view_foreground"
 		android:layout_width="match_parent"
 		android:layout_height="100dp"
-		android:layout_marginStart="@dimen/spacing_normal"
-		android:layout_marginEnd="@dimen/spacing_normal"
+		android:layout_marginStart="@dimen/spacing_small"
+		android:layout_marginEnd="@dimen/spacing_small"
 		android:layout_marginBottom="@dimen/spacing_tiny"
 		android:foreground="?attr/selectableItemBackground"
 		app:cardBackgroundColor="@color/card_view_foreground"
@@ -90,7 +90,7 @@
 				android:layout_height="wrap_content"
 				android:layout_alignParentEnd="true"
 				android:textSize="@dimen/font_small"
-				android:layout_marginTop="-5dp" />
+				android:layout_marginTop="-2dp" />
 			
 			
 			<RelativeLayout
@@ -99,13 +99,13 @@
 				android:layout_marginStart="@dimen/spacing_small"
 				android:layout_toEndOf="@id/submission_icon">
 				
-				
 				<TextView
 					android:id="@+id/submission_name"
 					style="@style/NameTitle"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
 					android:layout_marginBottom="@dimen/spacing_tiny"
+					android:layout_marginStart="@dimen/spacing_tiny"
 					tools:text="Tim's stag party" />
 				
 				<TextView
@@ -114,6 +114,7 @@
 					android:layout_height="wrap_content"
 					android:layout_below="@id/submission_name"
 					android:maxLines="4"
+					android:layout_marginStart="@dimen/spacing_tiny"
 					android:ellipsize="end"
 					tools:text="All boring stuff... Great night guys!" />
 			

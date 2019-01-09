@@ -16,7 +16,7 @@ import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.EVENT_ID
 import gr.tei.erasmus.pp.eventmate.data.model.Event
 import gr.tei.erasmus.pp.eventmate.helpers.DateTimeHelper
 import gr.tei.erasmus.pp.eventmate.helpers.DialogHelper
-import gr.tei.erasmus.pp.eventmate.helpers.ImageHelper
+import gr.tei.erasmus.pp.eventmate.helpers.FileHelper
 import gr.tei.erasmus.pp.eventmate.helpers.StateHelper
 import gr.tei.erasmus.pp.eventmate.ui.base.*
 import gr.tei.erasmus.pp.eventmate.ui.eventDetail.EventDetailFragmentAdapter.Companion.TASKS_TAB
@@ -149,7 +149,7 @@ class EventDetailActivity : BaseActivity() {
 			event_date.text = DateTimeHelper.formatDateTimeString(date, DateTimeHelper.DATE_FORMAT)
 			event_time.text = DateTimeHelper.formatDateTimeString(date, DateTimeHelper.TIME_FORMAT)
 			photo?.let {
-				event_photo.setImageBitmap(ImageHelper.getImageFromString(it))
+				event_photo.setImageBitmap(FileHelper.decodeImage(it))
 			}
 		}
 		

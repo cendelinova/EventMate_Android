@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModelProviders
 import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.app.App
 import gr.tei.erasmus.pp.eventmate.data.model.User
-import gr.tei.erasmus.pp.eventmate.helpers.ImageHelper
+import gr.tei.erasmus.pp.eventmate.helpers.FileHelper
 import gr.tei.erasmus.pp.eventmate.helpers.StateHelper
 import gr.tei.erasmus.pp.eventmate.ui.base.BaseFragment
 import gr.tei.erasmus.pp.eventmate.ui.base.ErrorState
@@ -104,7 +104,7 @@ class ProfileFragment : BaseFragment() {
 			tv_count_attended_events.text = attendedEvents.toString()
 			tv_count_organized_events.text = organizedEvents.toString()
 			photo?.let {
-				profile_image.setImageBitmap(ImageHelper.getImageFromString(it))
+				profile_image.setImageBitmap(FileHelper.decodeImage(it))
 			}
 		}
 	}

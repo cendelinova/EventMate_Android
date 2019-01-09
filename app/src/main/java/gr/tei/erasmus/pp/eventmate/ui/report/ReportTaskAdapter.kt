@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.data.model.Task
-import gr.tei.erasmus.pp.eventmate.helpers.ImageHelper
+import gr.tei.erasmus.pp.eventmate.helpers.FileHelper
 import kotlinx.android.synthetic.main.report_task_item.view.*
 import timber.log.Timber
 
@@ -31,7 +31,7 @@ class ReportTaskAdapter(
 		with(viewHolder.itemView) {
 			task_name.text = task.name
 			task.photo?.let {
-				task_photo.setImageBitmap(ImageHelper.getImageFromString(it))
+				task_photo.setImageBitmap(FileHelper.decodeImage(it))
 			}
 			setOnClickListener {
 				// todo whole row changes checkbox

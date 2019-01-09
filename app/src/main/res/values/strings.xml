@@ -208,7 +208,7 @@
 	<string name="mgs_report_info">WHAT INFORMATION WOULD YOU LIKE TO INCLUDE?</string>
 	<string name="msg_report_guests">WHO WILL BE IN YOUR REPORT?</string>
 	<string name="msg_report_tasks">WHICH TASKS WOULD YOU LIKE TO INCLUDE?</string>
-	<string name="tv_no_submission">No submission file yet</string>
+	<string name="tv_no_submission">No submission file</string>
 	<string name="take_photo">Take photo</string>
 	<string name="record_video">Record video</string>
 	<string name="record_audio">Record audio</string>
@@ -224,4 +224,5 @@
 	<string name="video_proof">Video proof</string>
 	<string name="audio_proof">Audio proof</string>
 	<string name="view">View</string>
+	<string name="error_uploading_data">Error occurred during loading. Please try it again</string>
 </resources>

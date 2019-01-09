@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.data.model.Event
 import gr.tei.erasmus.pp.eventmate.helpers.DateTimeHelper
-import gr.tei.erasmus.pp.eventmate.helpers.ImageHelper
+import gr.tei.erasmus.pp.eventmate.helpers.FileHelper
 import kotlinx.android.synthetic.main.event_item.view.*
 import timber.log.Timber
 
@@ -42,7 +42,7 @@ class EventAdapter(
 			event_tasks_count.text = event.taskCount.toString()
 			
 			event.photo?.let {
-				event_photo.setImageBitmap(ImageHelper.getImageFromString(it))
+				event_photo.setImageBitmap(FileHelper.decodeImage(it))
 			}
 		}
 	}

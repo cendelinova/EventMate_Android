@@ -38,7 +38,7 @@ import gr.tei.erasmus.pp.eventmate.data.model.SubmissionExtra
 import gr.tei.erasmus.pp.eventmate.data.model.SubmissionFile
 import gr.tei.erasmus.pp.eventmate.data.model.SubmissionResponse
 import gr.tei.erasmus.pp.eventmate.helpers.DialogHelper
-import gr.tei.erasmus.pp.eventmate.helpers.ImageHelper
+import gr.tei.erasmus.pp.eventmate.helpers.FileHelper
 import gr.tei.erasmus.pp.eventmate.helpers.StateHelper
 import gr.tei.erasmus.pp.eventmate.ui.base.BaseActivity
 import gr.tei.erasmus.pp.eventmate.ui.base.ErrorState
@@ -116,9 +116,9 @@ class AssigneeSubmissionListActivity : BaseActivity(), IPickResult {
 		with(submissionResponse) {
 			task_name.text = taskName
 			taskPhoto?.let {
-				task_photo.setImageBitmap(ImageHelper.getImageFromString(it))
+				task_photo.setImageBitmap(FileHelper.decodeImage(it))
 			}
-			submissionAdapter.updateSubmissionList(content.toMutableList())
+			submissionAdapter.updateSubmissionList(content.sortedBy { it.created?.time?.compareTo(it.created.time) }.toMutableList())
 			
 			taskDescription?.let {
 				tv_description.text = taskDescription
@@ -157,7 +157,7 @@ class AssigneeSubmissionListActivity : BaseActivity(), IPickResult {
 		if (intent.hasExtra(SUBMISSION_EXTRA) && intent.getParcelableExtra<SubmissionExtra>(SUBMISSION_EXTRA) != null) {
 			val data = intent.getParcelableExtra<SubmissionExtra>(SUBMISSION_EXTRA)
 			// todo real data
-			viewModel.getUserTaskSubmissions(3, 8)
+			viewModel.getUserTaskSubmissions(data.userId, 8)
 		}
 	}
 	

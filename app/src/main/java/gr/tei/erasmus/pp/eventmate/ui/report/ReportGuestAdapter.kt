@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.data.model.User
-import gr.tei.erasmus.pp.eventmate.helpers.ImageHelper
+import gr.tei.erasmus.pp.eventmate.helpers.FileHelper
 import kotlinx.android.synthetic.main.report_guest_item.view.*
 import timber.log.Timber
 
@@ -31,7 +31,7 @@ class ReportGuestAdapter(
 		with(viewHolder.itemView) {
 			user_name.text = user.userName
 			user.photo?.let {
-				user_photo.setImageBitmap(ImageHelper.getImageFromString(it))
+				user_photo.setImageBitmap(FileHelper.decodeImage(it))
 			}
 			setOnClickListener {
 				checkbox.isChecked = !checkbox.isChecked

@@ -80,7 +80,7 @@ object DialogHelper {
 					}
 					
 					photoString?.let { photoString ->
-						it.photo.setImageBitmap(ImageHelper.getImageFromString(photoString))
+						it.photo.setImageBitmap(FileHelper.decodeImage(photoString))
 					}
 					
 				}

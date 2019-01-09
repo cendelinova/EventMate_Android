@@ -33,8 +33,8 @@ class SubmissionViewModel : BaseViewModel() {
 		launch {
 			mStates.postValue(LoadingState)
 			try {
-				val response = submissionRepository.saveNewSubmissionFile(taskId, submissionFile)
-				if (response) {
+				val response = submissionRepository.saveNewSubmissionFile(taskId, submissionFile).await()
+				if (response.isSuccessful && response.body() != null) {
 					mStates.postValue(FinishedState)
 				}
 			} catch (error: Throwable) {

@@ -11,7 +11,7 @@ import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.TASK_ID
 import gr.tei.erasmus.pp.eventmate.data.model.SubmissionExtra
 import gr.tei.erasmus.pp.eventmate.data.model.Task
 import gr.tei.erasmus.pp.eventmate.data.model.User
-import gr.tei.erasmus.pp.eventmate.helpers.ImageHelper
+import gr.tei.erasmus.pp.eventmate.helpers.FileHelper
 import gr.tei.erasmus.pp.eventmate.helpers.StateHelper
 import gr.tei.erasmus.pp.eventmate.helpers.TextInputLayoutHelper.getDefaultTextIfEmpty
 import gr.tei.erasmus.pp.eventmate.ui.base.BaseActivity
@@ -114,7 +114,7 @@ class TaskDetailActivity : BaseActivity() {
 			tv_location.text = getDefaultTextIfEmpty(place)
 			tv_points.text = points.toString()
 			photo?.let {
-				task_photo.setImageBitmap(ImageHelper.getImageFromString(it))
+				task_photo.setImageBitmap(FileHelper.decodeImage(it))
 			}
 			
 			if (!assignees.isNullOrEmpty()) {
