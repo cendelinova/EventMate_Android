@@ -118,16 +118,15 @@ class AssigneeSubmissionListActivity : BaseActivity(), IPickResult {
 			taskPhoto?.let {
 				task_photo.setImageBitmap(FileHelper.decodeImage(it))
 			}
-			submissionAdapter.updateSubmissionList(content.sortedBy { it.created?.time?.compareTo(it.created.time) }.toMutableList())
+			submissionAdapter.updateSubmissionList(content.sortedWith(compareBy { it.created?.time?.compareTo(it.created.time) }).reversed().toMutableList())
 			
 			taskDescription?.let {
 				tv_description.text = taskDescription
 			}
 			
-			
 			SpannableStringBuilder().also {
 				val startString = getString(R.string.assignee_submission)
-				SpannableString(startString + " " + submitter?.userName).apply {
+				SpannableString(startString + " " + submitter.userName).apply {
 					
 					setSpan(
 						ForegroundColorSpan(getColor(R.color.colorAccent)),

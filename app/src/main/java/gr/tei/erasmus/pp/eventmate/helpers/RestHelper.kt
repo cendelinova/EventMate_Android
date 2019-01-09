@@ -26,6 +26,7 @@ class RestHelper(retrofit: Retrofit) {
 	fun insertTask(task: TaskRequest) = taskService.insertTask(task.eventId, task)
 	fun getTask(taskId: Long) = taskService.getTask(taskId)
 	
+	// todo save
 	fun getUserTaskSubmissions(userId: Long, taskId: Long) = submissionService.getSubmissions(taskId, userId)
 	
 	suspend fun saveSubmission(taskId: Long, submissionFile: SubmissionFile) =
