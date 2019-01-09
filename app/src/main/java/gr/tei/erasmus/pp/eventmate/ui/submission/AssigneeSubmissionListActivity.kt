@@ -226,6 +226,10 @@ class AssigneeSubmissionListActivity : BaseActivity(), IPickResult {
 	}
 	
 	private val submissionListener = object : SubmissionAdapter.SubmissionListener {
+		override fun onSubmissionIconClick(submissionFile: SubmissionFile) {
+			showDataPreview(submissionFile)
+		}
+		
 		override fun onSubmissionClick(itemView: View, slideIn: Boolean) {
 			if (slideIn) {
 				YoYo.with(Techniques.SlideInLeft)
@@ -248,27 +252,7 @@ class AssigneeSubmissionListActivity : BaseActivity(), IPickResult {
 		}
 		
 		override fun onSubmissionView(submissionFile: SubmissionFile) {
-			when (SubmissionFile.FileType.valueOf(submissionFile.type)) {
-				SubmissionFile.FileType.PHOTO -> DialogHelper.showDialogWithPhotoPreview(
-					this@AssigneeSubmissionListActivity,
-					layoutInflater,
-					null,
-					submissionFile.data
-				)
-				
-				SubmissionFile.FileType.VIDEO -> {
-					DialogHelper.showDialogWithVideoPreview(
-						this@AssigneeSubmissionListActivity,
-						layoutInflater,
-						null,
-						submissionFile.data
-					)
-				}
-				
-				SubmissionFile.FileType.AUDIO -> {
-					// todo audio
-				}
-			}
+			showDataPreview(submissionFile)
 		}
 		
 		override fun onSubmissionDownload(submissionFile: SubmissionFile) {
@@ -305,6 +289,33 @@ class AssigneeSubmissionListActivity : BaseActivity(), IPickResult {
 			}
 			
 			startActivity(intent)
+		}
+	}
+	
+	private fun showDataPreview(submissionFile: SubmissionFile) {
+		when (SubmissionFile.FileType.valueOf(submissionFile.type)) {
+			SubmissionFile.FileType.PHOTO -> DialogHelper.showDialogWithPhotoPreview(
+				this@AssigneeSubmissionListActivity,
+				layoutInflater,
+				null,
+				submissionFile.data
+			)
+			
+			SubmissionFile.FileType.VIDEO -> {
+				DialogHelper.showDialogWithVideoPreview(
+					this@AssigneeSubmissionListActivity,
+					layoutInflater,
+					submissionFile.data
+				)
+			}
+			
+			SubmissionFile.FileType.AUDIO -> {
+				DialogHelper.showDialogWithAudioPlayer(
+					this@AssigneeSubmissionListActivity,
+					layoutInflater,
+					submissionFile.data
+				)
+			}
 		}
 	}
 	

@@ -12,6 +12,7 @@ class DateTimeHelper {
 		const val TIME_FORMAT = "HH:mm"
 		const val DATE_TIME_FORMAT = "dd/MM/yyyy HH:mm"
 		const val FULL_DATE_TIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ssZ"
+		const val FULL_DATE_TIME_FORMAT_FILE = "yyyyMMdd-kkmmss"
 		
 		fun isToday(dateTime: DateTime): Boolean = (dateTime.toLocalDate()) == (LocalDate())
 		

@@ -39,6 +39,8 @@ class SubmissionAdapter(
 			}
 			
 			submission_icon.setImageResource(SubmissionFile.FileType.valueOf(submissionFile.type).icon)
+			submission_icon.setOnClickListener { submissionListener.onSubmissionIconClick(submissionFile) }
+			
 			submission_name.text = submissionFile.name ?:
 					context.getString(SubmissionFile.FileType.valueOf(submissionFile.type).defaultString)
 			
@@ -67,5 +69,6 @@ class SubmissionAdapter(
 		fun onSubmissionDownload(submissionFile: SubmissionFile)
 		fun onSubmissionDelete(submissionFile: SubmissionFile)
 		fun onSubmissionClick(itemView: View, slideIn: Boolean)
+		fun onSubmissionIconClick(submissionFile: SubmissionFile)
 	}
 }

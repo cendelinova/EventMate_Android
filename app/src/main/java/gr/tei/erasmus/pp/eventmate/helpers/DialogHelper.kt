@@ -13,10 +13,16 @@ import com.afollestad.materialdialogs.actions.getActionButton
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.list.customListAdapter
 import gr.tei.erasmus.pp.eventmate.R
+import kotlinx.android.synthetic.main.dialog_audio_preview.view.*
 import kotlinx.android.synthetic.main.dialog_photo_preview.view.*
-import kotlinx.android.synthetic.main.dialog_photo_preview.view.btn_close
 import kotlinx.android.synthetic.main.dialog_video_preview.view.*
 import kotlinx.android.synthetic.main.report_pick_dialog.view.*
+import nl.changer.audiowife.AudioWife
+import kotlinx.android.synthetic.main.dialog_audio_preview.view.btn_close as close_audio
+import kotlinx.android.synthetic.main.dialog_audio_preview.view.progress as progress_audio
+import kotlinx.android.synthetic.main.dialog_photo_preview.view.btn_close as close_photo
+import kotlinx.android.synthetic.main.dialog_video_preview.view.btn_close as close_video
+import kotlinx.android.synthetic.main.dialog_video_preview.view.progress as progress_video
 
 
 object DialogHelper {
@@ -89,7 +95,7 @@ object DialogHelper {
 		}.create()
 		
 		with(dialog) {
-			layout.btn_close.setOnClickListener {
+			layout.close_photo.setOnClickListener {
 				this.dismiss()
 			}
 			show()
@@ -99,33 +105,73 @@ object DialogHelper {
 	fun showDialogWithVideoPreview(
 		context: Context,
 		layoutInflater: LayoutInflater,
-		uri: Uri? = null,
 		data: String? = null
 	) {
 		val layout =
-			layoutInflater.inflate(R.layout.dialog_photo_preview, null)
+			layoutInflater.inflate(R.layout.dialog_video_preview, null)
 				.also {
+					StateHelper.toggleProgress(it.progress_audio, true)
 					with(it.video_view) {
-						//			setVideoURI(data)
+						setVideoURI(FileHelper.decodeFile(context, data))
 						setMediaController(android.widget.MediaController(context).apply {
 							setAnchorView(this)
 						})
 						requestFocus()
-//			seekTo(1)
+						seekTo(1)
 					}
-//		toggleVideoButtons()
+					toggleVideoButtons(it)
+					StateHelper.toggleProgress(it.progress_audio, false)
+					
 				}
 		val dialog = AlertDialog.Builder(context).apply {
 			setView(layout)
 		}.create()
 		
 		with(dialog) {
-			layout.btn_close.setOnClickListener {
+			layout.close_video.setOnClickListener {
 				this.dismiss()
 			}
 			show()
 		}
+	}
+	
+	fun showDialogWithAudioPlayer(
+		context: Context,
+		layoutInflater: LayoutInflater,
+		data: String? = null
+	) {
+		val layout =
+			layoutInflater.inflate(R.layout.dialog_audio_preview, null)
+				.also {
+					StateHelper.toggleProgress(it.progress_audio, true)
+					AudioWife.getInstance().init(context, FileHelper.decodeFile(context, data))
+						.useDefaultUi(it.audio_layout, layoutInflater)
+					StateHelper.toggleProgress(it.progress_audio, false)
+				}
+		val dialog = AlertDialog.Builder(context).apply {
+			setView(layout)
+		}.create()
 		
+		with(dialog) {
+			layout.close_audio.setOnClickListener {
+				this.dismiss()
+			}
+			show()
+		}
+	}
+	
+	private fun toggleVideoButtons(view: View) {
+		with(view) {
+			btn_play.setOnClickListener {
+				if (!video_view.isPlaying) {
+					video_view.start()
+					btn_play.visibility = View.GONE
+				}
+			}
+			video_view.setOnCompletionListener {
+				btn_play.visibility = View.VISIBLE
+			}
+		}
 	}
 	
 }
