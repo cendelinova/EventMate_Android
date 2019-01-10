@@ -1,5 +1,6 @@
 package gr.tei.erasmus.pp.eventmate.data.source.remote.services
 
+import gr.tei.erasmus.pp.eventmate.data.model.Email
 import gr.tei.erasmus.pp.eventmate.data.model.ReportRequest
 import gr.tei.erasmus.pp.eventmate.data.model.ReportResponse
 import kotlinx.coroutines.Deferred
@@ -18,4 +19,7 @@ interface ReportService {
 	
 	@POST("/event/{id}/report")
 	fun saveReport(@Path("id") id: Long, @Body report: ReportRequest): Deferred<Response<ReportResponse>>
+	
+	@POST("/report/{id}/share")
+	fun shareReport(@Path("id") id: Long, @Body email: Email): Deferred<Response<Unit>>
 }

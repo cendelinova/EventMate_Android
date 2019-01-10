@@ -9,7 +9,6 @@ import android.widget.CheckBox
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.widget.SearchView.OnQueryTextListener
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import gr.tei.erasmus.pp.eventmate.R
@@ -18,7 +17,8 @@ import gr.tei.erasmus.pp.eventmate.helpers.DialogHelper
 import gr.tei.erasmus.pp.eventmate.helpers.StateHelper
 import gr.tei.erasmus.pp.eventmate.helpers.StateHelper.showError
 import gr.tei.erasmus.pp.eventmate.helpers.StateHelper.toggleProgress
-import gr.tei.erasmus.pp.eventmate.helpers.TextInputLayoutHelper
+import gr.tei.erasmus.pp.eventmate.helpers.TextHelper
+import gr.tei.erasmus.pp.eventmate.helpers.TextHelper.getQueryTextListener
 import gr.tei.erasmus.pp.eventmate.ui.base.*
 import gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.guests.UserViewModel
 import gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.tasks.TasksViewModel
@@ -36,7 +36,7 @@ class NewReportActivity : BaseActivity() {
 	
 	private lateinit var tasks: MutableList<Task>
 	
-	private var eventReportInfo = EventReportInfo()
+	private val eventReportInfo by lazy { EventReportInfo() }
 	
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -53,8 +53,8 @@ class NewReportActivity : BaseActivity() {
 	
 	private fun handleReportCreation() {
 		btn_generate_report.setOnClickListener {
-			val name = TextInputLayoutHelper.collectValueFromInput(input_report_name)
-			val comment = TextInputLayoutHelper.collectValueFromInput(input_report_comment)
+			val name = TextHelper.collectValueFromInput(input_report_name)
+			val comment = TextHelper.collectValueFromInput(input_report_comment)
 			val type = when (report_category.checkedRadioButtonId) {
 				R.id.full_report -> ReportResponse.ReportType.FULL_SUMMARY.name
 				R.id.certificate -> ReportResponse.ReportType.CERTIFICATE.name
@@ -157,8 +157,8 @@ class NewReportActivity : BaseActivity() {
 	}
 	
 	private val reportGuestListener = object : ReportGuestAdapter.ReportListener {
-		override fun onReportGuestPick(userId: Long?, isChecked: Boolean) {
-			userId?.run {
+		override fun onReportGuestPick(user: User, isChecked: Boolean) {
+			user.id?.run {
 				if (isChecked) {
 					listOfGuestIds.add(this)
 				} else {
@@ -208,19 +208,6 @@ class NewReportActivity : BaseActivity() {
 		include_tasks.isChecked = !listOfTaskIds.isEmpty()
 	}
 	
-	private fun getQueryTextListener(adapter: AbstractFilterAdapter): OnQueryTextListener =
-		object : OnQueryTextListener {
-			override fun onQueryTextSubmit(query: String?): Boolean {
-				return false
-			}
-			
-			override fun onQueryTextChange(newText: String?): Boolean {
-				adapter.filter?.filter(newText)
-				return false
-			}
-			
-		}
-	
 	private val eventReportListener = DialogInterface.OnClickListener { dialog, _ ->
 		(dialog as AlertDialog).findViewById<LinearLayout>(R.id.checkboxes)?.run {
 			for (i in 0 until childCount) {
@@ -241,10 +228,6 @@ class NewReportActivity : BaseActivity() {
 				}
 			}
 		}
-	}
-	
-	private fun prepareEventReportInfo(): EventReportInfo {
-		return EventReportInfo()
 	}
 	
 }

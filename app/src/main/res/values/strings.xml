@@ -228,4 +228,7 @@
 	<string name="success_file_uploaded">Successfully submission file uploaded</string>
 	<string name="error_user_not_report_creator">We\'re sorry you don\'t have permission to manipulate with the report.</string>
 	<string name="success_report_create">Succesfully created report</string>
+	<string name="msg_share_reports">Who will get this report?</string>
+	<string name="hint_mail_subject">Email subject</string>
+	<string name="hint_mail_text">Email text</string>
 </resources>

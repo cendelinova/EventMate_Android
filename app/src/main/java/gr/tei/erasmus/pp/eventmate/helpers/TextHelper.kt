@@ -1,8 +1,10 @@
 package gr.tei.erasmus.pp.eventmate.helpers
 
+import androidx.appcompat.widget.SearchView
 import com.google.android.material.textfield.TextInputLayout
+import gr.tei.erasmus.pp.eventmate.ui.base.AbstractFilterAdapter
 
-object TextInputLayoutHelper {
+object TextHelper {
 	
 	fun clearInputs(listOfInputs: MutableList<TextInputLayout>) {
 		for (input in listOfInputs) {
@@ -24,5 +26,18 @@ object TextInputLayoutHelper {
 	}
 	
 	fun getDefaultTextIfEmpty(text: String?) = if (text.isNullOrEmpty() || text.contains("null", false)) "-" else text
+	
+	fun getQueryTextListener(adapter: AbstractFilterAdapter): SearchView.OnQueryTextListener =
+		object : SearchView.OnQueryTextListener {
+			override fun onQueryTextSubmit(query: String?): Boolean {
+				return false
+			}
+			
+			override fun onQueryTextChange(newText: String?): Boolean {
+				adapter.filter?.filter(newText)
+				return false
+			}
+			
+		}
 	
 }

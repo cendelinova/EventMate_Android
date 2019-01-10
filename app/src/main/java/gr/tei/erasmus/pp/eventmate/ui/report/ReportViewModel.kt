@@ -3,6 +3,7 @@ package gr.tei.erasmus.pp.eventmate.ui.report
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import gr.tei.erasmus.pp.eventmate.app.App
+import gr.tei.erasmus.pp.eventmate.data.model.Email
 import gr.tei.erasmus.pp.eventmate.data.model.ReportRequest
 import gr.tei.erasmus.pp.eventmate.data.model.ReportResponse
 import gr.tei.erasmus.pp.eventmate.ui.base.*
@@ -99,6 +100,25 @@ class ReportViewModel : BaseViewModel() {
 					FinishedState
 				} else {
 					ErrorState(Throwable("Error during deleting report"))
+				}
+				
+				mStates.postValue(state)
+			} catch (error: Throwable) {
+				mStates.postValue(ErrorState(error))
+			}
+		}
+	}
+	
+	fun shareReport(reportId: Long, email: Email) {
+		launch {
+			mStates.postValue(LoadingState)
+			try {
+				val response = reportRepository.shareReport(reportId, email).await()
+				Timber.d("shareReport() with id: $reportId $response ${response.isSuccessful}")
+				val state = if (response.isSuccessful && response.body() != null) {
+					FinishedState
+				} else {
+					ErrorState(Throwable("Error during sharing report"))
 				}
 				
 				mStates.postValue(state)

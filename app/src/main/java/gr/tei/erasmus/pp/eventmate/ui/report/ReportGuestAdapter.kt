@@ -45,7 +45,7 @@ class ReportGuestAdapter(
 			checkbox.isChecked = user.checked
 			checkbox.setOnCheckedChangeListener { _, isChecked ->
 				user.checked = isChecked
-				reportListener?.onReportGuestPick(user.id, isChecked)
+				reportListener?.onReportGuestPick(user, isChecked)
 			}
 		}
 		
@@ -75,6 +75,6 @@ class ReportGuestAdapter(
 	inner class ReportGuestViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 	
 	interface ReportListener {
-		fun onReportGuestPick(userId: Long?, isChecked: Boolean)
+		fun onReportGuestPick(user: User, isChecked: Boolean)
 	}
 }

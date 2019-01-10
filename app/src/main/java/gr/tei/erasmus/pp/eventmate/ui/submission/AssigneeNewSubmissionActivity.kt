@@ -21,7 +21,7 @@ import gr.tei.erasmus.pp.eventmate.helpers.DialogHelper
 import gr.tei.erasmus.pp.eventmate.helpers.FileHelper
 import gr.tei.erasmus.pp.eventmate.helpers.FileHelper.getRealPathFromURI
 import gr.tei.erasmus.pp.eventmate.helpers.StateHelper
-import gr.tei.erasmus.pp.eventmate.helpers.TextInputLayoutHelper
+import gr.tei.erasmus.pp.eventmate.helpers.TextHelper
 import gr.tei.erasmus.pp.eventmate.ui.base.*
 import kotlinx.android.synthetic.main.activity_assignee_new_submission.*
 import nl.changer.audiowife.AudioWife
@@ -47,9 +47,9 @@ class AssigneeNewSubmissionActivity : BaseActivity() {
 	
 	private fun handleSendingNewSubmission() {
 		btn_send_submission.setOnClickListener {
-			val name = TextInputLayoutHelper.getDefaultTextIfEmpty(input_submission_name.editText?.text.toString())
+			val name = TextHelper.getDefaultTextIfEmpty(input_submission_name.editText?.text.toString())
 			val comment =
-				TextInputLayoutHelper.getDefaultTextIfEmpty(input_submission_comment.editText?.text.toString())
+				TextHelper.getDefaultTextIfEmpty(input_submission_comment.editText?.text.toString())
 			
 			val data = getData()
 			if (data == null) {

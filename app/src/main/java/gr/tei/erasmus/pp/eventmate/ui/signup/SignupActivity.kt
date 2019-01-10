@@ -21,7 +21,7 @@ import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.data.model.UserRequest
 import gr.tei.erasmus.pp.eventmate.helpers.FileHelper
 import gr.tei.erasmus.pp.eventmate.helpers.StateHelper
-import gr.tei.erasmus.pp.eventmate.helpers.TextInputLayoutHelper
+import gr.tei.erasmus.pp.eventmate.helpers.TextHelper
 import gr.tei.erasmus.pp.eventmate.ui.base.*
 import gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.guests.UserViewModel
 import gr.tei.erasmus.pp.eventmate.ui.mainActivity.MainActivity
@@ -69,7 +69,7 @@ class SignupActivity : BaseActivity(), Validator.ValidationListener, IPickResult
 	}
 	
 	override fun onValidationFailed(errors: MutableList<ValidationError>?) {
-		TextInputLayoutHelper.clearInputs(listOfInputs)
+		TextHelper.clearInputs(listOfInputs)
 		errors?.run {
 			for (error in errors) {
 				val view = error.view
@@ -84,9 +84,9 @@ class SignupActivity : BaseActivity(), Validator.ValidationListener, IPickResult
 	}
 	
 	override fun onValidationSucceeded() {
-		val userName = TextInputLayoutHelper.collectValueFromInput(input_name)
-		val email = TextInputLayoutHelper.collectValueFromInput(input_email)
-		val password = TextInputLayoutHelper.collectValueFromInput(input_password)
+		val userName = TextHelper.collectValueFromInput(input_name)
+		val email = TextHelper.collectValueFromInput(input_email)
+		val password = TextHelper.collectValueFromInput(input_password)
 		var photo: String? = null
 		if (photoChosen) {
 			photo = FileHelper.encodeImage(FileHelper.getBitmap(profile_photo))

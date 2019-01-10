@@ -1,6 +1,7 @@
 package gr.tei.erasmus.pp.eventmate.data.repository
 
 import android.content.Context
+import gr.tei.erasmus.pp.eventmate.data.model.Email
 import gr.tei.erasmus.pp.eventmate.data.model.ReportRequest
 import gr.tei.erasmus.pp.eventmate.helpers.RestHelper
 
@@ -12,5 +13,6 @@ class ReportRepository(private val context: Context, private val restHelper: Res
 	fun saveReport(eventId: Long, report: ReportRequest) = restHelper.saveEventReport(eventId, report)
 	
 	fun deleteReport(reportId: Long) = restHelper.deleteEventReport(reportId)
+	fun shareReport(reportId: Long, email: Email) = restHelper.shareReport(reportId, email)
 	
 }

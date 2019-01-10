@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:orientation="vertical"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:focusableInTouchMode="true">
+	
+	<TextView
+		android:id="@+id/my_title"
+		style="@style/MessageTitle"
+		android:layout_height="wrap_content"
+		android:layout_width="wrap_content"
+		android:textSize="@dimen/font_normal"
+		android:text="@string/msg_report_guests"
+		android:layout_centerHorizontal="true" />
+	
+	<com.google.android.material.textfield.TextInputLayout
+		android:id="@+id/input_mail_subject"
+		style="@style/MyEditText"
+		android:layout_marginTop="@dimen/spacing_small"
+		android:hint="@string/hint_mail_subject"
+		android:layout_height="wrap_content"
+		android:layout_below="@id/my_title"
+		android:layout_width="match_parent">
+		
+		<com.google.android.material.textfield.TextInputEditText
+			android:drawableTint="@color/grey"
+			android:inputType="text"
+			android:layout_height="wrap_content"
+			android:layout_width="match_parent"
+			android:lines="1" />
+	</com.google.android.material.textfield.TextInputLayout>
+	
+	<com.google.android.material.textfield.TextInputLayout
+		android:id="@+id/input_mail_text"
+		style="@style/MyEditText"
+		android:hint="@string/hint_mail_text"
+		android:layout_height="wrap_content"
+		android:layout_width="match_parent"
+		android:layout_below="@id/input_mail_subject"
+		app:layout_constraintTop_toBottomOf="@id/input_report_name">
+		
+		<com.google.android.material.textfield.TextInputEditText
+			android:drawableTint="@color/grey"
+			android:inputType="textMultiLine"
+			android:layout_height="wrap_content"
+			android:layout_width="match_parent"
+			android:lines="1"
+			android:gravity="top"
+			android:maxLines="5"
+			android:minLines="3" />
+	</com.google.android.material.textfield.TextInputLayout>
+	
+	
+	<androidx.appcompat.widget.SearchView
+		android:id="@+id/search_view"
+		android:layout_marginTop="@dimen/spacing_large"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_below="@id/input_mail_text"
+		app:queryHint="@string/hint_search" />
+	
+	<androidx.recyclerview.widget.RecyclerView
+		android:id="@+id/guest_recycler_view"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:scrollbars="none"
+		android:layout_below="@id/search_view"
+		app:fastScrollThumbColor="@color/colorAccent" />
+
+
+</RelativeLayout>

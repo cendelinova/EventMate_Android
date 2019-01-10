@@ -19,7 +19,7 @@ import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.EVENT_ID
 import gr.tei.erasmus.pp.eventmate.data.model.TaskRequest
 import gr.tei.erasmus.pp.eventmate.helpers.FileHelper
-import gr.tei.erasmus.pp.eventmate.helpers.TextInputLayoutHelper
+import gr.tei.erasmus.pp.eventmate.helpers.TextHelper
 import gr.tei.erasmus.pp.eventmate.ui.base.*
 import gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.EventDetailActivity
 import gr.tei.erasmus.pp.eventmate.ui.signup.TextInputLayoutAdapter
@@ -79,7 +79,7 @@ class NewTaskActivity : BaseActivity(), Validator.ValidationListener, IPickResul
 	}
 	
 	override fun onValidationFailed(errors: MutableList<ValidationError>?) {
-		TextInputLayoutHelper.clearInputs(listOfInputs)
+		TextHelper.clearInputs(listOfInputs)
 		errors?.run {
 			for (error in errors) {
 				val view = error.view
@@ -94,13 +94,13 @@ class NewTaskActivity : BaseActivity(), Validator.ValidationListener, IPickResul
 	}
 	
 	override fun onValidationSucceeded() {
-		TextInputLayoutHelper.clearInputs(listOfInputs)
-		val name = TextInputLayoutHelper.collectValueFromInput(input_task_name)
-		val points = TextInputLayoutHelper.collectValueFromInput(input_points).toInt()
-		val description = TextInputLayoutHelper.collectValueFromInput(input_description)
-		val place = TextInputLayoutHelper.collectValueFromInput(input_place)
+		TextHelper.clearInputs(listOfInputs)
+		val name = TextHelper.collectValueFromInput(input_task_name)
+		val points = TextHelper.collectValueFromInput(input_points).toInt()
+		val description = TextHelper.collectValueFromInput(input_description)
+		val place = TextHelper.collectValueFromInput(input_place)
 		val timeLimit =
-			if (TextInputLayoutHelper.collectValueFromInput(input_time).isEmpty()) null else TextInputLayoutHelper.collectValueFromInput(
+			if (TextHelper.collectValueFromInput(input_time).isEmpty()) null else TextHelper.collectValueFromInput(
 				input_time
 			).toInt()
 		
@@ -132,7 +132,7 @@ class NewTaskActivity : BaseActivity(), Validator.ValidationListener, IPickResul
 		
 		// for clearing purposes
 		listOfInputs = mutableListOf(taskName, points)
-		TextInputLayoutHelper.setRequiredMark(listOfInputs)
+		TextHelper.setRequiredMark(listOfInputs)
 	}
 	
 	private fun toggleProgress(visibility: Boolean) {

@@ -26,7 +26,7 @@ object StateHelper {
 		Snackbar.make(
 			view,
 			context.getString(errorMessage),
-			Snackbar.LENGTH_INDEFINITE
+			Snackbar.LENGTH_LONG
 		).show()
 		
 	}

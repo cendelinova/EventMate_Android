@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.data.model.Task
-import gr.tei.erasmus.pp.eventmate.helpers.TextInputLayoutHelper
+import gr.tei.erasmus.pp.eventmate.helpers.TextHelper
 import kotlinx.android.synthetic.main.task_item.view.*
 import kotlinx.android.synthetic.main.task_item_expanded.view.*
 import timber.log.Timber
@@ -43,8 +43,8 @@ class TaskAdapter(
 			task_description.text = task.description
 			
 			if (collapsing_view.visibility == View.VISIBLE) {
-				task_location.text = TextInputLayoutHelper.getDefaultTextIfEmpty(task.place)
-				task_limit.text = TextInputLayoutHelper.getDefaultTextIfEmpty(task.timeLimit.toString())
+				task_location.text = TextHelper.getDefaultTextIfEmpty(task.place)
+				task_limit.text = TextHelper.getDefaultTextIfEmpty(task.timeLimit.toString())
 			}
 			
 		}
