@@ -3,7 +3,7 @@ package gr.tei.erasmus.pp.eventmate.data.model
 import gr.tei.erasmus.pp.eventmate.R
 import java.util.*
 
-data class Report(
+data class ReportResponse(
 	val id: Long?, val name: String?, val type: String, val comment: String?, val preview: String?, val content: String?) {
 	
 	enum class ReportType(val icon: Int, var defaultString: Int) {

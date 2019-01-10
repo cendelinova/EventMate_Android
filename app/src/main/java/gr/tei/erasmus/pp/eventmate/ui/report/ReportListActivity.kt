@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.daimajia.androidanimations.library.Techniques
 import com.daimajia.androidanimations.library.YoYo
 import gr.tei.erasmus.pp.eventmate.R
-import gr.tei.erasmus.pp.eventmate.data.model.Report
+import gr.tei.erasmus.pp.eventmate.data.model.ReportResponse
 import gr.tei.erasmus.pp.eventmate.helpers.DialogHelper
 import gr.tei.erasmus.pp.eventmate.helpers.StateHelper
 import gr.tei.erasmus.pp.eventmate.ui.base.BaseActivity
@@ -47,7 +47,7 @@ class ReportListActivity : BaseActivity() {
 	
 	private fun handleAddFab() {
 		fab.setOnClickListener {
-			startActivity(Intent(this, ReportMarkerActivity::class.java))
+			startActivity(Intent(this, NewReportActivity::class.java))
 		}
 	}
 	
@@ -72,16 +72,16 @@ class ReportListActivity : BaseActivity() {
 	}
 	
 	private val onReportClick = object : ReportAdapter.ReportListener {
-		override fun onReportShare(report: Report) {
+		override fun onReportShare(report: ReportResponse) {
 			Timber.d("onSubmissionView called")
 		}
 		
-		override fun onReportDownload(report: Report) {
+		override fun onReportDownload(report: ReportResponse) {
 			Timber.d("onSubmissionDownload called")
 			
 		}
 		
-		override fun onReportDelete(report: Report) {
+		override fun onReportDelete(report: ReportResponse) {
 			Timber.d("onSubmissionDelete called")
 			report.id?.let { id ->
 				DialogHelper.showDeleteDialog(

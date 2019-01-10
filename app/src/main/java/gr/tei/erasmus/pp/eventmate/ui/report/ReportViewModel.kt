@@ -3,7 +3,8 @@ package gr.tei.erasmus.pp.eventmate.ui.report
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import gr.tei.erasmus.pp.eventmate.app.App
-import gr.tei.erasmus.pp.eventmate.data.model.Report
+import gr.tei.erasmus.pp.eventmate.data.model.ReportRequest
+import gr.tei.erasmus.pp.eventmate.data.model.ReportResponse
 import gr.tei.erasmus.pp.eventmate.ui.base.*
 import gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.guests.UserViewModel
 import gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.tasks.TasksViewModel
@@ -88,10 +89,29 @@ class ReportViewModel : BaseViewModel() {
 		}
 	}
 	
+	fun saveEventReport(eventId: Long, reportRequest: ReportRequest) {
+		launch {
+			mStates.postValue(LoadingState)
+			try {
+				val response = reportRepository.saveReport(eventId, reportRequest).await()
+				Timber.d("saveEventReport() with id: $eventId $response ${response.isSuccessful}")
+				val state = if (response.isSuccessful && response.body() != null) {
+					ReportState(response.body()!!)
+				} else {
+					ErrorState(Throwable("Error during deleting report"))
+				}
+				
+				mStates.postValue(state)
+			} catch (error: Throwable) {
+				mStates.postValue(ErrorState(error))
+			}
+		}
+	}
 	
-	data class ReportState(val reports: MutableList<Report>) : State() {
+	
+	data class ReportState(val reports: MutableList<ReportResponse>) : State() {
 		companion object {
-			fun from(list: MutableList<Report>): ReportState {
+			fun from(list: MutableList<ReportResponse>): ReportState {
 				return if (list.isEmpty()) error("report list should not be empty")
 				else {
 					ReportState(list)

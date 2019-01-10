@@ -14,47 +14,56 @@
 		android:layout_marginBottom="@dimen/spacing_normal"
 		android:text="@string/mgs_report_info" />
 	
-	<CheckBox
-		android:id="@+id/event_name"
-		style="@style/CheckboxDialogStyle"
-		android:layout_width="match_parent"
-		android:text="@string/hint_event_name"
-		android:layout_height="wrap_content" />
-	
-	<CheckBox
-		android:id="@+id/event_date"
-		style="@style/CheckboxDialogStyle"
-		android:layout_width="match_parent"
-		android:text="@string/event_date"
-		android:layout_height="wrap_content" />
-	
-	<CheckBox
-		android:id="@+id/event_place"
-		style="@style/CheckboxDialogStyle"
-		android:layout_width="match_parent"
-		android:text="@string/event_place"
-		android:layout_height="wrap_content" />
-	
-	<CheckBox
-		android:id="@+id/event_owner"
-		style="@style/CheckboxDialogStyle"
-		android:layout_width="match_parent"
-		android:text="@string/event_owner"
-		android:layout_height="wrap_content" />
-	
-	<CheckBox
-		android:id="@+id/report_creator"
-		style="@style/CheckboxDialogStyle"
-		android:layout_width="match_parent"
-		android:text="@string/report_creator"
+	<LinearLayout
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:orientation="vertical"
+		android:id="@+id/checkboxes">
 		
-		android:layout_height="wrap_content" />
+		<CheckBox
+			android:id="@+id/event_name"
+			style="@style/CheckboxDialogStyle"
+			android:layout_width="match_parent"
+			android:text="@string/hint_event_name"
+			android:layout_height="wrap_content" />
+		
+		<CheckBox
+			android:id="@+id/event_date"
+			style="@style/CheckboxDialogStyle"
+			android:layout_width="match_parent"
+			android:text="@string/event_date"
+			android:layout_height="wrap_content" />
+		
+		<CheckBox
+			android:id="@+id/event_place"
+			style="@style/CheckboxDialogStyle"
+			android:layout_width="match_parent"
+			android:text="@string/event_place"
+			android:layout_height="wrap_content" />
+		
+		<CheckBox
+			android:id="@+id/event_owner"
+			style="@style/CheckboxDialogStyle"
+			android:layout_width="match_parent"
+			android:text="@string/event_owner"
+			android:layout_height="wrap_content" />
+		
+		<CheckBox
+			android:id="@+id/report_creator"
+			style="@style/CheckboxDialogStyle"
+			android:layout_width="match_parent"
+			android:text="@string/report_creator"
+			android:layout_height="wrap_content" />
+		
+		<CheckBox
+			android:id="@+id/report_created_date"
+			style="@style/CheckboxDialogStyle"
+			android:layout_width="match_parent"
+			android:text="@string/report_created_date"
+			android:layout_height="wrap_content" />
+		
+	</LinearLayout>
 	
-	<CheckBox
-		android:id="@+id/report_created_date"
-		style="@style/CheckboxDialogStyle"
-		android:layout_width="match_parent"
-		android:text="@string/report_created_date"
-		android:layout_height="wrap_content" />
+	
 
 </LinearLayout>

@@ -1,24 +1,28 @@
 package gr.tei.erasmus.pp.eventmate.ui.report
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.CheckBox
+import android.widget.LinearLayout
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView.OnQueryTextListener
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import gr.tei.erasmus.pp.eventmate.R
-import gr.tei.erasmus.pp.eventmate.data.model.Task
-import gr.tei.erasmus.pp.eventmate.data.model.User
+import gr.tei.erasmus.pp.eventmate.data.model.*
 import gr.tei.erasmus.pp.eventmate.helpers.DialogHelper
 import gr.tei.erasmus.pp.eventmate.helpers.StateHelper.showError
 import gr.tei.erasmus.pp.eventmate.helpers.StateHelper.toggleProgress
+import gr.tei.erasmus.pp.eventmate.helpers.TextInputLayoutHelper
 import gr.tei.erasmus.pp.eventmate.ui.base.*
 import gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.guests.UserViewModel
 import gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.tasks.TasksViewModel
-import kotlinx.android.synthetic.main.activity_report_marker.*
+import kotlinx.android.synthetic.main.activity_new_report.*
 
 
-class ReportMarkerActivity : BaseActivity() {
+class NewReportActivity : BaseActivity() {
 	
 	private val listOfGuestIds by lazy { mutableListOf<Long>() }
 	private val listOfTaskIds by lazy { mutableListOf<Long>() }
@@ -29,9 +33,11 @@ class ReportMarkerActivity : BaseActivity() {
 	
 	private lateinit var tasks: MutableList<Task>
 	
+	private var eventReportInfo = EventReportInfo()
+	
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
-		setContentView(R.layout.activity_report_marker)
+		setContentView(R.layout.activity_new_report)
 		setupToolbar(toolbar)
 		
 		observeViewModel()
@@ -39,11 +45,23 @@ class ReportMarkerActivity : BaseActivity() {
 		viewModel.getEventGuests(5)
 		viewModel.getEventTasks(5)
 		setupListeners()
+		handleReportCreation()
 	}
 	
 	private fun handleReportCreation() {
 		btn_generate_report.setOnClickListener {
-			// todo viewmodel create call
+			val name = TextInputLayoutHelper.collectValueFromInput(input_report_name)
+			val comment = TextInputLayoutHelper.collectValueFromInput(input_report_comment)
+			val type = when (report_category.checkedRadioButtonId) {
+				R.id.full_report -> ReportResponse.ReportType.FULL_SUMMARY.name
+				R.id.certificate -> ReportResponse.ReportType.CERTIFICATE.name
+				else -> ""
+			}
+			
+			eventReportInfo.listOfIncludedGuests = listOfGuestIds
+			eventReportInfo.listOfIncludedTasks = listOfTaskIds
+			
+			viewModel.saveEventReport(5, ReportRequest(name, comment, type, eventReportInfo))
 		}
 	}
 	
@@ -58,13 +76,13 @@ class ReportMarkerActivity : BaseActivity() {
 			DialogHelper.showCustomDialog(
 				this,
 				LayoutInflater.from(this).inflate(R.layout.report_event_info_dialog, null),
-				null
+				eventReportListener
 			)
 		}
 		
 		tv_display_guests.setOnClickListener {
 			val reportGuestAdapter = ReportGuestAdapter(
-				this@ReportMarkerActivity,
+				this@NewReportActivity,
 				reportGuestListener, users
 			)
 			
@@ -77,7 +95,7 @@ class ReportMarkerActivity : BaseActivity() {
 		
 		tv_include_tasks.setOnClickListener {
 			val reportTaskAdapter = ReportTaskAdapter(
-				this@ReportMarkerActivity,
+				this@NewReportActivity,
 				reportTaskListener,
 				tasks
 			)
@@ -180,6 +198,30 @@ class ReportMarkerActivity : BaseActivity() {
 			}
 			
 		}
+	
+	private val eventReportListener = DialogInterface.OnClickListener { dialog, _ ->
+		(dialog as AlertDialog).findViewById<LinearLayout>(R.id.checkboxes)?.run {
+			for (i in 0 until childCount) {
+				val v = getChildAt(i)
+				if (v is CheckBox) {
+					with(v) {
+						when (id) {
+							R.id.event_name -> eventReportInfo.includeName = isChecked
+							R.id.event_date -> eventReportInfo.includeDate = isChecked
+							R.id.event_place -> eventReportInfo.includePlace = isChecked
+							R.id.event_owner -> eventReportInfo.includeOwner = isChecked
+							R.id.report_creator -> eventReportInfo.includeReportCreator = isChecked
+							R.id.report_created_date -> eventReportInfo.includeReportCreatedDate = isChecked
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	private fun prepareEventReportInfo(): EventReportInfo {
+		return EventReportInfo()
+	}
 	
 }
 

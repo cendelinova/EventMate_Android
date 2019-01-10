@@ -38,7 +38,7 @@ class RestHelper(retrofit: Retrofit) {
 	// reports
 	fun getEventReports(eventId: Long) = reportService.getEventReports(eventId)
 	fun getEventReport(reportId: Long) = reportService.getReport(reportId)
-	fun saveEventReport(eventId: Long, report: Report) = reportService.saveReport(eventId, report)
+	fun saveEventReport(eventId: Long, report: ReportRequest) = reportService.saveReport(eventId, report)
 	fun deleteEventReport(reportId: Long) = reportService.deleteReport(reportId)
 	
 }

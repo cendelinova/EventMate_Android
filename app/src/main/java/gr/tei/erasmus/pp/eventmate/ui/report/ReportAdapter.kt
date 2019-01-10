@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import gr.tei.erasmus.pp.eventmate.R
-import gr.tei.erasmus.pp.eventmate.data.model.Report
+import gr.tei.erasmus.pp.eventmate.data.model.ReportResponse
 import gr.tei.erasmus.pp.eventmate.helpers.FileHelper
 import kotlinx.android.synthetic.main.report_item.view.*
 import timber.log.Timber
@@ -14,7 +14,7 @@ import timber.log.Timber
 class ReportAdapter(
 	private val context: Context,
 	private val reportListener: ReportListener,
-	private var reports: MutableList<Report>
+	private var reports: MutableList<ReportResponse>
 ) : RecyclerView.Adapter<ReportAdapter.ReportViewHolder>() {
 	
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
@@ -27,7 +27,7 @@ class ReportAdapter(
 		displayReportEntry(holder, reports[holder.adapterPosition])
 	}
 	
-	private fun displayReportEntry(viewHolder: ReportViewHolder, report: Report) {
+	private fun displayReportEntry(viewHolder: ReportViewHolder, report: ReportResponse) {
 		with(viewHolder.itemView) {
 			setOnClickListener {
 				if (report_item.getChildAt(0).id == R.id.view_background) {
@@ -40,7 +40,7 @@ class ReportAdapter(
 				report_photo.setImageBitmap(FileHelper.decodeImage(it))
 			}
 			
-			val reportType = Report.ReportType.valueOf(report.type)
+			val reportType = ReportResponse.ReportType.valueOf(report.type)
 			
 			report_type_icon.setImageResource(reportType.icon)
 			
@@ -55,7 +55,7 @@ class ReportAdapter(
 		
 	}
 	
-	fun updateReportList(newReports: MutableList<Report>) {
+	fun updateReportList(newReports: MutableList<ReportResponse>) {
 		reports = newReports
 		notifyDataSetChanged()
 	}
@@ -63,9 +63,9 @@ class ReportAdapter(
 	inner class ReportViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 	
 	interface ReportListener {
-		fun onReportShare(report: Report)
-		fun onReportDownload(report: Report)
-		fun onReportDelete(report: Report)
+		fun onReportShare(report: ReportResponse)
+		fun onReportDownload(report: ReportResponse)
+		fun onReportDelete(report: ReportResponse)
 		fun onReportClick(itemView: View, slideIn: Boolean)
 	}
 }

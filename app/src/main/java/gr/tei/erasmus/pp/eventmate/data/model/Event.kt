@@ -14,7 +14,7 @@ data class Event(
 	val photo: String?,
 	val state: String,
 	val tasks: MutableList<Task>?,
-	val reports: MutableList<Report>?,
+	val reports: MutableList<ReportResponse>?,
 	val invitations: MutableList<Invitation>?,
 	val guests: MutableList<User>?,
 	val eventOwner: User?,
