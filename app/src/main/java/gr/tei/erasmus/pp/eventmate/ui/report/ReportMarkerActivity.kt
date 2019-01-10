@@ -4,13 +4,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import androidx.appcompat.widget.SearchView.OnQueryTextListener
-import androidx.recyclerview.widget.RecyclerView
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.data.model.Task
 import gr.tei.erasmus.pp.eventmate.data.model.User
 import gr.tei.erasmus.pp.eventmate.helpers.DialogHelper
-import gr.tei.erasmus.pp.eventmate.ui.base.AbstractFilterAdapter
-import gr.tei.erasmus.pp.eventmate.ui.base.BaseActivity
+import gr.tei.erasmus.pp.eventmate.helpers.StateHelper.showError
+import gr.tei.erasmus.pp.eventmate.helpers.StateHelper.toggleProgress
+import gr.tei.erasmus.pp.eventmate.ui.base.*
+import gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.guests.UserViewModel
+import gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.tasks.TasksViewModel
 import kotlinx.android.synthetic.main.activity_report_marker.*
 
 
@@ -19,20 +23,32 @@ class ReportMarkerActivity : BaseActivity() {
 	private val listOfGuestIds by lazy { mutableListOf<Long>() }
 	private val listOfTaskIds by lazy { mutableListOf<Long>() }
 	
-	private val users by lazy { mutableListOf(User(1, "pepa"), User(2, "jenda"), User(3, "evik")) }
+	private val viewModel by lazy { ViewModelProviders.of(this).get(ReportViewModel::class.java) }
 	
-	private val tasks by lazy { mutableListOf(Task(1, "task1"), Task(2, "task2"), Task(3, "task3")) }
+	private lateinit var users: MutableList<User>
+	
+	private lateinit var tasks: MutableList<Task>
 	
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_report_marker)
 		setupToolbar(toolbar)
+		
+		observeViewModel()
+		viewModel.getEventGuests(5)
+		viewModel.getEventTasks(5)
 		setupListeners()
 	}
 	
 	private fun handleReportCreation() {
 		btn_generate_report.setOnClickListener {
 			// todo viewmodel create call
+		}
+	}
+	
+	private fun observeViewModel() {
+		with(viewModel) {
+			observe(states, observeReportState)
 		}
 	}
 	
@@ -44,6 +60,7 @@ class ReportMarkerActivity : BaseActivity() {
 				null
 			)
 		}
+		
 		tv_display_guests.setOnClickListener {
 			val reportGuestAdapter = ReportGuestAdapter(
 				this@ReportMarkerActivity,
@@ -56,6 +73,7 @@ class ReportMarkerActivity : BaseActivity() {
 				getString(R.string.msg_report_guests), confirmGuestListener, getQueryTextListener(reportGuestAdapter)
 			)
 		}
+		
 		tv_include_tasks.setOnClickListener {
 			val reportTaskAdapter = ReportTaskAdapter(
 				this@ReportMarkerActivity,
@@ -122,6 +140,21 @@ class ReportMarkerActivity : BaseActivity() {
 				} else {
 					listOfTaskIds.remove(this)
 				}
+			}
+		}
+	}
+	
+	private val observeReportState = Observer<State> { state ->
+		when (state) {
+			is LoadingState -> toggleProgress(progress, true)
+			is ErrorState -> showError(state.error, progress, main)
+			is UserViewModel.UserListState -> {
+				toggleProgress(progress, false)
+				users = state.users
+			}
+			is TasksViewModel.TaskListState -> {
+				toggleProgress(progress, false)
+				tasks = state.tasks
 			}
 		}
 	}

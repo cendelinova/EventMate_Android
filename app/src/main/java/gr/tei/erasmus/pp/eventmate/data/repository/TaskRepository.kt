@@ -15,6 +15,7 @@ class TaskRepository(private val restHelper: RestHelper, private val taskDao: Ta
 			Task.convertToModel(it)
 		}.toMutableList()
 	
+	fun getEventTasks(eventId: Long) = restHelper.getEventTasks(eventId)
 	fun getTask(taskId: Long): Task = Task.convertToModel(taskDao.getTask(taskId))
 	
 	suspend fun getTaskFromServer(taskId: Long) = restHelper.getTask(taskId)
