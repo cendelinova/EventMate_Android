@@ -35,6 +35,7 @@ class ReportMarkerActivity : BaseActivity() {
 		setupToolbar(toolbar)
 		
 		observeViewModel()
+		// todo get real eventId
 		viewModel.getEventGuests(5)
 		viewModel.getEventTasks(5)
 		setupListeners()

@@ -18,7 +18,7 @@ data class TaskEntity(
 	@ColumnInfo(name = "event_id") var eventId: Long,
 	@ColumnInfo(name = "task_name") var taskName: String,
 	@ColumnInfo(name = "points") var points: Int,
-	@ColumnInfo(name = "description") var description: String?,
+	@ColumnInfo(name = "comment") var description: String?,
 	@ColumnInfo(name = "location") var place: String?,
 	@ColumnInfo(name = "time_limit") var timeLimit: Int?
 )

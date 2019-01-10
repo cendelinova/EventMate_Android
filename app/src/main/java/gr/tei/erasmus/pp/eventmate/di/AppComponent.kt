@@ -47,4 +47,6 @@ interface AppComponent {
 	
 	fun provideUserRepository() : UserRepository
 	
+	fun provideReportRepository() : ReportRepository
+	
 }

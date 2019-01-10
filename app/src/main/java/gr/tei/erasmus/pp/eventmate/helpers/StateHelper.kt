@@ -1,6 +1,5 @@
 package gr.tei.erasmus.pp.eventmate.helpers
 
-import android.content.res.Resources
 import android.view.View
 import android.widget.ProgressBar
 import com.google.android.material.snackbar.Snackbar
@@ -19,14 +18,14 @@ object StateHelper {
 		progress.visibility = if (visibility) View.VISIBLE else View.INVISIBLE
 	}
 	
-	fun showError(error: Throwable, progress: ProgressBar, view: View) {
+	fun showError(error: Throwable, progress: ProgressBar, view: View, errorMessage: Int = R.string.loading_error) {
 		val context = App.COMPONENTS.provideContext()
 		
 		Timber.e("Error $error while fetching")
 		toggleProgress(progress, false)
 		Snackbar.make(
 			view,
-			context.getString(R.string.loading_error),
+			context.getString(errorMessage),
 			Snackbar.LENGTH_INDEFINITE
 		).show()
 		

@@ -36,13 +36,16 @@ class ReportAdapter(
 					reportListener.onReportClick(this, false)
 				}
 			}
-			report.photo?.let {
+			report.preview?.let {
 				report_photo.setImageBitmap(FileHelper.decodeImage(it))
 			}
 			
-			report_name.text = report.name
-			report_description.text = report.description
+			val reportType = Report.ReportType.valueOf(report.type)
 			
+			report_type_icon.setImageResource(reportType.icon)
+			
+			report_name.text = report.name ?: reportType.name
+			report_description.text = report.comment
 			
 			btn_delete.setOnClickListener { reportListener.onReportDelete(report) }
 			btn_download.setOnClickListener { reportListener.onReportDownload(report) }
@@ -50,6 +53,11 @@ class ReportAdapter(
 			
 		}
 		
+	}
+	
+	fun updateReportList(newReports: MutableList<Report>) {
+		reports = newReports
+		notifyDataSetChanged()
 	}
 	
 	inner class ReportViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)

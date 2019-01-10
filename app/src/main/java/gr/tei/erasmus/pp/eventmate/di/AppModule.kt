@@ -76,4 +76,10 @@ class AppModule(context: Context) : ContextWrapper(context) {
 		SubmissionRepository(context, restHelper)
 	
 	
+	@Provides
+	@Singleton
+	fun provideReportRepository(context: Context, restHelper: RestHelper) =
+		ReportRepository(context, restHelper)
+	
+	
 }
