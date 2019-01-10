@@ -64,7 +64,7 @@ class NewReportActivity : BaseActivity() {
 			eventReportInfo.listOfIncludedGuests = listOfGuestIds
 			eventReportInfo.listOfIncludedTasks = listOfTaskIds
 			
-			viewModel.saveEventReport(5, ReportRequest(name, comment, type, eventReportInfo))
+			viewModel.saveEventReport(11, ReportRequest(name, comment, type, eventReportInfo))
 		}
 	}
 	
