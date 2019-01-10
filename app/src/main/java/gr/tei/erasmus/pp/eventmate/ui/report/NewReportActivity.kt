@@ -1,11 +1,13 @@
 package gr.tei.erasmus.pp.eventmate.ui.report
 
 import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.CheckBox
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView.OnQueryTextListener
 import androidx.lifecycle.Observer
@@ -13,6 +15,7 @@ import androidx.lifecycle.ViewModelProviders
 import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.data.model.*
 import gr.tei.erasmus.pp.eventmate.helpers.DialogHelper
+import gr.tei.erasmus.pp.eventmate.helpers.StateHelper
 import gr.tei.erasmus.pp.eventmate.helpers.StateHelper.showError
 import gr.tei.erasmus.pp.eventmate.helpers.StateHelper.toggleProgress
 import gr.tei.erasmus.pp.eventmate.helpers.TextInputLayoutHelper
@@ -73,9 +76,10 @@ class NewReportActivity : BaseActivity() {
 	
 	private fun setupListeners() {
 		tv_show_event_info.setOnClickListener {
-			DialogHelper.showCustomDialog(
+			DialogHelper.showEventReportDialog(
 				this,
-				LayoutInflater.from(this).inflate(R.layout.report_event_info_dialog, null),
+				layoutInflater,
+				eventReportInfo,
 				eventReportListener
 			)
 		}
@@ -105,6 +109,19 @@ class NewReportActivity : BaseActivity() {
 				LayoutInflater.from(this).inflate(R.layout.report_pick_dialog, null),
 				getString(R.string.msg_report_tasks), confirmTasksListener, getQueryTextListener(reportTaskAdapter)
 			)
+		}
+		
+		show_event_info.setOnCheckedChangeListener { _, isChecked ->
+			with(eventReportInfo) {
+				includeDate = isChecked
+				includeName = isChecked
+				includeOwner = isChecked
+				includeReportCreatedDate = isChecked
+				includePlace = isChecked
+				includeReportCreator = isChecked
+				
+			}
+			
 		}
 		
 		include_tasks.setOnClickListener {
@@ -175,6 +192,11 @@ class NewReportActivity : BaseActivity() {
 				toggleProgress(progress, false)
 				tasks = state.tasks
 			}
+			is FinishedState -> {
+				StateHelper.toggleProgress(progress, false)
+				Toast.makeText(this, R.string.success_report_create, Toast.LENGTH_LONG).show()
+				startActivity(Intent(this, ReportListActivity::class.java))
+			}
 		}
 	}
 	
@@ -213,7 +235,9 @@ class NewReportActivity : BaseActivity() {
 							R.id.report_creator -> eventReportInfo.includeReportCreator = isChecked
 							R.id.report_created_date -> eventReportInfo.includeReportCreatedDate = isChecked
 						}
+						show_event_info.isChecked = true
 					}
+					
 				}
 			}
 		}

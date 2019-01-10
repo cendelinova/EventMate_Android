@@ -227,4 +227,5 @@
 	<string name="error_uploading_data">Error occurred during loading. Please try it again</string>
 	<string name="success_file_uploaded">Successfully submission file uploaded</string>
 	<string name="error_user_not_report_creator">We\'re sorry you don\'t have permission to manipulate with the report.</string>
+	<string name="success_report_create">Succesfully created report</string>
 </resources>

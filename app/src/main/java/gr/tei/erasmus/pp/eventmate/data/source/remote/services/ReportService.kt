@@ -17,5 +17,5 @@ interface ReportService {
 	fun deleteReport(@Path("id") id: Long): Deferred<Response<MutableList<ReportResponse>>>
 	
 	@POST("/event/{id}/report")
-	fun saveReport(@Path("id") id: Long, @Body report: ReportRequest): Deferred<Response<MutableList<ReportResponse>>>
+	fun saveReport(@Path("id") id: Long, @Body report: ReportRequest): Deferred<Response<ReportResponse>>
 }

@@ -96,7 +96,7 @@ class ReportViewModel : BaseViewModel() {
 				val response = reportRepository.saveReport(eventId, reportRequest).await()
 				Timber.d("saveEventReport() with id: $eventId $response ${response.isSuccessful}")
 				val state = if (response.isSuccessful && response.body() != null) {
-					ReportState(response.body()!!)
+					FinishedState
 				} else {
 					ErrorState(Throwable("Error during deleting report"))
 				}

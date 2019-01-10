@@ -14,9 +14,11 @@ import com.afollestad.materialdialogs.actions.getActionButton
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.list.customListAdapter
 import gr.tei.erasmus.pp.eventmate.R
+import gr.tei.erasmus.pp.eventmate.data.model.EventReportInfo
 import kotlinx.android.synthetic.main.dialog_audio_preview.view.*
 import kotlinx.android.synthetic.main.dialog_photo_preview.view.*
 import kotlinx.android.synthetic.main.dialog_video_preview.view.*
+import kotlinx.android.synthetic.main.report_event_info_dialog.view.*
 import kotlinx.android.synthetic.main.report_pick_dialog.view.*
 import nl.changer.audiowife.AudioWife
 import kotlinx.android.synthetic.main.dialog_audio_preview.view.btn_close as close_audio
@@ -24,6 +26,7 @@ import kotlinx.android.synthetic.main.dialog_audio_preview.view.progress as prog
 import kotlinx.android.synthetic.main.dialog_photo_preview.view.btn_close as close_photo
 import kotlinx.android.synthetic.main.dialog_video_preview.view.btn_close as close_video
 import kotlinx.android.synthetic.main.dialog_video_preview.view.progress as progress_video
+import kotlinx.android.synthetic.main.report_pick_dialog.view.my_title as title
 
 
 object DialogHelper {
@@ -40,9 +43,23 @@ object DialogHelper {
 		}.show()
 	}
 	
-	fun showCustomDialog(context: Context, customView: View, callback: DialogInterface.OnClickListener?) {
+	fun showEventReportDialog(
+		context: Context,
+		layoutInflater: LayoutInflater,
+		eventReportInfo: EventReportInfo,
+		callback: DialogInterface.OnClickListener?
+	) {
 		AlertDialog.Builder(context).apply {
-			setView(customView)
+			val layout = layoutInflater.inflate(R.layout.report_event_info_dialog, null)
+			with(eventReportInfo) {
+				layout.event_name.isChecked = includeName
+				layout.event_date.isChecked = includeDate
+				layout.event_owner.isChecked = includeOwner
+				layout.event_place.isChecked = includePlace
+				layout.report_creator.isChecked = includeReportCreator
+				layout.report_created_date.isChecked = includeReportCreatedDate
+			}
+			setView(layout)
 			setPositiveButton(R.string.btn_confirm, callback)
 			setNegativeButton(
 				R.string.btn_cancel
