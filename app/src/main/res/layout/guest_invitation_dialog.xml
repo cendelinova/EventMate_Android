@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:orientation="vertical"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:focusableInTouchMode="true">
+	
+	<TextView
+		android:id="@+id/header_via_email"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:text="@string/via_email"
+		android:layout_marginTop="@dimen/spacing_small"
+		android:layout_marginStart="@dimen/spacing_normal"
+		android:textSize="@dimen/font_normal"
+		android:textAllCaps="true" />
+	
+	<com.android.ex.chips.RecipientEditTextView
+		android:id="@+id/input_emails"
+		android:hint="@string/hint_emails"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="@dimen/spacing_normal"
+		android:layout_marginEnd="@dimen/spacing_normal" />
+	
+	<TextView
+		android:id="@+id/header_existing_users"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:text="@string/existing_users"
+		android:layout_marginTop="@dimen/spacing_small"
+		android:layout_marginStart="@dimen/spacing_normal"
+		android:textSize="@dimen/font_normal"
+		android:textAllCaps="true" />
+	
+	<androidx.appcompat.widget.SearchView
+		android:id="@+id/search_view"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		app:queryHint="@string/hint_search" />
+	
+	<androidx.recyclerview.widget.RecyclerView
+		android:id="@+id/guest_recycler_view"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:scrollbars="none"
+		android:layout_below="@id/search_view"
+		app:fastScrollThumbColor="@color/colorAccent" />
+
+</LinearLayout>

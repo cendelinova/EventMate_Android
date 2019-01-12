@@ -21,4 +21,7 @@ interface UserService {
 	
 	@GET("/event/{eventId}/guests")
 	fun getEventGuests(@Path("eventId") eventId: Long): Deferred<Response<MutableList<User>>>
+	
+	@GET("/public/users")
+	fun getAllUsers(): Deferred<Response<MutableList<User>>>
 }

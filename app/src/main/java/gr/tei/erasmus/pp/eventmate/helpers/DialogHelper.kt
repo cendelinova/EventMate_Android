@@ -74,19 +74,19 @@ object DialogHelper {
 		adapter: RecyclerView.Adapter<*>,
 		customView: View,
 		title: String,
-		onClickListener: View.OnClickListener?,
+		confirmListener: View.OnClickListener?,
 		queryListener: SearchView.OnQueryTextListener?
 	) {
 		
 		MaterialDialog(context).show {
-			customView.my_title.text = title
+//			customView.my_title.text = title
 			customView.search_view.setOnQueryTextListener(queryListener)
 			customView(view = customView, scrollable = true)
 			customListAdapter(adapter)
 			positiveButton(R.string.btn_confirm)
 			negativeButton(R.string.btn_cancel)
 			getActionButton(WhichButton.POSITIVE).setOnClickListener {
-				onClickListener?.onClick(it)
+				confirmListener?.onClick(it)
 				this.dismiss()
 			}
 		}

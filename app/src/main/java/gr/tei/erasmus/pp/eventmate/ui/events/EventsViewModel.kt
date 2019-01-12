@@ -9,10 +9,12 @@ import gr.tei.erasmus.pp.eventmate.data.model.Event
 import gr.tei.erasmus.pp.eventmate.data.model.Event.EventState.UNDEFINED_STATE
 import gr.tei.erasmus.pp.eventmate.data.model.EventRequest
 import gr.tei.erasmus.pp.eventmate.ui.base.*
+import gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.guests.UserViewModel
 import kotlinx.coroutines.launch
 
 class EventsViewModel : BaseViewModel() {
-	private val eventRepository by lazy { App.COMPONENTS.provideEventRepository() }
+	private val eventRepository = App.COMPONENTS.provideEventRepository()
+	private val userRepository = App.COMPONENTS.provideUserRepository()
 	
 	private val mStates = MutableLiveData<State>()
 	val states: LiveData<State>
@@ -85,6 +87,23 @@ class EventsViewModel : BaseViewModel() {
 			try {
 				eventRepository.update(updatedEvent)
 				mStates.postValue(FinishedState)
+			} catch (error: Throwable) {
+				mStates.postValue(ErrorState(error))
+			}
+		}
+	}
+	
+	fun getAppUsers() {
+		launch {
+			mStates.postValue(LoadingState)
+			try {
+				val response = userRepository.getAppUsers().await()
+				val state = if (response.isSuccessful && response.body() != null) {
+					UserViewModel.UserListState(response.body()!!)
+				} else {
+					ErrorState(Throwable(response.message()))
+				}
+				mStates.postValue(state)
 			} catch (error: Throwable) {
 				mStates.postValue(ErrorState(error))
 			}

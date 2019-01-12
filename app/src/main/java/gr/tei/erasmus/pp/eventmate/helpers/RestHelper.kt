@@ -17,7 +17,7 @@ class RestHelper(retrofit: Retrofit) {
 	fun getEvents() = eventService.getEvents()
 	
 	fun insertEvent(event: EventRequest) = eventService.insertEvent(event)
-	fun updateEvent(event: EventRequest) = event.id?.let { eventService.updateEvent(event.id, event) }
+	fun updateEvent(event: EventRequest) = event.id?.let { eventService.updateEvent(it, event) }
 	fun deleteEvent(eventId: Long) = eventService.deleteEvent(eventId)
 	
 	// tasks
@@ -46,5 +46,6 @@ class RestHelper(retrofit: Retrofit) {
 	fun saveEventReport(eventId: Long, report: ReportRequest) = reportService.saveReport(eventId, report)
 	fun deleteEventReport(reportId: Long) = reportService.deleteReport(reportId)
 	fun shareReport(reportId: Long, email: Email) = reportService.shareReport(reportId, email)
+	fun getAppUsers() = userService.getAllUsers()
 	
 }

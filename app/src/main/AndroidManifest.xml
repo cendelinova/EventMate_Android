@@ -8,6 +8,7 @@
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 	<uses-permission android:name="android.permission.WAKE_LOCK" />
 	<uses-permission android:name="android.permission.CAMERA" />
+	<uses-permission android:name="android.permission.READ_CONTACTS"/>
 	
 	<application
 		android:name=".app.App"
@@ -47,7 +48,13 @@
 			</intent-filter>
 		</activity>
 		<activity android:name=".ui.signup.SignupActivity" />
-		<activity android:name=".ui.events.newEvent.NewEventActivity" />
+		<activity android:name=".ui.events.newEvent.NewEventActivity">
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN" />
+				
+				<category android:name="android.intent.category.LAUNCHER" />
+			</intent-filter>
+		</activity>
 		<activity android:name=".ui.events.eventDetail.EventDetailActivity" />
 		<activity
 			android:name=".ui.settings.SettingsActivity"
@@ -79,13 +86,7 @@
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
 		</activity>
-		<activity android:name=".ui.report.NewReportActivity">
-			<intent-filter>
-				<action android:name="android.intent.action.MAIN" />
-				
-				<category android:name="android.intent.category.LAUNCHER" />
-			</intent-filter>
-		</activity>
+		<activity android:name=".ui.report.NewReportActivity"></activity>
 		<activity android:name=".ui.submission.AssigneeSubmissionListActivity">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />

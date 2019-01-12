@@ -1,9 +1,10 @@
 package gr.tei.erasmus.pp.eventmate.data.model
 
 data class EventRequest(
-	val id: Long? = null,
-	val name: String,
-	val date: String,
-	val place: String?,
-	val photo: String?
+	var id: Long? = null,
+	var name: String = "",
+	var date: String = "",
+	var place: String? = null,
+	var photo: String? = null,
+	var invitations: List<Invitation> = mutableListOf()
 )

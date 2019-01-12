@@ -231,4 +231,10 @@
 	<string name="msg_share_reports">Who will get this report?</string>
 	<string name="hint_mail_subject">Email subject</string>
 	<string name="hint_mail_text">Email text</string>
+	<string name="existing_users">Existing users</string>
+	<string name="mgs_invite_guests">Who do you want to invite?</string>
+	<string name="via_email">Invitation via email</string>
+	<string name="event_invitation">Event invitation</string>
+	<string name="hint_emails">Type in recipients emails</string>
+	<string name="invite_event_guests">Invite event guests</string>
 </resources>

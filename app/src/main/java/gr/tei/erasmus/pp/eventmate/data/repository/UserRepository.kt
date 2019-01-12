@@ -30,6 +30,8 @@ class UserRepository(private val context: Context, private val restHelper: RestH
 		return null
 	}
 	
+	fun getAppUsers() = restHelper.getAppUsers()
+	
 	fun getUser(userId: Long) = restHelper.getUser(userId)
 	
 	fun register(user: UserRequest) = restHelper.registerUser(user)
