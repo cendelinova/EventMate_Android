@@ -15,4 +15,6 @@ class ReportRepository(private val context: Context, private val restHelper: Res
 	fun deleteReport(reportId: Long) = restHelper.deleteEventReport(reportId)
 	fun shareReport(reportId: Long, email: Email) = restHelper.shareReport(reportId, email)
 	
+	fun downloadReport(reportId: Long) = restHelper.downloadReport(reportId)
+	
 }

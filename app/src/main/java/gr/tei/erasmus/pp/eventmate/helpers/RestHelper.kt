@@ -31,6 +31,7 @@ class RestHelper(retrofit: Retrofit) {
 	// submissions
 	fun getUserTaskSubmissions(userId: Long, taskId: Long) = submissionService.getSubmissions(taskId, userId)
 	fun saveSubmission(taskId: Long, submissionFile: SubmissionFile) = submissionService.saveSubmissionFile(taskId, submissionFile)
+	fun deleteSubmissionFile(fileId: Long) = submissionService.deleteSubmissionFile(fileId)
 	
 	// users
 	fun getUser(userId: Long) = userService.getUser(userId)
@@ -45,5 +46,6 @@ class RestHelper(retrofit: Retrofit) {
 	fun saveEventReport(eventId: Long, report: ReportRequest) = reportService.saveReport(eventId, report)
 	fun deleteEventReport(reportId: Long) = reportService.deleteReport(reportId)
 	fun shareReport(reportId: Long, email: Email) = reportService.shareReport(reportId, email)
+	fun downloadReport(reportId: Long) = reportService.downloadReport(reportId)
 	
 }

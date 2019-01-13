@@ -22,4 +22,7 @@ interface ReportService {
 	
 	@POST("/report/{id}/share")
 	fun shareReport(@Path("id") id: Long, @Body email: Email): Deferred<Response<Unit>>
+	
+	@GET("/file/report/{id}/content")
+	fun downloadReport(@Path("id") reportId: Long): Deferred<Response<String>>
 }

@@ -1,4 +1,4 @@
-package gr.tei.erasmus.pp.eventmate.ui.inbox
+package gr.tei.erasmus.pp.eventmate.ui.chat
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,8 +10,8 @@ import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.USER_ID
 import gr.tei.erasmus.pp.eventmate.data.model.Conversation
 import gr.tei.erasmus.pp.eventmate.ui.base.BaseFragment
-import gr.tei.erasmus.pp.eventmate.ui.inbox.conversationDetail.ConversationDetailActivity
-import gr.tei.erasmus.pp.eventmate.ui.inbox.newMessage.NewMessageActivity
+import gr.tei.erasmus.pp.eventmate.ui.chat.conversationDetail.ConversationDetailActivity
+import gr.tei.erasmus.pp.eventmate.ui.chat.newMessage.NewMessageActivity
 import gr.tei.erasmus.pp.eventmate.ui.mainActivity.MainActivity
 import gr.tei.erasmus.pp.eventmate.ui.userProfile.UserProfileActivity
 import kotlinx.android.synthetic.main.fragment_inbox.*

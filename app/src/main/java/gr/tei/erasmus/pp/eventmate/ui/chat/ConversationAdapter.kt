@@ -1,4 +1,4 @@
-package gr.tei.erasmus.pp.eventmate.ui.inbox
+package gr.tei.erasmus.pp.eventmate.ui.chat
 
 import android.content.Context
 import android.view.LayoutInflater

@@ -4,5 +4,5 @@ data class ReportRequest(
 	val name: String?,
 	val comment: String?,
 	val type: String,
-	val eventReportInfo: EventReportInfo
+	val reportInfoDTO: ReportInfoDTO
 )

@@ -14,7 +14,7 @@ import com.afollestad.materialdialogs.actions.getActionButton
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.list.customListAdapter
 import gr.tei.erasmus.pp.eventmate.R
-import gr.tei.erasmus.pp.eventmate.data.model.EventReportInfo
+import gr.tei.erasmus.pp.eventmate.data.model.ReportInfoDTO
 import kotlinx.android.synthetic.main.dialog_audio_preview.view.*
 import kotlinx.android.synthetic.main.dialog_photo_preview.view.*
 import kotlinx.android.synthetic.main.dialog_video_preview.view.*
@@ -46,12 +46,12 @@ object DialogHelper {
 	fun showEventReportDialog(
 		context: Context,
 		layoutInflater: LayoutInflater,
-		eventReportInfo: EventReportInfo,
+		reportInfoDTO: ReportInfoDTO,
 		callback: DialogInterface.OnClickListener?
 	) {
 		AlertDialog.Builder(context).apply {
 			val layout = layoutInflater.inflate(R.layout.report_event_info_dialog, null)
-			with(eventReportInfo) {
+			with(reportInfoDTO) {
 				layout.event_name.isChecked = includeName
 				layout.event_date.isChecked = includeDate
 				layout.event_owner.isChecked = includeOwner

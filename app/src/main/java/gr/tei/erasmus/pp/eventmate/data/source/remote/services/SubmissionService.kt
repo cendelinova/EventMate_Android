@@ -6,10 +6,7 @@ import gr.tei.erasmus.pp.eventmate.data.model.SubmissionResponse
 import gr.tei.erasmus.pp.eventmate.data.model.Task
 import kotlinx.coroutines.Deferred
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
+import retrofit2.http.*
 
 interface SubmissionService {
 	@GET("/task/{taskId}/submission/{userId}")
@@ -20,4 +17,7 @@ interface SubmissionService {
 	
 	@POST("/file/submissionFile/task/{taskId}")
 	fun saveSubmissionFile(@Path("taskId") taskId: Long, @Body submissionFile: SubmissionFile): Deferred<Response<Task>>
+	
+	@DELETE("/file/submissionFile/{id}")
+	fun deleteSubmissionFile(@Path("id") fileId: Long): Deferred<Response<MutableList<SubmissionResponse>>>
 }

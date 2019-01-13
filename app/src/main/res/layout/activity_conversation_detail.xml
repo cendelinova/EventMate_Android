@@ -4,6 +4,78 @@
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	tools:context=".ui.inbox.conversationDetail.ConversationDetailActivity">
+	tools:context=".ui.chat.conversationDetail.ConversationDetailActivity">
+	
+	<androidx.appcompat.widget.Toolbar
+		android:id="@+id/toolbar"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:background="@android:color/transparent"
+		android:elevation="2dp"
+		android:theme="@style/AppTheme.AppBarOverlayNoBackground"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
+		app:popupTheme="@style/AppTheme.PopupOverlay">
+		
+		<TextView
+			android:id="@+id/my_title"
+			style="@style/MessageTitle"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_centerInParent="true" />
+	
+	</androidx.appcompat.widget.Toolbar>
+	
+	<gr.tei.erasmus.pp.eventmate.ui.common.RecyclerViewEmptyViewSupport
+		android:id="@+id/message_recycler_view"
+		android:layout_marginTop="@dimen/spacing_small"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_marginBottom="@dimen/spacing_small"
+		app:fastScrollThumbColor="@color/colorAccent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/toolbar"
+		app:layout_constraintVertical_bias="0.0" />
+	
+	<ProgressBar
+		android:id="@+id/progress"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:visibility="invisible"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent" />
+	
+	
+	<LinearLayout
+		android:id="@+id/message_empty_view"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:orientation="vertical"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent">
+		
+		<Space
+			android:layout_width="match_parent"
+			android:layout_height="0dp"
+			android:layout_weight="2" />
+		
+		<TextView
+			style="@style/EmptyText"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:text="@string/tv_no_messages" />
+		
+		<Space
+			android:layout_width="match_parent"
+			android:layout_height="0dp"
+			android:layout_weight="2" />
+	
+	</LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

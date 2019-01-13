@@ -1,4 +1,4 @@
-package gr.tei.erasmus.pp.eventmate.ui.inbox.newMessage
+package gr.tei.erasmus.pp.eventmate.ui.chat.newMessage
 
 import android.os.Bundle
 import gr.tei.erasmus.pp.eventmate.R

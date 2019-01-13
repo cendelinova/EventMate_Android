@@ -55,22 +55,22 @@ class SubmissionViewModel : BaseViewModel() {
 				SubmissionFile.FileType.PHOTO.name -> submissionFile.name?.let {
 					FileHelper.saveFileLocally(
 						context,
-						submissionFile,
-						".jpeg",
+						submissionFile.data,
+						"${submissionFile.name}.jpeg",
 						"image/jpeg"
 					)
 				}
 				SubmissionFile.FileType.VIDEO.name -> FileHelper.saveFileLocally(
 					context,
-					submissionFile,
-					".mp4",
+					submissionFile.data,
+					"${submissionFile.name}.mp4",
 					"video/mp4"
 				)
 				
 				SubmissionFile.FileType.AUDIO.name -> FileHelper.saveFileLocally(
 					context,
-					submissionFile,
-					".wav",
+					submissionFile.data,
+					"${submissionFile.name}.wav",
 					"audio/wav"
 				)
 			}
@@ -78,6 +78,24 @@ class SubmissionViewModel : BaseViewModel() {
 			mStates.postValue(FinishedState)
 		}
 		
+	}
+	
+	fun deleteSubmissionFile(submissionFileId: Long) {
+		launch {
+			mStates.postValue(LoadingState)
+			try {
+				val response = submissionRepository.deleteSubmissionFile(submissionFileId).await()
+				Timber.d("deleteSubmissionFile() $response ${response.isSuccessful}")
+				val state = if (response.isSuccessful && response.body() != null) {
+					SubmissionState(response.body()!!)
+				} else {
+					ErrorState(Throwable("Error"))
+				}
+				mStates.postValue(state)
+			} catch (error: Throwable) {
+				mStates.postValue(ErrorState(error))
+			}
+		}
 	}
 	
 	data class SubmissionState(val submissionResponses: MutableList<SubmissionResponse>) : State() {

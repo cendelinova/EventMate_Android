@@ -8,7 +8,7 @@
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 	<uses-permission android:name="android.permission.WAKE_LOCK" />
 	<uses-permission android:name="android.permission.CAMERA" />
-	<uses-permission android:name="android.permission.READ_CONTACTS"/>
+	<uses-permission android:name="android.permission.READ_CONTACTS" />
 	
 	<application
 		android:name=".app.App"
@@ -61,8 +61,14 @@
 			android:label="@string/title_activity_settings"
 			android:theme="@style/AppTheme.NoActionBar" />
 		<activity android:name=".ui.gameRank.GameRankActivity" />
-		<activity android:name=".ui.inbox.conversationDetail.ConversationDetailActivity" />
-		<activity android:name=".ui.inbox.newMessage.NewMessageActivity" />
+		<activity android:name=".ui.chat.conversationDetail.ConversationDetailActivity">
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN" />
+				
+				<category android:name="android.intent.category.LAUNCHER" />
+			</intent-filter>
+		</activity>
+		<activity android:name=".ui.chat.newMessage.NewMessageActivity" />
 		<activity
 			android:name=".ui.newTask.NewTaskActivity"
 			android:label="@string/title_activity_new_task"
@@ -71,7 +77,6 @@
 		<activity android:name=".ui.taskDetail.TaskDetailActivity">
 		
 		</activity>
-		<activity android:name=".ui.inviteGuests.InviteGuestsActivity" />
 		<activity android:name=".ui.report.ReportListActivity">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />

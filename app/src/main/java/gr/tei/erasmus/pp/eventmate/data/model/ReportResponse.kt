@@ -4,7 +4,7 @@ import gr.tei.erasmus.pp.eventmate.R
 import java.util.*
 
 data class ReportResponse(
-	val id: Long?, val name: String?, val type: String, val comment: String?, val preview: String?, val content: String?) {
+	val id: Long?, val name: String?, val type: String, val comment: String?, val preview: String?) {
 	
 	enum class ReportType(val icon: Int, var defaultString: Int) {
 		CERTIFICATE(R.drawable.ic_certificate_white_20dp, R.string.certificate),

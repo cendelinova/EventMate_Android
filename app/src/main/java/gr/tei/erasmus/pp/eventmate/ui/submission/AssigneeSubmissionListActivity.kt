@@ -104,6 +104,7 @@ class AssigneeSubmissionListActivity : BaseActivity(), IPickResult {
 			is SubmissionViewModel.SubmissionState -> {
 				StateHelper.toggleProgress(progress, false)
 				setupLayout(state.submissionResponses[0])
+				
 			}
 			is FinishedState -> StateHelper.toggleProgress(progress, false)
 		}
@@ -115,11 +116,12 @@ class AssigneeSubmissionListActivity : BaseActivity(), IPickResult {
 			taskPhoto?.let {
 				task_photo.setImageBitmap(FileHelper.decodeImage(it))
 			}
-			submissionAdapter.updateSubmissionList(content.sortedWith(compareBy { it.created?.time?.compareTo(it.created.time) }).reversed().toMutableList())
 			
 			taskDescription?.let {
 				tv_description.text = taskDescription
 			}
+			
+			submissionAdapter.updateSubmissionList(content.sortedWith(compareBy { it.created?.time?.compareTo(it.created.time) }).reversed().toMutableList())
 			
 			SpannableStringBuilder().also {
 				val startString = getString(R.string.assignee_submission)
@@ -180,10 +182,8 @@ class AssigneeSubmissionListActivity : BaseActivity(), IPickResult {
 			for (audioFormat in intArrayOf(AudioFormat.ENCODING_PCM_8BIT, AudioFormat.ENCODING_PCM_16BIT)) {
 				for (channelConfig in intArrayOf(AudioFormat.CHANNEL_IN_MONO, AudioFormat.CHANNEL_IN_STEREO)) {
 					try {
-						Timber.d(
-							"Attempting rate $rate Hz, bits: $audioFormat channel: $channelConfig"
-						)
-						val bufferSize = AudioRecord.getMinBufferSize(rate, channelConfig.toInt(), audioFormat.toInt())
+						Timber.d("Attempting rate $rate Hz, bits: $audioFormat channel: $channelConfig")
+						val bufferSize = AudioRecord.getMinBufferSize(rate, channelConfig, audioFormat)
 						
 						if (bufferSize != AudioRecord.ERROR_BAD_VALUE) {
 							// check if we can instantiate and have a success
@@ -262,6 +262,7 @@ class AssigneeSubmissionListActivity : BaseActivity(), IPickResult {
 		}
 		
 		override fun onSubmissionDelete(submissionFile: SubmissionFile) {
+			submissionFile.id?.let { viewModel.deleteSubmissionFile(it) }
 		}
 		
 	}
@@ -321,6 +322,4 @@ class AssigneeSubmissionListActivity : BaseActivity(), IPickResult {
 			}
 		}
 	}
-	
-	
 }

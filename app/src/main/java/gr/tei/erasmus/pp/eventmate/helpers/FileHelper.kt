@@ -13,6 +13,7 @@ import android.provider.MediaStore
 import android.util.Base64
 import android.widget.ImageView
 import com.makeramen.roundedimageview.RoundedDrawable
+import gr.tei.erasmus.pp.eventmate.data.model.ReportResponse
 import gr.tei.erasmus.pp.eventmate.data.model.SubmissionFile
 import org.joda.time.DateTime
 import timber.log.Timber
@@ -82,14 +83,15 @@ object FileHelper {
 		return absolutePath
 	}
 	
-	fun saveFileLocally(context: Context, submissionFile: SubmissionFile, suffix: String, mimeType: String) {
+	fun saveFileLocally(context: Context, data: String, fileName: String, mimeType: String) {
 		var file: File? = null
 		val outputStream: FileOutputStream
 		try {
-			file = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), submissionFile.name + suffix)
+	
+			file = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), fileName)
 			
 			outputStream = FileOutputStream(file)
-			outputStream.write(Base64.decode(submissionFile.data.toByteArray(), Base64.NO_WRAP))
+			outputStream.write(Base64.decode(data.toByteArray(), Base64.NO_WRAP))
 			outputStream.close()
 			showDownloadNotification(context, file, mimeType)
 		} catch (e: IOException) {

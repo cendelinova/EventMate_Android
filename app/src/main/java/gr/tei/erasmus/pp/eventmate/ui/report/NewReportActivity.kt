@@ -36,7 +36,7 @@ class NewReportActivity : BaseActivity() {
 	
 	private lateinit var tasks: MutableList<Task>
 	
-	private val eventReportInfo by lazy { EventReportInfo() }
+	private val eventReportInfo by lazy { ReportInfoDTO() }
 	
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -64,6 +64,7 @@ class NewReportActivity : BaseActivity() {
 			eventReportInfo.listOfIncludedGuests = listOfGuestIds
 			eventReportInfo.listOfIncludedTasks = listOfTaskIds
 			
+			// todo real data
 			viewModel.saveEventReport(11, ReportRequest(name, comment, type, eventReportInfo))
 		}
 	}

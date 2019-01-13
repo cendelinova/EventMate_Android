@@ -8,4 +8,6 @@ class SubmissionRepository(private val context: Context, private val restHelper:
 	suspend fun getSubmissions(userId: Long, taskId: Long) = restHelper.getUserTaskSubmissions(userId, taskId)
 	
 	suspend fun saveNewSubmissionFile(taskId: Long, submissionFile: SubmissionFile) = restHelper.saveSubmission(taskId, submissionFile)
+	
+	fun deleteSubmissionFile(fileId: Long) = restHelper.deleteSubmissionFile(fileId)
 }

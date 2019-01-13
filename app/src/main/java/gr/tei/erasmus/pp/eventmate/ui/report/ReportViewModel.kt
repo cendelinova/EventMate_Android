@@ -1,11 +1,13 @@
 package gr.tei.erasmus.pp.eventmate.ui.report
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import gr.tei.erasmus.pp.eventmate.app.App
 import gr.tei.erasmus.pp.eventmate.data.model.Email
 import gr.tei.erasmus.pp.eventmate.data.model.ReportRequest
 import gr.tei.erasmus.pp.eventmate.data.model.ReportResponse
+import gr.tei.erasmus.pp.eventmate.helpers.FileHelper
 import gr.tei.erasmus.pp.eventmate.ui.base.*
 import gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.guests.UserViewModel
 import gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.tasks.TasksViewModel
@@ -99,7 +101,7 @@ class ReportViewModel : BaseViewModel() {
 				val state = if (response.isSuccessful && response.body() != null) {
 					FinishedState
 				} else {
-					ErrorState(Throwable("Error during deleting report"))
+					ErrorState(Throwable("Error during saving report"))
 				}
 				
 				mStates.postValue(state)
@@ -120,6 +122,32 @@ class ReportViewModel : BaseViewModel() {
 				} else {
 					ErrorState(Throwable("Error during sharing report"))
 				}
+				
+				mStates.postValue(state)
+			} catch (error: Throwable) {
+				mStates.postValue(ErrorState(error))
+			}
+		}
+	}
+	
+	fun downloadReport(context: Context, reportId: Long) {
+		launch {
+			mStates.postValue(LoadingState)
+			try {
+				val response = reportRepository.downloadReport(reportId).await()
+				Timber.d("downloadReport() with id: $reportId $response ${response.isSuccessful}")
+				val state = if (response.isSuccessful && response.body() != null) {
+					FinishedState
+				} else {
+					ErrorState(Throwable("Error during sharing report"))
+				}
+				
+				FileHelper.saveFileLocally(
+					context,
+					response.body()!!,
+					".pdf",
+					"application/pdf"
+				)
 				
 				mStates.postValue(state)
 			} catch (error: Throwable) {
