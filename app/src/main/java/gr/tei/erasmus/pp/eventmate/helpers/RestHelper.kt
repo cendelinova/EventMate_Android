@@ -26,6 +26,7 @@ class RestHelper(retrofit: Retrofit) {
 	fun getTask(taskId: Long) = taskService.getTask(taskId)
 	fun getEventTasks(eventId: Long) = taskService.getEventTasks(eventId)
 	fun deleteTask(taskId: Long) = taskService.deleteTask(taskId)
+	fun assignPoints(taskId: Long, userSubmissionPointList: MutableList<UserSubmissionPoints>) = taskService.assignPoints(taskId, userSubmissionPointList)
 	
 	// submissions
 	fun getUserTaskSubmissions(userId: Long, taskId: Long) = submissionService.getSubmissions(taskId, userId)

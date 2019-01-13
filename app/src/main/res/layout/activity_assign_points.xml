@@ -4,12 +4,12 @@
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
+	android:id="@+id/main"
 	tools:context=".ui.assignPoints.AssignPointsActivity">
 	
 	<include
 		android:id="@+id/header"
-		layout="@layout/toolbar_event_detail" />
-	
+		layout="@layout/toolbar_task_detail" />
 	
 	<gr.tei.erasmus.pp.eventmate.ui.common.RecyclerViewEmptyViewSupport
 		android:id="@+id/assign_points_recycler_view"

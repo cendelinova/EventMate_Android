@@ -3,16 +3,17 @@ package gr.tei.erasmus.pp.eventmate.data.repository
 import gr.tei.erasmus.pp.eventmate.data.model.Event
 import gr.tei.erasmus.pp.eventmate.data.model.Task
 import gr.tei.erasmus.pp.eventmate.data.model.TaskRequest
+import gr.tei.erasmus.pp.eventmate.data.model.UserSubmissionPoints
 import gr.tei.erasmus.pp.eventmate.data.source.local.room.dao.TaskDao
 import gr.tei.erasmus.pp.eventmate.helpers.RestHelper
 import timber.log.Timber
 
 class TaskRepository(private val restHelper: RestHelper, private val taskDao: TaskDao) {
 	
-	suspend fun getAllTasks(eventId: Long): MutableList<Task> = taskDao.getAllTasks(eventId)
-		.map {
-			Task.convertToModel(it)
-		}.toMutableList()
+//	suspend fun getAllTasks(eventId: Long): MutableList<Task> = taskDao.getAllTasks(eventId)
+//		.map {
+//			Task.convertToModel(it)
+//		}.toMutableList()
 	
 	fun getEventTasks(eventId: Long) = restHelper.getEventTasks(eventId)
 //	fun getTask(taskId: Long): Task = Task.convertToModel(taskDao.getTask(taskId))
@@ -31,6 +32,8 @@ class TaskRepository(private val restHelper: RestHelper, private val taskDao: Ta
 	}
 
 //	fun delete(taskEntity: TaskEntity) = taskDao.delete(taskEntity.uid)
+	
+	fun assignPoints(taskId: Long, userSubmissionPointList: MutableList<UserSubmissionPoints>) = restHelper.assignPoints(taskId, userSubmissionPointList)
 	
 	fun deleteTask(taskId: Long) = restHelper.deleteTask(taskId)
 	
