@@ -1,25 +1,29 @@
 package gr.tei.erasmus.pp.eventmate.ui.taskDetail
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import gr.tei.erasmus.pp.eventmate.R
+import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.EVENT_ID
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.SUBMISSION_EXTRA
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.TASK_ID
 import gr.tei.erasmus.pp.eventmate.data.model.SubmissionExtra
 import gr.tei.erasmus.pp.eventmate.data.model.Task
 import gr.tei.erasmus.pp.eventmate.data.model.User
+import gr.tei.erasmus.pp.eventmate.helpers.DialogHelper
 import gr.tei.erasmus.pp.eventmate.helpers.FileHelper
 import gr.tei.erasmus.pp.eventmate.helpers.StateHelper
 import gr.tei.erasmus.pp.eventmate.helpers.TextHelper.getDefaultTextIfEmpty
-import gr.tei.erasmus.pp.eventmate.ui.base.BaseActivity
-import gr.tei.erasmus.pp.eventmate.ui.base.ErrorState
-import gr.tei.erasmus.pp.eventmate.ui.base.LoadingState
-import gr.tei.erasmus.pp.eventmate.ui.base.State
+import gr.tei.erasmus.pp.eventmate.ui.base.*
+import gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.EventDetailActivity
 import gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.guests.UserAdapter
 import gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.tasks.TasksViewModel
+import gr.tei.erasmus.pp.eventmate.ui.newTask.NewTaskActivity
 import gr.tei.erasmus.pp.eventmate.ui.submission.AssigneeSubmissionListActivity
 import kotlinx.android.synthetic.main.activity_task_detail.*
 import kotlinx.android.synthetic.main.toolbar_task_detail.*
@@ -29,7 +33,7 @@ class TaskDetailActivity : BaseActivity() {
 	
 	private var taskId: Long? = null
 	
-	private lateinit var assignessAdapter: UserAdapter
+	private lateinit var assigneesAdapter: UserAdapter
 	
 	private lateinit var task: Task
 	
@@ -47,7 +51,7 @@ class TaskDetailActivity : BaseActivity() {
 		observeViewModel()
 		
 		taskId?.let {
-			//			viewModel.getTask(taskId!!)
+			viewModel.getTask(it)
 			viewModel.getTask(8)
 		}
 		
@@ -59,11 +63,43 @@ class TaskDetailActivity : BaseActivity() {
 		}
 	}
 	
+	override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+		val inflater = menuInflater
+		inflater.inflate(R.menu.menu_fragment_detail, menu)
+		return super.onCreateOptionsMenu(menu)
+	}
+	
+	override fun onOptionsItemSelected(item: MenuItem): Boolean {
+		if (item.itemId == R.id.edit) startActivity(
+			Intent(
+				this@TaskDetailActivity,
+				NewTaskActivity::class.java
+			).apply {
+				putExtra(
+					TASK_ID, taskId
+				)
+			})
+		else if (item.itemId == R.id.delete) {
+			DialogHelper.showDeleteDialog(this, DialogInterface.OnClickListener { _, _ ->
+				taskId?.let {
+					viewModel.deleteTask(it)
+				}
+			})
+		}
+		return super.onOptionsItemSelected(item)
+	}
+	
 	// Observer
 	private val observeTaskProgressState = Observer<State> { state ->
 		when (state) {
 			is LoadingState -> StateHelper.toggleProgress(progress, true)
 			is ErrorState -> StateHelper.showError(state.error, progress, task_detail)
+			is FinishedState -> {
+				StateHelper.toggleProgress(progress, false)
+				startActivity(Intent(this, EventDetailActivity::class.java).apply {
+					putExtra(EVENT_ID, 5)
+				})
+			}
 			is TasksViewModel.TaskListState -> {
 				StateHelper.toggleProgress(progress, false)
 				setupLayout(state.tasks[0])
@@ -92,7 +128,7 @@ class TaskDetailActivity : BaseActivity() {
 	private fun initializeRecyclerView() {
 		Timber.v("initializeRecyclerView() called")
 		
-		assignessAdapter = UserAdapter(
+		assigneesAdapter = UserAdapter(
 			this,
 			onUserClick,
 			mutableListOf()
@@ -102,7 +138,7 @@ class TaskDetailActivity : BaseActivity() {
 			setHasFixedSize(true)
 			setEmptyView(assignee_empty_view)
 			layoutManager = GridLayoutManager(context!!, 3)
-			adapter = assignessAdapter
+			adapter = assigneesAdapter
 		}
 	}
 	
@@ -118,7 +154,7 @@ class TaskDetailActivity : BaseActivity() {
 			}
 			
 			if (!assignees.isNullOrEmpty()) {
-				assignessAdapter.updateUserList(assignees.toMutableList())
+				assigneesAdapter.updateUserList(assignees.toMutableList())
 			}
 		}
 	}

@@ -183,8 +183,8 @@
 	<string name="tv_no_reports">No reports</string>
 	<string name="name">Name</string>
 	<string name="msg_time_assign_points">It\'s time to assign points</string>
-	<string name="title_delete_event">Delete event</string>
-	<string name="message_wish_delete_event">Do you really want to delete this event?</string>
+	<string name="title_delete">Delete action</string>
+	<string name="message_wish_delete">Do you really want to delete this?</string>
 	<string name="active_filters">Active filters</string>
 	<string name="share">Share</string>
 	<string name="download">Download</string>
@@ -236,4 +236,5 @@
 	<string name="hint_emails">Type in recipients emails</string>
 	<string name="invite_event_guests">Invite event guests</string>
 	<string name="choose_assigness">Choose task assigness</string>
+	<string name="mgs_pick_assignee">Choose task assignees</string>
 </resources>

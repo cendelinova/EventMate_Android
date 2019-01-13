@@ -55,7 +55,6 @@ class EventDetailActivity : BaseActivity() {
 		
 		eventId = intent.getLongExtra(EVENT_ID, 0)
 		
-		
 		observeViewModel()
 		
 		eventId?.let {
@@ -74,7 +73,7 @@ class EventDetailActivity : BaseActivity() {
 	
 	override fun onCreateOptionsMenu(menu: Menu?): Boolean {
 		val inflater = menuInflater
-		inflater.inflate(R.menu.menu_fragment_event_detail, menu)
+		inflater.inflate(R.menu.menu_fragment_detail, menu)
 		return super.onCreateOptionsMenu(menu)
 	}
 	

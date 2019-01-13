@@ -4,7 +4,6 @@ import gr.tei.erasmus.pp.eventmate.data.model.Event
 import gr.tei.erasmus.pp.eventmate.data.model.Task
 import gr.tei.erasmus.pp.eventmate.data.model.TaskRequest
 import gr.tei.erasmus.pp.eventmate.data.source.local.room.dao.TaskDao
-import gr.tei.erasmus.pp.eventmate.data.source.local.room.entities.TaskEntity
 import gr.tei.erasmus.pp.eventmate.helpers.RestHelper
 import timber.log.Timber
 
@@ -16,9 +15,9 @@ class TaskRepository(private val restHelper: RestHelper, private val taskDao: Ta
 		}.toMutableList()
 	
 	fun getEventTasks(eventId: Long) = restHelper.getEventTasks(eventId)
-	fun getTask(taskId: Long): Task = Task.convertToModel(taskDao.getTask(taskId))
+//	fun getTask(taskId: Long): Task = Task.convertToModel(taskDao.getTask(taskId))
 	
-	suspend fun getTaskFromServer(taskId: Long) = restHelper.getTask(taskId)
+	fun getTask(taskId: Long) = restHelper.getTask(taskId)
 	
 	suspend fun insert(task: TaskRequest) {
 		val result = restHelper.insertTask(task).await()
@@ -30,8 +29,10 @@ class TaskRepository(private val restHelper: RestHelper, private val taskDao: Ta
 			}
 		}
 	}
+
+//	fun delete(taskEntity: TaskEntity) = taskDao.delete(taskEntity.uid)
 	
-	fun delete(taskEntity: TaskEntity) = taskDao.delete(taskEntity.uid)
+	fun deleteTask(taskId: Long) = restHelper.deleteTask(taskId)
 	
 	fun saveEventTasks(event: Event) {
 		val tasks = event.tasks?.map { Task.convertToEntity(it) }

@@ -39,8 +39,30 @@ class TasksViewModel : BaseViewModel() {
 		launch {
 			mStates.postValue(LoadingState)
 			try {
-				val task = taskRepository.getTaskFromServer(taskId).await()
-				mStates.postValue(TaskListState(mutableListOf(task)))
+				val response = taskRepository.getTask(taskId).await()
+				val state = if (response.isSuccessful && response.body() != null) {
+					TaskListState(mutableListOf(response.body()!!))
+				} else {
+					ErrorState(Throwable("Error"))
+				}
+				mStates.postValue(state)
+			} catch (error: Throwable) {
+				mStates.postValue(ErrorState(error))
+			}
+		}
+	}
+	
+	fun deleteTask(taskId: Long) {
+		launch {
+			mStates.postValue(LoadingState)
+			try {
+				val response = taskRepository.deleteTask(taskId).await()
+				val state = if (response.isSuccessful && response.body() != null) {
+					TaskListState(response.body()!!)
+				} else {
+					ErrorState(Throwable("Error"))
+				}
+				mStates.postValue(state)
 			} catch (error: Throwable) {
 				mStates.postValue(ErrorState(error))
 			}

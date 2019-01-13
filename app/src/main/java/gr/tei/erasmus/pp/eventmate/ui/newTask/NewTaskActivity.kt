@@ -18,6 +18,8 @@ import com.vansuita.pickimage.dialog.PickImageDialog
 import com.vansuita.pickimage.listeners.IPickResult
 import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.EVENT_ID
+import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.TASK_ID
+import gr.tei.erasmus.pp.eventmate.data.model.Task
 import gr.tei.erasmus.pp.eventmate.data.model.TaskRequest
 import gr.tei.erasmus.pp.eventmate.data.model.User
 import gr.tei.erasmus.pp.eventmate.helpers.DialogHelper
@@ -26,6 +28,7 @@ import gr.tei.erasmus.pp.eventmate.helpers.TextHelper
 import gr.tei.erasmus.pp.eventmate.ui.base.*
 import gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.EventDetailActivity
 import gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.guests.UserViewModel
+import gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.tasks.TasksViewModel
 import gr.tei.erasmus.pp.eventmate.ui.report.ReportGuestAdapter
 import gr.tei.erasmus.pp.eventmate.ui.signup.TextInputLayoutAdapter
 import kotlinx.android.synthetic.main.activity_new_task.*
@@ -44,6 +47,9 @@ class NewTaskActivity : BaseActivity(), Validator.ValidationListener, IPickResul
 	private var listOfInputs = mutableListOf<TextInputLayout>()
 	
 	private var eventId: Long? = null
+	private var taskId: Long? = null
+	
+	private var isEdit = false
 	
 	private var users: MutableList<User> = mutableListOf()
 	
@@ -64,6 +70,13 @@ class NewTaskActivity : BaseActivity(), Validator.ValidationListener, IPickResul
 		eventId = intent.getLongExtra(EVENT_ID, 0)
 		
 		viewModel.getEventGuests(eventId!!)
+		
+		if (intent.hasExtra(TASK_ID)) {
+			taskId = intent.getLongExtra(TASK_ID, 0)
+			isEdit = true
+			viewModel.getTask(taskId!!)
+		}
+		
 		setupChoosingPhotoDialog()
 		setupPickAssigneesDialog()
 		initInputs()
@@ -92,7 +105,7 @@ class NewTaskActivity : BaseActivity(), Validator.ValidationListener, IPickResul
 			DialogHelper.showDialogWithAdapter(
 				this, userAdapter,
 				layoutInflater.inflate(R.layout.report_pick_dialog, null),
-				getString(R.string.mgs_invite_guests), confirmListener, TextHelper.getQueryTextListener(userAdapter)
+				getString(R.string.mgs_pick_assignee), confirmListener, TextHelper.getQueryTextListener(userAdapter)
 			)
 		}
 	}
@@ -189,11 +202,32 @@ class NewTaskActivity : BaseActivity(), Validator.ValidationListener, IPickResul
 					putExtra(EVENT_ID, eventId)
 				})
 			}
+			is TasksViewModel.TaskListState -> {
+				toggleProgress(false)
+				setupLayout(state.tasks[0])
+			}
 			is UserViewModel.UserListState -> {
 				toggleProgress(false)
 				users = state.users
 			}
 		}
+	}
+	
+	private fun setupLayout(task: Task) {
+		with(task) {
+			input_task_name.editText?.setText(name)
+			input_points.editText?.setText(points.toString())
+			input_description.editText?.setText(description)
+			input_place.editText?.setText(place)
+			task_photo.setImageBitmap(task.photo?.let { FileHelper.decodeImage(it) })
+			
+			if (!assignees.isNullOrEmpty()) {
+				this@NewTaskActivity.assignees = assignees.toMutableList()
+				TextHelper.createContactChips(assignees.toMutableList(), chip_group, closeUserChipListener)
+			}
+			
+		}
+		
 	}
 	
 	private val confirmListener = View.OnClickListener {

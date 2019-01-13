@@ -98,8 +98,8 @@
 				
 				<ImageView
 					android:id="@+id/indicator_owner"
-					android:layout_width="@dimen/small_icon_size"
-					android:layout_height="@dimen/small_icon_size"
+					android:layout_width="10dp"
+					android:layout_height="10dp"
 					android:layout_alignParentRight="true"
 					android:src="@drawable/ic_star"/>
 			

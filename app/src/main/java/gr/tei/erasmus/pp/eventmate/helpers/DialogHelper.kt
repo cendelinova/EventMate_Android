@@ -36,8 +36,8 @@ object DialogHelper {
 			setNegativeButton(
 				R.string.btn_cancel
 			) { dialog, _ -> dialog.dismiss() }
-			setMessage(R.string.message_wish_delete_event)
-			setTitle(R.string.title_delete_event)
+			setMessage(R.string.message_wish_delete)
+			setTitle(R.string.title_delete)
 		}.also {
 			it.create()
 		}.show()
@@ -79,7 +79,7 @@ object DialogHelper {
 	) {
 		
 		MaterialDialog(context).show {
-//			customView.my_title.text = title
+			customView.my_title.text = title
 			customView.search_view.setOnQueryTextListener(queryListener)
 			customView(view = customView, scrollable = true)
 			customListAdapter(adapter)

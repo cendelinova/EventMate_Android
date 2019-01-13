@@ -11,7 +11,7 @@ interface TaskService {
 	fun getTasks(): Deferred<MutableList<Task>>
 	
 	@GET("/task/{id}")
-	fun getTask(@Path("id") id: Long): Deferred<Task>
+	fun getTask(@Path("id") id: Long): Deferred<Response<Task>>
 	
 	@POST("/event/{id}/task")
 	fun insertTask(@Path("id") id: Long, @Body task: TaskRequest): Deferred<Response<Task>>

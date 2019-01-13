@@ -6,6 +6,7 @@ import gr.tei.erasmus.pp.eventmate.app.App
 import gr.tei.erasmus.pp.eventmate.data.model.TaskRequest
 import gr.tei.erasmus.pp.eventmate.ui.base.*
 import gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.guests.UserViewModel
+import gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.tasks.TasksViewModel
 import kotlinx.coroutines.launch
 
 class NewTaskViewModel : BaseViewModel() {
@@ -37,6 +38,23 @@ class NewTaskViewModel : BaseViewModel() {
 				val response = userRepository.getGuests(eventId).await()
 				val state = if (response.isSuccessful && response.body() != null) {
 					UserViewModel.UserListState(response.body()!!)
+				} else {
+					ErrorState(Throwable("Error"))
+				}
+				mStates.postValue(state)
+			} catch (error: Throwable) {
+				mStates.postValue(ErrorState(error))
+			}
+		}
+	}
+	
+	fun getTask(taskId: Long) {
+		launch {
+			mStates.postValue(LoadingState)
+			try {
+				val response = taskRepository.getTask(taskId).await()
+				val state = if (response.isSuccessful && response.body() != null) {
+					TasksViewModel.TaskListState(mutableListOf(response.body()!!))
 				} else {
 					ErrorState(Throwable("Error"))
 				}
