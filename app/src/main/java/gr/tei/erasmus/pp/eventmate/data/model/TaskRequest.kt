@@ -10,5 +10,6 @@ data class TaskRequest(
 	val description: String?,
 	val points: Int,
 	val timeLimit: Int?,
-	val photo: String?
+	val photo: String?,
+	val assignees: MutableList<User>
 )

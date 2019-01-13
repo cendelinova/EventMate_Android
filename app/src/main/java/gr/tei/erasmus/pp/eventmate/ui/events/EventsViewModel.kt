@@ -8,6 +8,7 @@ import gr.tei.erasmus.pp.eventmate.constants.Constants.EventFilter.*
 import gr.tei.erasmus.pp.eventmate.data.model.Event
 import gr.tei.erasmus.pp.eventmate.data.model.Event.EventState.UNDEFINED_STATE
 import gr.tei.erasmus.pp.eventmate.data.model.EventRequest
+import gr.tei.erasmus.pp.eventmate.data.model.Invitation
 import gr.tei.erasmus.pp.eventmate.ui.base.*
 import gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.guests.UserViewModel
 import kotlinx.coroutines.launch
@@ -73,8 +74,13 @@ class EventsViewModel : BaseViewModel() {
 		launch {
 			mStates.postValue(LoadingState)
 			try {
-				val event = Event.convertToModel(eventRepository.getEvent(eventId))
-				mStates.postValue(EventListState(mutableListOf(event)))
+				val response = eventRepository.getEvent(eventId).await()
+				val state = if (response.isSuccessful && response.body() != null) {
+					EventListState(mutableListOf(response.body()!!))
+				} else {
+					ErrorState(Throwable("Error during getting event"))
+				}
+				mStates.postValue(state)
 			} catch (error: Throwable) {
 				mStates.postValue(ErrorState(error))
 			}
@@ -102,6 +108,24 @@ class EventsViewModel : BaseViewModel() {
 					UserViewModel.UserListState(response.body()!!)
 				} else {
 					ErrorState(Throwable(response.message()))
+				}
+				mStates.postValue(state)
+			} catch (error: Throwable) {
+				mStates.postValue(ErrorState(error))
+			}
+		}
+	}
+	
+	fun inviteGuests(eventId: Long, invitations: MutableList<Invitation>) {
+		launch {
+			mStates.postValue(LoadingState)
+			try {
+				val response = eventRepository.inviteGuests(eventId, invitations).await()
+				val state = if (response.isSuccessful && response.body() != null) {
+					val guests = (response.body()!! as Event).guests
+					guests?.let { UserViewModel.UserListState(it) }
+				} else {
+					ErrorState(Throwable("Error"))
 				}
 				mStates.postValue(state)
 			} catch (error: Throwable) {

@@ -7,11 +7,6 @@
 			android:title="@string/pref_title_pm" />
 		
 		<SwitchPreference
-			android:key="@string/pref_key_gm"
-			android:summary="@string/pref_description_gm"
-			android:title="@string/pref_title_gm" />
-		
-		<SwitchPreference
 			android:key="@string/pref_key_event_invitation"
 			android:summary="@string/pref_description_event_invitation"
 			android:title="@string/pref_title_event_invitation" />
@@ -27,15 +22,4 @@
 			android:title="@string/pref_title_assign_points" />
 	</PreferenceCategory>
 	
-	<PreferenceCategory android:title="@string/preferences_category_others">
-		<Preference
-			android:key="@string/pref_key_reset_score"
-			android:summary="@string/pref_description_reset_score"
-			android:title="@string/pref_title_reset_score" />
-		
-		<!--<RingtonePreference-->
-		<!--android:key="ringtone"-->
-		<!--android:summary="@string/pref_description_ringtone"-->
-		<!--android:title="@string/pref_title_ringtone" />-->
-	</PreferenceCategory>
 </PreferenceScreen>

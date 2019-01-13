@@ -8,6 +8,16 @@ data class Invitation(
 	val invitationState: String
 ) {
 	
+	companion object {
+		fun buildInvitation(user: User?, email: String, type: Invitation.InvitationType) = Invitation(
+			null,
+			user,
+			email,
+			type.name,
+			Invitation.InvitationState.PENDING.name
+		)
+	}
+	
 	enum class InvitationType {
 		EMAIL,
 		NOTIFICATION,

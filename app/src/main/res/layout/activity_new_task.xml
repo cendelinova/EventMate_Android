@@ -127,24 +127,24 @@
 			</com.google.android.material.textfield.TextInputLayout>
 			
 			
-			<com.google.android.material.textfield.TextInputLayout
-				android:id="@+id/input_time"
-				style="@style/MyEditText"
-				android:hint="@string/hint_task_time"
-				android:layout_height="wrap_content"
-				android:layout_width="0dp"
-				app:layout_constraintEnd_toEndOf="parent"
-				app:layout_constraintStart_toStartOf="parent"
-				app:layout_constraintTop_toBottomOf="@id/input_points">
-				
-				<com.google.android.material.textfield.TextInputEditText
-					android:drawableEnd="@drawable/ic_time"
-					android:drawableTint="@color/grey"
-					android:inputType="numberDecimal"
-					android:layout_height="wrap_content"
-					android:layout_width="match_parent"
-					android:lines="1" />
-			</com.google.android.material.textfield.TextInputLayout>
+			<!--<com.google.android.material.textfield.TextInputLayout-->
+				<!--android:id="@+id/input_time"-->
+				<!--style="@style/MyEditText"-->
+				<!--android:hint="@string/hint_task_time"-->
+				<!--android:layout_height="wrap_content"-->
+				<!--android:layout_width="0dp"-->
+				<!--app:layout_constraintEnd_toEndOf="parent"-->
+				<!--app:layout_constraintStart_toStartOf="parent"-->
+				<!--app:layout_constraintTop_toBottomOf="@id/input_points">-->
+				<!---->
+				<!--<com.google.android.material.textfield.TextInputEditText-->
+					<!--android:drawableEnd="@drawable/ic_time"-->
+					<!--android:drawableTint="@color/grey"-->
+					<!--android:inputType="numberDecimal"-->
+					<!--android:layout_height="wrap_content"-->
+					<!--android:layout_width="match_parent"-->
+					<!--android:lines="1" />-->
+			<!--</com.google.android.material.textfield.TextInputLayout>-->
 			
 			<com.google.android.material.textfield.TextInputLayout
 				android:id="@+id/input_place"
@@ -154,7 +154,7 @@
 				android:layout_width="0dp"
 				app:layout_constraintEnd_toEndOf="parent"
 				app:layout_constraintStart_toStartOf="parent"
-				app:layout_constraintTop_toBottomOf="@id/input_time">
+				app:layout_constraintTop_toBottomOf="@id/input_points">
 				
 				<com.google.android.material.textfield.TextInputEditText
 					android:drawableEnd="@drawable/ic_location"
@@ -184,23 +184,26 @@
 			</com.google.android.material.textfield.TextInputLayout>
 			
 			
-			<com.google.android.material.textfield.TextInputLayout
-				android:id="@+id/input_asigness"
-				style="@style/MyEditText"
-				android:hint="@string/hint_asigness"
+			<com.google.android.material.button.MaterialButton
+				android:id="@+id/btn_choose_assignees"
+				style="@style/Widget.MaterialComponents.Button.TextButton"
+				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:layout_width="0dp"
-				app:layout_constraintEnd_toEndOf="parent"
-				app:layout_constraintStart_toStartOf="parent"
-				app:layout_constraintTop_toBottomOf="@id/input_description">
-				
-				<com.google.android.material.textfield.TextInputEditText
-					android:drawableEnd="@drawable/ic_guests"
-					android:drawableTint="@color/grey"
-					android:inputType="text"
-					android:layout_height="wrap_content"
-					android:layout_width="match_parent" />
-			</com.google.android.material.textfield.TextInputLayout>
+				android:textColor="@color/colorAccent"
+				android:text="@string/choose_assigness"
+				app:layout_constraintStart_toStartOf="@+id/input_description"
+				app:layout_constraintTop_toBottomOf="@id/input_description" />
+			
+			<com.google.android.material.chip.ChipGroup
+				android:id="@+id/chip_group"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginStart="@dimen/spacing_normal"
+				android:layout_marginEnd="@dimen/spacing_normal"
+				app:chipSpacingVertical="@dimen/spacing_tiny"
+				app:layout_constraintEnd_toEndOf="@id/input_place"
+				app:layout_constraintStart_toStartOf="@+id/input_description"
+				app:layout_constraintTop_toBottomOf="@id/btn_choose_assignees" />
 			
 			<androidx.appcompat.widget.AppCompatButton
 				android:id="@+id/btn_save_task"
@@ -211,7 +214,7 @@
 				android:text="@string/btn_create_task"
 				app:layout_constraintEnd_toEndOf="parent"
 				app:layout_constraintStart_toStartOf="parent"
-				app:layout_constraintTop_toBottomOf="@id/input_asigness" />
+				app:layout_constraintTop_toBottomOf="@id/chip_group" />
 		
 		</androidx.constraintlayout.widget.ConstraintLayout>
 	

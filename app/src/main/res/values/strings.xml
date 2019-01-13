@@ -138,8 +138,6 @@
 	<string name="preferences_category_others">Others</string>
 	<string name="pref_title_pm">Private message</string>
 	<string name="pref_description_pm">Be notified when you get a private message</string>
-	<string name="pref_title_gm">Group message</string>
-	<string name="pref_description_gm">Be notified when you get a group message</string>
 	<string name="pref_title_event_start">Event start</string>
 	<string name="pref_description_event_start">Be notified when an event is about to start</string>
 	<string name="pref_title_assign_points">Assign points</string>
@@ -237,4 +235,5 @@
 	<string name="event_invitation">Event invitation</string>
 	<string name="hint_emails">Type in recipients emails</string>
 	<string name="invite_event_guests">Invite event guests</string>
+	<string name="choose_assigness">Choose task assigness</string>
 </resources>

@@ -4,28 +4,33 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.PorterDuff
 import android.os.Bundle
+import android.text.util.Rfc822Tokenizer
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.android.ex.chips.BaseRecipientAdapter
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.tabs.TabLayout
 import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.EVENT_ID
 import gr.tei.erasmus.pp.eventmate.data.model.Event
-import gr.tei.erasmus.pp.eventmate.helpers.DateTimeHelper
-import gr.tei.erasmus.pp.eventmate.helpers.DialogHelper
-import gr.tei.erasmus.pp.eventmate.helpers.FileHelper
-import gr.tei.erasmus.pp.eventmate.helpers.StateHelper
+import gr.tei.erasmus.pp.eventmate.data.model.Invitation
+import gr.tei.erasmus.pp.eventmate.data.model.Invitation.Companion.buildInvitation
+import gr.tei.erasmus.pp.eventmate.data.model.User
+import gr.tei.erasmus.pp.eventmate.helpers.*
 import gr.tei.erasmus.pp.eventmate.ui.base.*
-import gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.EventDetailFragmentAdapter.Companion.TASKS_TAB
 import gr.tei.erasmus.pp.eventmate.ui.events.EventsViewModel
+import gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.EventDetailFragmentAdapter.Companion.TASKS_TAB
+import gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.guests.UserViewModel
 import gr.tei.erasmus.pp.eventmate.ui.events.newEvent.NewEventActivity
-import gr.tei.erasmus.pp.eventmate.ui.inviteGuests.InviteGuestsActivity
 import gr.tei.erasmus.pp.eventmate.ui.mainActivity.MainActivity
 import gr.tei.erasmus.pp.eventmate.ui.newTask.NewTaskActivity
+import gr.tei.erasmus.pp.eventmate.ui.report.ReportGuestAdapter
 import kotlinx.android.synthetic.main.activity_event_detail.*
+import kotlinx.android.synthetic.main.guest_invitation_dialog.view.*
 
 
 class EventDetailActivity : BaseActivity() {
@@ -33,6 +38,10 @@ class EventDetailActivity : BaseActivity() {
 	private val viewModel by lazy { ViewModelProviders.of(this).get(EventsViewModel::class.java) }
 	
 	var eventId: Long? = null
+	
+	private var users: MutableList<User> = mutableListOf()
+	private var invitedExistingUsers = mutableListOf<User>()
+	private var emails = mutableListOf<String>()
 	
 	companion object {
 		private const val TITLE_FADE_OUT_RANGE = 0.15F
@@ -43,6 +52,8 @@ class EventDetailActivity : BaseActivity() {
 		setContentView(R.layout.activity_event_detail)
 		
 		eventId = intent.getLongExtra(EVENT_ID, 0)
+		
+		viewModel.getAppUsers()
 		
 		observeViewModel()
 		
@@ -135,14 +146,17 @@ class EventDetailActivity : BaseActivity() {
 	}
 	
 	private fun handleFab() {
-		val goalActivity =
-			if (tabs.selectedTabPosition == TASKS_TAB) NewTaskActivity::class.java else InviteGuestsActivity::class.java
-		
-		fab.setOnClickListener {
-			startActivity(Intent(this, goalActivity).apply {
-				putExtra(EVENT_ID, eventId)
-			})
+		val listener = View.OnClickListener {
+			if (tabs.selectedTabPosition == TASKS_TAB) {
+				startActivity(Intent(this, NewTaskActivity::class.java).apply {
+					putExtra(EVENT_ID, eventId)
+				})
+			} else {
+				setupGuestsInvitationDialog()
+			}
 		}
+		
+		fab.setOnClickListener(listener)
 	}
 	
 	
@@ -173,6 +187,10 @@ class EventDetailActivity : BaseActivity() {
 				StateHelper.toggleProgress(progress, false)
 				setupLayout(state.events[0])
 			}
+			is UserViewModel.UserListState -> {
+				StateHelper.toggleProgress(progress, false)
+				users = state.users
+			}
 		}
 	}
 	
@@ -190,4 +208,60 @@ class EventDetailActivity : BaseActivity() {
 			event_name_title.alpha = 0.0F
 		}
 	}
+	
+	private fun setupGuestsInvitationDialog() {
+		
+		val layout = layoutInflater.inflate(R.layout.guest_invitation_dialog, null)
+		
+		layout.input_emails.setTokenizer(Rfc822Tokenizer())
+		layout.input_emails.setAdapter(BaseRecipientAdapter(this))
+		
+		val reportListener = object : ReportGuestAdapter.ReportListener {
+			override fun onReportGuestPick(user: User, isChecked: Boolean) {
+				if (isChecked) {
+					invitedExistingUsers.add(user)
+				} else {
+					invitedExistingUsers.remove(user)
+				}
+			}
+		}
+		
+		val confirmListener = View.OnClickListener {
+			if (layout.input_emails.sortedRecipients.isNullOrEmpty() && invitedExistingUsers.isNullOrEmpty()) return@OnClickListener
+			val invitationList = mutableListOf<Invitation>()
+			
+			emails = layout.input_emails.sortedRecipients.map { d -> d.value.toString() }.toMutableList()
+			
+			emails.forEach { e ->
+				buildInvitation(
+					null,
+					e,
+					Invitation.InvitationType.EMAIL
+				).also { invitationList.add(it) }
+			}
+			
+			
+			if (invitedExistingUsers.isNotEmpty()) {
+				invitedExistingUsers.forEach { u ->
+					buildInvitation(
+						u,
+						u.email,
+						Invitation.InvitationType.EMAIL_AND_NOTIFICATION
+					).also { invitationList.add(it) }
+				}
+			}
+			
+			eventId?.let {
+				viewModel.inviteGuests(it, invitationList)
+			}
+		}
+
+		val userAdapter = ReportGuestAdapter(this, reportListener, users)
+		DialogHelper.showDialogWithAdapter(
+			this, userAdapter,
+			layout,
+			getString(R.string.mgs_invite_guests), confirmListener, TextHelper.getQueryTextListener(userAdapter)
+		)
+	}
+	
 }

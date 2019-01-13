@@ -3,6 +3,7 @@ package gr.tei.erasmus.pp.eventmate.data.repository
 import gr.tei.erasmus.pp.eventmate.app.App
 import gr.tei.erasmus.pp.eventmate.data.model.Event
 import gr.tei.erasmus.pp.eventmate.data.model.EventRequest
+import gr.tei.erasmus.pp.eventmate.data.model.Invitation
 import gr.tei.erasmus.pp.eventmate.data.source.local.room.dao.EventDao
 import gr.tei.erasmus.pp.eventmate.data.source.local.room.entities.EventEntity
 import timber.log.Timber
@@ -10,7 +11,7 @@ import timber.log.Timber
 
 class EventRepository(private val eventDao: EventDao, private val taskRepository: TaskRepository) {
 	
-	private val restHelper by lazy { App.COMPONENTS.provideRestHelper() }
+	private val restHelper = App.COMPONENTS.provideRestHelper()
 	
 	suspend fun getAllEvents(): MutableList<EventEntity> = eventDao.getAll()
 	
@@ -52,11 +53,11 @@ class EventRepository(private val eventDao: EventDao, private val taskRepository
 		if (result.isSuccessful) {
 			eventDao.delete(eventId)
 		}
-		
 	}
 	
+	fun inviteGuests(eventId: Long, invitations: MutableList<Invitation>) = restHelper.inviteGuests(eventId, invitations)
 	
-	fun getEvent(eventId: Long) = eventDao.getEvent(eventId)
+	fun getEvent(eventId: Long) = restHelper.getEvent(eventId)
 	
 	
 }

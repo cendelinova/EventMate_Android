@@ -8,7 +8,6 @@ import gr.tei.erasmus.pp.eventmate.ui.base.BaseActivity
 import gr.tei.erasmus.pp.eventmate.ui.events.EventsFragment
 import gr.tei.erasmus.pp.eventmate.ui.inbox.InboxFragment
 import gr.tei.erasmus.pp.eventmate.ui.profile.ProfileFragment
-import kotlinx.android.synthetic.main.activity_assignee_submission_list.*
 import kotlinx.android.synthetic.main.activity_main.*
 import timber.log.Timber
 

@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.google.android.material.chip.Chip
 import com.google.android.material.textfield.TextInputLayout
 import com.mobsandgeeks.saripaar.ValidationError
 import com.mobsandgeeks.saripaar.Validator
@@ -18,10 +19,14 @@ import com.vansuita.pickimage.listeners.IPickResult
 import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.EVENT_ID
 import gr.tei.erasmus.pp.eventmate.data.model.TaskRequest
+import gr.tei.erasmus.pp.eventmate.data.model.User
+import gr.tei.erasmus.pp.eventmate.helpers.DialogHelper
 import gr.tei.erasmus.pp.eventmate.helpers.FileHelper
 import gr.tei.erasmus.pp.eventmate.helpers.TextHelper
 import gr.tei.erasmus.pp.eventmate.ui.base.*
 import gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.EventDetailActivity
+import gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.guests.UserViewModel
+import gr.tei.erasmus.pp.eventmate.ui.report.ReportGuestAdapter
 import gr.tei.erasmus.pp.eventmate.ui.signup.TextInputLayoutAdapter
 import kotlinx.android.synthetic.main.activity_new_task.*
 import timber.log.Timber
@@ -40,6 +45,10 @@ class NewTaskActivity : BaseActivity(), Validator.ValidationListener, IPickResul
 	
 	private var eventId: Long? = null
 	
+	private var users: MutableList<User> = mutableListOf()
+	
+	private var assignees: MutableList<User> = mutableListOf()
+	
 	private val validator: Validator by lazy {
 		Validator(this).also {
 			it.setValidationListener(this@NewTaskActivity)
@@ -52,15 +61,39 @@ class NewTaskActivity : BaseActivity(), Validator.ValidationListener, IPickResul
 		setContentView(R.layout.activity_new_task)
 		setupToolbar(toolbar)
 		observeViewModel()
+		eventId = intent.getLongExtra(EVENT_ID, 0)
+		
+		viewModel.getEventGuests(eventId!!)
 		setupChoosingPhotoDialog()
+		setupPickAssigneesDialog()
 		initInputs()
 		handleSaveBtn()
-		eventId = intent.getLongExtra(EVENT_ID, 0)
 	}
 	
 	override fun onPickResult(pickResult: PickResult?) {
 		pickResult?.let {
 			Picasso.get().load(pickResult.uri).into(task_photo)
+		}
+	}
+	
+	private fun setupPickAssigneesDialog() {
+		btn_choose_assignees.setOnClickListener {
+			val pickUserListener = object : ReportGuestAdapter.ReportListener {
+				override fun onReportGuestPick(user: User, isChecked: Boolean) {
+					if (isChecked) {
+						assignees.add(user)
+					} else {
+						assignees.remove(user)
+					}
+				}
+			}
+			
+			val userAdapter = ReportGuestAdapter(this, pickUserListener, users)
+			DialogHelper.showDialogWithAdapter(
+				this, userAdapter,
+				layoutInflater.inflate(R.layout.report_pick_dialog, null),
+				getString(R.string.mgs_invite_guests), confirmListener, TextHelper.getQueryTextListener(userAdapter)
+			)
 		}
 	}
 	
@@ -99,10 +132,10 @@ class NewTaskActivity : BaseActivity(), Validator.ValidationListener, IPickResul
 		val points = TextHelper.collectValueFromInput(input_points).toInt()
 		val description = TextHelper.collectValueFromInput(input_description)
 		val place = TextHelper.collectValueFromInput(input_place)
-		val timeLimit =
-			if (TextHelper.collectValueFromInput(input_time).isEmpty()) null else TextHelper.collectValueFromInput(
-				input_time
-			).toInt()
+//		val timeLimit =
+//			if (TextHelper.collectValueFromInput(input_time).isEmpty()) null else TextHelper.collectValueFromInput(
+//				input_time
+//			).toInt()
 		
 		val photo = FileHelper.encodeImage(FileHelper.convertImageViewToBitmap(task_photo))
 		
@@ -114,7 +147,7 @@ class NewTaskActivity : BaseActivity(), Validator.ValidationListener, IPickResul
 					place,
 					description,
 					points,
-					timeLimit, photo
+					null, photo, assignees
 				)
 			)
 		}
@@ -142,15 +175,6 @@ class NewTaskActivity : BaseActivity(), Validator.ValidationListener, IPickResul
 	private fun showError(error: Throwable) {
 		Timber.e("Error $error while fetching tasks")
 		toggleProgress(false)
-//		Snackbar.make(
-//			new_event,
-//			getString(R.string.error_create_event),
-//			Snackbar.LENGTH_INDEFINITE
-//		).show()
-//			.setAction(R.string.retry) {
-//				startActivity(EventsFragment>().clearTop().clearTask().newTask())
-//			}
-//			.show()
 	}
 	
 	
@@ -165,6 +189,22 @@ class NewTaskActivity : BaseActivity(), Validator.ValidationListener, IPickResul
 					putExtra(EVENT_ID, eventId)
 				})
 			}
+			is UserViewModel.UserListState -> {
+				toggleProgress(false)
+				users = state.users
+			}
 		}
+	}
+	
+	private val confirmListener = View.OnClickListener {
+		chip_group.removeAllViews()
+		TextHelper.createContactChips(assignees, chip_group, closeUserChipListener)
+	}
+	
+	private val closeUserChipListener = View.OnClickListener {
+		val userToDeleted = assignees.first { u -> u.userName == (it as Chip).text }
+		assignees.remove(userToDeleted)
+		users.first { u -> u == userToDeleted }.checked = false
+		chip_group.removeView(it)
 	}
 }
