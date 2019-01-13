@@ -1,10 +1,12 @@
 package gr.tei.erasmus.pp.eventmate.ui.submission
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import gr.tei.erasmus.pp.eventmate.app.App
 import gr.tei.erasmus.pp.eventmate.data.model.SubmissionFile
 import gr.tei.erasmus.pp.eventmate.data.model.SubmissionResponse
+import gr.tei.erasmus.pp.eventmate.helpers.FileHelper
 import gr.tei.erasmus.pp.eventmate.ui.base.*
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -43,6 +45,39 @@ class SubmissionViewModel : BaseViewModel() {
 				mStates.postValue(ErrorState(error))
 			}
 		}
+	}
+	
+	fun saveFileLocally(context: Context, submissionFile: SubmissionFile) {
+		
+		launch {
+			mStates.postValue(LoadingState)
+			when (submissionFile.type) {
+				SubmissionFile.FileType.PHOTO.name -> submissionFile.name?.let {
+					FileHelper.saveFileLocally(
+						context,
+						submissionFile,
+						".jpeg",
+						"image/jpeg"
+					)
+				}
+				SubmissionFile.FileType.VIDEO.name -> FileHelper.saveFileLocally(
+					context,
+					submissionFile,
+					".mp4",
+					"video/mp4"
+				)
+				
+				SubmissionFile.FileType.AUDIO.name -> FileHelper.saveFileLocally(
+					context,
+					submissionFile,
+					".wav",
+					"audio/wav"
+				)
+			}
+			
+			mStates.postValue(FinishedState)
+		}
+		
 	}
 	
 	data class SubmissionState(val submissionResponses: MutableList<SubmissionResponse>) : State() {

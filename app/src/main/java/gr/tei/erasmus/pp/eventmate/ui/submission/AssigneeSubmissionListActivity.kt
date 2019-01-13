@@ -40,10 +40,7 @@ import gr.tei.erasmus.pp.eventmate.data.model.SubmissionResponse
 import gr.tei.erasmus.pp.eventmate.helpers.DialogHelper
 import gr.tei.erasmus.pp.eventmate.helpers.FileHelper
 import gr.tei.erasmus.pp.eventmate.helpers.StateHelper
-import gr.tei.erasmus.pp.eventmate.ui.base.BaseActivity
-import gr.tei.erasmus.pp.eventmate.ui.base.ErrorState
-import gr.tei.erasmus.pp.eventmate.ui.base.LoadingState
-import gr.tei.erasmus.pp.eventmate.ui.base.State
+import gr.tei.erasmus.pp.eventmate.ui.base.*
 import kotlinx.android.synthetic.main.activity_assignee_submission_list.*
 import kotlinx.android.synthetic.main.submission_item.view.*
 import kotlinx.android.synthetic.main.toolbar_task_detail.*
@@ -58,7 +55,6 @@ class AssigneeSubmissionListActivity : BaseActivity(), IPickResult {
 	
 	companion object {
 		const val REQUEST_VIDEO_CAPTURE = 1
-		const val REQUEST_PHOTO_CAPTURE = 2
 		const val REQUEST_AUDIO_RECORD = 3
 	}
 	
@@ -109,6 +105,7 @@ class AssigneeSubmissionListActivity : BaseActivity(), IPickResult {
 				StateHelper.toggleProgress(progress, false)
 				setupLayout(state.submissionResponses[0])
 			}
+			is FinishedState -> StateHelper.toggleProgress(progress, false)
 		}
 	}
 	
@@ -156,8 +153,10 @@ class AssigneeSubmissionListActivity : BaseActivity(), IPickResult {
 		if (intent.hasExtra(SUBMISSION_EXTRA) && intent.getParcelableExtra<SubmissionExtra>(SUBMISSION_EXTRA) != null) {
 			val data = intent.getParcelableExtra<SubmissionExtra>(SUBMISSION_EXTRA)
 			// todo real data
-			viewModel.getUserTaskSubmissions(data.userId, 8)
+			viewModel.getUserTaskSubmissions(2, 8)
 		}
+		viewModel.getUserTaskSubmissions(2, 8)
+		
 	}
 	
 	private fun dispatchTakePhotoIntent() {
@@ -236,6 +235,7 @@ class AssigneeSubmissionListActivity : BaseActivity(), IPickResult {
 					.duration(700)
 					.repeat(0)
 					.onStart {
+						itemView.view_background.visibility = View.VISIBLE
 						itemView.view_background.bringToFront()
 					}
 					.playOn(itemView.view_background)
@@ -246,6 +246,7 @@ class AssigneeSubmissionListActivity : BaseActivity(), IPickResult {
 					.repeat(0)
 					.onEnd {
 						itemView.view_foreground.bringToFront()
+						itemView.view_background.visibility = View.GONE
 					}
 					.playOn(itemView.view_background)
 			}
@@ -256,6 +257,8 @@ class AssigneeSubmissionListActivity : BaseActivity(), IPickResult {
 		}
 		
 		override fun onSubmissionDownload(submissionFile: SubmissionFile) {
+			viewModel.saveFileLocally(this@AssigneeSubmissionListActivity, submissionFile)
+			
 		}
 		
 		override fun onSubmissionDelete(submissionFile: SubmissionFile) {

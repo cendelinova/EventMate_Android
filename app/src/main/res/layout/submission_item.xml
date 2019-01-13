@@ -13,6 +13,7 @@
 		android:layout_marginStart="@dimen/spacing_normal"
 		android:layout_marginEnd="@dimen/spacing_normal"
 		android:layout_marginBottom="@dimen/spacing_tiny"
+		android:visibility="gone"
 		app:cardBackgroundColor="@color/card_view_foreground"
 		app:cardCornerRadius="5dp"
 		app:cardElevation="0dp">

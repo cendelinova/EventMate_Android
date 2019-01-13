@@ -1,14 +1,17 @@
 package gr.tei.erasmus.pp.eventmate.ui.assignPoints
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import gr.tei.erasmus.pp.eventmate.app.App
+import gr.tei.erasmus.pp.eventmate.data.model.SubmissionFile
 import gr.tei.erasmus.pp.eventmate.data.model.UserSubmissionPoints
+import gr.tei.erasmus.pp.eventmate.helpers.FileHelper
 import gr.tei.erasmus.pp.eventmate.ui.base.*
 import gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.tasks.TasksViewModel
 import kotlinx.coroutines.launch
 
-class AssignPointViewModel: BaseViewModel() {
+class AssignPointViewModel : BaseViewModel() {
 	
 	private val taskRepository = App.COMPONENTS.provideTaskRepository()
 	
@@ -49,4 +52,6 @@ class AssignPointViewModel: BaseViewModel() {
 			}
 		}
 	}
+	
+	
 }

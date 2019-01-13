@@ -1,20 +1,22 @@
 package gr.tei.erasmus.pp.eventmate.helpers
 
+import android.app.DownloadManager
 import android.content.ContentResolver
 import android.content.Context
+import android.content.Context.DOWNLOAD_SERVICE
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
+import android.os.Environment
 import android.provider.MediaStore
 import android.util.Base64
 import android.widget.ImageView
 import com.makeramen.roundedimageview.RoundedDrawable
+import gr.tei.erasmus.pp.eventmate.data.model.SubmissionFile
 import org.joda.time.DateTime
-import java.io.ByteArrayInputStream
-import java.io.ByteArrayOutputStream
-import java.io.File
-import java.io.FileOutputStream
+import timber.log.Timber
+import java.io.*
 
 
 object FileHelper {
@@ -78,5 +80,35 @@ object FileHelper {
 		}
 		
 		return absolutePath
+	}
+	
+	fun saveFileLocally(context: Context, submissionFile: SubmissionFile, suffix: String, mimeType: String) {
+		var file: File? = null
+		val outputStream: FileOutputStream
+		try {
+			file = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), submissionFile.name + suffix)
+			
+			outputStream = FileOutputStream(file)
+			outputStream.write(Base64.decode(submissionFile.data.toByteArray(), Base64.NO_WRAP))
+			outputStream.close()
+			showDownloadNotification(context, file, mimeType)
+		} catch (e: IOException) {
+			Timber.e(e)
+		}
+	}
+	
+	private fun showDownloadNotification(context: Context, file: File, mimeType: String) {
+		val downloadManager = context.getSystemService(DOWNLOAD_SERVICE) as DownloadManager
+		with(file) {
+			downloadManager.addCompletedDownload(
+				name,
+				name,
+				true,
+				mimeType,
+				absolutePath,
+				length(),
+				true
+			)
+		}
 	}
 }

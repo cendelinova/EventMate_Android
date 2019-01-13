@@ -18,7 +18,7 @@ class NetworkModule(private val restApiUrl: String) {
 	@Singleton
 	fun provideOkHttpClient(): OkHttpClient =
 		OkHttpClient.Builder().addInterceptor(
-			BasicAuthInterceptor("user3@email", "pass")
+			BasicAuthInterceptor("user2@email", "pass")
 		).build()
 	
 	@Provides
