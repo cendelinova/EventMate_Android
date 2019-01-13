@@ -44,9 +44,7 @@ class TasksFragment : BaseFragment() {
 		initializeRecyclerView()
 		observeViewModel()
 		
-		eventId?.let {
-			viewModel.getTasks(eventId!!)
-		}
+		eventId?.let { viewModel.getTasks(it) }
 	}
 	
 	/**

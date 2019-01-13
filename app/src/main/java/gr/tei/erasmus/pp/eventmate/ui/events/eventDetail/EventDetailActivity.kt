@@ -42,6 +42,8 @@ class EventDetailActivity : BaseActivity() {
 	private var users: MutableList<User> = mutableListOf()
 	private var invitedExistingUsers = mutableListOf<User>()
 	private var emails = mutableListOf<String>()
+	private var event: Event? = null
+	
 	
 	companion object {
 		private const val TITLE_FADE_OUT_RANGE = 0.15F
@@ -53,7 +55,6 @@ class EventDetailActivity : BaseActivity() {
 		
 		eventId = intent.getLongExtra(EVENT_ID, 0)
 		
-		viewModel.getAppUsers()
 		
 		observeViewModel()
 		
@@ -65,6 +66,9 @@ class EventDetailActivity : BaseActivity() {
 		setupViewPager()
 		handleToolbar()
 		handleFab()
+		
+		viewModel.getAppUsers()
+		
 	}
 	
 	
@@ -160,8 +164,8 @@ class EventDetailActivity : BaseActivity() {
 	}
 	
 	
-	private fun setupLayout(event: Event) {
-		with(event) {
+	private fun setupLayout(event: Event?) {
+		event?.run {
 			event_name_title.text = name
 			event_name.text = name
 			event_date.text = DateTimeHelper.formatDateTimeString(date, DateTimeHelper.DATE_FORMAT)
@@ -185,11 +189,12 @@ class EventDetailActivity : BaseActivity() {
 			}
 			is EventsViewModel.EventListState -> {
 				StateHelper.toggleProgress(progress, false)
-				setupLayout(state.events[0])
+				event = state.events[0]
+				setupLayout(event)
 			}
 			is UserViewModel.UserListState -> {
 				StateHelper.toggleProgress(progress, false)
-				users = state.users
+				users = state.users.filter { user -> event?.guests?.contains(user) == false }.toMutableList()
 			}
 		}
 	}
@@ -255,7 +260,7 @@ class EventDetailActivity : BaseActivity() {
 				viewModel.inviteGuests(it, invitationList)
 			}
 		}
-
+		
 		val userAdapter = ReportGuestAdapter(this, reportListener, users)
 		DialogHelper.showDialogWithAdapter(
 			this, userAdapter,

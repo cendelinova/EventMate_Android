@@ -18,21 +18,17 @@ class TasksViewModel : BaseViewModel() {
 	val states: LiveData<State>
 		get() = mStates
 	
-	private var allTasks = mutableListOf<Task>()
-	
-	
 	fun getTasks(eventId: Long) {
 		launch {
 			mStates.postValue(LoadingState)
-			allTasks.clear()
 			try {
-				val tasks = taskRepository.getAllTasks(eventId)
-				allTasks.addAll(tasks)
-				mStates.postValue(
-					TaskListState(
-						tasks
-					)
-				)
+				val response = taskRepository.getEventTasks(eventId).await()
+				val state = if (response.isSuccessful && response.body() != null) {
+					TaskListState(response.body()!!)
+				} else {
+					ErrorState(Throwable("Error"))
+				}
+				mStates.postValue(state)
 			} catch (error: Throwable) {
 				mStates.postValue(ErrorState(error))
 			}
@@ -42,14 +38,9 @@ class TasksViewModel : BaseViewModel() {
 	fun getTask(taskId: Long) {
 		launch {
 			mStates.postValue(LoadingState)
-			allTasks.clear()
 			try {
 				val task = taskRepository.getTaskFromServer(taskId).await()
-				mStates.postValue(
-					TaskListState(
-						mutableListOf(task)
-					)
-				)
+				mStates.postValue(TaskListState(mutableListOf(task)))
 			} catch (error: Throwable) {
 				mStates.postValue(ErrorState(error))
 			}

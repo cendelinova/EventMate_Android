@@ -37,7 +37,8 @@ object TextHelper {
 	fun createContactChips(
 		listOfInput: MutableList<*>,
 		chipGroup: ChipGroup,
-		onCloseListener: View.OnClickListener
+		onCloseListener: View.OnClickListener?,
+		isCloseIconVisible: Boolean = true
 	) {
 		listOfInput.forEach { contact ->
 			
@@ -56,14 +57,18 @@ object TextHelper {
 					text = contact.toString()
 				}
 				
-				isCloseIconVisible = true
+				if (onCloseListener == null) {
+					chipBackgroundColor = ContextCompat.getColorStateList(chipGroup.context, R.color.white )
+					chipStrokeWidth = 2f
+					chipStrokeColor = ContextCompat.getColorStateList(chipGroup.context, R.color.light_grey)
+					chipGroup.chipSpacingVertical = 10
+				}
+				
+				this.isCloseIconVisible = isCloseIconVisible
 				isChipIconVisible = true
 				setOnCloseIconClickListener(onCloseListener)
 				
 			}
-			
-			
-			
 			
 			chipGroup.addView(chip)
 		}

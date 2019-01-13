@@ -4,10 +4,7 @@ import gr.tei.erasmus.pp.eventmate.data.model.Task
 import gr.tei.erasmus.pp.eventmate.data.model.TaskRequest
 import kotlinx.coroutines.Deferred
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
+import retrofit2.http.*
 
 interface TaskService {
 	@GET("/me/event")
@@ -21,4 +18,10 @@ interface TaskService {
 	
 	@GET("/event/{id}/tasks")
 	fun getEventTasks(@Path("id") id: Long): Deferred<Response<MutableList<Task>>>
+	
+	@DELETE("/task/{id}")
+	fun deleteTask(@Path("id") id: Long): Deferred<Response<MutableList<Task>>>
+	
+	@PUT("/task/id")
+	fun updateTask(@Path("id") id: Long, @Body task: TaskRequest): Deferred<MutableList<Task>>
 }

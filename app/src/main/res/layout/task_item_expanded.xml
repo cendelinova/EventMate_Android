@@ -29,45 +29,25 @@
 			android:layout_marginBottom="@dimen/spacing_small"
 			tools:text="Brnoee" />
 		
-		<TextView
-			android:id="@+id/task_limit"
-			style="@style/SmallTextWithDrawable"
-			android:layout_width="0dp"
-			android:layout_height="wrap_content"
-			android:drawableStart="@drawable/ic_time"
-			android:layout_gravity="fill_horizontal"
-			tools:text="15:00" />
-		
+		<!--<TextView-->
+			<!--android:id="@+id/task_limit"-->
+			<!--style="@style/SmallTextWithDrawable"-->
+			<!--android:layout_width="0dp"-->
+			<!--android:layout_height="wrap_content"-->
+			<!--android:drawableStart="@drawable/ic_time"-->
+			<!--android:layout_gravity="fill_horizontal"-->
+			<!--tools:text="15:00" />-->
+		<!---->
 		<Space />
 		
 		<com.google.android.material.chip.ChipGroup
+			android:id="@+id/chip_group"
 			android:layout_columnSpan="2"
 			android:clickable="false"
 			android:focusable="false"
 			android:elevation="0dp"
-			android:background="@android:color/transparent">
-			
-			<com.google.android.material.chip.Chip
-				android:id="@+id/assignee1"
-				style="@style/ChipStyle"
-				android:text="seeteeesss" />
-			
-			<com.google.android.material.chip.Chip
-				android:id="@+id/assignee2"
-				style="@style/ChipStyle"
-				android:text="ess" />
-			
-			<com.google.android.material.chip.Chip
-				android:id="@+id/assigne3"
-				style="@style/ChipStyle"
-				android:text="ee" />
-			
-			<com.google.android.material.chip.Chip
-				android:id="@+id/assignee4"
-				style="@style/ChipStyle"
-				android:text="eteswwgg" />
+			android:background="@android:color/transparent"/>
 		
-		</com.google.android.material.chip.ChipGroup>
 	
 	</GridLayout>
 	

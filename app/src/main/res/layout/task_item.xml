@@ -5,38 +5,6 @@
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content">
 	
-	<androidx.cardview.widget.CardView
-		android:id="@+id/view_background"
-		android:layout_width="match_parent"
-		android:layout_height="100dp"
-		android:layout_marginStart="@dimen/spacing_normal"
-		android:layout_marginEnd="@dimen/spacing_normal"
-		android:layout_marginBottom="@dimen/spacing_tiny"
-		app:cardBackgroundColor="@color/darkPink"
-		app:cardCornerRadius="5dp"
-		app:cardElevation="0dp">
-		
-		<RelativeLayout
-			android:layout_width="match_parent"
-			android:layout_height="match_parent">
-			
-			<TextView
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_alignParentEnd="true"
-				android:layout_centerVertical="true"
-				android:layout_marginEnd="@dimen/spacing_normal"
-				android:drawableTop="@drawable/ic_delete_white"
-				android:fontFamily="sans-serif-condensed"
-				android:text="@string/delete"
-				android:textColor="#ffffff"
-				android:textSize="@dimen/font_small"
-				android:textStyle="normal" />
-		
-		</RelativeLayout>
-	
-	</androidx.cardview.widget.CardView>
-	
 	<!-- Content card-->
 	<androidx.cardview.widget.CardView
 		android:id="@+id/view_foreground"
@@ -64,30 +32,31 @@
 				android:orientation="vertical">
 				
 				<LinearLayout
+					android:id="@+id/assignees_list"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:orientation="horizontal"
 					android:layout_alignParentEnd="true">
 					
-					<de.hdodenhof.circleimageview.CircleImageView
-						android:id="@+id/assignee1"
-						android:layout_width="@dimen/icon_size"
-						android:layout_height="@dimen/icon_size"
-						android:layout_marginEnd="@dimen/spacing_tiny"
-						android:src="@drawable/ic_user_placeholder" />
-					
-					<de.hdodenhof.circleimageview.CircleImageView
-						android:id="@+id/assignee2"
-						android:layout_width="@dimen/icon_size"
-						android:layout_height="@dimen/icon_size"
-						android:layout_marginEnd="@dimen/spacing_tiny"
-						android:src="@drawable/ic_user_placeholder" />
-					
-					<de.hdodenhof.circleimageview.CircleImageView
-						android:id="@+id/assignee3"
-						android:layout_width="@dimen/icon_size"
-						android:layout_height="@dimen/icon_size"
-						android:src="@drawable/ic_user_placeholder" />
+					<!--<de.hdodenhof.circleimageview.CircleImageView-->
+						<!--android:id="@+id/assignee1"-->
+						<!--android:layout_width="@dimen/icon_size"-->
+						<!--android:layout_height="@dimen/icon_size"-->
+						<!--android:layout_marginEnd="@dimen/spacing_tiny"-->
+						<!--android:src="@drawable/ic_user_placeholder" />-->
+					<!---->
+					<!--<de.hdodenhof.circleimageview.CircleImageView-->
+						<!--android:id="@+id/assignee2"-->
+						<!--android:layout_width="@dimen/icon_size"-->
+						<!--android:layout_height="@dimen/icon_size"-->
+						<!--android:layout_marginEnd="@dimen/spacing_tiny"-->
+						<!--android:src="@drawable/ic_user_placeholder" />-->
+					<!---->
+					<!--<de.hdodenhof.circleimageview.CircleImageView-->
+						<!--android:id="@+id/assignee3"-->
+						<!--android:layout_width="@dimen/icon_size"-->
+						<!--android:layout_height="@dimen/icon_size"-->
+						<!--android:src="@drawable/ic_user_placeholder" />-->
 				</LinearLayout>
 				
 				<TextView
@@ -147,9 +116,7 @@
 			</LinearLayout>
 			
 			
-			
 			<include layout="@layout/task_item_expanded" />
-		
 		
 		</LinearLayout>
 	</androidx.cardview.widget.CardView>

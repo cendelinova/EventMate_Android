@@ -41,6 +41,8 @@ class EventAdapter(
 			event_guests_count.text = event.usersCount.toString()
 			event_tasks_count.text = event.taskCount.toString()
 			
+//			indicator_owner.visibility = if (event.eventOwner == )
+			
 			event.photo?.let {
 				event_photo.setImageBitmap(FileHelper.decodeImage(it))
 			}

@@ -4,9 +4,13 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import androidx.recyclerview.widget.RecyclerView
+import de.hdodenhof.circleimageview.CircleImageView
 import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.data.model.Task
+import gr.tei.erasmus.pp.eventmate.data.model.User
+import gr.tei.erasmus.pp.eventmate.helpers.FileHelper
 import gr.tei.erasmus.pp.eventmate.helpers.TextHelper
 import kotlinx.android.synthetic.main.task_item.view.*
 import kotlinx.android.synthetic.main.task_item_expanded.view.*
@@ -44,7 +48,12 @@ class TaskAdapter(
 			
 			if (collapsing_view.visibility == View.VISIBLE) {
 				task_location.text = TextHelper.getDefaultTextIfEmpty(task.place)
-				task_limit.text = TextHelper.getDefaultTextIfEmpty(task.timeLimit.toString())
+//				task_limit.text = TextHelper.getDefaultTextIfEmpty(task.timeLimit.toString())
+			}
+			
+			if (!task.assignees.isNullOrEmpty()) {
+				addAssignees(this, task.assignees.toMutableList())
+				TextHelper.createContactChips(task.assignees.toMutableList(), chip_group, null, false)
 			}
 			
 		}
@@ -60,6 +69,29 @@ class TaskAdapter(
 				collapsed_view.visibility = View.GONE
 			}
 		}
+	}
+	
+	private fun addAssignees(itemView: View, assignees: MutableList<User>) {
+		val photoSize = context.resources.getDimension(R.dimen.icon_size).toInt()
+		val marginEnd = context.resources.getDimension(R.dimen.spacing_tiny).toInt()
+		assignees.forEachIndexed { index, user ->
+			if (index == 2) return@forEachIndexed
+			val assigneeImage = CircleImageView(context).apply {
+				layoutParams = LinearLayout.LayoutParams(photoSize, photoSize, 0f).also {
+					it.marginEnd = marginEnd
+				}
+			}
+			
+			if (user.photo == null) {
+				assigneeImage.setImageResource(R.drawable.ic_user_placeholder)
+			} else {
+				assigneeImage.setImageBitmap(FileHelper.decodeImage(user.photo))
+			}
+			
+			itemView.assignees_list.addView(assigneeImage)
+			
+		}
+		
 	}
 	
 	/**
