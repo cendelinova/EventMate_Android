@@ -27,11 +27,14 @@ class EventsViewModel : BaseViewModel() {
 			mStates.postValue(LoadingState)
 			allEvents.clear()
 			try {
-				val events = eventRepository.getMyEvents()
-				events?.run {
-					allEvents.addAll(this)
-					mStates.postValue(EventListState(this))
+				val response = eventRepository.getMyEvents().await()
+				val state = if (response.isSuccessful && response.body() != null) {
+					allEvents.addAll(response.body()!!)
+					EventListState(response.body()!!)
+				} else {
+					ErrorState(Throwable("Error"))
 				}
+				mStates.postValue(state)
 			} catch (error: Throwable) {
 				mStates.postValue(ErrorState(error))
 			}
@@ -42,13 +45,19 @@ class EventsViewModel : BaseViewModel() {
 		launch {
 			mStates.postValue(LoadingState)
 			try {
-				eventRepository.delete(eventId)
-				val event = allEvents.find { event -> event.id == eventId }
-				event?.let {
-					allEvents.remove(it)
-					mStates.postValue(EventListState(allEvents, it.name))
+				val response = eventRepository.delete(eventId).await()
+				
+				if (response.isSuccessful) {
+					val event = allEvents.find { event -> event.id == eventId }
+					event?.let {
+						allEvents.remove(it)
+						mStates.postValue(EventListState(allEvents, it.name))
+					}
+					mStates.postValue(DeletedState)
+				} else {
+					mStates.postValue(ErrorState(Throwable("Error")))
 				}
-				mStates.postValue(DeletedState)
+				
 			} catch (error: Throwable) {
 				mStates.postValue(ErrorState(error))
 			}
@@ -59,8 +68,13 @@ class EventsViewModel : BaseViewModel() {
 		launch {
 			mStates.postValue(LoadingState)
 			try {
-				eventRepository.insert(newEvent)
-				mStates.postValue(FinishedState)
+				val response = eventRepository.insert(newEvent).await()
+				val state = if (response.isSuccessful && response.body() != null) {
+					FinishedState
+				} else {
+					ErrorState(Throwable("Error"))
+				}
+				mStates.postValue(state)
 			} catch (error: Throwable) {
 				mStates.postValue(ErrorState(error))
 			}

@@ -40,7 +40,6 @@ class ReportTaskAdapter(
 				task_photo.setImageBitmap(FileHelper.decodeImage(it))
 			}
 			setOnClickListener {
-				// todo whole row changes checkbox
 				checkbox.isChecked = !checkbox.isChecked
 			}
 			

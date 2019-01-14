@@ -79,10 +79,9 @@ object DialogHelper {
 	) {
 		
 		MaterialDialog(context).show {
-			if (!title.isEmpty()) {
+			if (!title.isEmpty() && customView.my_title != null) {
 				customView.my_title.text = title
 			}
-			
 			customView.search_view.setOnQueryTextListener(queryListener)
 			customView(view = customView, scrollable = true)
 			customListAdapter(adapter)

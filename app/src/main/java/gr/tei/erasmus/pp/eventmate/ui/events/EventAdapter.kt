@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import gr.tei.erasmus.pp.eventmate.R
+import gr.tei.erasmus.pp.eventmate.app.App
 import gr.tei.erasmus.pp.eventmate.data.model.Event
 import gr.tei.erasmus.pp.eventmate.helpers.DateTimeHelper
 import gr.tei.erasmus.pp.eventmate.helpers.FileHelper
@@ -17,6 +18,8 @@ class EventAdapter(
 	private val eventListener: EventListener,
 	private var events: MutableList<Event>
 ) : RecyclerView.Adapter<EventAdapter.EventViewHolder>() {
+	
+	private val userRoleHelper = App.COMPONENTS.provideUserRoleHelper()
 	
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventViewHolder {
 		Timber.d("onCreateViewHolder() called with parent = [$parent], viewType = [$viewType]")
@@ -41,10 +44,11 @@ class EventAdapter(
 			event_guests_count.text = event.usersCount.toString()
 			event_tasks_count.text = event.taskCount.toString()
 			
-//			indicator_owner.visibility = if (event.eventOwner == )
+			indicator_owner.visibility =
+					if (event.eventOwner?.let { userRoleHelper.isEventOwner(it) } == true) View.VISIBLE else View.GONE
 			
 			event.photo?.let {
-				event_photo.setImageBitmap(FileHelper.decodeImage(it))
+				if (it.isNotEmpty()) event_photo.setImageBitmap(FileHelper.decodeImage(it))
 			}
 		}
 	}

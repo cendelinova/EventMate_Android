@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.daimajia.androidanimations.library.Techniques
 import com.daimajia.androidanimations.library.YoYo
 import gr.tei.erasmus.pp.eventmate.R
+import gr.tei.erasmus.pp.eventmate.constants.Constants
+import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.EVENT_ID
 import gr.tei.erasmus.pp.eventmate.data.model.Email
 import gr.tei.erasmus.pp.eventmate.data.model.ReportResponse
 import gr.tei.erasmus.pp.eventmate.data.model.User
@@ -36,6 +38,7 @@ class ReportListActivity : BaseActivity() {
 	private lateinit var reportAdapter: ReportAdapter
 	
 	private lateinit var users: MutableList<User>
+	private var eventId: Long? = null
 	
 	private val userEmails by lazy { mutableListOf<String>() }
 	
@@ -46,9 +49,13 @@ class ReportListActivity : BaseActivity() {
 		observeViewModel()
 		handleAddFab()
 		initializeRecyclerView()
-		// todo get real event id
-		viewModel.getEventReports(11)
-		viewModel.getEventGuests(11)
+		
+		eventId = intent.getLongExtra(Constants.EVENT_ID, 0)
+		
+		eventId?.let {
+			viewModel.getEventReports(it)
+			viewModel.getEventGuests(it)
+		}
 	}
 	
 	private fun observeViewModel() {
@@ -59,7 +66,9 @@ class ReportListActivity : BaseActivity() {
 	
 	private fun handleAddFab() {
 		state_fab.setOnClickListener {
-			startActivity(Intent(this, NewReportActivity::class.java))
+			startActivity(Intent(this, NewReportActivity::class.java).apply {
+				putExtra(EVENT_ID, eventId)
+			})
 		}
 	}
 	

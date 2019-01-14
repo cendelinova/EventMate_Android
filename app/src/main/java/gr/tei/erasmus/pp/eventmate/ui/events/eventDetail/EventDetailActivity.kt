@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.tabs.TabLayout
 import gr.tei.erasmus.pp.eventmate.R
+import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.EVENT_EDITABLE
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.EVENT_ID
 import gr.tei.erasmus.pp.eventmate.data.model.Event
 import gr.tei.erasmus.pp.eventmate.helpers.DateTimeHelper
@@ -35,6 +36,10 @@ class EventDetailActivity : BaseActivity() {
 	
 	private var event: Event? = null
 	
+	private var isEditable = false
+	
+	private lateinit var menuOptions: Menu
+	
 	companion object {
 		private const val TITLE_FADE_OUT_RANGE = 0.15F
 	}
@@ -44,6 +49,7 @@ class EventDetailActivity : BaseActivity() {
 		setContentView(R.layout.activity_event_detail)
 		
 		eventId = intent.getLongExtra(EVENT_ID, 0)
+		isEditable = intent.getBooleanExtra(EVENT_EDITABLE, false)
 		
 		observeViewModel()
 		
@@ -60,7 +66,8 @@ class EventDetailActivity : BaseActivity() {
 	override fun onCreateOptionsMenu(menu: Menu?): Boolean {
 		val inflater = menuInflater
 		inflater.inflate(R.menu.menu_fragment_detail, menu)
-		if (event?.state != Event.EventState.EDITABLE.name) {
+		menuOptions = menu!!
+		if (!isEditable) {
 			menu?.findItem(R.id.edit)?.isVisible = false
 		}
 		return super.onCreateOptionsMenu(menu)
@@ -139,8 +146,9 @@ class EventDetailActivity : BaseActivity() {
 	
 	private fun setupLayout(event: Event?) {
 		event?.run {
+			val state = Event.EventState.valueOf(state)
 			event_name_title.text = name
-			event_status.text = "[" + getString(Event.EventState.valueOf(state).statusMessage) + "]"
+			event_status.text = "[" + getString(state.statusMessage) + "]"
 			event_name.text = name
 			event_date.text = DateTimeHelper.formatDateTimeString(date, DateTimeHelper.DATE_FORMAT)
 			event_time.text = DateTimeHelper.formatDateTimeString(date, DateTimeHelper.TIME_FORMAT)
@@ -149,7 +157,7 @@ class EventDetailActivity : BaseActivity() {
 			}
 			
 			StateHelper.prepareEventFab(this, state_fab, View.OnClickListener {
-				if (state != Event.EventState.FINISHED.name) {
+				if (state != Event.EventState.FINISHED) {
 					viewModel.changeEventStatus(id)
 				} else {
 					startActivity(Intent(this@EventDetailActivity, ReportListActivity::class.java).apply {
@@ -158,6 +166,13 @@ class EventDetailActivity : BaseActivity() {
 				}
 				
 			})
+			
+			if (state != Event.EventState.EDITABLE) {
+				menuOptions.findItem(R.id.edit).isVisible = false
+				isEditable = false
+			}
+			
+			
 		}
 		
 	}

@@ -245,4 +245,5 @@
 	<string name="event_stopped">Event has been stopped</string>
 	<string name="event_evaluated">Event is ready to be evaluated</string>
 	<string name="event_summary_requested">Event summary is ready to be seen</string>
+	<string name="success_event_updated">Event has been updated successfully</string>
 </resources>

@@ -21,44 +21,32 @@ data class Event(
 	val eventOwner: User?,
 	val permissions: MutableList<Permission>?
 ) {
-	constructor(
-		id: Long,
-		name: String,
-		date: String,
-		place: String,
-		tasksCount: Int,
-		usersCount: Int,
-		photo: String?
-	) : this(
-		id, name, place, date, tasksCount, usersCount,
-		0, 0, photo, EventState.READY_TO_PLAY.name, null, null, null, null, null, null
-	)
 	
 	companion object {
-		fun convertToModel(entity: EventEntity) = with(entity) {
-			Event(
-				uid,
-				eventName,
-				date,
-				place,
-				tasksCount,
-				usersCount,
-				photo ?: photo
-			)
-		}
-		
-		fun convertToEntity(model: Event) = with(model) {
-			EventEntity(
-				id,
-				name,
-				date,
-				place,
-				state,
-				taskCount,
-				usersCount,
-				photo ?: photo
-			)
-		}
+//		fun convertToModel(entity: EventEntity) = with(entity) {
+//			Event(
+//				uid,
+//				eventName,
+//				date,
+//				place,
+//				tasksCount,
+//				usersCount,
+//				photo ?: photo
+//			)
+//		}
+//
+//		fun convertToEntity(model: Event) = with(model) {
+//			EventEntity(
+//				id,
+//				name,
+//				date,
+//				place,
+//				state,
+//				taskCount,
+//				usersCount,
+//				photo ?: photo
+//			)
+//		}
 	}
 	
 	

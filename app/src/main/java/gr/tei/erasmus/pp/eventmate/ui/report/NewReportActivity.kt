@@ -12,6 +12,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import gr.tei.erasmus.pp.eventmate.R
+import gr.tei.erasmus.pp.eventmate.constants.Constants
 import gr.tei.erasmus.pp.eventmate.data.model.*
 import gr.tei.erasmus.pp.eventmate.helpers.DialogHelper
 import gr.tei.erasmus.pp.eventmate.helpers.StateHelper
@@ -36,6 +37,8 @@ class NewReportActivity : BaseActivity() {
 	
 	private lateinit var tasks: MutableList<Task>
 	
+	private var eventId: Long? = null
+	
 	private val eventReportInfo by lazy { ReportInfoDTO() }
 	
 	override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,9 +47,11 @@ class NewReportActivity : BaseActivity() {
 		setupToolbar(toolbar)
 		
 		observeViewModel()
-		// todo get real eventId
-		viewModel.getEventGuests(5)
-		viewModel.getEventTasks(5)
+		eventId = intent.getLongExtra(Constants.EVENT_ID, 0)
+		eventId?.let {
+			viewModel.getEventGuests(it)
+			viewModel.getEventTasks(it)
+		}
 		setupListeners()
 		handleReportCreation()
 	}
