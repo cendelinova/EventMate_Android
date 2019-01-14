@@ -121,8 +121,13 @@ class EventsViewModel : BaseViewModel() {
 		launch {
 			mStates.postValue(LoadingState)
 			try {
-				eventRepository.update(updatedEvent)
-				mStates.postValue(FinishedState)
+				val response = eventRepository.update(updatedEvent)?.await()
+				val state = if (response?.isSuccessful == true && response?.body() != null) {
+					FinishedState
+				} else {
+					ErrorState(Throwable("Error"))
+				}
+				mStates.postValue(state)
 			} catch (error: Throwable) {
 				mStates.postValue(ErrorState(error))
 			}
