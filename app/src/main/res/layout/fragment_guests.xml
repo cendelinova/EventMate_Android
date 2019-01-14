@@ -14,17 +14,18 @@
 			android:id="@+id/guest_recycler_view"
 			android:layout_width="0dp"
 			android:layout_height="wrap_content"
+			android:scrollbars="none"
+			app:fastScrollThumbColor="@color/colorAccent"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toTopOf="parent"
-			android:scrollbars="none"
-			app:fastScrollThumbColor="@color/colorAccent"/>
+			app:layout_constraintTop_toTopOf="parent" />
 		
 		<ProgressBar
 			android:id="@+id/progress"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:visibility="invisible"
+			android:elevation="7dp"
 			app:layout_constraintBottom_toBottomOf="parent"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
@@ -54,6 +55,16 @@
 				android:layout_weight="2" />
 		
 		</LinearLayout>
+		
+		<com.google.android.material.button.MaterialButton
+			android:id="@+id/btn_add_guests"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/btn_add_guests"
+			android:layout_marginTop="@dimen/spacing_xhuge"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/guest_recycler_view" />
 	
 	
 	</androidx.constraintlayout.widget.ConstraintLayout>

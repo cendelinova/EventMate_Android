@@ -71,6 +71,7 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:visibility="invisible"
+			android:elevation="7dp"
 			app:layout_constraintBottom_toBottomOf="parent"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
@@ -99,12 +100,11 @@
 				android:layout_weight="2" />
 		
 		</LinearLayout>
-	
-	
+		
 	</androidx.constraintlayout.widget.ConstraintLayout>
 	
 	<com.google.android.material.floatingactionbutton.FloatingActionButton
-		android:id="@+id/fab"
+		android:id="@+id/state_fab"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_margin="@dimen/spacing_normal"

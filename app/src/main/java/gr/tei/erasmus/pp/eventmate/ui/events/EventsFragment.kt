@@ -74,7 +74,7 @@ class EventsFragment : BaseFragment() {
 	}
 	
 	private fun handleAddFab() {
-		fab.setOnClickListener {
+		state_fab.setOnClickListener {
 			startActivity(Intent(this.activity, NewEventActivity::class.java))
 		}
 	}
@@ -227,7 +227,7 @@ class EventsFragment : BaseFragment() {
 		}
 		
 		if (eventStateFilter != UNDEFINED_STATE) {
-			filter_state.text = eventStateFilter.text
+			filter_state.text = getString(eventStateFilter.statusMessage)
 			filter_state.visibility = View.VISIBLE
 		}
 		

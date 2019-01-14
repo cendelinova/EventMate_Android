@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.EVENT_ID
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.TASK_ID
+import gr.tei.erasmus.pp.eventmate.data.model.Event
 import gr.tei.erasmus.pp.eventmate.data.model.Task
 import gr.tei.erasmus.pp.eventmate.helpers.StateHelper.showError
 import gr.tei.erasmus.pp.eventmate.helpers.StateHelper.toggleProgress
@@ -18,6 +19,8 @@ import gr.tei.erasmus.pp.eventmate.ui.base.BaseFragment
 import gr.tei.erasmus.pp.eventmate.ui.base.ErrorState
 import gr.tei.erasmus.pp.eventmate.ui.base.LoadingState
 import gr.tei.erasmus.pp.eventmate.ui.base.State
+import gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.EventDetailActivity
+import gr.tei.erasmus.pp.eventmate.ui.newTask.NewTaskActivity
 import gr.tei.erasmus.pp.eventmate.ui.taskDetail.TaskDetailActivity
 import kotlinx.android.synthetic.main.fragment_tasks.*
 import timber.log.Timber
@@ -43,6 +46,7 @@ class TasksFragment : BaseFragment() {
 		super.onViewCreated(view, savedInstanceState)
 		initializeRecyclerView()
 		observeViewModel()
+		handleAddNewTask()
 		
 		eventId?.let { viewModel.getTasks(it) }
 	}
@@ -73,6 +77,15 @@ class TasksFragment : BaseFragment() {
 		}
 	}
 	
+	private fun handleAddNewTask() {
+		btn_add_task.setOnClickListener {
+			activity?.startActivity(Intent(activity, NewTaskActivity::class.java).apply {
+				putExtra(EVENT_ID, eventId)
+			})
+		}
+		btn_add_task.visibility =
+				if ((activity as EventDetailActivity).getEvent()?.state == Event.EventState.EDITABLE.name) View.VISIBLE else View.GONE
+	}
 	
 	private val taskItemListener = object :
 		TaskAdapter.TaskListener {

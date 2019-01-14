@@ -20,6 +20,7 @@ class RestHelper(retrofit: Retrofit) {
 	fun updateEvent(event: EventRequest) = event.id?.let { eventService.updateEvent(it, event) }
 	fun deleteEvent(eventId: Long) = eventService.deleteEvent(eventId)
 	fun inviteGuests(eventId: Long, invitations: MutableList<Invitation>) = eventService.inviteGuests(eventId, invitations)
+	fun changeEventStatus(eventId: Long) = eventService.changeState(eventId)
 	
 	// tasks
 	fun insertTask(task: TaskRequest) = taskService.insertTask(task.eventId, task)

@@ -52,7 +52,7 @@ class InboxFragment : BaseFragment() {
 	}
 	
 	private fun handleFabBtn() {
-		fab.setOnClickListener {
+		state_fab.setOnClickListener {
 			startActivity(Intent(this@InboxFragment.activity, NewMessageActivity::class.java))
 		}
 	}

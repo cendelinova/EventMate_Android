@@ -12,6 +12,7 @@ import gr.tei.erasmus.pp.eventmate.data.source.local.room.dao.InvitationDao
 import gr.tei.erasmus.pp.eventmate.data.source.local.room.dao.TaskDao
 import gr.tei.erasmus.pp.eventmate.helpers.RestHelper
 import gr.tei.erasmus.pp.eventmate.helpers.SharedPreferenceHelper
+import gr.tei.erasmus.pp.eventmate.helpers.UserRoleHelper
 import javax.inject.Singleton
 
 @Module
@@ -80,6 +81,14 @@ class AppModule(context: Context) : ContextWrapper(context) {
 	@Singleton
 	fun provideReportRepository(context: Context, restHelper: RestHelper) =
 		ReportRepository(context, restHelper)
+	
+	@Provides
+	@Singleton
+	fun provideUserRoleHelper(
+		context: Context,
+		userRepository: UserRepository,
+		sharedPreferenceHelper: SharedPreferenceHelper
+	) = UserRoleHelper(context, userRepository, sharedPreferenceHelper)
 	
 	
 }

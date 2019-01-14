@@ -58,6 +58,7 @@ class EventRepository(private val eventDao: EventDao, private val taskRepository
 	fun inviteGuests(eventId: Long, invitations: MutableList<Invitation>) = restHelper.inviteGuests(eventId, invitations)
 	
 	fun getEvent(eventId: Long) = restHelper.getEvent(eventId)
+	fun changeEventStatus(eventId: Long) = restHelper.changeEventStatus(eventId)
 	
 	
 }

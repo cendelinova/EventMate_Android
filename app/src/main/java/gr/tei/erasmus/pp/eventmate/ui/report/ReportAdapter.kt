@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.data.model.ReportResponse
+import gr.tei.erasmus.pp.eventmate.helpers.DialogHelper
 import gr.tei.erasmus.pp.eventmate.helpers.FileHelper
 import kotlinx.android.synthetic.main.report_item.view.*
 import timber.log.Timber
@@ -38,7 +39,11 @@ class ReportAdapter(
 			}
 			report.preview?.let {
 				report_photo.setImageBitmap(FileHelper.decodeImage(it))
+				report_photo.setOnClickListener {
+					reportListener.onReportPreviewClick(report)
+				}
 			}
+			
 			
 			val reportType = ReportResponse.ReportType.valueOf(report.type)
 			
@@ -67,5 +72,6 @@ class ReportAdapter(
 		fun onReportDownload(report: ReportResponse)
 		fun onReportDelete(report: ReportResponse)
 		fun onReportClick(itemView: View, slideIn: Boolean)
+		fun onReportPreviewClick(report: ReportResponse)
 	}
 }

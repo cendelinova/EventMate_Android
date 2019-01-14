@@ -40,7 +40,7 @@ class AssignPointsActivity : BaseActivity() {
 	}
 	
 	private fun handleFab() {
-		fab.setOnClickListener {
+		state_fab.setOnClickListener {
 			viewModel.assignPoints(8, userSubmissionPointList)
 		}
 	}

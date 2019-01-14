@@ -25,4 +25,7 @@ interface EventService {
 	
 	@POST("/event/{id}/invitation/list")
 	fun inviteGuests(@Path("id") id: Long, @Body invitations: MutableList<Invitation>): Deferred<Response<Event>>
+	
+	@POST("/event/{id}/pushState")
+	fun changeState(@Path("id") id: Long): Deferred<Response<Event>>
 }

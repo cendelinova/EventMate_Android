@@ -25,6 +25,7 @@
 	<string name="event_status_in_play">In play</string>
 	<string name="event_status_evaluation">Evaluation</string>
 	<string name="event_status_finished">Finished</string>
+	<string name="event_status_undefined">Undefined</string>
 	<string name="who">Who</string>
 	<string name="event_status">Event status</string>
 	<string name="btn_confirm">Confirm</string>
@@ -237,4 +238,11 @@
 	<string name="invite_event_guests">Invite event guests</string>
 	<string name="choose_assigness">Choose task assigness</string>
 	<string name="mgs_pick_assignee">Choose task assignees</string>
+	<string name="btn_add_task">Add task</string>
+	<string name="btn_add_guests">Add guests</string>
+	<string name="event_locked">Event has been locked for edit</string>
+	<string name="event_started">Event has been started successfully</string>
+	<string name="event_stopped">Event has been stopped</string>
+	<string name="event_evaluated">Event is ready to be evaluated</string>
+	<string name="event_summary_requested">Event summary is ready to be seen</string>
 </resources>

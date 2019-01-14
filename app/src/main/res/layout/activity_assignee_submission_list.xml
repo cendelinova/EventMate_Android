@@ -97,7 +97,7 @@
 	
 	
 	<io.github.kobakei.materialfabspeeddial.FabSpeedDial
-		android:id="@+id/fab"
+		android:id="@+id/state_fab"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:src="@drawable/ic_add"

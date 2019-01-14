@@ -4,33 +4,27 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.PorterDuff
 import android.os.Bundle
-import android.text.util.Rfc822Tokenizer
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.android.ex.chips.BaseRecipientAdapter
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.tabs.TabLayout
 import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.EVENT_ID
 import gr.tei.erasmus.pp.eventmate.data.model.Event
-import gr.tei.erasmus.pp.eventmate.data.model.Invitation
-import gr.tei.erasmus.pp.eventmate.data.model.Invitation.Companion.buildInvitation
-import gr.tei.erasmus.pp.eventmate.data.model.User
-import gr.tei.erasmus.pp.eventmate.helpers.*
+import gr.tei.erasmus.pp.eventmate.helpers.DateTimeHelper
+import gr.tei.erasmus.pp.eventmate.helpers.DialogHelper
+import gr.tei.erasmus.pp.eventmate.helpers.FileHelper
+import gr.tei.erasmus.pp.eventmate.helpers.StateHelper
 import gr.tei.erasmus.pp.eventmate.ui.base.*
 import gr.tei.erasmus.pp.eventmate.ui.events.EventsViewModel
-import gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.EventDetailFragmentAdapter.Companion.TASKS_TAB
-import gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.guests.UserViewModel
 import gr.tei.erasmus.pp.eventmate.ui.events.newEvent.NewEventActivity
 import gr.tei.erasmus.pp.eventmate.ui.mainActivity.MainActivity
-import gr.tei.erasmus.pp.eventmate.ui.newTask.NewTaskActivity
-import gr.tei.erasmus.pp.eventmate.ui.report.ReportGuestAdapter
+import gr.tei.erasmus.pp.eventmate.ui.report.ReportListActivity
 import kotlinx.android.synthetic.main.activity_event_detail.*
-import kotlinx.android.synthetic.main.guest_invitation_dialog.view.*
 
 
 class EventDetailActivity : BaseActivity() {
@@ -39,11 +33,7 @@ class EventDetailActivity : BaseActivity() {
 	
 	var eventId: Long? = null
 	
-	private var users: MutableList<User> = mutableListOf()
-	private var invitedExistingUsers = mutableListOf<User>()
-	private var emails = mutableListOf<String>()
 	private var event: Event? = null
-	
 	
 	companion object {
 		private const val TITLE_FADE_OUT_RANGE = 0.15F
@@ -64,16 +54,15 @@ class EventDetailActivity : BaseActivity() {
 		setupToolbar(toolbar)
 		setupViewPager()
 		handleToolbar()
-		handleFab()
-		
-		viewModel.getAppUsers()
-		
 	}
 	
 	
 	override fun onCreateOptionsMenu(menu: Menu?): Boolean {
 		val inflater = menuInflater
 		inflater.inflate(R.menu.menu_fragment_detail, menu)
+		if (event?.state != Event.EventState.EDITABLE.name) {
+			menu?.findItem(R.id.edit)?.isVisible = false
+		}
 		return super.onCreateOptionsMenu(menu)
 	}
 	
@@ -148,34 +137,32 @@ class EventDetailActivity : BaseActivity() {
 		appbar.post { appbar.addOnOffsetChangedListener(onOffsetChangedListener) }
 	}
 	
-	private fun handleFab() {
-		val listener = View.OnClickListener {
-			if (tabs.selectedTabPosition == TASKS_TAB) {
-				startActivity(Intent(this, NewTaskActivity::class.java).apply {
-					putExtra(EVENT_ID, eventId)
-				})
-			} else {
-				setupGuestsInvitationDialog()
-			}
-		}
-		
-		fab.setOnClickListener(listener)
-	}
-	
-	
 	private fun setupLayout(event: Event?) {
 		event?.run {
 			event_name_title.text = name
+			event_status.text = "[" + getString(Event.EventState.valueOf(state).statusMessage) + "]"
 			event_name.text = name
 			event_date.text = DateTimeHelper.formatDateTimeString(date, DateTimeHelper.DATE_FORMAT)
 			event_time.text = DateTimeHelper.formatDateTimeString(date, DateTimeHelper.TIME_FORMAT)
 			photo?.let {
 				event_photo.setImageBitmap(FileHelper.decodeImage(it))
 			}
+			
+			StateHelper.prepareEventFab(this, state_fab, View.OnClickListener {
+				if (state != Event.EventState.FINISHED.name) {
+					viewModel.changeEventStatus(id)
+				} else {
+					startActivity(Intent(this@EventDetailActivity, ReportListActivity::class.java).apply {
+						putExtra(EVENT_ID, id)
+					})
+				}
+				
+			})
 		}
 		
-		
 	}
+	
+	fun getEvent(): Event? = event
 	
 	// Observer
 	private val observeEventProgressState = Observer<State> { state ->
@@ -190,10 +177,6 @@ class EventDetailActivity : BaseActivity() {
 				StateHelper.toggleProgress(progress, false)
 				event = state.events[0]
 				setupLayout(event)
-			}
-			is UserViewModel.UserListState -> {
-				StateHelper.toggleProgress(progress, false)
-				users = state.users.filter { user -> event?.guests?.contains(user) == false }.toMutableList()
 			}
 		}
 	}
@@ -211,61 +194,6 @@ class EventDetailActivity : BaseActivity() {
 		} else {
 			event_name_title.alpha = 0.0F
 		}
-	}
-	
-	private fun setupGuestsInvitationDialog() {
-		
-		val layout = layoutInflater.inflate(R.layout.guest_invitation_dialog, null)
-		
-		layout.input_emails.setTokenizer(Rfc822Tokenizer())
-		layout.input_emails.setAdapter(BaseRecipientAdapter(this))
-		
-		val reportListener = object : ReportGuestAdapter.ReportListener {
-			override fun onReportGuestPick(user: User, isChecked: Boolean) {
-				if (isChecked) {
-					invitedExistingUsers.add(user)
-				} else {
-					invitedExistingUsers.remove(user)
-				}
-			}
-		}
-		
-		val confirmListener = View.OnClickListener {
-			if (layout.input_emails.sortedRecipients.isNullOrEmpty() && invitedExistingUsers.isNullOrEmpty()) return@OnClickListener
-			val invitationList = mutableListOf<Invitation>()
-			
-			emails = layout.input_emails.sortedRecipients.map { d -> d.value.toString() }.toMutableList()
-			
-			emails.forEach { e ->
-				buildInvitation(
-					null,
-					e,
-					Invitation.InvitationType.EMAIL
-				).also { invitationList.add(it) }
-			}
-			
-			
-			if (invitedExistingUsers.isNotEmpty()) {
-				invitedExistingUsers.forEach { u ->
-					buildInvitation(
-						u,
-						u.email,
-						Invitation.InvitationType.EMAIL_AND_NOTIFICATION
-					).also { invitationList.add(it) }
-				}
-			}
-			
-			eventId?.let {
-				viewModel.inviteGuests(it, invitationList)
-			}
-		}
-		
-		val userAdapter = ReportGuestAdapter(this, reportListener, users)
-		DialogHelper.showDialogWithAdapter(
-			this, userAdapter,
-			layout,
-			getString(R.string.mgs_invite_guests), confirmListener, TextHelper.getQueryTextListener(userAdapter)
-		)
 	}
 	
 }

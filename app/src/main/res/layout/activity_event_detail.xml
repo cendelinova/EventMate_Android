@@ -18,7 +18,7 @@
 		<com.google.android.material.appbar.CollapsingToolbarLayout
 			android:id="@+id/collapsing_toolbar"
 			android:layout_width="match_parent"
-			android:layout_height="300dp"
+			android:layout_height="320dp"
 			android:fitsSystemWindows="true"
 			app:contentScrim="@color/white"
 			app:layout_scrollFlags="scroll|snap|exitUntilCollapsed"
@@ -60,11 +60,20 @@
 					tools:text="Tim's stage party" />
 				
 				<TextView
-					android:id="@+id/event_date"
+					android:id="@+id/event_status"
 					style="@style/MessageTitle"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_below="@id/event_name"
+					android:layout_centerHorizontal="true"
+					android:textSize="@dimen/font_small" />
+				
+				<TextView
+					android:id="@+id/event_date"
+					style="@style/MessageTitle"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_below="@id/event_status"
 					android:layout_centerHorizontal="true"
 					android:textSize="@dimen/font_small" />
 				
@@ -122,6 +131,7 @@
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:visibility="invisible"
+		android:elevation="7dp"
 		android:layout_gravity="center" />
 	
 	<gr.tei.erasmus.pp.eventmate.ui.base.NonSwipeableViewPager
@@ -132,11 +142,10 @@
 	
 	
 	<com.google.android.material.floatingactionbutton.FloatingActionButton
-		android:id="@+id/fab"
+		android:id="@+id/state_fab"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_margin="@dimen/spacing_normal"
-		android:src="@drawable/ic_add"
 		android:layout_gravity="bottom|end" />
 
 

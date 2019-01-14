@@ -70,7 +70,7 @@ class AssigneeSubmissionListActivity : BaseActivity(), IPickResult {
 		
 		parseIntent()
 		
-		fab.addOnMenuItemClickListener { _, _, id ->
+		state_fab.addOnMenuItemClickListener { _, _, id ->
 			when (id) {
 				R.id.action_take_photo -> dispatchTakePhotoIntent()
 				R.id.action_record_video -> dispatchTakeVideoIntent()

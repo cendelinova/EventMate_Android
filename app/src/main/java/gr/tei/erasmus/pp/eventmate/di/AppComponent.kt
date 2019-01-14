@@ -10,6 +10,7 @@ import gr.tei.erasmus.pp.eventmate.data.source.local.room.dao.InvitationDao
 import gr.tei.erasmus.pp.eventmate.data.source.local.room.dao.TaskDao
 import gr.tei.erasmus.pp.eventmate.helpers.RestHelper
 import gr.tei.erasmus.pp.eventmate.helpers.SharedPreferenceHelper
+import gr.tei.erasmus.pp.eventmate.helpers.UserRoleHelper
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import javax.inject.Singleton
@@ -48,5 +49,7 @@ interface AppComponent {
 	fun provideUserRepository() : UserRepository
 	
 	fun provideReportRepository() : ReportRepository
+	
+	fun provideUserRoleHelper() : UserRoleHelper
 	
 }

@@ -3,15 +3,15 @@ package gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.guests
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import gr.tei.erasmus.pp.eventmate.app.App
-import gr.tei.erasmus.pp.eventmate.data.model.Task
-import gr.tei.erasmus.pp.eventmate.data.model.User
-import gr.tei.erasmus.pp.eventmate.data.model.UserRequest
+import gr.tei.erasmus.pp.eventmate.data.model.*
 import gr.tei.erasmus.pp.eventmate.ui.base.*
 import kotlinx.coroutines.launch
 
 class UserViewModel : BaseViewModel() {
 	
-	private val userRepository by lazy { App.COMPONENTS.provideUserRepository() }
+	private val userRepository =  App.COMPONENTS.provideUserRepository()
+	
+	private val eventRepository = App.COMPONENTS.provideEventRepository()
 	
 	private val mStates = MutableLiveData<State>()
 	val states: LiveData<State>
@@ -84,6 +84,43 @@ class UserViewModel : BaseViewModel() {
 			}
 		}
 	}
+	
+	fun getAppUsers() {
+		launch {
+			mStates.postValue(LoadingState)
+			try {
+				val response = userRepository.getAppUsers().await()
+				val state = if (response.isSuccessful && response.body() != null) {
+					AppUserState(response.body()!!)
+				} else {
+					ErrorState(Throwable(response.message()))
+				}
+				mStates.postValue(state)
+			} catch (error: Throwable) {
+				mStates.postValue(ErrorState(error))
+			}
+		}
+	}
+	
+	fun inviteGuests(eventId: Long, invitations: MutableList<Invitation>) {
+		launch {
+			mStates.postValue(LoadingState)
+			try {
+				val response = eventRepository.inviteGuests(eventId, invitations).await()
+				val state = if (response.isSuccessful && response.body() != null) {
+					val guests = (response.body()!! as Event).guests
+					guests?.let { UserViewModel.UserListState(it) }
+				} else {
+					ErrorState(Throwable("Error"))
+				}
+				mStates.postValue(state)
+			} catch (error: Throwable) {
+				mStates.postValue(ErrorState(error))
+			}
+		}
+	}
+	
+	data class AppUserState(val appUsers: MutableList<User>): State()
 	
 	data class UserListState(val users: MutableList<User>) : State() {
 		companion object {

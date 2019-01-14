@@ -58,7 +58,7 @@ class ReportListActivity : BaseActivity() {
 	}
 	
 	private fun handleAddFab() {
-		fab.setOnClickListener {
+		state_fab.setOnClickListener {
 			startActivity(Intent(this, NewReportActivity::class.java))
 		}
 	}
@@ -84,6 +84,11 @@ class ReportListActivity : BaseActivity() {
 	}
 	
 	private val onReportClick = object : ReportAdapter.ReportListener {
+		override fun onReportPreviewClick(report: ReportResponse) {
+			Timber.d("onReportPreviewClick called")
+			DialogHelper.showDialogWithPhotoPreview(this@ReportListActivity, layoutInflater, null, report.preview)
+		}
+		
 		override fun onReportShare(report: ReportResponse) {
 			Timber.d("onReportShare called")
 			val reportGuestAdapter = ReportGuestAdapter(

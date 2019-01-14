@@ -1,5 +1,6 @@
 package gr.tei.erasmus.pp.eventmate.data.model
 
+import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.data.source.local.room.entities.EventEntity
 
 data class Event(
@@ -60,14 +61,16 @@ data class Event(
 		}
 	}
 	
-	enum class EventState(val text: String) {
-		EDITABLE("Editable"),
-		READY_TO_PLAY("Ready to play"),
-		IN_PLAY("In play"),
-		UNDER_EVALUATION("Under evaluation"),
-		FINISHED("Finished"),
-		UNDEFINED_STATE("Undefined")
+	
+	enum class EventState(val statusMessage: Int, val iconFab: Int, val messageResource: Int) {
+		EDITABLE(R.string.event_status_editable, R.drawable.ic_lock, R.string.event_locked),
+		READY_TO_PLAY(R.string.event_status_ready_to_play, R.drawable.ic_play_button, R.string.event_started),
+		IN_PLAY(R.string.event_status_in_play, R.drawable.ic_stop, R.string.event_stopped),
+		UNDER_EVALUATION(R.string.event_status_evaluation, R.drawable.ic_evaluation, R.string.event_evaluated),
+		FINISHED(R.string.event_status_finished, R.drawable.ic_event_summary, R.string.event_summary_requested),
+		UNDEFINED_STATE(R.string.event_status_undefined, R.drawable.ic_undefined, R.string.event_status_undefined)
 	}
 	
 }
+
 
