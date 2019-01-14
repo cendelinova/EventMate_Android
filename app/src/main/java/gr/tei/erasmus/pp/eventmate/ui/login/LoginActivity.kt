@@ -30,7 +30,6 @@ class LoginActivity : NoToolbarActivity() {
 		handleLoginButton()
 		handleSignUp()
 		handleFacebookLogin()
-		handleForgottenPassword()
 		handleGoogleLogin()
 	}
 	
@@ -44,12 +43,6 @@ class LoginActivity : NoToolbarActivity() {
 	private fun handleSignUp() {
 		tv_no_account.setOnClickListener {
 			startActivity(Intent(this, SignupActivity::class.java))
-		}
-	}
-	
-	private fun handleForgottenPassword() {
-		tv_forgotten_password.setOnClickListener {
-			// todo api call
 		}
 	}
 	

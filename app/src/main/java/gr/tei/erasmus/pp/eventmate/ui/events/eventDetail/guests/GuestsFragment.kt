@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.android.ex.chips.BaseRecipientAdapter
 import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.constants.Constants
-import gr.tei.erasmus.pp.eventmate.data.model.Event
 import gr.tei.erasmus.pp.eventmate.data.model.Invitation
 import gr.tei.erasmus.pp.eventmate.data.model.User
 import gr.tei.erasmus.pp.eventmate.helpers.DialogHelper
@@ -44,6 +43,7 @@ class GuestsFragment : BaseFragment() {
 	private var emails = mutableListOf<String>()
 	private var users: MutableList<User> = mutableListOf()
 	
+	
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		eventId = arguments?.getLong(Constants.EVENT_ID)
@@ -72,7 +72,7 @@ class GuestsFragment : BaseFragment() {
 		}
 		
 		btn_add_guests.visibility =
-				if ((activity as EventDetailActivity).getEvent()?.state == Event.EventState.EDITABLE.name) View.VISIBLE else View.GONE
+				if ((activity as EventDetailActivity).isEditableEvent()) View.VISIBLE else View.GONE
 	}
 	
 	/**

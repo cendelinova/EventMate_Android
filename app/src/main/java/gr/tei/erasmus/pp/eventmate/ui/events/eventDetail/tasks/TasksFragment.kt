@@ -8,10 +8,10 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.button.MaterialButton
 import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.EVENT_ID
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.TASK_ID
-import gr.tei.erasmus.pp.eventmate.data.model.Event
 import gr.tei.erasmus.pp.eventmate.data.model.Task
 import gr.tei.erasmus.pp.eventmate.helpers.StateHelper.showError
 import gr.tei.erasmus.pp.eventmate.helpers.StateHelper.toggleProgress
@@ -33,20 +33,28 @@ class TasksFragment : BaseFragment() {
 	
 	private var eventId: Long? = null
 	
+	private lateinit var addTaskBtn: MaterialButton
+	
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
+		Timber.d("onCreate")
 		eventId = arguments?.getLong(EVENT_ID)
 	}
 	
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+		Timber.d("onCreateView")
+		
 		return inflater.inflate(R.layout.fragment_tasks, container, false)
 	}
 	
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+		Timber.d("onViewCreated")
 		super.onViewCreated(view, savedInstanceState)
 		initializeRecyclerView()
 		observeViewModel()
 		handleAddNewTask()
+		
+		addTaskBtn = btn_add_task
 		
 		eventId?.let { viewModel.getTasks(it) }
 	}
@@ -84,7 +92,7 @@ class TasksFragment : BaseFragment() {
 			})
 		}
 		btn_add_task.visibility =
-				if ((activity as EventDetailActivity).getEvent()?.state == Event.EventState.EDITABLE.name) View.VISIBLE else View.GONE
+				if ((activity as EventDetailActivity).isEditableEvent()) View.VISIBLE else View.GONE
 	}
 	
 	private val taskItemListener = object :
@@ -111,6 +119,10 @@ class TasksFragment : BaseFragment() {
 				taskAdapter.updateTaskList(state.tasks)
 			}
 		}
+	}
+	
+	fun toggleVisibilityAddTaskButton(visible: Boolean) {
+		btn_add_task.visibility = if (visible) View.VISIBLE else View.GONE
 	}
 	
 }

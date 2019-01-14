@@ -26,11 +26,14 @@ import gr.tei.erasmus.pp.eventmate.ui.events.newEvent.NewEventActivity
 import gr.tei.erasmus.pp.eventmate.ui.mainActivity.MainActivity
 import gr.tei.erasmus.pp.eventmate.ui.report.ReportListActivity
 import kotlinx.android.synthetic.main.activity_event_detail.*
+import timber.log.Timber
 
 
 class EventDetailActivity : BaseActivity() {
 	
 	private val viewModel by lazy { ViewModelProviders.of(this).get(EventsViewModel::class.java) }
+	
+	private lateinit var fragmentAdapter: EventDetailFragmentAdapter
 	
 	var eventId: Long? = null
 	
@@ -46,6 +49,7 @@ class EventDetailActivity : BaseActivity() {
 	
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
+		Timber.d("onCreate")
 		setContentView(R.layout.activity_event_detail)
 		
 		eventId = intent.getLongExtra(EVENT_ID, 0)
@@ -62,13 +66,20 @@ class EventDetailActivity : BaseActivity() {
 		handleToolbar()
 	}
 	
+	override fun onBackPressed() {
+		finish()
+		startActivity(Intent(this@EventDetailActivity, MainActivity::class.java))
+	}
+	
 	
 	override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+		Timber.d("onCreateOptionsMenu")
+		
 		val inflater = menuInflater
 		inflater.inflate(R.menu.menu_fragment_detail, menu)
 		menuOptions = menu!!
 		if (!isEditable) {
-			menu?.findItem(R.id.edit)?.isVisible = false
+			menu.findItem(R.id.edit)?.isVisible = false
 		}
 		return super.onCreateOptionsMenu(menu)
 	}
@@ -94,11 +105,8 @@ class EventDetailActivity : BaseActivity() {
 	}
 	
 	private fun setupViewPager() {
-		val fragmentAdapter = EventDetailFragmentAdapter(
-			this,
-			supportFragmentManager,
-			eventId
-		)
+		fragmentAdapter = EventDetailFragmentAdapter(this, supportFragmentManager, eventId)
+		
 		view_pager.adapter = fragmentAdapter
 		tabs.setupWithViewPager(view_pager)
 		tabs.addOnTabSelectedListener(selectTabListener)
@@ -160,6 +168,7 @@ class EventDetailActivity : BaseActivity() {
 				if (state != Event.EventState.FINISHED) {
 					viewModel.changeEventStatus(id)
 				} else {
+					finish()
 					startActivity(Intent(this@EventDetailActivity, ReportListActivity::class.java).apply {
 						putExtra(EVENT_ID, id)
 					})
@@ -168,16 +177,13 @@ class EventDetailActivity : BaseActivity() {
 			})
 			
 			if (state != Event.EventState.EDITABLE) {
-				menuOptions.findItem(R.id.edit).isVisible = false
 				isEditable = false
 			}
-			
-			
 		}
 		
 	}
 	
-	fun getEvent(): Event? = event
+	fun isEditableEvent() = isEditable
 	
 	// Observer
 	private val observeEventProgressState = Observer<State> { state ->
@@ -192,6 +198,14 @@ class EventDetailActivity : BaseActivity() {
 				StateHelper.toggleProgress(progress, false)
 				event = state.events[0]
 				setupLayout(event)
+			}
+			is EventsViewModel.ReadyToPlayEvent -> {
+				StateHelper.toggleProgress(progress, false)
+				finish()
+				startActivity(Intent(this, EventDetailActivity::class.java).apply {
+					putExtra(EVENT_ID, state.event.id)
+					putExtra(EVENT_EDITABLE, false)
+				})
 			}
 		}
 	}
