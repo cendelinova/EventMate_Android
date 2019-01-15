@@ -3,6 +3,7 @@ package gr.tei.erasmus.pp.eventmate.di
 import android.content.Context
 import com.google.gson.Gson
 import dagger.Component
+import gr.tei.erasmus.pp.eventmate.data.model.User
 import gr.tei.erasmus.pp.eventmate.data.repository.*
 import gr.tei.erasmus.pp.eventmate.data.source.local.room.AppDatabase
 import gr.tei.erasmus.pp.eventmate.data.source.local.room.dao.EventDao

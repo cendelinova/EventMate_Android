@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "473124299257",
+    "firebase_url": "https://eventmate-v1.firebaseio.com",
+    "project_id": "eventmate-v1",
+    "storage_bucket": "eventmate-v1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:473124299257:android:040c0de55dce2c5c",
+        "android_client_info": {
+          "package_name": "gr.tei.erasmus.pp.eventmate"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "473124299257-bfgb3ub200q44itlv0j0vm1rhfcv9v2h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "gr.tei.erasmus.pp.eventmate",
+            "certificate_hash": "8cd065fea1054eb3c256ed5d6d186fdfcdd1987e"
+          }
+        },
+        {
+          "client_id": "473124299257-maak3pl3h2r0606bq443m8avh0l0n9fl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBS1m03ITkZrgk9uAWfwDzQtCSlhCoea4k"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "473124299257-maak3pl3h2r0606bq443m8avh0l0n9fl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -38,7 +38,6 @@ class ChatViewModel : BaseViewModel() {
 	
 	fun getMyConversations() {
 		launch {
-			mStates.postValue(LoadingState)
 			try {
 				val response = chatRepository.getMyConversations().await()
 				val state = if (response.isSuccessful && response.body() != null) {
@@ -91,12 +90,13 @@ class ChatViewModel : BaseViewModel() {
 		launch {
 			mStates.postValue(LoadingState)
 			try {
-				val user = userRepository.getUser(userId).await()
-				mStates.postValue(
-					UserViewModel.UserListState(
-						mutableListOf(user)
-					)
-				)
+				val response = userRepository.getUser(userId).await()
+				val state = if (response.isSuccessful && response.body() != null) {
+					UserViewModel.UserListState(mutableListOf(response.body()!!))
+				} else {
+					ErrorState(Throwable("Error"))
+				}
+				mStates.postValue(state)
 			} catch (error: Throwable) {
 				mStates.postValue(ErrorState(error))
 			}

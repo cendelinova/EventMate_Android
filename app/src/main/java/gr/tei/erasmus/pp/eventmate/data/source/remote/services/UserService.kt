@@ -11,10 +11,10 @@ import retrofit2.http.Path
 
 interface UserService {
 	@GET("/user/{id}")
-	fun getUser(@Path("id") id: Long): Deferred<User>
+	fun getUser(@Path("id") id: Long): Deferred<Response<User>>
 	
 	@GET("/me")
-	fun getMyProfile(): Deferred<User>
+	fun getMyProfile(): Deferred<Response<User>>
 	
 	@POST("/public/register")
 	fun registerUser(@Body user: UserRequest): Deferred<Response<User>>

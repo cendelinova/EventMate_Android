@@ -10,6 +10,7 @@ import gr.tei.erasmus.pp.eventmate.app.App
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.USER_ID
 import gr.tei.erasmus.pp.eventmate.data.model.User
 import gr.tei.erasmus.pp.eventmate.helpers.FileHelper
+import gr.tei.erasmus.pp.eventmate.helpers.GameRankHelper
 import gr.tei.erasmus.pp.eventmate.helpers.StateHelper
 import gr.tei.erasmus.pp.eventmate.ui.base.BaseFragment
 import gr.tei.erasmus.pp.eventmate.ui.base.ErrorState
@@ -76,13 +77,6 @@ class ProfileFragment : BaseFragment() {
 	}
 	
 	
-	private val onUserClick = object :
-		UserAdapter.GuestListener {
-		override fun onUserClick(user: User) {
-			startActivity(Intent(this@ProfileFragment.activity, UserProfileActivity::class.java))
-		}
-	}
-	
 	private val observeUserProgressState = Observer<State> { state ->
 		when (state) {
 			is LoadingState -> StateHelper.toggleProgress(progress, true)
@@ -105,6 +99,8 @@ class ProfileFragment : BaseFragment() {
 			photo?.let {
 				profile_image.setImageBitmap(FileHelper.decodeImage(it))
 			}
+			
+			GameRankHelper.showCorrectGameRankPhoto(ic_rank, score)
 		}
 	}
 }

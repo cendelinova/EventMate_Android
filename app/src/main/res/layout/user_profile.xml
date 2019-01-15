@@ -130,32 +130,14 @@
 		app:layout_constraintVertical_bias="0.0"
 		tools:text="@string/tv_earned_points" />
 	
-	<RelativeLayout
-		android:layout_width="0dp"
-		android:layout_height="wrap_content"
-		android:layout_marginRight="@dimen/spacing_normal"
-		android:layout_marginBottom="@dimen/spacing_normal"
+	<ImageView
+		android:id="@+id/ic_rank"
+		android:layout_margin="@dimen/spacing_normal"
+		android:layout_width="@dimen/rank_icon_size"
+		android:layout_height="@dimen/rank_icon_size"
+		android:src="@drawable/ic_rank_chicken"
 		app:layout_constraintBottom_toBottomOf="parent"
-		app:layout_constraintEnd_toEndOf="parent">
-		
-		<ImageView
-			android:id="@+id/ic_rank"
-			android:layout_width="@dimen/rank_icon_size"
-			android:layout_height="@dimen/rank_icon_size"
-			android:src="@drawable/ic_rank_chicken" />
-		
-		<TextView
-			android:id="@+id/tv_rank_title"
-			style="@style/MessageTitle"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_below="@id/ic_rank"
-			android:layout_centerHorizontal="true"
-			android:layout_marginTop="@dimen/spacing_tiny"
-			android:text="chicken"
-			android:textAlignment="center" />
-	
-	</RelativeLayout>
+		app:layout_constraintEnd_toEndOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -15,10 +15,6 @@
 			android:title="@string/game_rank"
 			app:showAsAction="never" />
 		<item
-			android:id="@+id/help"
-			android:title="@string/help"
-			app:showAsAction="never" />
-		<item
 			android:id="@+id/logout"
 			android:title="@string/logout"
 			app:showAsAction="never" />

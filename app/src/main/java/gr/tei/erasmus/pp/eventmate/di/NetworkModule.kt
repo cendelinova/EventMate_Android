@@ -9,6 +9,7 @@ import dagger.Module
 import dagger.Provides
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.USER_MAIL
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.USER_PASSWORD
+import gr.tei.erasmus.pp.eventmate.data.model.User
 import gr.tei.erasmus.pp.eventmate.helpers.RestHelper
 import gr.tei.erasmus.pp.eventmate.helpers.authetification.BasicAuthInterceptor
 import okhttp3.OkHttpClient
@@ -17,22 +18,21 @@ import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 @Module
-class NetworkModule(private val context: Context, private val restApiUrl: String) {
+class NetworkModule(private val context: Context, private val user: User?, private val restApiUrl: String) {
 	private val sharedPreferenceHelper by lazy {
 		PreferenceManager.getDefaultSharedPreferences(context)
 	}
 	
 	@Provides
 	@Singleton
-	fun provideOkHttpClient(): OkHttpClient =
-		OkHttpClient.Builder().addInterceptor(
-			BasicAuthInterceptor(
-				sharedPreferenceHelper.getString(USER_MAIL, "")!!, sharedPreferenceHelper.getString(
-					USER_PASSWORD, ""
-				)!!
-			)
-		).build()
-	
+	fun provideOkHttpClient(): OkHttpClient {
+		val builder = OkHttpClient.Builder()
+		user?.run {
+			builder.addInterceptor(BasicAuthInterceptor(email, password))
+		}
+		
+		return builder.build()
+	}
 	@Provides
 	@Singleton
 	fun provideGson(): Gson = GsonBuilder().excludeFieldsWithoutExposeAnnotation().create()

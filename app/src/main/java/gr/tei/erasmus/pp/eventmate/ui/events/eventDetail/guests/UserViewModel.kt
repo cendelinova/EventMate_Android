@@ -2,17 +2,21 @@ package gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.guests
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import gr.tei.erasmus.pp.eventmate.BuildConfig
 import gr.tei.erasmus.pp.eventmate.app.App
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.USER_ID
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.USER_MAIL
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.USER_PASSWORD
 import gr.tei.erasmus.pp.eventmate.data.model.*
+import gr.tei.erasmus.pp.eventmate.di.AppModule
+import gr.tei.erasmus.pp.eventmate.di.DaggerAppComponent
+import gr.tei.erasmus.pp.eventmate.di.NetworkModule
 import gr.tei.erasmus.pp.eventmate.ui.base.*
 import kotlinx.coroutines.launch
 
 class UserViewModel : BaseViewModel() {
 	
-	private val userRepository =  App.COMPONENTS.provideUserRepository()
+	private val userRepository = App.COMPONENTS.provideUserRepository()
 	
 	private val eventRepository = App.COMPONENTS.provideEventRepository()
 	private val sharedPreferenceHelper = App.COMPONENTS.provideSharedPreferencesHelper()
@@ -45,29 +49,41 @@ class UserViewModel : BaseViewModel() {
 		launch {
 			mStates.postValue(LoadingState)
 			try {
-				val user = userRepository.getUser(userId).await()
-				mStates.postValue(
-					UserListState(
-						mutableListOf(user)
-					)
-				)
+				val response = userRepository.getUser(userId).await()
+				val state = if (response.isSuccessful && response.body() != null) {
+					UserListState(mutableListOf(response.body()!!))
+				} else {
+					ErrorState(Throwable("Error"))
+				}
+				mStates.postValue(state)
 			} catch (error: Throwable) {
 				mStates.postValue(ErrorState(error))
 			}
 		}
 	}
 	
-	fun register(user: UserRequest) {
+	fun register(userRequest: UserRequest) {
 		launch {
 			mStates.postValue(LoadingState)
 			try {
-				val result = userRepository.register(user).await()
+				val result = userRepository.register(userRequest).await()
 				if (result.isSuccessful && result.body() != null) {
 					val user = result.body()!!
 					sharedPreferenceHelper.saveLong(USER_ID, user.id!!)
 					sharedPreferenceHelper.saveString(USER_MAIL, user.email)
-					sharedPreferenceHelper.saveString(USER_PASSWORD, user.password!!)
-//					userRepository.saveUserCredentials(user.email, user.password)
+					sharedPreferenceHelper.saveString(USER_PASSWORD, userRequest.password)
+					
+					val context = App.COMPONENTS.provideContext()
+					App.COMPONENTS = DaggerAppComponent.builder()
+						.appModule(AppModule(context))
+						.networkModule(
+							NetworkModule(
+								context,
+								User(user.userName, user.email, userRequest.password),
+								BuildConfig.SERVER_URL
+							)
+						)
+						.build()
 				}
 				
 				mStates.postValue(FinishedState)
@@ -81,12 +97,32 @@ class UserViewModel : BaseViewModel() {
 		launch {
 			mStates.postValue(LoadingState)
 			try {
-				val user = userRepository.getMyProfile().await()
-				mStates.postValue(
-					UserListState(
-						mutableListOf(user)
-					)
-				)
+				val response = userRepository.getMyProfile().await()
+				val state = if (response.isSuccessful && response.body() != null) {
+					UserListState(mutableListOf(response.body()!!))
+				} else {
+					ErrorState(Throwable("Error"))
+				}
+				
+				mStates.postValue(state)
+			} catch (error: Throwable) {
+				mStates.postValue(ErrorState(error))
+			}
+		}
+	}
+	
+	fun login() {
+		launch {
+			mStates.postValue(LoadingState)
+			try {
+				val response = userRepository.getMyProfile().await()
+				val state = if (response.isSuccessful && response.body() != null) {
+					FinishedState
+				} else {
+					ErrorState(Throwable("Error"))
+				}
+				
+				mStates.postValue(state)
 			} catch (error: Throwable) {
 				mStates.postValue(ErrorState(error))
 			}
@@ -128,7 +164,7 @@ class UserViewModel : BaseViewModel() {
 		}
 	}
 	
-	data class AppUserState(val appUsers: MutableList<User>): State()
+	data class AppUserState(val appUsers: MutableList<User>) : State()
 	
 	data class UserListState(val users: MutableList<User>) : State() {
 		companion object {

@@ -4,9 +4,11 @@ import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import gr.tei.erasmus.pp.eventmate.R
+import gr.tei.erasmus.pp.eventmate.app.App
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.USER_ID
 import gr.tei.erasmus.pp.eventmate.data.model.User
 import gr.tei.erasmus.pp.eventmate.helpers.FileHelper
+import gr.tei.erasmus.pp.eventmate.helpers.GameRankHelper
 import gr.tei.erasmus.pp.eventmate.helpers.StateHelper.showError
 import gr.tei.erasmus.pp.eventmate.helpers.StateHelper.toggleProgress
 import gr.tei.erasmus.pp.eventmate.ui.base.BaseActivity
@@ -34,6 +36,7 @@ class UserProfileActivity : BaseActivity() {
 		userId?.let {
 			viewModel.getUser(userId!!)
 		}
+		
 	}
 	
 	private fun observeViewModel() {
@@ -53,6 +56,7 @@ class UserProfileActivity : BaseActivity() {
 			photo?.let {
 				profile_image.setImageBitmap(FileHelper.decodeImage(it))
 			}
+			GameRankHelper.showCorrectGameRankPhoto(ic_rank, score)
 		}
 	}
 	

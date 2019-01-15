@@ -8,8 +8,15 @@ import androidx.appcompat.widget.Toolbar
 import android.view.MenuItem
 import android.view.WindowManager
 import androidx.fragment.app.FragmentActivity
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlin.coroutines.CoroutineContext
 
-abstract class BaseActivity : AppCompatActivity() {
+abstract class BaseActivity : AppCompatActivity(), CoroutineScope {
+	
+	private val job: Job = Job()
+	override val coroutineContext: CoroutineContext = job + Dispatchers.Main
 	
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -27,6 +34,7 @@ abstract class BaseActivity : AppCompatActivity() {
 	
 	override fun onDestroy() {
 		super.onDestroy()
+		job.cancel()
 	}
 	
 	/* Protected methods ****************************************************************************/

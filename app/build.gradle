@@ -95,6 +95,11 @@ dependencies {
 
     implementation 'com.miguelcatalan:materialsearchview:1.4.0'
 
+    // firebase
+    implementation 'com.google.firebase:firebase-core:16.0.6'
+    // firebase messaging
+    implementation'com.google.firebase:firebase-messaging:17.3.4'
+
     // Room library
     implementation 'androidx.room:room-runtime:2.1.0-alpha03'
     annotationProcessor 'androidx.room:room-compiler:2.1.0-alpha03'
@@ -107,3 +112,5 @@ dependencies {
 
     implementation project(':AndroidAudioRecorder')
 }
+
+apply plugin: 'com.google.gms.google-services'

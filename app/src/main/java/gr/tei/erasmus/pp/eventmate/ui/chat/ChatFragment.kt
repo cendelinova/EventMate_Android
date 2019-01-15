@@ -23,6 +23,8 @@ import gr.tei.erasmus.pp.eventmate.ui.chat.newMessage.NewMessageActivity
 import gr.tei.erasmus.pp.eventmate.ui.mainActivity.MainActivity
 import gr.tei.erasmus.pp.eventmate.ui.userProfile.UserProfileActivity
 import kotlinx.android.synthetic.main.fragment_inbox.*
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import timber.log.Timber
 
 class ChatFragment : BaseFragment() {
@@ -43,7 +45,18 @@ class ChatFragment : BaseFragment() {
 		initializeRecyclerView()
 		observeViewModel()
 		handleFabBtn()
+		
 		viewModel.getMyConversations()
+		repeatConversations()
+	}
+	private fun repeatConversations() {
+		launch {
+			do {
+				delay(2000)
+				viewModel.getMyConversations()
+			} while (true)
+
+		}
 	}
 	
 	private fun observeViewModel() {
@@ -54,10 +67,8 @@ class ChatFragment : BaseFragment() {
 	
 	private val observeChatMessages = Observer<State> { state ->
 		when (state) {
-			is LoadingState -> toggleProgress(progress, true)
 			is ErrorState -> showError(state.error, progress, chat_fragment)
 			is ChatViewModel.MessageListState -> {
-				toggleProgress(progress, false)
 				conversationAdapter.updateConversationList(state.messages)
 			}
 		}

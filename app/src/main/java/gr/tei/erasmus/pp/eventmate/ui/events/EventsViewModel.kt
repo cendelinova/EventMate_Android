@@ -13,6 +13,7 @@ import gr.tei.erasmus.pp.eventmate.data.model.EventRequest
 import gr.tei.erasmus.pp.eventmate.ui.base.*
 import gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.guests.UserViewModel
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class EventsViewModel : BaseViewModel() {
 	private val eventRepository = App.COMPONENTS.provideEventRepository()
@@ -34,6 +35,7 @@ class EventsViewModel : BaseViewModel() {
 					allEvents.addAll(response.body()!!)
 					EventListState(response.body()!!)
 				} else {
+					Timber.e(response.errorBody()?.string())
 					ErrorState(Throwable("Error"))
 				}
 				mStates.postValue(state)
@@ -57,6 +59,7 @@ class EventsViewModel : BaseViewModel() {
 					}
 					mStates.postValue(DeletedState)
 				} else {
+					Timber.e(response.errorBody()?.string())
 					mStates.postValue(ErrorState(Throwable("Error")))
 				}
 				
@@ -93,6 +96,7 @@ class EventsViewModel : BaseViewModel() {
 				val state = if (response.isSuccessful && response.body() != null) {
 					EventListState(mutableListOf(response.body()!!))
 				} else {
+					Timber.e(response.errorBody()?.string())
 					ErrorState(Throwable("Error during getting event"))
 				}
 				mStates.postValue(state)
@@ -127,6 +131,7 @@ class EventsViewModel : BaseViewModel() {
 				val state = if (response?.isSuccessful == true && response?.body() != null) {
 					FinishedState
 				} else {
+					Timber.e(response?.errorBody()?.string())
 					ErrorState(Throwable("Error"))
 				}
 				mStates.postValue(state)
@@ -181,6 +186,8 @@ class EventsViewModel : BaseViewModel() {
 						EventListState(mutableListOf(response.body()!!))
 					}
 				} else {
+					Timber.e(response.errorBody()?.string())
+					
 					ErrorState(Throwable("Error"))
 				}
 				
