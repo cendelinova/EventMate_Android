@@ -33,6 +33,7 @@ class AssignPointsActivity : BaseActivity() {
 		setContentView(R.layout.activity_assign_points)
 		
 		setupToolbar(toolbar)
+		
 		observeViewModel()
 		// todo real
 		viewModel.getTask(8)
@@ -72,6 +73,8 @@ class AssignPointsActivity : BaseActivity() {
 	private fun setupLayout(task: Task) {
 		with(task) {
 			task_name.text = name
+			task_status_icon.setImageResource(R.drawable.ic_task_under_evaluation)
+			tasks_status.text = getString(R.string.task_state_maximum_points, maxPoints.toString())
 			task_photo.setImageBitmap(photo?.let { FileHelper.decodeImage(it) })
 			this@AssignPointsActivity.assignees = assignees?.toMutableList() ?: mutableListOf()
 			this@AssignPointsActivity.maxPoints = points

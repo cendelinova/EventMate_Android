@@ -13,6 +13,7 @@ class Constants {
 		const val SUBMISSION_EXTRA = "submissionExtra"
 		const val EVENT_EDITABLE = "eventEditable"
 		const val EVENT_STATE = "eventState"
+		const val USER_NAME = "userName"
 	}
 	
 	enum class EventFilter(val text: String) {

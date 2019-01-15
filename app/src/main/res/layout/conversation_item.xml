@@ -24,6 +24,7 @@
 		android:layout_marginStart="@dimen/spacing_normal"
 		android:textAllCaps="true"
 		android:textSize="@dimen/font_normal"
+		android:textStyle="bold"
 		app:layout_constraintStart_toEndOf="@id/conversation_photo"
 		tools:text="Bill Simon" />
 	

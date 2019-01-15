@@ -1,31 +1,31 @@
-package gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.tasks
+package gr.tei.erasmus.pp.eventmate.ui.chat
 
-import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import gr.tei.erasmus.pp.eventmate.app.App
-import gr.tei.erasmus.pp.eventmate.data.model.Task
+import gr.tei.erasmus.pp.eventmate.data.model.ChatMessage
 import gr.tei.erasmus.pp.eventmate.ui.base.BaseViewModel
 import gr.tei.erasmus.pp.eventmate.ui.base.ErrorState
 import gr.tei.erasmus.pp.eventmate.ui.base.LoadingState
 import gr.tei.erasmus.pp.eventmate.ui.base.State
+import gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.guests.UserViewModel
 import kotlinx.coroutines.launch
 
-class TasksViewModel : BaseViewModel() {
-	
-	private val taskRepository by lazy { App.COMPONENTS.provideTaskRepository() }
+class ChatViewModel : BaseViewModel() {
+	private val chatRepository = App.COMPONENTS.provideChatRepository()
+	private val userRepository = App.COMPONENTS.provideUserRepository()
 	
 	private val mStates = MutableLiveData<State>()
 	val states: LiveData<State>
 		get() = mStates
 	
-	fun getTasks(eventId: Long) {
+	fun saveMessage(chatMessage: ChatMessage) {
 		launch {
 			mStates.postValue(LoadingState)
 			try {
-				val response = taskRepository.getEventTasks(eventId).await()
+				val response = chatRepository.saveMessage(chatMessage).await()
 				val state = if (response.isSuccessful && response.body() != null) {
-					TaskListState(response.body()!!)
+					MessageListState(mutableListOf(response.body()!!))
 				} else {
 					ErrorState(Throwable("Error"))
 				}
@@ -36,13 +36,13 @@ class TasksViewModel : BaseViewModel() {
 		}
 	}
 	
-	fun getTask(taskId: Long) {
+	fun getMyConversations() {
 		launch {
 			mStates.postValue(LoadingState)
 			try {
-				val response = taskRepository.getTask(taskId).await()
+				val response = chatRepository.getMyConversations().await()
 				val state = if (response.isSuccessful && response.body() != null) {
-					TaskListState(mutableListOf(response.body()!!))
+					MessageListState(response.body()!!)
 				} else {
 					ErrorState(Throwable("Error"))
 				}
@@ -53,13 +53,13 @@ class TasksViewModel : BaseViewModel() {
 		}
 	}
 	
-	fun deleteTask(taskId: Long) {
+	fun getConversationDetail(userId: Long) {
 		launch {
 			mStates.postValue(LoadingState)
 			try {
-				val response = taskRepository.deleteTask(taskId).await()
+				val response = chatRepository.getConversationDetail(userId).await()
 				val state = if (response.isSuccessful && response.body() != null) {
-					TaskListState(response.body()!!)
+					MessageListState(response.body()!!)
 				} else {
 					ErrorState(Throwable("Error"))
 				}
@@ -70,22 +70,16 @@ class TasksViewModel : BaseViewModel() {
 		}
 	}
 	
-	fun changeTaskStatus(taskId: Long) {
+	fun getAppUsers() {
 		launch {
 			mStates.postValue(LoadingState)
 			try {
-				val response = taskRepository.changeTaskStatus(taskId).await()
+				val response = userRepository.getAppUsers().await()
 				val state = if (response.isSuccessful && response.body() != null) {
-//					val eventState = Event.EventState.valueOf(response.body()!!.state)
-//					if (eventState == Event.EventState.READY_TO_PLAY) ReadyToPlayEvent(response.body()!!)
-//					else {
-//						EventListState(mutableListOf(response.body()!!))
-//					}
-					TaskListState(mutableListOf(response.body()!!))
+					UserViewModel.AppUserState(response.body()!!)
 				} else {
-					ErrorState(Throwable("Error"))
+					ErrorState(Throwable(response.message()))
 				}
-				
 				mStates.postValue(state)
 			} catch (error: Throwable) {
 				mStates.postValue(ErrorState(error))
@@ -93,14 +87,22 @@ class TasksViewModel : BaseViewModel() {
 		}
 	}
 	
-	data class TaskListState(val tasks: MutableList<Task>) : State() {
-		companion object {
-			fun from(list: MutableList<Task>): TaskListState {
-				return if (list.isEmpty()) error("event list should not be empty")
-				else {
-					TaskListState(list)
-				}
+	fun getUser(userId: Long) {
+		launch {
+			mStates.postValue(LoadingState)
+			try {
+				val user = userRepository.getUser(userId).await()
+				mStates.postValue(
+					UserViewModel.UserListState(
+						mutableListOf(user)
+					)
+				)
+			} catch (error: Throwable) {
+				mStates.postValue(ErrorState(error))
 			}
 		}
 	}
+	
+	data class MessageListState(val messages: MutableList<ChatMessage>) : State()
+	
 }

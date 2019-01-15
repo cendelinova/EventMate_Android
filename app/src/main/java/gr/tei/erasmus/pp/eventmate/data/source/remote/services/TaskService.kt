@@ -28,4 +28,7 @@ interface TaskService {
 	
 	@POST("/task/{id}/assignPoints")
 	fun assignPoints(@Path("id") taskId: Long, @Body userSubmissionPointList: MutableList<UserSubmissionPoints>): Deferred<Response<Void>>
+	
+	@POST("/task{id}/pushState")
+	fun changeTaskStatus(@Path("id") taskId: Long): Deferred<Response<Task>>
 }

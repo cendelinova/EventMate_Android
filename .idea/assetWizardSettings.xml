@@ -35,8 +35,8 @@
                           <map>
                             <entry key="assetSourceType" value="FILE" />
                             <entry key="color" value="ffffff" />
-                            <entry key="outputName" value="ic_stop" />
-                            <entry key="sourceFile" value="C:\Users\cendp\Downloads\stop.svg" />
+                            <entry key="outputName" value="ic_task_finish" />
+                            <entry key="sourceFile" value="C:\Users\cendp\Downloads\finish.svg" />
                           </map>
                         </option>
                       </PersistentState>

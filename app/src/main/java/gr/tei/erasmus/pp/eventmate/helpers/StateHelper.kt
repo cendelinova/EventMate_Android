@@ -8,6 +8,8 @@ import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.app.App
 import gr.tei.erasmus.pp.eventmate.data.model.Event
 import gr.tei.erasmus.pp.eventmate.data.model.Event.EventState.*
+import gr.tei.erasmus.pp.eventmate.data.model.Task
+import gr.tei.erasmus.pp.eventmate.data.model.Task.TaskState.IN_REVIEW
 import gr.tei.erasmus.pp.eventmate.data.model.User
 import timber.log.Timber
 
@@ -39,10 +41,10 @@ object StateHelper {
 		
 		val state = Event.EventState.valueOf(event.state)
 		when (state) {
-			EDITABLE -> {
+			Event.EventState.EDITABLE -> {
 				event.eventOwner?.let {
 					setFabSettings(
-						fab, EDITABLE.iconFab, fabListener,
+						fab, Event.EventState.EDITABLE.iconFab, fabListener,
 						it, userRoleHelper
 					)
 				}
@@ -55,10 +57,10 @@ object StateHelper {
 					)
 				}
 			}
-			IN_PLAY -> {
+			Event.EventState.IN_PLAY -> {
 				event.eventOwner?.let {
 					setFabSettings(
-						fab, IN_PLAY.iconFab, fabListener,
+						fab, Event.EventState.IN_PLAY.iconFab, fabListener,
 						it, userRoleHelper
 					)
 				}
@@ -72,10 +74,10 @@ object StateHelper {
 				}
 			}
 			
-			FINISHED -> {
+			Event.EventState.FINISHED -> {
 				event.eventOwner?.let {
 					setFabSettings(
-						fab, FINISHED.iconFab, fabListener,
+						fab, Event.EventState.FINISHED.iconFab, fabListener,
 						it, userRoleHelper
 					)
 				}
@@ -85,6 +87,50 @@ object StateHelper {
 				return
 			}
 		}
+	}
+	
+	fun prepareTaskFab(task: Task, fab: FloatingActionButton, fabListener: View.OnClickListener) {
+		val userRoleHelper = App.COMPONENTS.provideUserRoleHelper()
+		
+		val state = Task.TaskState.valueOf(task.taskState)
+		when (state) {
+			Task.TaskState.EDITABLE -> {
+				setFabSettings(
+					fab, Task.TaskState.EDITABLE.fabIcon, fabListener,
+					task.taskOwner, userRoleHelper
+				)
+				
+			}
+			Task.TaskState.READY_TO_START -> {
+				setFabSettings(
+					fab, READY_TO_PLAY.iconFab, fabListener,
+					task.taskOwner, userRoleHelper
+				)
+				
+			}
+			Task.TaskState.IN_PLAY -> {
+				setFabSettings(
+					fab, Task.TaskState.IN_PLAY.fabIcon, fabListener,
+					task.taskOwner, userRoleHelper
+				)
+			}
+			IN_REVIEW -> {
+				
+				setFabSettings(
+					fab, UNDER_EVALUATION.iconFab, fabListener,
+					task.taskOwner, userRoleHelper
+				)
+			}
+			
+			Task.TaskState.FINISHED -> {
+				setFabSettings(
+					fab, Task.TaskState.FINISHED.fabIcon, fabListener,
+					task.taskOwner, userRoleHelper
+				)
+			}
+			
+		}
+		
 	}
 	
 	private fun setFabSettings(
@@ -97,7 +143,8 @@ object StateHelper {
 		with(fab) {
 			setImageResource(imageResource)
 			setOnClickListener(listener)
-			visibility = if (userRoleHelper.isEventOwner(user)) View.VISIBLE else View.GONE
+			// todo more roles
+//			visibility = if (userRoleHelper.isEventOwner(user)) View.VISIBLE else View.GONE
 		}
 	}
 }

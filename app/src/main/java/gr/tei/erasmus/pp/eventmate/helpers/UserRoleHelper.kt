@@ -19,4 +19,9 @@ class UserRoleHelper(
 		return true
 	}
 	
+	fun isSenderMe(user: User): Boolean {
+		// toodo
+		return true
+	}
+	
 }

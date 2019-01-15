@@ -89,6 +89,10 @@ class AppModule(context: Context) : ContextWrapper(context) {
 		userRepository: UserRepository,
 		sharedPreferenceHelper: SharedPreferenceHelper
 	) = UserRoleHelper(context, userRepository, sharedPreferenceHelper)
+
+	@Singleton
+	@Provides
+	fun provideChatRepository(context: Context, restHelper: RestHelper) = ChatRepository(context, restHelper)
 	
 	
 }

@@ -1,5 +1,7 @@
 package gr.tei.erasmus.pp.eventmate.ui.events
 
+import android.content.Context
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import gr.tei.erasmus.pp.eventmate.app.App
@@ -167,19 +169,21 @@ class EventsViewModel : BaseViewModel() {
 		return filteredEvents.toMutableList()
 	}
 	
-	fun changeEventStatus(eventId: Long) {
+	fun changeEventStatus(eventId: Long, context: Context) {
 		launch {
 			mStates.postValue(LoadingState)
 			try {
 				val response = eventRepository.changeEventStatus(eventId).await()
 				val state = if (response.isSuccessful && response.body() != null) {
-					if (response.body()!!.state == Event.EventState.READY_TO_PLAY.name) ReadyToPlayEvent(response.body()!!)
+					val eventState = Event.EventState.valueOf(response.body()!!.state)
+					if (eventState == Event.EventState.READY_TO_PLAY) ReadyToPlayEvent(response.body()!!)
 					else {
 						EventListState(mutableListOf(response.body()!!))
 					}
 				} else {
 					ErrorState(Throwable("Error"))
 				}
+				
 				mStates.postValue(state)
 			} catch (error: Throwable) {
 				mStates.postValue(ErrorState(error))

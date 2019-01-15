@@ -6,7 +6,7 @@ import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.helpers.PermissionHelper
 import gr.tei.erasmus.pp.eventmate.ui.base.BaseActivity
 import gr.tei.erasmus.pp.eventmate.ui.events.EventsFragment
-import gr.tei.erasmus.pp.eventmate.ui.chat.InboxFragment
+import gr.tei.erasmus.pp.eventmate.ui.chat.ChatFragment
 import gr.tei.erasmus.pp.eventmate.ui.profile.ProfileFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import timber.log.Timber
@@ -37,7 +37,7 @@ class MainActivity : BaseActivity() {
 		bottom_navigation.setOnNavigationItemSelectedListener {
 			when (it.itemId) {
 				R.id.inbox_tab -> {
-					loadFragment(InboxFragment())
+					loadFragment(ChatFragment())
 					true
 				}
 				R.id.events_tab -> {

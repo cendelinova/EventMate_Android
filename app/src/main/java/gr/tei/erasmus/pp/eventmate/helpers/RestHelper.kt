@@ -12,6 +12,7 @@ class RestHelper(retrofit: Retrofit) {
 	private val taskService = retrofit.create(TaskService::class.java)
 	private val submissionService = retrofit.create(SubmissionService::class.java)
 	private val reportService = retrofit.create(ReportService::class.java)
+	private val chatService = retrofit.create(ChatService::class.java)
 	
 	// events
 	fun getEvents() = eventService.getEvents()
@@ -28,6 +29,8 @@ class RestHelper(retrofit: Retrofit) {
 	fun getEventTasks(eventId: Long) = taskService.getEventTasks(eventId)
 	fun deleteTask(taskId: Long) = taskService.deleteTask(taskId)
 	fun assignPoints(taskId: Long, userSubmissionPointList: MutableList<UserSubmissionPoints>) = taskService.assignPoints(taskId, userSubmissionPointList)
+	fun changeTaskStatus(taskId: Long) = taskService.changeTaskStatus(taskId)
+	
 	
 	// submissions
 	fun getUserTaskSubmissions(userId: Long, taskId: Long) = submissionService.getSubmissions(taskId, userId)
@@ -48,5 +51,11 @@ class RestHelper(retrofit: Retrofit) {
 	fun deleteEventReport(reportId: Long) = reportService.deleteReport(reportId)
 	fun shareReport(reportId: Long, email: Email) = reportService.shareReport(reportId, email)
 	fun downloadReport(reportId: Long) = reportService.downloadReport(reportId)
+	
+	// chat
+	
+	fun saveMessage(chatMessage: ChatMessage) = chatService.saveMessage(chatMessage)
+	fun getMyConversations() = chatService.getMyConversations()
+	fun getConversationDetail(userId: Long) = chatService.getConversationDetail(userId)
 	
 }

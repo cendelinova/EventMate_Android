@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -166,7 +167,7 @@ class EventDetailActivity : BaseActivity() {
 			
 			StateHelper.prepareEventFab(this, state_fab, View.OnClickListener {
 				if (state != Event.EventState.FINISHED) {
-					viewModel.changeEventStatus(id)
+					viewModel.changeEventStatus(id, this@EventDetailActivity)
 				} else {
 					finish()
 					startActivity(Intent(this@EventDetailActivity, ReportListActivity::class.java).apply {
@@ -198,9 +199,20 @@ class EventDetailActivity : BaseActivity() {
 				StateHelper.toggleProgress(progress, false)
 				event = state.events[0]
 				setupLayout(event)
+				// todo show
+//				Toast.makeText(
+//					this@EventDetailActivity,
+//					Event.EventState.valueOf(state.events[0].state).messageResource,
+//					Toast.LENGTH_LONG
+//				).show()
 			}
 			is EventsViewModel.ReadyToPlayEvent -> {
 				StateHelper.toggleProgress(progress, false)
+//				Toast.makeText(
+//					this@EventDetailActivity,
+//					Event.EventState.valueOf(state.event.state).messageResource,
+//					Toast.LENGTH_LONG
+//				).show()
 				finish()
 				startActivity(Intent(this, EventDetailActivity::class.java).apply {
 					putExtra(EVENT_ID, state.event.id)

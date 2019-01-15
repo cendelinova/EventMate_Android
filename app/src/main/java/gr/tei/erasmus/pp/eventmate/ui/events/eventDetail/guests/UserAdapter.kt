@@ -1,12 +1,13 @@
 package gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.guests
 
 import android.content.Context
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.data.model.User
+import gr.tei.erasmus.pp.eventmate.helpers.FileHelper
 import kotlinx.android.synthetic.main.guest_item.view.*
 
 class UserAdapter(
@@ -27,6 +28,7 @@ class UserAdapter(
 	private fun displayGuestEntry(viewHolder: GuestViewHolder, user: User) {
 		with(viewHolder.itemView) {
 			guest_item.setOnClickListener { guestListener.onUserClick(user) }
+			user_photo.setImageBitmap(user.photo?.let { FileHelper.decodeImage(it) })
 			user_name.text = user.userName
 		}
 	}

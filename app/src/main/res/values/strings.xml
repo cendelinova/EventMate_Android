@@ -246,4 +246,16 @@
 	<string name="event_evaluated">Event is ready to be evaluated</string>
 	<string name="event_summary_requested">Event summary is ready to be seen</string>
 	<string name="success_event_updated">Event has been updated</string>
+	<string name="task_item_status_editable">Editable</string>
+	<string name="task_detail_status_editable">Task can be still edit</string>
+	<string name="task_item_status_ready_to_play">Ready to play</string>
+	<string name="task_detail_status_ready_to_play">Task is ready to be played</string>
+	<string name="task_item_status_in_play">In play</string>
+	<string name="task_detail_status_in_play">Task is running</string>
+	<string name="task_item_status_in_review">Under evaluation</string>
+	<string name="task_detail_status_in_review">Task is waiting for assigning points </string>
+	<string name="task_item_status_finished">Finished</string>
+	<string name="task_detail_status_finished">Task is done</string>
+	<string name="task_state_maximum_points">Maximum %1$s points each</string>
+	<string name="hint_search_user">Search user</string>
 </resources>

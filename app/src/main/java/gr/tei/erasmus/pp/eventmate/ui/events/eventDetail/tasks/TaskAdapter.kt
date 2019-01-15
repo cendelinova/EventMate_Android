@@ -42,9 +42,11 @@ class TaskAdapter(
 			expand_row.setOnClickListener { handleToggle(this, true) }
 			collapsing_view.setOnClickListener { handleToggle(this, false) }
 			
+			val taskState = Task.TaskState.valueOf(task.taskState)
 			task_name.text = task.name
 			task_points.text = task.points.toString()
 			task_description.text = task.description
+			task_state.text = "[" + context.getString(taskState.taskItemStatusMessage) + "]"
 			
 			if (collapsing_view.visibility == View.VISIBLE) {
 				task_location.text = TextHelper.getDefaultTextIfEmpty(task.place)

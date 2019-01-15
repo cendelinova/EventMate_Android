@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
@@ -19,6 +20,7 @@ import gr.tei.erasmus.pp.eventmate.helpers.DialogHelper
 import gr.tei.erasmus.pp.eventmate.helpers.FileHelper
 import gr.tei.erasmus.pp.eventmate.helpers.StateHelper
 import gr.tei.erasmus.pp.eventmate.helpers.TextHelper.getDefaultTextIfEmpty
+import gr.tei.erasmus.pp.eventmate.ui.assignPoints.AssignPointsActivity
 import gr.tei.erasmus.pp.eventmate.ui.base.*
 import gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.EventDetailActivity
 import gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.guests.UserAdapter
@@ -52,7 +54,6 @@ class TaskDetailActivity : BaseActivity() {
 		
 		taskId?.let {
 			viewModel.getTask(it)
-			viewModel.getTask(8)
 		}
 		
 	}
@@ -66,6 +67,13 @@ class TaskDetailActivity : BaseActivity() {
 	override fun onCreateOptionsMenu(menu: Menu?): Boolean {
 		val inflater = menuInflater
 		inflater.inflate(R.menu.menu_fragment_detail, menu)
+		
+		// todo hide menu
+		
+//		if (Task.TaskState.valueOf(task.taskState) == Task.TaskState.EDITABLE) {
+//			menu?.findItem(R.id.edit)?.isVisible = false
+//			menu?.findItem(R.id.delete)?.isVisible = false
+//		}
 		return super.onCreateOptionsMenu(menu)
 	}
 	
@@ -144,10 +152,14 @@ class TaskDetailActivity : BaseActivity() {
 	
 	private fun setupLayout(task: Task) {
 		with(task) {
+			val taskState = Task.TaskState.valueOf(taskState)
 			task_name.text = name
 			tv_description.text = getDefaultTextIfEmpty(description)
 //			tv_time_limit.text = getDefaultTextIfEmpty(timeLimit?.toString())
 			tv_location.text = getDefaultTextIfEmpty(place)
+			
+			tasks_status.text = getString(taskState.taskDetailStatusMessage)
+			task_status_icon.setImageResource(taskState.taskDetailIcon)
 			tv_points.text = points.toString()
 			photo?.let {
 				task_photo.setImageBitmap(FileHelper.decodeImage(it))
@@ -156,6 +168,17 @@ class TaskDetailActivity : BaseActivity() {
 			if (!assignees.isNullOrEmpty()) {
 				assigneesAdapter.updateUserList(assignees.toMutableList())
 			}
+			
+			StateHelper.prepareTaskFab(this, fab, View.OnClickListener {
+				if (taskState != Task.TaskState.IN_REVIEW) {
+					viewModel.changeTaskStatus(id)
+				} else {
+					finish()
+					startActivity(Intent(this@TaskDetailActivity, AssignPointsActivity::class.java).apply {
+						putExtra(TASK_ID, id)
+					})
+				}
+			})
 		}
 	}
 }

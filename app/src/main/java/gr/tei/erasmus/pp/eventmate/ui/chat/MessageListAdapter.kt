@@ -8,10 +8,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import gr.tei.erasmus.pp.eventmate.R
-import gr.tei.erasmus.pp.eventmate.data.model.Message
+import gr.tei.erasmus.pp.eventmate.data.model.ChatMessage
 
 
-class MessageListAdapter(private val context: Context, private val messages: List<Message>) :
+class MessageListAdapter(private val context: Context, private var messages: List<ChatMessage>) :
 	RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 	override fun getItemCount(): Int {
 		return messages.size
@@ -21,7 +21,7 @@ class MessageListAdapter(private val context: Context, private val messages: Lis
 	override fun getItemViewType(position: Int): Int {
 		val message = messages[position]
 		// todo current user
-		return if (message.from.id == 2L) {
+		return if (message.from?.id == 2L) {
 			// If the current user is the sender of the message
 			VIEW_TYPE_MESSAGE_SENT
 		} else {
@@ -56,11 +56,16 @@ class MessageListAdapter(private val context: Context, private val messages: Lis
 		}
 	}
 	
+	fun updateConversationList(messages: MutableList<ChatMessage>) {
+		this.messages = messages
+		notifyDataSetChanged()
+	}
+	
 	private inner class SentMessageHolder internal constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
 		internal var messageText: TextView = itemView.findViewById(R.id.text_message_body)
 		internal var timeText: TextView = itemView.findViewById(R.id.text_message_time)
 		
-		internal fun bind(message: Message) {
+		internal fun bind(message: ChatMessage) {
 			messageText.text = message.content
 			
 			// Format the stored timestamp into a readable String using method.
@@ -73,7 +78,7 @@ class MessageListAdapter(private val context: Context, private val messages: Lis
 		internal var timeText: TextView = itemView.findViewById(R.id.text_message_time)
 		internal var profileImage: ImageView = itemView.findViewById(R.id.image_message_profile) as ImageView
 		
-		internal fun bind(message: Message) {
+		internal fun bind(message: ChatMessage) {
 			messageText.text = message.content
 			
 			// Format the stored timestamp into a readable String using method.

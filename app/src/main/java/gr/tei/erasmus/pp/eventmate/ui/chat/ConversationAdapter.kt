@@ -6,15 +6,22 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import gr.tei.erasmus.pp.eventmate.R
-import gr.tei.erasmus.pp.eventmate.data.model.Conversation
+import gr.tei.erasmus.pp.eventmate.app.App
+import gr.tei.erasmus.pp.eventmate.data.model.ChatMessage
+import gr.tei.erasmus.pp.eventmate.data.model.User
+import gr.tei.erasmus.pp.eventmate.helpers.FileHelper
 import kotlinx.android.synthetic.main.conversation_item.view.*
+import org.ocpsoft.prettytime.PrettyTime
 import timber.log.Timber
 
 class ConversationAdapter(
 	private val context: Context,
 	private val conversationListener: ConversationAdapter.ConversationListener,
-	private var conversations: MutableList<Conversation>
+	private var conversations: MutableList<ChatMessage>
 ) : RecyclerView.Adapter<ConversationAdapter.ConversationViewHolder>() {
+	
+	private val userRoleHelper = App.COMPONENTS.provideUserRoleHelper()
+	
 	override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ConversationViewHolder {
 		Timber.d("onCreateViewHolder() called with parent = [$viewGroup], viewType = [$viewType]")
 		
@@ -35,35 +42,40 @@ class ConversationAdapter(
 		displayEventEntry(viewHolder, conversations[viewHolder.adapterPosition])
 	}
 	
-	private fun displayEventEntry(viewHolder: ConversationViewHolder, conversation: Conversation) {
+	private fun displayEventEntry(viewHolder: ConversationViewHolder, chatMessage: ChatMessage) {
 		
 		with(viewHolder.itemView) {
-			conversation_item.setOnClickListener { conversationListener.onConversationClick(conversation) }
-			conversation_photo.setOnClickListener {
-				if (!conversation.isGroup && conversation.userId != null) {
-					conversationListener.onUserPhotoClick(conversation.userId)
-				}
+			
+			val contact =
+				if (chatMessage.from?.let { userRoleHelper.isSenderMe(it) }!!) chatMessage.to else chatMessage.from
+			conversation_name.text = contact.userName
+			contact.photo?.let {
+				conversation_photo.setImageBitmap(FileHelper.decodeImage(it))
 			}
-//			Picasso.get().load(conversation.photo).into(conversation_photo)
-			conversation_name.text = conversation.name
-			message.text = conversation.lastMessageText
-			sent_time.text = conversation.lastMessageTime
+			
+			conversation_item.setOnClickListener { contact.id?.let { conversationListener.onConversationClick(contact) } }
+			
+			conversation_photo.setOnClickListener {
+				contact.id?.let { it1 -> conversationListener.onUserPhotoClick(it1) }
+			}
+			
+			message.text = chatMessage.content
+			sent_time.text = PrettyTime().format(chatMessage.date)
 		}
 	}
 	
 	/**
 	 * Update and notify data set change.
 	 */
-	fun updateConversationList(updatedConversations: MutableList<Conversation>) {
+	fun updateConversationList(updatedConversations: MutableList<ChatMessage>) {
 		conversations = updatedConversations
 		notifyDataSetChanged()
 	}
 	
 	interface ConversationListener {
-		fun onConversationClick(conversation: Conversation)
+		fun onConversationClick(user: User)
 		fun onUserPhotoClick(userId: Long)
 	}
-	
 	
 	inner class ConversationViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 }

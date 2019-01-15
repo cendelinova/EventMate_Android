@@ -98,13 +98,7 @@ class TasksFragment : BaseFragment() {
 	private val taskItemListener = object :
 		TaskAdapter.TaskListener {
 		override fun onTaskClick(task: Task) {
-			startActivity(
-				Intent(
-					activity,
-					TaskDetailActivity::class.java
-				).apply {
-					putExtra(TASK_ID, task.id)
-				})
+			startActivity(Intent(activity, TaskDetailActivity::class.java).apply { putExtra(TASK_ID, task.id) })
 		}
 		
 	}
@@ -119,10 +113,6 @@ class TasksFragment : BaseFragment() {
 				taskAdapter.updateTaskList(state.tasks)
 			}
 		}
-	}
-	
-	fun toggleVisibilityAddTaskButton(visible: Boolean) {
-		btn_add_task.visibility = if (visible) View.VISIBLE else View.GONE
 	}
 	
 }

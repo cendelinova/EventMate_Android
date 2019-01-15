@@ -44,15 +44,17 @@
 		
 		<FrameLayout
 			android:id="@+id/photo_layout"
-			android:layout_width="95dp"
-			android:layout_height="95dp"
+			android:layout_width="100dp"
+			android:layout_height="100dp"
 			android:layout_gravity="end"
+			android:layout_marginTop="@dimen/spacing_small"
 			android:layout_rowSpan="4">
 			
 			<com.makeramen.roundedimageview.RoundedImageView
 				android:id="@+id/task_photo"
 				android:layout_width="@dimen/bigger_icon_size"
-				android:layout_height="84dp"
+				android:layout_height="@dimen/bigger_icon_size"
+				android:layout_marginEnd="@dimen/spacing_small"
 				android:layout_gravity="top|center_horizontal"
 				android:background="?selectableItemBackground"
 				android:clickable="true"
@@ -66,8 +68,8 @@
 				android:layout_width="24dp"
 				android:layout_height="24dp"
 				android:layout_gravity="bottom|end"
-				android:layout_marginEnd="3dp"
-				android:layout_marginBottom="5dp"
+				android:layout_marginEnd="15dp"
+				android:layout_marginBottom="15dp"
 				android:background="@drawable/badge"
 				android:scaleType="center"
 				android:src="@drawable/ic_edit_solid" />

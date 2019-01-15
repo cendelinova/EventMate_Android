@@ -3,9 +3,9 @@
 	android:shape="ring"
 	android:thicknessRatio="2"
 	android:useLevel="false">
-	<solid android:color="@color/colorAccent" />
+	<solid android:color="@color/colorPrimary" />
 	
 	<stroke
 		android:width="10dp"
-		android:color="@color/colorAccent" />
+		android:color="@color/colorPrimary" />
 </shape>

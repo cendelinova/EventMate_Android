@@ -46,10 +46,11 @@ interface AppComponent {
 	
 	fun provideInvitationRepository(): InvitationRepository
 	
-	fun provideUserRepository() : UserRepository
+	fun provideUserRepository(): UserRepository
 	
-	fun provideReportRepository() : ReportRepository
+	fun provideReportRepository(): ReportRepository
 	
-	fun provideUserRoleHelper() : UserRoleHelper
-	
+	fun provideUserRoleHelper(): UserRoleHelper
+
+	fun provideChatRepository(): ChatRepository
 }
