@@ -175,6 +175,12 @@ class EventDetailActivity : BaseActivity() {
 					})
 				}
 				
+				Toast.makeText(
+					this@EventDetailActivity,
+					getString(Event.EventState.valueOf(this.state).messageResource),
+					Toast.LENGTH_LONG
+				).show()
+				
 			})
 			
 			if (state != Event.EventState.EDITABLE) {

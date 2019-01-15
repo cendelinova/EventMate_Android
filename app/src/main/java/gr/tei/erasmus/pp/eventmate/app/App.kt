@@ -29,7 +29,7 @@ class App : Application() {
 		
 		COMPONENTS = DaggerAppComponent.builder()
 			.appModule(AppModule(this))
-			.networkModule(NetworkModule(BuildConfig.SERVER_URL))
+			.networkModule(NetworkModule(this, BuildConfig.SERVER_URL))
 			.build()
 	}
 	

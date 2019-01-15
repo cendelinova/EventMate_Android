@@ -20,7 +20,7 @@ class LoginActivity : NoToolbarActivity() {
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_login)
-		
+		sharedPreferenceHelper.remove(USER_ID)
 		if (sharedPreferenceHelper.hasKey(USER_ID)) {
 			startActivity(Intent(this, MainActivity::class.java))
 		}

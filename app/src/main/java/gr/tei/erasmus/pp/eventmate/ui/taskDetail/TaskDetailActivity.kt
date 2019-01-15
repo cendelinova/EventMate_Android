@@ -13,6 +13,7 @@ import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.EVENT_ID
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.SUBMISSION_EXTRA
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.TASK_ID
+import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.USER_ID
 import gr.tei.erasmus.pp.eventmate.data.model.SubmissionExtra
 import gr.tei.erasmus.pp.eventmate.data.model.Task
 import gr.tei.erasmus.pp.eventmate.data.model.User
@@ -27,6 +28,7 @@ import gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.guests.UserAdapter
 import gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.tasks.TasksViewModel
 import gr.tei.erasmus.pp.eventmate.ui.newTask.NewTaskActivity
 import gr.tei.erasmus.pp.eventmate.ui.submission.AssigneeSubmissionListActivity
+import gr.tei.erasmus.pp.eventmate.ui.userProfile.UserProfileActivity
 import kotlinx.android.synthetic.main.activity_task_detail.*
 import kotlinx.android.synthetic.main.toolbar_task_detail.*
 import timber.log.Timber
@@ -118,14 +120,21 @@ class TaskDetailActivity : BaseActivity() {
 	
 	private val onUserClick = object : UserAdapter.GuestListener {
 		override fun onUserClick(user: User) {
-
-//			startActivity(Intent(this@TaskDetailActivity, UserProfileActivity::class.java).apply {
-//				putExtra(USER_ID, user.id)
-//			})
+			val state = Task.TaskState.valueOf(task.taskState)
+			if (state == Task.TaskState.IN_REVIEW) {
+				startActivity(Intent(this@TaskDetailActivity, AssigneeSubmissionListActivity::class.java).apply {
+					putExtra(SUBMISSION_EXTRA, SubmissionExtra(user.id!!, task.id))
+				})
+			} else {
+				startActivity(Intent(this@TaskDetailActivity, UserProfileActivity::class.java).apply {
+					putExtra(USER_ID, user.id)
+				})
+			}
 			
-			startActivity(Intent(this@TaskDetailActivity, AssigneeSubmissionListActivity::class.java).apply {
-				putExtra(SUBMISSION_EXTRA, SubmissionExtra(user.id!!, task.id))
-			})
+			// todo setup male ikonky
+
+
+			
 		}
 		
 	}
