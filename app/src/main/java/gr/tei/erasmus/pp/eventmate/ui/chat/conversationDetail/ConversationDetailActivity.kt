@@ -42,13 +42,19 @@ class ConversationDetailActivity : BaseActivity() {
 		
 		my_title.text = userName
 		
-		initializeRecyclerView()
 		observeViewModel()
 		
 		viewModel.getConversationDetail(userId!!)
 		viewModel.getUser(userId!!)
 		
 		handleBtnSendMessage()
+		initializeRecyclerView()
+		
+	}
+	
+	override fun onBackPressed() {
+		super.onBackPressed()
+		finish()
 	}
 	
 	private fun observeViewModel() {

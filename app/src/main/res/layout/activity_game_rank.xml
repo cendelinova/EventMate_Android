@@ -5,5 +5,38 @@
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	tools:context=".ui.gameRank.GameRankActivity">
+	
+	<androidx.appcompat.widget.Toolbar
+		android:id="@+id/toolbar"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:background="@android:color/transparent"
+		android:elevation="2dp"
+		android:theme="@style/AppTheme.AppBarOverlayNoBackground"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
+		app:popupTheme="@style/AppTheme.PopupOverlay">
+		
+		<TextView
+			android:id="@+id/my_title"
+			style="@style/MessageTitle"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_centerInParent="true"
+			android:text="@string/title_game_rank" />
+	
+	</androidx.appcompat.widget.Toolbar>
+	
+	<ImageView
+		android:layout_width="0dp"
+		android:layout_height="0dp"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="@+id/toolbar"
+		app:layout_constraintTop_toBottomOf="@+id/toolbar"
+		android:src=""/>
+	
+	
 
 </androidx.constraintlayout.widget.ConstraintLayout>

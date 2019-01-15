@@ -47,7 +47,7 @@ class ConversationAdapter(
 		with(viewHolder.itemView) {
 			
 			val contact =
-				if (chatMessage.from?.let { userRoleHelper.isSenderMe(it) }!!) chatMessage.to else chatMessage.from
+				if (chatMessage.from?.let { userRoleHelper.isSameUser(it) }!!) chatMessage.to else chatMessage.from
 			conversation_name.text = contact.userName
 			contact.photo?.let {
 				conversation_photo.setImageBitmap(FileHelper.decodeImage(it))

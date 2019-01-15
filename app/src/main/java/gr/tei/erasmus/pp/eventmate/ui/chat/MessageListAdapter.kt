@@ -9,13 +9,15 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.data.model.ChatMessage
+import gr.tei.erasmus.pp.eventmate.helpers.DateTimeHelper
+import gr.tei.erasmus.pp.eventmate.helpers.FileHelper
+import org.joda.time.DateTime
 
 
 class MessageListAdapter(private val context: Context, private var messages: List<ChatMessage>) :
 	RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-	override fun getItemCount(): Int {
-		return messages.size
-	}
+	
+	override fun getItemCount() = messages.size
 	
 	// Determines the appropriate ViewType according to the sender of the message.
 	override fun getItemViewType(position: Int): Int {
@@ -69,7 +71,7 @@ class MessageListAdapter(private val context: Context, private var messages: Lis
 			messageText.text = message.content
 			
 			// Format the stored timestamp into a readable String using method.
-//			timeText.setText(Utils.formatDateTime(message.getCreatedAt()))
+			timeText.text = DateTimeHelper.convertDateTimeToString(DateTime(message.date), DateTimeHelper.TIME_FORMAT)
 		}
 	}
 	
@@ -80,14 +82,9 @@ class MessageListAdapter(private val context: Context, private var messages: Lis
 		
 		internal fun bind(message: ChatMessage) {
 			messageText.text = message.content
-			
-			// Format the stored timestamp into a readable String using method.
-//			timeText.setText(Utils.formatDateTime(message.getCreatedAt()))
-//
-//			nameText.setText(message.getSender().getNickname())
-//
+			timeText.text = DateTimeHelper.convertDateTimeToString(DateTime(message.date), DateTimeHelper.TIME_FORMAT)
 //			// Insert the profile image from the URL into the ImageView.
-//			Utils.displayRoundImageFromUrl(context, message.getSender().getProfileUrl(), profileImage)
+			profileImage.setImageBitmap(message.from?.photo?.let { FileHelper.decodeImage(it) })
 		}
 	}
 	

@@ -258,4 +258,5 @@
 	<string name="task_detail_status_finished">Task is done</string>
 	<string name="task_state_maximum_points">Maximum %1$s points each</string>
 	<string name="hint_search_user">Search user</string>
+	<string name="title_game_rank">Game rank</string>
 </resources>

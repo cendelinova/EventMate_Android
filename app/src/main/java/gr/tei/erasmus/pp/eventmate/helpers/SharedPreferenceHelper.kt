@@ -27,4 +27,7 @@ class SharedPreferenceHelper(context: Context) : ContextWrapper(context.applicat
 	
 	fun saveString(key: String, value: String) = sharedPreferences.edit().putString(key, value).apply()
 	
+	fun remove(key: String) = sharedPreferences.edit().remove(key).apply()
+	
+	fun hasKey(key: String) = sharedPreferences.contains(key)
 }

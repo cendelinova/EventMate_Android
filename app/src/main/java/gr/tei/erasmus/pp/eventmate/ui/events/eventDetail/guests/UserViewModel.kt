@@ -3,6 +3,9 @@ package gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.guests
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import gr.tei.erasmus.pp.eventmate.app.App
+import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.USER_ID
+import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.USER_MAIL
+import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.USER_PASSWORD
 import gr.tei.erasmus.pp.eventmate.data.model.*
 import gr.tei.erasmus.pp.eventmate.ui.base.*
 import kotlinx.coroutines.launch
@@ -12,6 +15,7 @@ class UserViewModel : BaseViewModel() {
 	private val userRepository =  App.COMPONENTS.provideUserRepository()
 	
 	private val eventRepository = App.COMPONENTS.provideEventRepository()
+	private val sharedPreferenceHelper = App.COMPONENTS.provideSharedPreferencesHelper()
 	
 	private val mStates = MutableLiveData<State>()
 	val states: LiveData<State>
@@ -59,7 +63,11 @@ class UserViewModel : BaseViewModel() {
 			try {
 				val result = userRepository.register(user).await()
 				if (result.isSuccessful && result.body() != null) {
-					userRepository.saveUserCredentials(user.email, user.password)
+					val user = result.body()!!
+					sharedPreferenceHelper.saveLong(USER_ID, user.id!!)
+					sharedPreferenceHelper.saveString(USER_MAIL, user.email)
+					sharedPreferenceHelper.saveString(USER_PASSWORD, user.password!!)
+//					userRepository.saveUserCredentials(user.email, user.password)
 				}
 				
 				mStates.postValue(FinishedState)

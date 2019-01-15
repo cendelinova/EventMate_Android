@@ -45,7 +45,7 @@ class EventAdapter(
 			event_tasks_count.text = event.taskCount.toString()
 			
 			indicator_owner.visibility =
-					if (event.eventOwner?.let { userRoleHelper.isEventOwner(it) } == true) View.VISIBLE else View.GONE
+					if (event.eventOwner?.let { userRoleHelper.isSameUser(it) } == true) View.VISIBLE else View.GONE
 			
 			event.photo?.let {
 				if (it.isNotEmpty()) event_photo.setImageBitmap(FileHelper.decodeImage(it))

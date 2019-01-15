@@ -9,8 +9,6 @@ class RecyclerViewEmptyViewSupport : RecyclerView {
 	
 	/* Public attributes **************************************************************************/
 	
-	var loadAdOnEmptyViewListener: LoadAdOnEmptyViewListener? = null
-	
 	/* Private attributes *************************************************************************/
 	
 	private var emptyView: View? = null
@@ -57,7 +55,6 @@ class RecyclerViewEmptyViewSupport : RecyclerView {
 		if (adapter?.itemCount == 0) {
 			emptyView?.visibility = View.VISIBLE
 			visibility = View.GONE
-			loadAdOnEmptyViewListener?.loadAd()
 		} else {
 			emptyView?.visibility = View.GONE
 			visibility = View.VISIBLE
@@ -66,8 +63,5 @@ class RecyclerViewEmptyViewSupport : RecyclerView {
 	
 	/* Callbacks **********************************************************************************/
 	
-	interface LoadAdOnEmptyViewListener {
-		fun loadAd()
-	}
 	
 }

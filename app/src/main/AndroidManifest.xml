@@ -49,11 +49,6 @@
 		</activity>
 		<activity android:name=".ui.signup.SignupActivity" />
 		<activity android:name=".ui.events.newEvent.NewEventActivity">
-			<intent-filter>
-				<action android:name="android.intent.action.MAIN" />
-				
-				<category android:name="android.intent.category.LAUNCHER" />
-			</intent-filter>
 		</activity>
 		<activity android:name=".ui.events.eventDetail.EventDetailActivity" />
 		<activity
@@ -62,11 +57,6 @@
 			android:theme="@style/AppTheme.NoActionBar" />
 		<activity android:name=".ui.gameRank.GameRankActivity" />
 		<activity android:name=".ui.chat.conversationDetail.ConversationDetailActivity">
-			<intent-filter>
-				<action android:name="android.intent.action.MAIN" />
-				
-				<category android:name="android.intent.category.LAUNCHER" />
-			</intent-filter>
 		</activity>
 		<activity android:name=".ui.chat.newMessage.NewMessageActivity" />
 		<activity
@@ -78,26 +68,12 @@
 		
 		</activity>
 		<activity android:name=".ui.report.ReportListActivity">
-			<intent-filter>
-				<action android:name="android.intent.action.MAIN" />
-				
-				<category android:name="android.intent.category.LAUNCHER" />
-			</intent-filter>
 		</activity>
 		<activity android:name=".ui.assignPoints.AssignPointsActivity">
-			<intent-filter>
-				<action android:name="android.intent.action.MAIN" />
-				
-				<category android:name="android.intent.category.LAUNCHER" />
-			</intent-filter>
+
 		</activity>
 		<activity android:name=".ui.report.NewReportActivity"></activity>
 		<activity android:name=".ui.submission.AssigneeSubmissionListActivity">
-			<intent-filter>
-				<action android:name="android.intent.action.MAIN" />
-				
-				<category android:name="android.intent.category.LAUNCHER" />
-			</intent-filter>
 		</activity>
 		<activity android:name=".ui.submission.AssigneeNewSubmissionActivity"></activity>
 	</application>
