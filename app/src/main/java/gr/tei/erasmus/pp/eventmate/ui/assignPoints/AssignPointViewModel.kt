@@ -8,6 +8,7 @@ import gr.tei.erasmus.pp.eventmate.helpers.ErrorHelper
 import gr.tei.erasmus.pp.eventmate.ui.base.*
 import gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.tasks.TasksViewModel
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class AssignPointViewModel : BaseViewModel() {
 	
@@ -25,6 +26,7 @@ class AssignPointViewModel : BaseViewModel() {
 				val state = if (response.isSuccessful && response.body() != null) {
 					TasksViewModel.TaskListState(mutableListOf(response.body()!!))
 				} else {
+					Timber.e(response.errorBody()?.string())
 					ErrorState(Throwable(ErrorHelper.getErrorMessageFromHeader(response.headers())))
 				}
 				mStates.postValue(state)
@@ -42,6 +44,7 @@ class AssignPointViewModel : BaseViewModel() {
 				val state = if (response.isSuccessful && response.body() != null) {
 					FinishedState
 				} else {
+					Timber.e(response.errorBody()?.string())
 					ErrorState(Throwable(ErrorHelper.getErrorMessageFromHeader(response.headers())))
 				}
 				mStates.postValue(state)

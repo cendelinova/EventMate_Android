@@ -144,7 +144,7 @@ object StateHelper {
 			setImageResource(imageResource)
 			setOnClickListener(listener)
 			// todo more roles
-//			visibility = if (userRoleHelper.isSameUser(user)) View.VISIBLE else View.GONE
+			visibility = if (userRoleHelper.isSameUser(user)) View.VISIBLE else View.GONE
 		}
 	}
 }

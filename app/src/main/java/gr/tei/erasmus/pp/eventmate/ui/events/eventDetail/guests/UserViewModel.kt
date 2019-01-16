@@ -34,8 +34,10 @@ class UserViewModel : BaseViewModel() {
 				val state = if (response.isSuccessful && response.body() != null) {
 					UserListState(response.body()!!)
 				} else {
+					Timber.e(response.errorBody()?.string())
 					ErrorState(Throwable(ErrorHelper.getErrorMessageFromHeader(response.headers())))
 				}
+				mStates.postValue(state)
 			} catch (error: Throwable) {
 				mStates.postValue(ErrorState(error))
 			}
@@ -63,7 +65,6 @@ class UserViewModel : BaseViewModel() {
 		launch {
 			mStates.postValue(LoadingState)
 			try {
-				Timber.d(" XXXA predregistraci")
 				val response = userRepository.register(userRequest).await()
 				val state = if (response.isSuccessful && response.body() != null) {
 					userRepository.saveUserToSharedPreferences(response.body()!!, userRequest.password)
@@ -79,10 +80,10 @@ class UserViewModel : BaseViewModel() {
 							)
 						)
 						.build()
-					Timber.d(" XXXA po registraci")
 					
 					FinishedState
 				} else {
+					Timber.e(response.errorBody()?.string())
 					ErrorState(Throwable(ErrorHelper.getErrorMessageFromHeader(response.headers())))
 				}
 				
@@ -101,6 +102,7 @@ class UserViewModel : BaseViewModel() {
 				val state = if (response.isSuccessful && response.body() != null) {
 					UserListState(mutableListOf(response.body()!!))
 				} else {
+					Timber.e(response.errorBody()?.string())
 					ErrorState(Throwable(ErrorHelper.getErrorMessageFromHeader(response.headers())))
 				}
 				
@@ -127,8 +129,11 @@ class UserViewModel : BaseViewModel() {
 							)
 						)
 						.build()
+					
+					userRepository.saveUserToSharedPreferences(response.body()!!, userRequest.password)
 					FinishedState
 				} else {
+					Timber.e(response.errorBody()?.string())
 					ErrorState(Throwable(ErrorHelper.getErrorMessageFromHeader(response.headers())))
 				}
 				
@@ -147,6 +152,7 @@ class UserViewModel : BaseViewModel() {
 				val state = if (response.isSuccessful && response.body() != null) {
 					AppUserState(response.body()!!)
 				} else {
+					Timber.e(response.errorBody()?.string())
 					ErrorState(Throwable(ErrorHelper.getErrorMessageFromHeader(response.headers())))
 				}
 				mStates.postValue(state)
@@ -165,6 +171,7 @@ class UserViewModel : BaseViewModel() {
 					val guests = (response.body()!! as Event).guests
 					guests?.let { UserViewModel.UserListState(it) }
 				} else {
+					Timber.e(response.errorBody()?.string())
 					ErrorState(Throwable(ErrorHelper.getErrorMessageFromHeader(response.headers())))
 				}
 				mStates.postValue(state)

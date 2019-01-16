@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import gr.tei.erasmus.pp.eventmate.R
-import gr.tei.erasmus.pp.eventmate.app.App
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.USER_ID
 import gr.tei.erasmus.pp.eventmate.data.model.User
 import gr.tei.erasmus.pp.eventmate.helpers.FileHelper
@@ -34,7 +33,7 @@ class UserProfileActivity : BaseActivity() {
 		observeViewModel()
 		
 		userId?.let {
-			viewModel.getUser(userId!!)
+			viewModel.getUser(it)
 		}
 		
 	}

@@ -46,7 +46,6 @@ object ErrorHelper {
 		}
 		
 		return Resources.getSystem().getString(message)
-		
 	}
 	
 	enum class ErrorType(val errorCode: Int, val errorMessage: Int) {

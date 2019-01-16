@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProviders
 import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.app.App
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.USER_ID
+import gr.tei.erasmus.pp.eventmate.data.model.User
 import gr.tei.erasmus.pp.eventmate.data.model.UserRequest
 import gr.tei.erasmus.pp.eventmate.helpers.StateHelper
 import gr.tei.erasmus.pp.eventmate.helpers.TextHelper
@@ -22,10 +23,14 @@ class LoginActivity : BaseActivity() {
 	private val viewModel by lazy { ViewModelProviders.of(this).get(UserViewModel::class.java) }
 	private val sharedPreferenceHelper = App.COMPONENTS.provideSharedPreferencesHelper()
 	
+	private val userRepository = App.COMPONENTS.provideUserRepository()
+	
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_login)
-		sharedPreferenceHelper.remove(USER_ID)
+
+//		userRepository.saveUserToSharedPreferences(User("", ""), "")
+		
 		if (sharedPreferenceHelper.hasKey(USER_ID)) {
 			startActivity(Intent(this, MainActivity::class.java))
 		}

@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.android.ex.chips.BaseRecipientAdapter
 import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.constants.Constants
+import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.USER_ID
 import gr.tei.erasmus.pp.eventmate.data.model.Invitation
 import gr.tei.erasmus.pp.eventmate.data.model.User
 import gr.tei.erasmus.pp.eventmate.helpers.DialogHelper
@@ -109,7 +110,9 @@ class GuestsFragment : BaseFragment() {
 	private val onUserClick = object :
 		UserAdapter.GuestListener {
 		override fun onUserClick(user: User) {
-			startActivity(Intent(this@GuestsFragment.activity, UserProfileActivity::class.java))
+			startActivity(Intent(this@GuestsFragment.activity, UserProfileActivity::class.java).apply {
+				putExtra(USER_ID, user.id)
+			})
 		}
 	}
 	

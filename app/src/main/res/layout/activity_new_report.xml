@@ -127,6 +127,7 @@
 					android:layout_height="wrap_content"
 					android:text="@string/full_report"
 					android:layout_weight="1"
+					android:checked="true"
 					android:theme="@style/MyRadioButtonStyle" />
 				
 				<RadioButton

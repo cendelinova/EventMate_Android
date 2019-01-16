@@ -10,6 +10,7 @@ import gr.tei.erasmus.pp.eventmate.ui.base.ErrorState
 import gr.tei.erasmus.pp.eventmate.ui.base.LoadingState
 import gr.tei.erasmus.pp.eventmate.ui.base.State
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class TasksViewModel : BaseViewModel() {
 	
@@ -27,6 +28,7 @@ class TasksViewModel : BaseViewModel() {
 				val state = if (response.isSuccessful && response.body() != null) {
 					TaskListState(response.body()!!)
 				} else {
+					Timber.e(response.errorBody()?.string())
 					ErrorState(Throwable(ErrorHelper.getErrorMessageFromHeader(response.headers())))
 				}
 				mStates.postValue(state)
@@ -44,6 +46,7 @@ class TasksViewModel : BaseViewModel() {
 				val state = if (response.isSuccessful && response.body() != null) {
 					TaskListState(mutableListOf(response.body()!!))
 				} else {
+					Timber.e(response.errorBody()?.string())
 					ErrorState(Throwable(ErrorHelper.getErrorMessageFromHeader(response.headers())))
 				}
 				mStates.postValue(state)
@@ -61,6 +64,7 @@ class TasksViewModel : BaseViewModel() {
 				val state = if (response.isSuccessful && response.body() != null) {
 					TaskListState(response.body()!!)
 				} else {
+					Timber.e(response.errorBody()?.string())
 					ErrorState(Throwable(ErrorHelper.getErrorMessageFromHeader(response.headers())))
 				}
 				mStates.postValue(state)
@@ -83,6 +87,7 @@ class TasksViewModel : BaseViewModel() {
 //					}
 					TaskListState(mutableListOf(response.body()!!))
 				} else {
+					Timber.e(response.errorBody()?.string())
 					ErrorState(Throwable(ErrorHelper.getErrorMessageFromHeader(response.headers())))
 				}
 				

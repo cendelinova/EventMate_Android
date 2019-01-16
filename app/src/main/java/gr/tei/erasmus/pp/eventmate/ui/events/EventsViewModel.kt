@@ -18,6 +18,7 @@ import timber.log.Timber
 class EventsViewModel : BaseViewModel() {
 	private val eventRepository = App.COMPONENTS.provideEventRepository()
 	private val userRepository = App.COMPONENTS.provideUserRepository()
+	private val userRoleHelper = App.COMPONENTS.provideUserRoleHelper()
 	
 	private val mStates = MutableLiveData<State>()
 	val states: LiveData<State>
@@ -76,6 +77,7 @@ class EventsViewModel : BaseViewModel() {
 				val state = if (response.isSuccessful && response.body() != null) {
 					FinishedState
 				} else {
+					Timber.e(response.errorBody()?.string())
 					ErrorState(Throwable(ErrorHelper.getErrorMessageFromHeader(response.headers())))
 				}
 				mStates.postValue(state)
@@ -87,9 +89,9 @@ class EventsViewModel : BaseViewModel() {
 	
 	fun getEventList() = allEvents
 	
-	fun getEvent(eventId: Long) {
+	fun getEvent(eventId: Long, showProgress: Boolean = true) {
 		launch {
-			mStates.postValue(LoadingState)
+			if (showProgress) mStates.postValue(LoadingState)
 			try {
 				val response = eventRepository.getEvent(eventId).await()
 				val state = if (response.isSuccessful && response.body() != null) {
@@ -113,6 +115,7 @@ class EventsViewModel : BaseViewModel() {
 				val state = if (response.isSuccessful && response.body() != null) {
 					UserViewModel.AppUserState(response.body()!!)
 				} else {
+					Timber.e(response.errorBody()?.string())
 					ErrorState(Throwable(ErrorHelper.getErrorMessageFromHeader(response.headers())))
 				}
 				mStates.postValue(state)
@@ -149,14 +152,17 @@ class EventsViewModel : BaseViewModel() {
 		
 		if (filterRole == UNDEFINED_FILTER && eventStateFilter == UNDEFINED_STATE) return allEvents
 		
+		
 		if (filterRole == OWNER_FILTER && eventStateFilter != UNDEFINED_STATE) {
-			filteredEvents = allEvents.filter { e -> e.eventOwner?.id == 1L && e.state == eventStateFilter.name }
+			filteredEvents =
+					allEvents.filter { e -> userRoleHelper.isSameUser(e.eventOwner!!) && e.state == eventStateFilter.name }
 		} else if (filterRole == GUEST_FILTER && eventStateFilter != UNDEFINED_STATE) {
-			filteredEvents = allEvents.filter { e -> e.eventOwner?.id != 1L && e.state == eventStateFilter.name }
+			filteredEvents =
+					allEvents.filter { e -> !userRoleHelper.isSameUser(e.eventOwner!!) && e.state == eventStateFilter.name }
 		} else if (filterRole == OWNER_FILTER) {
-			filteredEvents = allEvents.filter { e -> e.eventOwner?.id == 1L }
+			filteredEvents = allEvents.filter { e -> userRoleHelper.isSameUser(e.eventOwner!!) }
 		} else if (filterRole == GUEST_FILTER) {
-			filteredEvents = allEvents.filter { e -> e.eventOwner?.id != 1L }
+			filteredEvents = allEvents.filter { e -> !userRoleHelper.isSameUser(e.eventOwner!!) }
 		} else if (filterRole == UNDEFINED_FILTER && eventStateFilter != UNDEFINED_STATE) {
 			filteredEvents = allEvents.filter { e -> e.state == eventStateFilter.name }
 		}

@@ -16,6 +16,7 @@ import com.google.android.material.tabs.TabLayout
 import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.EVENT_EDITABLE
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.EVENT_ID
+import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.EVENT_SHOW_MENU
 import gr.tei.erasmus.pp.eventmate.data.model.Event
 import gr.tei.erasmus.pp.eventmate.helpers.DateTimeHelper
 import gr.tei.erasmus.pp.eventmate.helpers.DialogHelper
@@ -41,6 +42,7 @@ class EventDetailActivity : BaseActivity() {
 	private var event: Event? = null
 	
 	private var isEditable = false
+	private var showMenu = false
 	
 	private lateinit var menuOptions: Menu
 	
@@ -55,11 +57,12 @@ class EventDetailActivity : BaseActivity() {
 		
 		eventId = intent.getLongExtra(EVENT_ID, 0)
 		isEditable = intent.getBooleanExtra(EVENT_EDITABLE, false)
+		showMenu = intent.getBooleanExtra(EVENT_SHOW_MENU, false)
 		
 		observeViewModel()
 		
 		eventId?.let {
-			viewModel.getEvent(it)
+			viewModel.getEvent(it, false)
 		}
 		
 		setupToolbar(toolbar)
@@ -75,12 +78,13 @@ class EventDetailActivity : BaseActivity() {
 	
 	override fun onCreateOptionsMenu(menu: Menu?): Boolean {
 		Timber.d("onCreateOptionsMenu")
-		
-		val inflater = menuInflater
-		inflater.inflate(R.menu.menu_fragment_detail, menu)
-		menuOptions = menu!!
-		if (!isEditable) {
-			menu.findItem(R.id.edit)?.isVisible = false
+		if (showMenu) {
+			val inflater = menuInflater
+			inflater.inflate(R.menu.menu_fragment_detail, menu)
+			menuOptions = menu!!
+			if (!isEditable) {
+				menu.findItem(R.id.edit)?.isVisible = false
+			}
 		}
 		return super.onCreateOptionsMenu(menu)
 	}
@@ -91,9 +95,7 @@ class EventDetailActivity : BaseActivity() {
 				this@EventDetailActivity,
 				NewEventActivity::class.java
 			).apply {
-				putExtra(
-					EVENT_ID, eventId
-				)
+				putExtra(EVENT_ID, eventId)
 			})
 		else if (item.itemId == R.id.delete) {
 			DialogHelper.showDeleteDialog(this, DialogInterface.OnClickListener { _, _ ->

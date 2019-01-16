@@ -16,6 +16,7 @@ class Constants {
 		const val EVENT_EDITABLE = "eventEditable"
 		const val EVENT_STATE = "eventState"
 		const val USER_NAME = "userName"
+		const val EVENT_SHOW_MENU = "eventShowMenu"
 	}
 	
 	enum class EventFilter(val text: String) {

@@ -17,6 +17,7 @@ import gr.tei.erasmus.pp.eventmate.app.App
 import gr.tei.erasmus.pp.eventmate.constants.Constants
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.EVENT_EDITABLE
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.EVENT_ID
+import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.EVENT_SHOW_MENU
 import gr.tei.erasmus.pp.eventmate.constants.Constants.EventFilter.*
 import gr.tei.erasmus.pp.eventmate.data.model.Event
 import gr.tei.erasmus.pp.eventmate.data.model.Event.EventState.*
@@ -36,6 +37,7 @@ class EventsFragment : BaseFragment() {
 	
 	private val viewModel by lazy { ViewModelProviders.of(this).get(EventsViewModel::class.java) }
 	private val sharedPreferenceHelper = App.COMPONENTS.provideSharedPreferencesHelper()
+	private val userRoleHelper = App.COMPONENTS.provideUserRoleHelper()
 	
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 		Timber.v("onCreateView() called with: inflater = [$inflater], container = [$container], savedInstanceState = [$savedInstanceState]")
@@ -189,7 +191,11 @@ class EventsFragment : BaseFragment() {
 		override fun onItemClick(event: Event) {
 			startActivity(Intent(activity, EventDetailActivity::class.java).apply {
 				putExtra(EVENT_ID, event.id)
-				putExtra(EVENT_EDITABLE, event.state == Event.EventState.EDITABLE.name)
+				putExtra(
+					EVENT_EDITABLE,
+					event.state == Event.EventState.EDITABLE.name && userRoleHelper.isSameUser(event.eventOwner)
+				)
+				putExtra(EVENT_SHOW_MENU, userRoleHelper.isSameUser(event.eventOwner))
 			})
 		}
 	}

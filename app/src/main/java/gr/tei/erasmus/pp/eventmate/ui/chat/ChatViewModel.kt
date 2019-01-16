@@ -11,6 +11,7 @@ import gr.tei.erasmus.pp.eventmate.ui.base.LoadingState
 import gr.tei.erasmus.pp.eventmate.ui.base.State
 import gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.guests.UserViewModel
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class ChatViewModel : BaseViewModel() {
 	private val chatRepository = App.COMPONENTS.provideChatRepository()
@@ -28,6 +29,7 @@ class ChatViewModel : BaseViewModel() {
 				val state = if (response.isSuccessful && response.body() != null) {
 					MessageListState(mutableListOf(response.body()!!))
 				} else {
+					Timber.e(response.errorBody()?.string())
 					ErrorState(Throwable(ErrorHelper.getErrorMessageFromHeader(response.headers())))
 				}
 				mStates.postValue(state)
@@ -44,7 +46,8 @@ class ChatViewModel : BaseViewModel() {
 				val state = if (response.isSuccessful && response.body() != null) {
 					MessageListState(response.body()!!)
 				} else {
-					ErrorState(Throwable("Error"))
+					Timber.e(response.errorBody()?.string())
+					ErrorState(Throwable(ErrorHelper.getErrorMessageFromHeader(response.headers())))
 				}
 				mStates.postValue(state)
 			} catch (error: Throwable) {
@@ -61,6 +64,7 @@ class ChatViewModel : BaseViewModel() {
 				val state = if (response.isSuccessful && response.body() != null) {
 					MessageListState(response.body()!!)
 				} else {
+					Timber.e(response.errorBody()?.string())
 					ErrorState(Throwable(ErrorHelper.getErrorMessageFromHeader(response.headers())))
 				}
 				mStates.postValue(state)
@@ -78,6 +82,7 @@ class ChatViewModel : BaseViewModel() {
 				val state = if (response.isSuccessful && response.body() != null) {
 					UserViewModel.AppUserState(response.body()!!)
 				} else {
+					Timber.e(response.errorBody()?.string())
 					ErrorState(Throwable(ErrorHelper.getErrorMessageFromHeader(response.headers())))
 				}
 				mStates.postValue(state)
@@ -95,6 +100,7 @@ class ChatViewModel : BaseViewModel() {
 				val state = if (response.isSuccessful && response.body() != null) {
 					UserViewModel.UserListState(mutableListOf(response.body()!!))
 				} else {
+					Timber.e(response.errorBody()?.string())
 					ErrorState(Throwable(ErrorHelper.getErrorMessageFromHeader(response.headers())))
 				}
 				mStates.postValue(state)

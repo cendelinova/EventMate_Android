@@ -281,4 +281,5 @@
 	<string name="error_more_points_than_max">You are assigning more points than it\'s maximum for the task</string>
 	<string name="error_no_permission_task">We\'re sorry you don\'t have permission for this task</string>
 	<string name="error_no_permission_event">We\'re sorry you don\'t have permission for this event</string>
+	<string name="btn_update_event">Update event</string>
 </resources>

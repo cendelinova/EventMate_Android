@@ -27,6 +27,7 @@ class SubmissionViewModel : BaseViewModel() {
 				val state = if (response.isSuccessful && response.body() != null) {
 					SubmissionState(response.body()!!)
 				} else {
+					Timber.e(response.errorBody()?.string())
 					ErrorState(Throwable(ErrorHelper.getErrorMessageFromHeader(response.headers())))
 				}
 				mStates.postValue(state)
@@ -45,6 +46,7 @@ class SubmissionViewModel : BaseViewModel() {
 				val state = if (response.isSuccessful && response.body() != null) {
 					FinishedState
 				} else {
+					Timber.e(response.errorBody()?.string())
 					ErrorState(Throwable(ErrorHelper.getErrorMessageFromHeader(response.headers())))
 				}
 				
@@ -97,6 +99,7 @@ class SubmissionViewModel : BaseViewModel() {
 				val state = if (response.isSuccessful && response.body() != null) {
 					SubmissionState(response.body()!!)
 				} else {
+					Timber.e(response.errorBody()?.string())
 					ErrorState(Throwable(ErrorHelper.getErrorMessageFromHeader(response.headers())))
 				}
 				mStates.postValue(state)

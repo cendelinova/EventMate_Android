@@ -31,9 +31,13 @@ class ReportViewModel : BaseViewModel() {
 			try {
 				val response = userRepository.getGuests(eventId).await()
 				Timber.d("getEventGuests() $response ${response.isSuccessful}")
-				if (response.isSuccessful && response.body() != null) {
-					mStates.postValue(UserViewModel.UserListState(response.body()!!))
+				val state = if (response.isSuccessful && response.body() != null) {
+					UserViewModel.UserListState(response.body()!!)
+				} else {
+					Timber.e(response.errorBody()?.string())
+					ErrorState(Throwable(ErrorHelper.getErrorMessageFromHeader(response.headers())))
 				}
+				mStates.postValue(state)
 			} catch (error: Throwable) {
 				mStates.postValue(ErrorState(error))
 			}
@@ -49,8 +53,10 @@ class ReportViewModel : BaseViewModel() {
 				val state = if (response.isSuccessful && response.body() != null) {
 					TasksViewModel.TaskListState(response.body()!!)
 				} else {
+					Timber.e(response.errorBody()?.string())
 					ErrorState(Throwable(ErrorHelper.getErrorMessageFromHeader(response.headers())))
 				}
+				mStates.postValue(state)
 			} catch (error: Throwable) {
 				mStates.postValue(ErrorState(error))
 			}
@@ -66,6 +72,7 @@ class ReportViewModel : BaseViewModel() {
 				val state = if (response.isSuccessful && response.body() != null) {
 					ReportState(response.body()!!)
 				} else {
+					Timber.e(response.errorBody()?.string())
 					ErrorState(Throwable(ErrorHelper.getErrorMessageFromHeader(response.headers())))
 				}
 				
@@ -85,9 +92,9 @@ class ReportViewModel : BaseViewModel() {
 				val state = if (response.isSuccessful && response.body() != null) {
 					ReportState(response.body()!!)
 				} else {
+					Timber.e(response.errorBody()?.string())
 					ErrorState(Throwable(ErrorHelper.getErrorMessageFromHeader(response.headers())))
 				}
-				
 				mStates.postValue(state)
 			} catch (error: Throwable) {
 				mStates.postValue(ErrorState(error))
@@ -104,6 +111,7 @@ class ReportViewModel : BaseViewModel() {
 				val state = if (response.isSuccessful && response.body() != null) {
 					FinishedState
 				} else {
+					Timber.e(response.errorBody()?.string())
 					ErrorState(Throwable(ErrorHelper.getErrorMessageFromHeader(response.headers())))
 				}
 				
@@ -123,6 +131,7 @@ class ReportViewModel : BaseViewModel() {
 				val state = if (response.isSuccessful && response.body() != null) {
 					FinishedState
 				} else {
+					Timber.e(response.errorBody()?.string())
 					ErrorState(Throwable(ErrorHelper.getErrorMessageFromHeader(response.headers())))
 				}
 				
@@ -148,6 +157,7 @@ class ReportViewModel : BaseViewModel() {
 					)
 					FinishedState
 				} else {
+					Timber.e(response.errorBody()?.string())
 					ErrorState(Throwable(ErrorHelper.getErrorMessageFromHeader(response.headers())))
 				}
 				
