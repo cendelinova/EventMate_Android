@@ -13,6 +13,7 @@ import gr.tei.erasmus.pp.eventmate.data.model.User
 import gr.tei.erasmus.pp.eventmate.helpers.RestHelper
 import gr.tei.erasmus.pp.eventmate.helpers.authetification.BasicAuthInterceptor
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
@@ -27,10 +28,16 @@ class NetworkModule(private val context: Context, private val user: User?, priva
 	@Singleton
 	fun provideOkHttpClient(): OkHttpClient {
 		val builder = OkHttpClient.Builder()
-		user?.run {
-			builder.addInterceptor(BasicAuthInterceptor(email, password))
+		with(builder) {
+			HttpLoggingInterceptor().apply {
+				level = HttpLoggingInterceptor.Level.HEADERS
+				addInterceptor(this)
+			}
+			user?.run {
+				addInterceptor(BasicAuthInterceptor(email, password))
+			}
 		}
-		
+
 		return builder.build()
 	}
 	@Provides

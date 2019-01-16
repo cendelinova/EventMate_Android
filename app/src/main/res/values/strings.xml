@@ -260,4 +260,25 @@
 	<string name="hint_search_user">Search user</string>
 	<string name="title_game_rank">Game rank</string>
 	<string name="success_login">Success login</string>
+	<string name="error_no_reports_in_event">No reports in the event</string>
+	<string name="error_entity_not_found">We\'re sorry it\'s not available right not.</string>
+	<string name="error_no_submission">No submission</string>
+	<string name="error_user_not_event_owner">You don\'t have permission to do that. You aren\'t event owner.</string>
+	<string name="error_user_not_task_owner">You don\'t have permission to do that. You aren\'t task owner</string>
+	<string name="error_user_not_task_assignee">You dont\' have permission to do that. You aren\'t task assignee.</string>
+	<string name="error_no_permission">You don\'t have permission</string>
+	<string name="error_no_permission_delete_report">You don\'t have permission to delete the report</string>
+	<string name="error_no_permission_send_submission">You don\'t have permission to send submission</string>
+	<string name="error_no_permission_submission_file">You don\'t have permission to manipulate with this file</string>
+	<string name="error_no_permission_edit_task">You don\'t have permission to edit the task</string>
+	<string name="error_no_permission_assign_points">You don\'t have permission to assign points. You aren\'t task owner.</string>
+	<string name="error_email_already_used">We\'re sorry. This email was already taken. Please choose another one.</string>
+	<string name="error_event_name_used">This name for event was already user. Please choose new one</string>
+	<string name="error_task_not_playble_state">Task is not running yet</string>
+	<string name="error_task_not_review_state">Task is not in review state yet</string>
+	<string name="error_event_not_editable_state">Event is not editable anymore</string>
+	<string name="error_event_not_finished_state">Event is not finished yet</string>
+	<string name="error_more_points_than_max">You are assigning more points than it\'s maximum for the task</string>
+	<string name="error_no_permission_task">We\'re sorry you don\'t have permission for this task</string>
+	<string name="error_no_permission_event">We\'re sorry you don\'t have permission for this event</string>
 </resources>

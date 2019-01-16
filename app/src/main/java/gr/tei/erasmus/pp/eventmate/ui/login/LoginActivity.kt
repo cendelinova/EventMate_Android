@@ -20,6 +20,7 @@ import gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.guests.UserViewModel
 import gr.tei.erasmus.pp.eventmate.ui.mainActivity.MainActivity
 import gr.tei.erasmus.pp.eventmate.ui.signup.SignupActivity
 import kotlinx.android.synthetic.main.activity_login.*
+import kotlinx.coroutines.launch
 
 class LoginActivity : BaseActivity() {
 	
@@ -70,6 +71,7 @@ class LoginActivity : BaseActivity() {
 			val userEmail = TextHelper.collectValueFromInput(input_email)
 			val password = TextHelper.collectValueFromInput(input_password)
 			val user = User(userEmail, password)
+			
 			App.COMPONENTS = DaggerAppComponent.builder()
 				.appModule(AppModule(this))
 				.networkModule(NetworkModule(this, user, BuildConfig.SERVER_URL))

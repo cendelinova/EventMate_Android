@@ -10,6 +10,7 @@ import gr.tei.erasmus.pp.eventmate.constants.Constants.EventFilter.*
 import gr.tei.erasmus.pp.eventmate.data.model.Event
 import gr.tei.erasmus.pp.eventmate.data.model.Event.EventState.UNDEFINED_STATE
 import gr.tei.erasmus.pp.eventmate.data.model.EventRequest
+import gr.tei.erasmus.pp.eventmate.helpers.ErrorHelper
 import gr.tei.erasmus.pp.eventmate.ui.base.*
 import gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.guests.UserViewModel
 import kotlinx.coroutines.launch
@@ -36,7 +37,7 @@ class EventsViewModel : BaseViewModel() {
 					EventListState(response.body()!!)
 				} else {
 					Timber.e(response.errorBody()?.string())
-					ErrorState(Throwable("Error"))
+					ErrorState(Throwable(ErrorHelper.getErrorMessage(response.code())))
 				}
 				mStates.postValue(state)
 			} catch (error: Throwable) {
