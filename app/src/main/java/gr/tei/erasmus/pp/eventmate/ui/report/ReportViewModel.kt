@@ -7,6 +7,7 @@ import gr.tei.erasmus.pp.eventmate.app.App
 import gr.tei.erasmus.pp.eventmate.data.model.Email
 import gr.tei.erasmus.pp.eventmate.data.model.ReportRequest
 import gr.tei.erasmus.pp.eventmate.data.model.ReportResponse
+import gr.tei.erasmus.pp.eventmate.helpers.ErrorHelper
 import gr.tei.erasmus.pp.eventmate.helpers.FileHelper
 import gr.tei.erasmus.pp.eventmate.ui.base.*
 import gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.guests.UserViewModel
@@ -45,8 +46,10 @@ class ReportViewModel : BaseViewModel() {
 			try {
 				val response = taskRepository.getEventTasks(eventId).await()
 				Timber.d("getEventTasks() with id: $eventId $response ${response.isSuccessful}")
-				if (response.isSuccessful && response.body() != null) {
-					mStates.postValue(TasksViewModel.TaskListState(response.body()!!))
+				val state = if (response.isSuccessful && response.body() != null) {
+					TasksViewModel.TaskListState(response.body()!!)
+				} else {
+					ErrorState(Throwable(ErrorHelper.getErrorMessageFromHeader(response.headers())))
 				}
 			} catch (error: Throwable) {
 				mStates.postValue(ErrorState(error))
@@ -63,7 +66,7 @@ class ReportViewModel : BaseViewModel() {
 				val state = if (response.isSuccessful && response.body() != null) {
 					ReportState(response.body()!!)
 				} else {
-					ErrorState(Throwable("Error during deleting report"))
+					ErrorState(Throwable(ErrorHelper.getErrorMessageFromHeader(response.headers())))
 				}
 				
 				mStates.postValue(state)
@@ -82,7 +85,7 @@ class ReportViewModel : BaseViewModel() {
 				val state = if (response.isSuccessful && response.body() != null) {
 					ReportState(response.body()!!)
 				} else {
-					ErrorState(Throwable("Error during deleting report"))
+					ErrorState(Throwable(ErrorHelper.getErrorMessageFromHeader(response.headers())))
 				}
 				
 				mStates.postValue(state)
@@ -101,7 +104,7 @@ class ReportViewModel : BaseViewModel() {
 				val state = if (response.isSuccessful && response.body() != null) {
 					FinishedState
 				} else {
-					ErrorState(Throwable("Error during saving report"))
+					ErrorState(Throwable(ErrorHelper.getErrorMessageFromHeader(response.headers())))
 				}
 				
 				mStates.postValue(state)
@@ -120,7 +123,7 @@ class ReportViewModel : BaseViewModel() {
 				val state = if (response.isSuccessful && response.body() != null) {
 					FinishedState
 				} else {
-					ErrorState(Throwable("Error during sharing report"))
+					ErrorState(Throwable(ErrorHelper.getErrorMessageFromHeader(response.headers())))
 				}
 				
 				mStates.postValue(state)
@@ -137,17 +140,16 @@ class ReportViewModel : BaseViewModel() {
 				val response = reportRepository.downloadReport(reportId).await()
 				Timber.d("downloadReport() with id: $reportId $response ${response.isSuccessful}")
 				val state = if (response.isSuccessful && response.body() != null) {
+					FileHelper.saveFileLocally(
+						context,
+						response.body()!!,
+						".pdf",
+						"application/pdf"
+					)
 					FinishedState
 				} else {
-					ErrorState(Throwable("Error during sharing report"))
+					ErrorState(Throwable(ErrorHelper.getErrorMessageFromHeader(response.headers())))
 				}
-				
-				FileHelper.saveFileLocally(
-					context,
-					response.body()!!,
-					".pdf",
-					"application/pdf"
-				)
 				
 				mStates.postValue(state)
 			} catch (error: Throwable) {

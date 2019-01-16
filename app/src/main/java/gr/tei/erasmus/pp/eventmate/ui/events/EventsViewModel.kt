@@ -1,7 +1,6 @@
 package gr.tei.erasmus.pp.eventmate.ui.events
 
 import android.content.Context
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import gr.tei.erasmus.pp.eventmate.app.App
@@ -37,7 +36,7 @@ class EventsViewModel : BaseViewModel() {
 					EventListState(response.body()!!)
 				} else {
 					Timber.e(response.errorBody()?.string())
-					ErrorState(Throwable(ErrorHelper.getErrorMessage(response.code())))
+					ErrorState(Throwable(ErrorHelper.getErrorMessageFromHeader(response.headers())))
 				}
 				mStates.postValue(state)
 			} catch (error: Throwable) {
@@ -51,19 +50,18 @@ class EventsViewModel : BaseViewModel() {
 			mStates.postValue(LoadingState)
 			try {
 				val response = eventRepository.delete(eventId).await()
-				
-				if (response.isSuccessful) {
+				val state = if (response.isSuccessful) {
 					val event = allEvents.find { event -> event.id == eventId }
 					event?.let {
 						allEvents.remove(it)
 						mStates.postValue(EventListState(allEvents, it.name))
 					}
-					mStates.postValue(DeletedState)
+					DeletedState
 				} else {
 					Timber.e(response.errorBody()?.string())
-					mStates.postValue(ErrorState(Throwable("Error")))
+					ErrorState(Throwable(ErrorHelper.getErrorMessageFromHeader(response.headers())))
 				}
-				
+				mStates.postValue(state)
 			} catch (error: Throwable) {
 				mStates.postValue(ErrorState(error))
 			}
@@ -78,7 +76,7 @@ class EventsViewModel : BaseViewModel() {
 				val state = if (response.isSuccessful && response.body() != null) {
 					FinishedState
 				} else {
-					ErrorState(Throwable("Error"))
+					ErrorState(Throwable(ErrorHelper.getErrorMessageFromHeader(response.headers())))
 				}
 				mStates.postValue(state)
 			} catch (error: Throwable) {
@@ -98,7 +96,7 @@ class EventsViewModel : BaseViewModel() {
 					EventListState(mutableListOf(response.body()!!))
 				} else {
 					Timber.e(response.errorBody()?.string())
-					ErrorState(Throwable("Error during getting event"))
+					ErrorState(Throwable(ErrorHelper.getErrorMessageFromHeader(response.headers())))
 				}
 				mStates.postValue(state)
 			} catch (error: Throwable) {
@@ -115,7 +113,7 @@ class EventsViewModel : BaseViewModel() {
 				val state = if (response.isSuccessful && response.body() != null) {
 					UserViewModel.AppUserState(response.body()!!)
 				} else {
-					ErrorState(Throwable(response.message()))
+					ErrorState(Throwable(ErrorHelper.getErrorMessageFromHeader(response.headers())))
 				}
 				mStates.postValue(state)
 			} catch (error: Throwable) {
@@ -133,7 +131,7 @@ class EventsViewModel : BaseViewModel() {
 					FinishedState
 				} else {
 					Timber.e(response?.errorBody()?.string())
-					ErrorState(Throwable("Error"))
+					ErrorState(Throwable(ErrorHelper.getErrorMessage(response?.code()!!)))
 				}
 				mStates.postValue(state)
 			} catch (error: Throwable) {
@@ -188,8 +186,7 @@ class EventsViewModel : BaseViewModel() {
 					}
 				} else {
 					Timber.e(response.errorBody()?.string())
-					
-					ErrorState(Throwable("Error"))
+					ErrorState(Throwable(ErrorHelper.getErrorMessageFromHeader(response.headers())))
 				}
 				
 				mStates.postValue(state)

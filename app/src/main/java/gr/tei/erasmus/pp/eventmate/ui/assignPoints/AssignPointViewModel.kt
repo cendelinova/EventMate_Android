@@ -1,12 +1,10 @@
 package gr.tei.erasmus.pp.eventmate.ui.assignPoints
 
-import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import gr.tei.erasmus.pp.eventmate.app.App
-import gr.tei.erasmus.pp.eventmate.data.model.SubmissionFile
 import gr.tei.erasmus.pp.eventmate.data.model.UserSubmissionPoints
-import gr.tei.erasmus.pp.eventmate.helpers.FileHelper
+import gr.tei.erasmus.pp.eventmate.helpers.ErrorHelper
 import gr.tei.erasmus.pp.eventmate.ui.base.*
 import gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.tasks.TasksViewModel
 import kotlinx.coroutines.launch
@@ -27,7 +25,7 @@ class AssignPointViewModel : BaseViewModel() {
 				val state = if (response.isSuccessful && response.body() != null) {
 					TasksViewModel.TaskListState(mutableListOf(response.body()!!))
 				} else {
-					ErrorState(Throwable("Error"))
+					ErrorState(Throwable(ErrorHelper.getErrorMessageFromHeader(response.headers())))
 				}
 				mStates.postValue(state)
 			} catch (error: Throwable) {
@@ -44,7 +42,7 @@ class AssignPointViewModel : BaseViewModel() {
 				val state = if (response.isSuccessful && response.body() != null) {
 					FinishedState
 				} else {
-					ErrorState(Throwable("Error"))
+					ErrorState(Throwable(ErrorHelper.getErrorMessageFromHeader(response.headers())))
 				}
 				mStates.postValue(state)
 			} catch (error: Throwable) {

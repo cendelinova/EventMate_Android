@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import gr.tei.erasmus.pp.eventmate.app.App
 import gr.tei.erasmus.pp.eventmate.data.model.SubmissionFile
 import gr.tei.erasmus.pp.eventmate.data.model.SubmissionResponse
+import gr.tei.erasmus.pp.eventmate.helpers.ErrorHelper
 import gr.tei.erasmus.pp.eventmate.helpers.FileHelper
 import gr.tei.erasmus.pp.eventmate.ui.base.*
 import kotlinx.coroutines.launch
@@ -23,9 +24,12 @@ class SubmissionViewModel : BaseViewModel() {
 			mStates.postValue(LoadingState)
 			try {
 				val response = submissionRepository.getSubmissions(userId, taskId).await()
-				if (response.isSuccessful && response.body() != null) {
-					mStates.postValue(SubmissionState(response.body()!!))
+				val state = if (response.isSuccessful && response.body() != null) {
+					SubmissionState(response.body()!!)
+				} else {
+					ErrorState(Throwable(ErrorHelper.getErrorMessageFromHeader(response.headers())))
 				}
+				mStates.postValue(state)
 			} catch (error: Throwable) {
 				mStates.postValue(ErrorState(error))
 			}
@@ -38,9 +42,13 @@ class SubmissionViewModel : BaseViewModel() {
 			try {
 				val response = submissionRepository.saveNewSubmissionFile(taskId, submissionFile).await()
 				Timber.d("saveNewSubmissionFile() $response ${response.isSuccessful}")
-				if (response.isSuccessful && response.body() != null) {
-					mStates.postValue(FinishedState)
+				val state = if (response.isSuccessful && response.body() != null) {
+					FinishedState
+				} else {
+					ErrorState(Throwable(ErrorHelper.getErrorMessageFromHeader(response.headers())))
 				}
+				
+				mStates.postValue(state)
 			} catch (error: Throwable) {
 				mStates.postValue(ErrorState(error))
 			}
@@ -89,7 +97,7 @@ class SubmissionViewModel : BaseViewModel() {
 				val state = if (response.isSuccessful && response.body() != null) {
 					SubmissionState(response.body()!!)
 				} else {
-					ErrorState(Throwable("Error"))
+					ErrorState(Throwable(ErrorHelper.getErrorMessageFromHeader(response.headers())))
 				}
 				mStates.postValue(state)
 			} catch (error: Throwable) {

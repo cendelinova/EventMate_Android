@@ -20,10 +20,8 @@ import javax.inject.Singleton
 
 @Module
 class NetworkModule(private val context: Context, private val user: User?, private val restApiUrl: String) {
-	private val sharedPreferenceHelper by lazy {
-		PreferenceManager.getDefaultSharedPreferences(context)
-	}
 	
+
 	@Provides
 	@Singleton
 	fun provideOkHttpClient(): OkHttpClient {

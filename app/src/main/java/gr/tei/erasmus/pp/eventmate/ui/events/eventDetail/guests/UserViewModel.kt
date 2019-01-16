@@ -11,6 +11,7 @@ import gr.tei.erasmus.pp.eventmate.data.model.*
 import gr.tei.erasmus.pp.eventmate.di.AppModule
 import gr.tei.erasmus.pp.eventmate.di.DaggerAppComponent
 import gr.tei.erasmus.pp.eventmate.di.NetworkModule
+import gr.tei.erasmus.pp.eventmate.helpers.ErrorHelper
 import gr.tei.erasmus.pp.eventmate.ui.base.*
 import kotlinx.coroutines.launch
 
@@ -32,12 +33,10 @@ class UserViewModel : BaseViewModel() {
 			mStates.postValue(LoadingState)
 			try {
 				val response = userRepository.getGuests(eventId).await()
-				if (response.isSuccessful && response.body() != null) {
-					mStates.postValue(
-						UserListState(
-							response.body()!!
-						)
-					)
+				val state = if (response.isSuccessful && response.body() != null) {
+					UserListState(response.body()!!)
+				} else {
+					ErrorState(Throwable(ErrorHelper.getErrorMessageFromHeader(response.headers())))
 				}
 			} catch (error: Throwable) {
 				mStates.postValue(ErrorState(error))
@@ -53,7 +52,7 @@ class UserViewModel : BaseViewModel() {
 				val state = if (response.isSuccessful && response.body() != null) {
 					UserListState(mutableListOf(response.body()!!))
 				} else {
-					ErrorState(Throwable("Error"))
+					ErrorState(Throwable(ErrorHelper.getErrorMessageFromHeader(response.headers())))
 				}
 				mStates.postValue(state)
 			} catch (error: Throwable) {
@@ -66,9 +65,9 @@ class UserViewModel : BaseViewModel() {
 		launch {
 			mStates.postValue(LoadingState)
 			try {
-				val result = userRepository.register(userRequest).await()
-				if (result.isSuccessful && result.body() != null) {
-					val user = result.body()!!
+				val response = userRepository.register(userRequest).await()
+				val state = if (response.isSuccessful && response.body() != null) {
+					val user = response.body()!!
 					sharedPreferenceHelper.saveLong(USER_ID, user.id!!)
 					sharedPreferenceHelper.saveString(USER_MAIL, user.email)
 					sharedPreferenceHelper.saveString(USER_PASSWORD, userRequest.password)
@@ -84,9 +83,13 @@ class UserViewModel : BaseViewModel() {
 							)
 						)
 						.build()
+					
+					FinishedState
+				} else {
+					ErrorState(Throwable(ErrorHelper.getErrorMessageFromHeader(response.headers())))
 				}
 				
-				mStates.postValue(FinishedState)
+				mStates.postValue(state)
 			} catch (error: Throwable) {
 				mStates.postValue(ErrorState(error))
 			}
@@ -101,7 +104,7 @@ class UserViewModel : BaseViewModel() {
 				val state = if (response.isSuccessful && response.body() != null) {
 					UserListState(mutableListOf(response.body()!!))
 				} else {
-					ErrorState(Throwable("Error"))
+					ErrorState(Throwable(ErrorHelper.getErrorMessageFromHeader(response.headers())))
 				}
 				
 				mStates.postValue(state)
@@ -119,7 +122,7 @@ class UserViewModel : BaseViewModel() {
 				val state = if (response.isSuccessful && response.body() != null) {
 					FinishedState
 				} else {
-					ErrorState(Throwable("Error"))
+					ErrorState(Throwable(ErrorHelper.getErrorMessageFromHeader(response.headers())))
 				}
 				
 				mStates.postValue(state)
@@ -137,7 +140,7 @@ class UserViewModel : BaseViewModel() {
 				val state = if (response.isSuccessful && response.body() != null) {
 					AppUserState(response.body()!!)
 				} else {
-					ErrorState(Throwable(response.message()))
+					ErrorState(Throwable(ErrorHelper.getErrorMessageFromHeader(response.headers())))
 				}
 				mStates.postValue(state)
 			} catch (error: Throwable) {
@@ -155,7 +158,7 @@ class UserViewModel : BaseViewModel() {
 					val guests = (response.body()!! as Event).guests
 					guests?.let { UserViewModel.UserListState(it) }
 				} else {
-					ErrorState(Throwable("Error"))
+					ErrorState(Throwable(ErrorHelper.getErrorMessageFromHeader(response.headers())))
 				}
 				mStates.postValue(state)
 			} catch (error: Throwable) {

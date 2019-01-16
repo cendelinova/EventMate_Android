@@ -20,16 +20,17 @@ class TaskRepository(private val restHelper: RestHelper, private val taskDao: Ta
 	
 	fun getTask(taskId: Long) = restHelper.getTask(taskId)
 	
-	suspend fun insert(task: TaskRequest) {
-		val result = restHelper.insertTask(task).await()
-		Timber.v("Result of adding new task $result")
-		if (result.isSuccessful && result.body() != null) {
-			Timber.v("Success add new task ${result.body()}")
-			Task.convertToEntity(result.body()!!).also {
-				taskDao.insert(it)
-			}
-		}
-	}
+	suspend fun insert(task: TaskRequest) = restHelper.insertTask(task)
+//	{
+//		val result = restHelper.insertTask(task).await()
+////		Timber.v("Result of adding new task $result")
+////		if (result.isSuccessful && result.body() != null) {
+////			Timber.v("Success add new task ${result.body()}")
+////			Task.convertToEntity(result.body()!!).also {
+////				taskDao.insert(it)
+////			}
+////		}
+//	}
 
 //	fun delete(taskEntity: TaskEntity) = taskDao.delete(taskEntity.uid)
 	

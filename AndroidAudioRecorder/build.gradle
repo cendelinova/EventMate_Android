@@ -14,12 +14,13 @@ android {
     buildTypes {
         buildTypes {
             debug {
-                buildConfigField "String", "SERVER_URL", '"http://192.168.137.1:8080/"'
+//                buildConfigField "String", "SERVER_URL", '"http://192.168.137.1:8080/"'
+                buildConfigField "String", "SERVER_URL", '"http://192.168.137.107:8080/"'
             }
 
             debugWithReleaseServer {
                 initWith debug
-                buildConfigField "String", "SERVER_URL", '"http://192.168.137.1:8080/'
+                buildConfigField "String", "SERVER_URL", '"http://192.168.137.107:8080/'
             }
 
             release {

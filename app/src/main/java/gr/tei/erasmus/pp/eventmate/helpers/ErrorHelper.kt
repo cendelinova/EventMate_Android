@@ -1,11 +1,17 @@
 package gr.tei.erasmus.pp.eventmate.helpers
 
-import android.content.Context
 import android.content.res.Resources
 import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.helpers.ErrorHelper.ErrorType.*
+import okhttp3.Headers
 
 object ErrorHelper {
+	
+	private const val ERROR_HEADER = "c-error-code"
+	
+	fun getErrorMessageFromHeader(headers: Headers): String {
+		return headers.get(ERROR_HEADER)?.toInt()?.let { getErrorMessage(it) }.toString()
+	}
 	
 	fun getErrorMessage(errorCode: Int): String {
 		

@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import gr.tei.erasmus.pp.eventmate.app.App
 import gr.tei.erasmus.pp.eventmate.data.model.TaskRequest
+import gr.tei.erasmus.pp.eventmate.helpers.ErrorHelper
 import gr.tei.erasmus.pp.eventmate.ui.base.*
 import gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.guests.UserViewModel
 import gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.tasks.TasksViewModel
@@ -23,8 +24,13 @@ class NewTaskViewModel : BaseViewModel() {
 		launch {
 			mStates.postValue(LoadingState)
 			try {
-				taskRepository.insert(task)
-				mStates.postValue(FinishedState)
+				val response = taskRepository.insert(task).await()
+				val state = if (response.isSuccessful && response.body() != null) {
+					FinishedState
+				} else {
+					ErrorState(Throwable(ErrorHelper.getErrorMessageFromHeader(response.headers())))
+				}
+				mStates.postValue(state)
 			} catch (error: Throwable) {
 				mStates.postValue(ErrorState(error))
 			}
@@ -39,7 +45,7 @@ class NewTaskViewModel : BaseViewModel() {
 				val state = if (response.isSuccessful && response.body() != null) {
 					UserViewModel.UserListState(response.body()!!)
 				} else {
-					ErrorState(Throwable("Error"))
+					ErrorState(Throwable(ErrorHelper.getErrorMessageFromHeader(response.headers())))
 				}
 				mStates.postValue(state)
 			} catch (error: Throwable) {
@@ -56,7 +62,7 @@ class NewTaskViewModel : BaseViewModel() {
 				val state = if (response.isSuccessful && response.body() != null) {
 					TasksViewModel.TaskListState(mutableListOf(response.body()!!))
 				} else {
-					ErrorState(Throwable("Error"))
+					ErrorState(Throwable(ErrorHelper.getErrorMessageFromHeader(response.headers())))
 				}
 				mStates.postValue(state)
 			} catch (error: Throwable) {

@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import gr.tei.erasmus.pp.eventmate.app.App
 import gr.tei.erasmus.pp.eventmate.data.model.Task
+import gr.tei.erasmus.pp.eventmate.helpers.ErrorHelper
 import gr.tei.erasmus.pp.eventmate.ui.base.BaseViewModel
 import gr.tei.erasmus.pp.eventmate.ui.base.ErrorState
 import gr.tei.erasmus.pp.eventmate.ui.base.LoadingState
@@ -27,7 +28,7 @@ class TasksViewModel : BaseViewModel() {
 				val state = if (response.isSuccessful && response.body() != null) {
 					TaskListState(response.body()!!)
 				} else {
-					ErrorState(Throwable("Error"))
+					ErrorState(Throwable(ErrorHelper.getErrorMessageFromHeader(response.headers())))
 				}
 				mStates.postValue(state)
 			} catch (error: Throwable) {
@@ -44,7 +45,7 @@ class TasksViewModel : BaseViewModel() {
 				val state = if (response.isSuccessful && response.body() != null) {
 					TaskListState(mutableListOf(response.body()!!))
 				} else {
-					ErrorState(Throwable("Error"))
+					ErrorState(Throwable(ErrorHelper.getErrorMessageFromHeader(response.headers())))
 				}
 				mStates.postValue(state)
 			} catch (error: Throwable) {
@@ -61,7 +62,7 @@ class TasksViewModel : BaseViewModel() {
 				val state = if (response.isSuccessful && response.body() != null) {
 					TaskListState(response.body()!!)
 				} else {
-					ErrorState(Throwable("Error"))
+					ErrorState(Throwable(ErrorHelper.getErrorMessageFromHeader(response.headers())))
 				}
 				mStates.postValue(state)
 			} catch (error: Throwable) {
@@ -83,7 +84,7 @@ class TasksViewModel : BaseViewModel() {
 //					}
 					TaskListState(mutableListOf(response.body()!!))
 				} else {
-					ErrorState(Throwable("Error"))
+					ErrorState(Throwable(ErrorHelper.getErrorMessageFromHeader(response.headers())))
 				}
 				
 				mStates.postValue(state)
