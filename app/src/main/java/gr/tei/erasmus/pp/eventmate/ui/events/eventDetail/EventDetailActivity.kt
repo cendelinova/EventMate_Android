@@ -14,7 +14,6 @@ import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.tabs.TabLayout
 import gr.tei.erasmus.pp.eventmate.R
-import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.EVENT_ADD_GUESTS
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.EVENT_ADD_TASKS
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.EVENT_ID
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.EVENT_SHOW_MENU
@@ -25,11 +24,15 @@ import gr.tei.erasmus.pp.eventmate.helpers.FileHelper
 import gr.tei.erasmus.pp.eventmate.helpers.StateHelper
 import gr.tei.erasmus.pp.eventmate.ui.base.*
 import gr.tei.erasmus.pp.eventmate.ui.events.EventsViewModel
+import gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.guests.GuestsFragment
+import gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.tasks.TasksFragment
 import gr.tei.erasmus.pp.eventmate.ui.events.newEvent.NewEventActivity
 import gr.tei.erasmus.pp.eventmate.ui.mainActivity.MainActivity
 import gr.tei.erasmus.pp.eventmate.ui.report.ReportListActivity
 import kotlinx.android.synthetic.main.activity_event_detail.*
 import timber.log.Timber
+import kotlinx.android.synthetic.main.fragment_guests.btn_add_guests as AddGuest
+import kotlinx.android.synthetic.main.fragment_tasks.btn_add_task as AddTask
 
 
 class EventDetailActivity : BaseActivity() {
@@ -41,9 +44,6 @@ class EventDetailActivity : BaseActivity() {
 	var eventId: Long? = null
 	
 	private var event: Event? = null
-	
-	private var canAddTasks = false
-	private var canAddGuests = false
 	private var showMenu = false
 	
 	private lateinit var menuOptions: Menu
@@ -58,8 +58,6 @@ class EventDetailActivity : BaseActivity() {
 		setContentView(R.layout.activity_event_detail)
 		
 		eventId = intent.getLongExtra(EVENT_ID, 0)
-		canAddTasks = intent.getBooleanExtra(EVENT_ADD_TASKS, false)
-		canAddGuests = intent.getBooleanExtra(EVENT_ADD_GUESTS, false)
 		
 		showMenu = intent.getBooleanExtra(EVENT_SHOW_MENU, false)
 		
@@ -86,9 +84,6 @@ class EventDetailActivity : BaseActivity() {
 			val inflater = menuInflater
 			inflater.inflate(R.menu.menu_fragment_detail, menu)
 			menuOptions = menu!!
-			if (!canAddTasks) {
-				menu.findItem(R.id.edit)?.isVisible = false
-			}
 		}
 		return super.onCreateOptionsMenu(menu)
 	}
@@ -118,15 +113,7 @@ class EventDetailActivity : BaseActivity() {
 		tabs.setupWithViewPager(view_pager)
 		tabs.addOnTabSelectedListener(selectTabListener)
 		setupTabIcons()
-//		if (view_pager.currentItem == TASKS_TAB) {
-//			btn_add.setOnClickListener {
-//				startActivity(Intent(this, NewTaskActivity::class.java).apply {
-//					putExtra(EVENT_ID, eventId)
-//				})
-//			}
-//		} else if (view_pager.currentItem == GUESTS_TAB){
-//
-//		}
+		
 	}
 	
 	
@@ -199,15 +186,23 @@ class EventDetailActivity : BaseActivity() {
 				
 			})
 			
-			if (state != Event.EventState.EDITABLE) {
-				canAddTasks = false
+			eventOwner?.run {
+				supportFragmentManager.fragments.forEach {
+					if (it is TasksFragment) {
+						StateHelper.toggleButton(this, state, it.AddTask)
+					} else if (it is GuestsFragment) {
+						StateHelper.toggleButton(this, state, it.AddGuest)
+					}
+				}
 			}
+			
+			if (state != Event.EventState.EDITABLE) {
+				showMenu = false
+			}
+			invalidateOptionsMenu()
 		}
 		
 	}
-	
-	fun canAddTasks() = canAddTasks
-	fun canAddGuests() = canAddGuests
 	
 	// Observer
 	private val observeEventProgressState = Observer<State> { state ->
@@ -222,14 +217,7 @@ class EventDetailActivity : BaseActivity() {
 				StateHelper.toggleProgress(progress, false)
 				event = state.events[0]
 				setupLayout(event)
-			}
-			is EventsViewModel.ReadyToPlayEvent -> {
-				StateHelper.toggleProgress(progress, false)
-				finish()
-				startActivity(Intent(this, EventDetailActivity::class.java).apply {
-					putExtra(EVENT_ID, state.event.id)
-					putExtra(EVENT_ADD_TASKS, false)
-				})
+				
 			}
 		}
 	}

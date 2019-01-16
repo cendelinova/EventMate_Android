@@ -50,7 +50,6 @@ class GuestsFragment : BaseFragment() {
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		eventId = arguments?.getLong(Constants.EVENT_ID)
-		Timber.v("AAAA onCreate() $eventId")
 		
 	}
 	
@@ -63,7 +62,6 @@ class GuestsFragment : BaseFragment() {
 		initializeRecyclerView()
 		observeViewModel()
 		
-		Timber.v("AAAA onViewCreated $eventId")
 		eventId?.let {
 			viewModel.getGuests(it)
 		}
@@ -76,15 +74,14 @@ class GuestsFragment : BaseFragment() {
 			viewModel.getAppUsers()
 		}
 		
-		btn_add_guests.visibility =
-				if ((activity as EventDetailActivity).canAddGuests()) View.VISIBLE else View.GONE
+//		btn_add_guests.visibility =
+//				if ((activity as EventDetailActivity).canAddGuests()) View.VISIBLE else View.GONE
 	}
 	
 	/**
 	 * We have blacklist items obtained, initialize recyclerView and display them.
 	 */
 	private fun initializeRecyclerView() {
-		Timber.v("AAAA initializeRecyclerView() called")
 		
 		guestAdapter = UserAdapter(
 			context!!,
@@ -128,10 +125,8 @@ class GuestsFragment : BaseFragment() {
 				swipe_layout.isRefreshing = false
 				toggleProgress(progress, false)
 				guestAdapter.updateUserList(state.users)
-				Timber.v("AAAA guests: ${state.users}")
 			}
 			is UserViewModel.AppUserState -> {
-				Timber.v("AAAA dalsi: ${state.appUsers}")
 				StateHelper.toggleProgress(progress, false)
 				users = state.appUsers.filter { u -> !userRoleHelper.isSameUser(u) }.toMutableList()
 				setupGuestsInvitationDialog()

@@ -182,11 +182,7 @@ class EventsViewModel : BaseViewModel() {
 			try {
 				val response = eventRepository.changeEventStatus(eventId).await()
 				val state = if (response.isSuccessful && response.body() != null) {
-					val eventState = Event.EventState.valueOf(response.body()!!.state)
-					if (eventState == Event.EventState.READY_TO_PLAY) ReadyToPlayEvent(response.body()!!)
-					else {
-						EventListState(mutableListOf(response.body()!!))
-					}
+					EventListState(mutableListOf(response.body()!!))
 				} else {
 					Timber.e(response.errorBody()?.string())
 					ErrorState(Throwable(ErrorHelper.getErrorMessageFromHeader(response.headers())))
@@ -198,8 +194,6 @@ class EventsViewModel : BaseViewModel() {
 			}
 		}
 	}
-	
-	data class ReadyToPlayEvent(val event: Event) : State()
 	
 	data class EventListState(
 		val events: MutableList<Event>,

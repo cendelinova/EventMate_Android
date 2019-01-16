@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.app.App
+import gr.tei.erasmus.pp.eventmate.constants.Constants
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.EVENT_ID
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.SUBMISSION_EXTRA
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.TASK_ID
@@ -65,6 +66,16 @@ class TaskDetailActivity : BaseActivity() {
 			viewModel.getTask(it)
 		}
 		
+	}
+	
+	override fun onBackPressed() {
+		super.onBackPressed()
+		finish()
+		startActivity(Intent(this, EventDetailActivity::class.java).apply {
+			putExtra(EVENT_ID, eventId)
+			putExtra(Constants.EVENT_ADD_TASKS, false)
+			putExtra(Constants.EVENT_ADD_GUESTS, false)
+		})
 	}
 	
 	private fun observeViewModel() {
@@ -123,8 +134,8 @@ class TaskDetailActivity : BaseActivity() {
 				})
 			}
 			is TasksViewModel.TaskListState -> {
+				task = state.tasks[0]
 				if (state.render) {
-					finish()
 					startActivity(Intent(this, TaskDetailActivity::class.java).apply {
 						putExtra(TASK_ID, task.id)
 						putExtra(EVENT_ID, eventId)
@@ -133,11 +144,12 @@ class TaskDetailActivity : BaseActivity() {
 							userRoleHelper.isSameUser(task.taskOwner) && Task.TaskState.valueOf(task.taskState) == Task.TaskState.EDITABLE
 						)
 					})
+//					finish()
+					
 				}
 				swipe_layout.isRefreshing = false
 				StateHelper.toggleProgress(progress, false)
 				setupLayout(state.tasks[0])
-				task = state.tasks[0]
 			}
 		}
 	}

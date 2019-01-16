@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
 import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.app.App
@@ -35,13 +36,10 @@ class TasksFragment : BaseFragment() {
 	
 	private var eventId: Long? = null
 	
-	private lateinit var addTaskBtn: MaterialButton
-	
 	private val userRoleHelper = App.COMPONENTS.provideUserRoleHelper()
 	
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
-		Timber.d("AAAA onCreate")
 		eventId = arguments?.getLong(EVENT_ID)
 	}
 	
@@ -58,7 +56,6 @@ class TasksFragment : BaseFragment() {
 		observeViewModel()
 		handleAddNewTask()
 		
-		addTaskBtn = btn_add_task
 		
 		eventId?.let { viewModel.getTasks(it) }
 	}
@@ -78,7 +75,7 @@ class TasksFragment : BaseFragment() {
 		with(task_recycler_view) {
 			setHasFixedSize(true)
 			setEmptyView(tasks_empty_view)
-			layoutManager = LinearLayoutManager(context!!)
+			layoutManager = LinearLayoutManager(context!!) as RecyclerView.LayoutManager?
 			adapter = taskAdapter
 		}
 		
@@ -99,8 +96,7 @@ class TasksFragment : BaseFragment() {
 				putExtra(EVENT_ID, eventId)
 			})
 		}
-		btn_add_task.visibility =
-				if ((activity as EventDetailActivity).canAddTasks()) View.VISIBLE else View.GONE
+
 	}
 	
 	private val taskItemListener = object :

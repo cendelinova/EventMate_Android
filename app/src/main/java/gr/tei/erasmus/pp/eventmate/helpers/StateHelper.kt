@@ -2,8 +2,10 @@ package gr.tei.erasmus.pp.eventmate.helpers
 
 import android.view.View
 import android.widget.ProgressBar
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
+import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.app.App
 import gr.tei.erasmus.pp.eventmate.data.model.Event
 import gr.tei.erasmus.pp.eventmate.data.model.Event.EventState.*
@@ -13,6 +15,18 @@ import gr.tei.erasmus.pp.eventmate.data.model.User
 import timber.log.Timber
 
 object StateHelper {
+	
+	fun toggleButton(eventOwner: User, state: Event.EventState, button: MaterialButton) {
+		val userRoleHelper = App.COMPONENTS.provideUserRoleHelper()
+		button.visibility = when (state) {
+			EDITABLE -> {
+				if (button.id != R.id.btn_add_guests && !userRoleHelper.isSameUser(eventOwner)) {
+					View.GONE
+				} else View.VISIBLE
+			}
+			READY_TO_PLAY, IN_PLAY, UNDER_EVALUATION, FINISHED, UNDEFINED_STATE -> View.GONE
+		}
+	}
 	
 	
 	/**

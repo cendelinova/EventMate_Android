@@ -5,6 +5,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import gr.tei.erasmus.pp.eventmate.R
+import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.TASK_ID
 import gr.tei.erasmus.pp.eventmate.data.model.Task
 import gr.tei.erasmus.pp.eventmate.data.model.User
 import gr.tei.erasmus.pp.eventmate.data.model.UserSubmissionPoints
@@ -26,6 +27,8 @@ class AssignPointsActivity : BaseActivity() {
 	private var assignees = mutableListOf<User>()
 	private var maxPoints = 0
 	
+	private var taskId: Long? = null
+	
 	private val userSubmissionPointList = mutableListOf<UserSubmissionPoints>()
 	
 	override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,16 +36,19 @@ class AssignPointsActivity : BaseActivity() {
 		setContentView(R.layout.activity_assign_points)
 		
 		setupToolbar(toolbar)
-		
+		taskId = intent.getLongExtra(TASK_ID, 0)
 		observeViewModel()
-		// todo real
-		viewModel.getTask(8)
+		
+		taskId?.let {
+			viewModel.getTask(it)
+		}
+		
 		handleFab()
 	}
 	
 	private fun handleFab() {
 		state_fab.setOnClickListener {
-			viewModel.assignPoints(8, userSubmissionPointList)
+			taskId?.let { it1 -> viewModel.assignPoints(it1, userSubmissionPointList) }
 		}
 	}
 	
@@ -74,10 +80,11 @@ class AssignPointsActivity : BaseActivity() {
 		with(task) {
 			task_name.text = name
 			task_status_icon.setImageResource(R.drawable.ic_task_under_evaluation)
-			tasks_status.text = getString(R.string.task_state_maximum_points, maxPoints.toString())
+			tasks_status.text = getString(R.string.task_state_maximum_points, points.toString())
 			task_photo.setImageBitmap(photo?.let { FileHelper.decodeImage(it) })
 			this@AssignPointsActivity.assignees = assignees?.toMutableList() ?: mutableListOf()
 			this@AssignPointsActivity.maxPoints = points
+			
 		}
 		initializeRecyclerView()
 		assignPointAdapter.updateList(assignees)
@@ -104,13 +111,9 @@ class AssignPointsActivity : BaseActivity() {
 		override fun onSetPoint(userId: Long, points: Int) {
 			
 			try {
-				userSubmissionPointList.first { p -> p.idUser == userId }.also {
-					it.points = points.toLong()
-				}
+				userSubmissionPointList.first { p -> p.idUser == userId }.points = points.toLong()
 			} catch (e: NoSuchElementException) {
-				userSubmissionPointList.add(
-					UserSubmissionPoints(userId, points.toLong())
-				)
+				userSubmissionPointList.add(UserSubmissionPoints(userId, points.toLong()))
 			}
 			
 		}
