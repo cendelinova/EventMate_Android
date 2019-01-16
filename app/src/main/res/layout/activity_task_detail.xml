@@ -161,13 +161,24 @@
 	
 	</LinearLayout>
 	
-	<gr.tei.erasmus.pp.eventmate.ui.common.RecyclerViewEmptyViewSupport
-		android:id="@+id/assignee_recycler_view"
-		android:layout_width="0dp"
+	
+	
+	<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+		android:id="@+id/swipe_layout"
 		android:layout_height="wrap_content"
+		android:layout_width="0dp"
+		android:layout_marginTop="@dimen/spacing_normal"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@id/grid" />
+		app:layout_constraintTop_toBottomOf="@id/grid">
+		
+		<gr.tei.erasmus.pp.eventmate.ui.common.RecyclerViewEmptyViewSupport
+			android:id="@+id/assignee_recycler_view"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:scrollbars="none" />
+	</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+	
 	
 	<com.google.android.material.floatingactionbutton.FloatingActionButton
 		android:id="@+id/fab"

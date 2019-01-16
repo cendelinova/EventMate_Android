@@ -50,6 +50,7 @@ class NewTaskActivity : BaseActivity(), Validator.ValidationListener, IPickResul
 	private var taskId: Long? = null
 	
 	private var isEdit = false
+	private var photoPicked = false
 	
 	private var users: MutableList<User> = mutableListOf()
 	
@@ -69,8 +70,6 @@ class NewTaskActivity : BaseActivity(), Validator.ValidationListener, IPickResul
 		observeViewModel()
 		eventId = intent.getLongExtra(EVENT_ID, 0)
 		
-		viewModel.getEventGuests(eventId!!)
-		
 		if (intent.hasExtra(TASK_ID)) {
 			taskId = intent.getLongExtra(TASK_ID, 0)
 			isEdit = true
@@ -79,7 +78,7 @@ class NewTaskActivity : BaseActivity(), Validator.ValidationListener, IPickResul
 		}
 		
 		setupChoosingPhotoDialog()
-		setupPickAssigneesDialog()
+		handlePickAssignees()
 		initInputs()
 		handleSaveBtn()
 	}
@@ -87,28 +86,36 @@ class NewTaskActivity : BaseActivity(), Validator.ValidationListener, IPickResul
 	override fun onPickResult(pickResult: PickResult?) {
 		pickResult?.let {
 			Picasso.get().load(pickResult.uri).into(task_photo)
+			photoPicked = true
+		}
+	}
+	
+	
+	private fun handlePickAssignees() {
+		btn_choose_assignees.setOnClickListener {
+			eventId?.let { it1 -> viewModel.getEventGuests(it1) }
 		}
 	}
 	
 	private fun setupPickAssigneesDialog() {
-		btn_choose_assignees.setOnClickListener {
-			val pickUserListener = object : ReportGuestAdapter.ReportListener {
-				override fun onReportGuestPick(user: User, isChecked: Boolean) {
-					if (isChecked) {
-						assignees.add(user)
-					} else {
-						assignees.remove(user)
-					}
+		
+		val pickUserListener = object : ReportGuestAdapter.ReportListener {
+			override fun onReportGuestPick(user: User, isChecked: Boolean) {
+				if (isChecked) {
+					assignees.add(user)
+				} else {
+					assignees.remove(user)
 				}
 			}
-			
-			val userAdapter = ReportGuestAdapter(this, pickUserListener, users)
-			DialogHelper.showDialogWithAdapter(
-				this, userAdapter,
-				layoutInflater.inflate(R.layout.report_pick_dialog, null),
-				getString(R.string.mgs_pick_assignee), confirmListener, TextHelper.getQueryTextListener(userAdapter)
-			)
 		}
+		
+		val userAdapter = ReportGuestAdapter(this, pickUserListener, users)
+		DialogHelper.showDialogWithAdapter(
+			this, userAdapter,
+			layoutInflater.inflate(R.layout.report_pick_dialog, null),
+			getString(R.string.mgs_pick_assignee), confirmListener, TextHelper.getQueryTextListener(userAdapter)
+		)
+		
 	}
 	
 	private fun setupChoosingPhotoDialog() {
@@ -151,20 +158,28 @@ class NewTaskActivity : BaseActivity(), Validator.ValidationListener, IPickResul
 //				input_time
 //			).toInt()
 		
-		val photo = FileHelper.encodeImage(FileHelper.convertImageViewToBitmap(task_photo))
+		var photo: String? = null
+		if (photoPicked) photo = FileHelper.encodeImage(FileHelper.convertImageViewToBitmap(task_photo))
 		
+		val taskRequest = TaskRequest(
+			eventId!!,
+			name,
+			place,
+			description,
+			points,
+			null, photo, assignees
+		)
 		eventId?.let {
-			viewModel.createTask(
-				TaskRequest(
-					eventId!!,
-					name,
-					place,
-					description,
-					points,
-					null, photo, assignees
+			if (!isEdit) viewModel.createTask(taskRequest) else taskId?.let { it1 ->
+				viewModel.updateTask(
+					it1,
+					taskRequest
 				)
-			)
+			}
+			
 		}
+		
+		
 	}
 	
 	private fun observeViewModel() {
@@ -210,6 +225,7 @@ class NewTaskActivity : BaseActivity(), Validator.ValidationListener, IPickResul
 			is UserViewModel.UserListState -> {
 				toggleProgress(false)
 				users = state.users
+				setupPickAssigneesDialog()
 			}
 		}
 	}

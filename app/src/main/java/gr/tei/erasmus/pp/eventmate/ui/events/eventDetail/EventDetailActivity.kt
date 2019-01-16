@@ -14,7 +14,8 @@ import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.tabs.TabLayout
 import gr.tei.erasmus.pp.eventmate.R
-import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.EVENT_EDITABLE
+import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.EVENT_ADD_GUESTS
+import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.EVENT_ADD_TASKS
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.EVENT_ID
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.EVENT_SHOW_MENU
 import gr.tei.erasmus.pp.eventmate.data.model.Event
@@ -24,11 +25,8 @@ import gr.tei.erasmus.pp.eventmate.helpers.FileHelper
 import gr.tei.erasmus.pp.eventmate.helpers.StateHelper
 import gr.tei.erasmus.pp.eventmate.ui.base.*
 import gr.tei.erasmus.pp.eventmate.ui.events.EventsViewModel
-import gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.EventDetailFragmentAdapter.Companion.GUESTS_TAB
-import gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.EventDetailFragmentAdapter.Companion.TASKS_TAB
 import gr.tei.erasmus.pp.eventmate.ui.events.newEvent.NewEventActivity
 import gr.tei.erasmus.pp.eventmate.ui.mainActivity.MainActivity
-import gr.tei.erasmus.pp.eventmate.ui.newTask.NewTaskActivity
 import gr.tei.erasmus.pp.eventmate.ui.report.ReportListActivity
 import kotlinx.android.synthetic.main.activity_event_detail.*
 import timber.log.Timber
@@ -44,7 +42,8 @@ class EventDetailActivity : BaseActivity() {
 	
 	private var event: Event? = null
 	
-	private var isEditable = false
+	private var canAddTasks = false
+	private var canAddGuests = false
 	private var showMenu = false
 	
 	private lateinit var menuOptions: Menu
@@ -59,7 +58,9 @@ class EventDetailActivity : BaseActivity() {
 		setContentView(R.layout.activity_event_detail)
 		
 		eventId = intent.getLongExtra(EVENT_ID, 0)
-		isEditable = intent.getBooleanExtra(EVENT_EDITABLE, false)
+		canAddTasks = intent.getBooleanExtra(EVENT_ADD_TASKS, false)
+		canAddGuests = intent.getBooleanExtra(EVENT_ADD_GUESTS, false)
+		
 		showMenu = intent.getBooleanExtra(EVENT_SHOW_MENU, false)
 		
 		observeViewModel()
@@ -85,7 +86,7 @@ class EventDetailActivity : BaseActivity() {
 			val inflater = menuInflater
 			inflater.inflate(R.menu.menu_fragment_detail, menu)
 			menuOptions = menu!!
-			if (!isEditable) {
+			if (!canAddTasks) {
 				menu.findItem(R.id.edit)?.isVisible = false
 			}
 		}
@@ -199,13 +200,14 @@ class EventDetailActivity : BaseActivity() {
 			})
 			
 			if (state != Event.EventState.EDITABLE) {
-				isEditable = false
+				canAddTasks = false
 			}
 		}
 		
 	}
 	
-	fun isEditableEvent() = isEditable
+	fun canAddTasks() = canAddTasks
+	fun canAddGuests() = canAddGuests
 	
 	// Observer
 	private val observeEventProgressState = Observer<State> { state ->
@@ -226,7 +228,7 @@ class EventDetailActivity : BaseActivity() {
 				finish()
 				startActivity(Intent(this, EventDetailActivity::class.java).apply {
 					putExtra(EVENT_ID, state.event.id)
-					putExtra(EVENT_EDITABLE, false)
+					putExtra(EVENT_ADD_TASKS, false)
 				})
 			}
 		}

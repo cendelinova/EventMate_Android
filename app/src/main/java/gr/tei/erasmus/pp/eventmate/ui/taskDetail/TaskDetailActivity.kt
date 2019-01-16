@@ -36,6 +36,7 @@ import timber.log.Timber
 class TaskDetailActivity : BaseActivity() {
 	
 	private var taskId: Long? = null
+	private var eventId: Long? = null
 	
 	private lateinit var assigneesAdapter: UserAdapter
 	
@@ -51,6 +52,7 @@ class TaskDetailActivity : BaseActivity() {
 		initializeRecyclerView()
 		setupToolbar(toolbar)
 		taskId = intent.getLongExtra(TASK_ID, 0)
+		eventId = intent.getLongExtra(EVENT_ID,0)
 		
 		observeViewModel()
 		
@@ -88,6 +90,7 @@ class TaskDetailActivity : BaseActivity() {
 				putExtra(
 					TASK_ID, taskId
 				)
+				putExtra(EVENT_ID, eventId)
 			})
 		else if (item.itemId == R.id.delete) {
 			DialogHelper.showDeleteDialog(this, DialogInterface.OnClickListener { _, _ ->
@@ -106,11 +109,13 @@ class TaskDetailActivity : BaseActivity() {
 			is ErrorState -> StateHelper.showError(state.error, progress, task_detail)
 			is FinishedState -> {
 				StateHelper.toggleProgress(progress, false)
+				finish()
 				startActivity(Intent(this, EventDetailActivity::class.java).apply {
-					putExtra(EVENT_ID, 5)
+					putExtra(EVENT_ID, eventId)
 				})
 			}
 			is TasksViewModel.TaskListState -> {
+				swipe_layout.isRefreshing = false
 				StateHelper.toggleProgress(progress, false)
 				setupLayout(state.tasks[0])
 				task = state.tasks[0]
@@ -132,8 +137,6 @@ class TaskDetailActivity : BaseActivity() {
 			}
 			
 			// todo setup male ikonky
-
-
 			
 		}
 		
@@ -156,6 +159,10 @@ class TaskDetailActivity : BaseActivity() {
 			setEmptyView(assignee_empty_view)
 			layoutManager = GridLayoutManager(context!!, 3)
 			adapter = assigneesAdapter
+		}
+		
+		swipe_layout.setOnRefreshListener {
+			taskId?.let { viewModel.getTask(it, false) }
 		}
 	}
 	

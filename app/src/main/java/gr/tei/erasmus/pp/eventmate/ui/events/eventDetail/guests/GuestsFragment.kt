@@ -77,7 +77,7 @@ class GuestsFragment : BaseFragment() {
 		}
 		
 		btn_add_guests.visibility =
-				if ((activity as EventDetailActivity).isEditableEvent()) View.VISIBLE else View.GONE
+				if ((activity as EventDetailActivity).canAddGuests()) View.VISIBLE else View.GONE
 	}
 	
 	/**

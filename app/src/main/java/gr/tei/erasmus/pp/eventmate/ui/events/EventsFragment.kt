@@ -15,7 +15,8 @@ import com.google.android.material.snackbar.Snackbar
 import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.app.App
 import gr.tei.erasmus.pp.eventmate.constants.Constants
-import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.EVENT_EDITABLE
+import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.EVENT_ADD_GUESTS
+import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.EVENT_ADD_TASKS
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.EVENT_ID
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.EVENT_SHOW_MENU
 import gr.tei.erasmus.pp.eventmate.constants.Constants.EventFilter.*
@@ -192,7 +193,10 @@ class EventsFragment : BaseFragment() {
 			startActivity(Intent(activity, EventDetailActivity::class.java).apply {
 				putExtra(EVENT_ID, event.id)
 				putExtra(
-					EVENT_EDITABLE,
+					EVENT_ADD_TASKS, event.state == Event.EventState.EDITABLE.name)
+				
+				putExtra(
+					EVENT_ADD_GUESTS,
 					event.state == Event.EventState.EDITABLE.name && userRoleHelper.isSameUser(event.eventOwner)
 				)
 				putExtra(EVENT_SHOW_MENU, userRoleHelper.isSameUser(event.eventOwner))

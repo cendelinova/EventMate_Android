@@ -46,5 +46,6 @@ class TaskRepository(private val restHelper: RestHelper, private val taskDao: Ta
 	}
 	
 	fun changeTaskStatus(taskId: Long) = restHelper.changeTaskStatus(taskId)
+	fun update(taskId: Long, task: TaskRequest) = restHelper.updateTask(taskId, task)
 	
 }

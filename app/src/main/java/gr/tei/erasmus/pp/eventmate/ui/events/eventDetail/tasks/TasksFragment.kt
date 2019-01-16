@@ -96,13 +96,16 @@ class TasksFragment : BaseFragment() {
 			})
 		}
 		btn_add_task.visibility =
-				if ((activity as EventDetailActivity).isEditableEvent()) View.VISIBLE else View.GONE
+				if ((activity as EventDetailActivity).canAddTasks()) View.VISIBLE else View.GONE
 	}
 	
 	private val taskItemListener = object :
 		TaskAdapter.TaskListener {
 		override fun onTaskClick(task: Task) {
-			startActivity(Intent(activity, TaskDetailActivity::class.java).apply { putExtra(TASK_ID, task.id) })
+			startActivity(Intent(activity, TaskDetailActivity::class.java).apply {
+				putExtra(TASK_ID, task.id)
+				putExtra(EVENT_ID, eventId)
+			})
 		}
 		
 	}

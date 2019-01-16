@@ -38,9 +38,9 @@ class TasksViewModel : BaseViewModel() {
 		}
 	}
 	
-	fun getTask(taskId: Long) {
+	fun getTask(taskId: Long, showProgress: Boolean = true) {
 		launch {
-			mStates.postValue(LoadingState)
+			if (showProgress) mStates.postValue(LoadingState)
 			try {
 				val response = taskRepository.getTask(taskId).await()
 				val state = if (response.isSuccessful && response.body() != null) {
