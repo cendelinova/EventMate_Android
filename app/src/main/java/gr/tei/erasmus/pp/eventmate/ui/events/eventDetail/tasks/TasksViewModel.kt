@@ -1,6 +1,5 @@
 package gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.tasks
 
-import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import gr.tei.erasmus.pp.eventmate.app.App
@@ -20,9 +19,9 @@ class TasksViewModel : BaseViewModel() {
 	val states: LiveData<State>
 		get() = mStates
 	
-	fun getTasks(eventId: Long) {
+	fun getTasks(eventId: Long, showProgress: Boolean = true) {
 		launch {
-			mStates.postValue(LoadingState)
+			if (showProgress) mStates.postValue(LoadingState)
 			try {
 				val response = taskRepository.getEventTasks(eventId).await()
 				val state = if (response.isSuccessful && response.body() != null) {

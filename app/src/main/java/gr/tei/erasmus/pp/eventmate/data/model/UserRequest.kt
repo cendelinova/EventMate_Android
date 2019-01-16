@@ -5,4 +5,6 @@ data class UserRequest(
 	val password: String,
 	val email: String,
 	val photo: String?
-)
+) {
+	constructor(password: String, email: String) : this("", password, email, null)
+}

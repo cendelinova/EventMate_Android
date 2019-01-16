@@ -1,7 +1,11 @@
 package gr.tei.erasmus.pp.eventmate.app
 
 import android.app.Application
+import android.preference.PreferenceManager
 import gr.tei.erasmus.pp.eventmate.BuildConfig
+import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.USER_MAIL
+import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.USER_PASSWORD
+import gr.tei.erasmus.pp.eventmate.data.model.User
 import gr.tei.erasmus.pp.eventmate.di.AppComponent
 import gr.tei.erasmus.pp.eventmate.di.AppModule
 import gr.tei.erasmus.pp.eventmate.di.DaggerAppComponent
@@ -26,10 +30,17 @@ class App : Application() {
 	 */
 	private fun initializeDagger() {
 		Timber.v("initializeDagger() called")
-		
+		val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+		val email: String = sharedPreferences.getString(USER_MAIL, "")
+		val password: String = sharedPreferences.getString(USER_PASSWORD, "")
+		val user = if (email.isNotEmpty() && password.isNotEmpty()) {
+			User(email, password)
+		} else {
+			null
+		}
 		COMPONENTS = DaggerAppComponent.builder()
 			.appModule(AppModule(this))
-			.networkModule(NetworkModule(this, null, BuildConfig.SERVER_URL))
+			.networkModule(NetworkModule(this, user, BuildConfig.SERVER_URL))
 			.build()
 	}
 	

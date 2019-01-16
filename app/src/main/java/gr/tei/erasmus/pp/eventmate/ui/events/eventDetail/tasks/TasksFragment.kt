@@ -77,6 +77,10 @@ class TasksFragment : BaseFragment() {
 			layoutManager = LinearLayoutManager(context!!)
 			adapter = taskAdapter
 		}
+		
+		swipe_layout.setOnRefreshListener {
+			eventId?.let { viewModel.getTasks(it, false) }
+		}
 	}
 	
 	private fun observeViewModel() {
@@ -109,6 +113,7 @@ class TasksFragment : BaseFragment() {
 			is LoadingState -> toggleProgress(progress, true)
 			is ErrorState -> showError(state.error, progress, tasks_fragment)
 			is TasksViewModel.TaskListState -> {
+				swipe_layout.isRefreshing = false
 				toggleProgress(progress, false)
 				taskAdapter.updateTaskList(state.tasks)
 			}

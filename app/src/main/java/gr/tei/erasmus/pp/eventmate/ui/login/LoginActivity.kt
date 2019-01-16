@@ -5,14 +5,10 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import gr.tei.erasmus.pp.eventmate.BuildConfig
 import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.app.App
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.USER_ID
-import gr.tei.erasmus.pp.eventmate.data.model.User
-import gr.tei.erasmus.pp.eventmate.di.AppModule
-import gr.tei.erasmus.pp.eventmate.di.DaggerAppComponent
-import gr.tei.erasmus.pp.eventmate.di.NetworkModule
+import gr.tei.erasmus.pp.eventmate.data.model.UserRequest
 import gr.tei.erasmus.pp.eventmate.helpers.StateHelper
 import gr.tei.erasmus.pp.eventmate.helpers.TextHelper
 import gr.tei.erasmus.pp.eventmate.ui.base.*
@@ -20,9 +16,6 @@ import gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.guests.UserViewModel
 import gr.tei.erasmus.pp.eventmate.ui.mainActivity.MainActivity
 import gr.tei.erasmus.pp.eventmate.ui.signup.SignupActivity
 import kotlinx.android.synthetic.main.activity_login.*
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.runBlocking
-import timber.log.Timber
 
 class LoginActivity : BaseActivity() {
 	
@@ -72,21 +65,9 @@ class LoginActivity : BaseActivity() {
 		btn_login.setOnClickListener {
 			val userEmail = TextHelper.collectValueFromInput(input_email)
 			val password = TextHelper.collectValueFromInput(input_password)
-			val user = User(userEmail, password)
+			val user = UserRequest(password, userEmail)
 			
-			runBlocking {
-				App.COMPONENTS = DaggerAppComponent.builder()
-					.appModule(AppModule(this@LoginActivity))
-					.networkModule(NetworkModule(this@LoginActivity, user, BuildConfig.SERVER_URL))
-					.build()
-				
-				Timber.d("cekame")
-				delay(10000)
-			}
-			
-			Timber.d("docekali jsme %s", App.COMPONENTS.provideOkHttpClient().interceptors()))
-			
-			viewModel.login()
+			viewModel.login(user)
 		}
 	}
 	

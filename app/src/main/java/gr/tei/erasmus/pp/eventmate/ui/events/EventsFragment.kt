@@ -66,6 +66,7 @@ class EventsFragment : BaseFragment() {
 		viewModel.getEvents()
 		setupSwipeAction()
 		prepareChips()
+		
 	}
 	
 	private fun observeViewModel() {
@@ -159,6 +160,10 @@ class EventsFragment : BaseFragment() {
 			layoutManager = LinearLayoutManager(context!!)
 			adapter = eventAdapter
 		}
+		
+		swipe_layout.setOnRefreshListener {
+			viewModel.getEvents(false)
+		}
 	}
 	
 	private fun setupSwipeAction() {
@@ -249,6 +254,7 @@ class EventsFragment : BaseFragment() {
 			is ErrorState -> showError(state.error, progress, events_fragment)
 			is EventsViewModel.EventListState -> {
 				toggleProgress(progress, false)
+				swipe_layout.isRefreshing = false
 				eventAdapter.updateEventList(state.events)
 				state.deleteEventName?.let {
 					Snackbar.make(

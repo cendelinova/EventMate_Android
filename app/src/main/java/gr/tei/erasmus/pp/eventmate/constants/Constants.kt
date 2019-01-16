@@ -6,7 +6,7 @@ class Constants {
 		const val TASK_ID = "taskId"
 		const val USER_ID = "userId"
 		const val USER_MAIL = "userEmail"
-		const val USER_PASSWORD = "userEmail"
+		const val USER_PASSWORD = "userPassword"
 		const val FILTER_EVENT_STATE = "eventStateFilter"
 		const val FILTER_EVENT_ROLE = "eventRoleFilter"
 		const val VIDEO = "video"

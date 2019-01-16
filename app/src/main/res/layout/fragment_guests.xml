@@ -10,15 +10,22 @@
 		android:layout_height="match_parent"
 		android:layout_marginTop="@dimen/spacing_normal">
 		
-		<gr.tei.erasmus.pp.eventmate.ui.common.RecyclerViewEmptyViewSupport
-			android:id="@+id/guest_recycler_view"
+		<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+			android:id="@+id/swipe_layout"
 			android:layout_width="0dp"
 			android:layout_height="wrap_content"
-			android:scrollbars="none"
-			app:fastScrollThumbColor="@color/colorAccent"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toTopOf="parent" />
+			app:layout_constraintTop_toBottomOf="@id/filters">
+			
+			<gr.tei.erasmus.pp.eventmate.ui.common.RecyclerViewEmptyViewSupport
+				android:id="@+id/guest_recycler_view"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:scrollbars="none"
+				app:fastScrollThumbColor="@color/colorAccent" />
+		</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+		
 		
 		<ProgressBar
 			android:id="@+id/progress"
@@ -64,7 +71,7 @@
 			android:layout_marginTop="@dimen/spacing_xhuge"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@id/guest_recycler_view" />
+			app:layout_constraintTop_toBottomOf="@id/swipe_layout" />
 	
 	
 	</androidx.constraintlayout.widget.ConstraintLayout>

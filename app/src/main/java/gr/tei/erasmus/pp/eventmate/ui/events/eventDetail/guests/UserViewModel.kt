@@ -4,9 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import gr.tei.erasmus.pp.eventmate.BuildConfig
 import gr.tei.erasmus.pp.eventmate.app.App
-import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.USER_ID
-import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.USER_MAIL
-import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.USER_PASSWORD
 import gr.tei.erasmus.pp.eventmate.data.model.*
 import gr.tei.erasmus.pp.eventmate.di.AppModule
 import gr.tei.erasmus.pp.eventmate.di.DaggerAppComponent
@@ -14,6 +11,7 @@ import gr.tei.erasmus.pp.eventmate.di.NetworkModule
 import gr.tei.erasmus.pp.eventmate.helpers.ErrorHelper
 import gr.tei.erasmus.pp.eventmate.ui.base.*
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class UserViewModel : BaseViewModel() {
 	
@@ -28,9 +26,9 @@ class UserViewModel : BaseViewModel() {
 	
 	private var allUsers = mutableListOf<Task>()
 	
-	fun getGuests(eventId: Long) {
+	fun getGuests(eventId: Long, showProgress: Boolean = true) {
 		launch {
-			mStates.postValue(LoadingState)
+			if (showProgress) mStates.postValue(LoadingState)
 			try {
 				val response = userRepository.getGuests(eventId).await()
 				val state = if (response.isSuccessful && response.body() != null) {
@@ -65,12 +63,10 @@ class UserViewModel : BaseViewModel() {
 		launch {
 			mStates.postValue(LoadingState)
 			try {
+				Timber.d(" XXXA predregistraci")
 				val response = userRepository.register(userRequest).await()
 				val state = if (response.isSuccessful && response.body() != null) {
-					val user = response.body()!!
-					sharedPreferenceHelper.saveLong(USER_ID, user.id!!)
-					sharedPreferenceHelper.saveString(USER_MAIL, user.email)
-					sharedPreferenceHelper.saveString(USER_PASSWORD, userRequest.password)
+					userRepository.saveUserToSharedPreferences(response.body()!!, userRequest.password)
 					
 					val context = App.COMPONENTS.provideContext()
 					App.COMPONENTS = DaggerAppComponent.builder()
@@ -78,11 +74,12 @@ class UserViewModel : BaseViewModel() {
 						.networkModule(
 							NetworkModule(
 								context,
-								User(user.userName, user.email, userRequest.password),
+								User(userRequest.email, userRequest.password),
 								BuildConfig.SERVER_URL
 							)
 						)
 						.build()
+					Timber.d(" XXXA po registraci")
 					
 					FinishedState
 				} else {
@@ -114,12 +111,22 @@ class UserViewModel : BaseViewModel() {
 		}
 	}
 	
-	fun login() {
+	fun login(userRequest: UserRequest) {
 		launch {
 			mStates.postValue(LoadingState)
 			try {
-				val response = userRepository.getMyProfile().await()
+				val response = userRepository.loginUser(userRequest).await()
 				val state = if (response.isSuccessful && response.body() != null) {
+					App.COMPONENTS = DaggerAppComponent.builder()
+						.appModule(AppModule(App.COMPONENTS.provideContext()))
+						.networkModule(
+							NetworkModule(
+								App.COMPONENTS.provideContext(),
+								User(userRequest.email, userRequest.password),
+								BuildConfig.SERVER_URL
+							)
+						)
+						.build()
 					FinishedState
 				} else {
 					ErrorState(Throwable(ErrorHelper.getErrorMessageFromHeader(response.headers())))

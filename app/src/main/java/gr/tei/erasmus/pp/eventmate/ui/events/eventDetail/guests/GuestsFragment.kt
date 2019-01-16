@@ -93,6 +93,10 @@ class GuestsFragment : BaseFragment() {
 			layoutManager = GridLayoutManager(context!!, 3)
 			adapter = guestAdapter
 		}
+		
+		swipe_layout.setOnRefreshListener {
+			eventId?.let { viewModel.getGuests(it, false) }
+		}
 	}
 	
 	private fun observeViewModel() {
@@ -118,6 +122,7 @@ class GuestsFragment : BaseFragment() {
 				guestAdapter.updateUserList(state.users)
 			}
 			is UserViewModel.AppUserState -> {
+				swipe_layout.isRefreshing = false
 				StateHelper.toggleProgress(progress, false)
 				users = state.appUsers
 			}

@@ -13,6 +13,9 @@ interface UserService {
 	@GET("/user/{id}")
 	fun getUser(@Path("id") id: Long): Deferred<Response<User>>
 	
+	@POST("/public/login")
+	fun loginUser(@Body user: UserRequest): Deferred<Response<User>>
+	
 	@GET("/me")
 	fun getMyProfile(): Deferred<Response<User>>
 	

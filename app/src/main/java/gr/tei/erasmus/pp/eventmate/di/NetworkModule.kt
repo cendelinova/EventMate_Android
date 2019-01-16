@@ -16,6 +16,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import timber.log.Timber
 import javax.inject.Singleton
 
 @Module
@@ -25,15 +26,18 @@ class NetworkModule(private val context: Context, private val user: User?, priva
 	@Provides
 	@Singleton
 	fun provideOkHttpClient(): OkHttpClient {
+		Timber.d(" XXXA vola se")
 		val builder = OkHttpClient.Builder()
 		with(builder) {
 			HttpLoggingInterceptor().apply {
 				level = HttpLoggingInterceptor.Level.HEADERS
-				redactHeader("Authorization")
-				addInterceptor(this)
+			addInterceptor(this)
 			}
 			user?.run {
+				Timber.d("XXXA pridame basic")
 				addInterceptor(BasicAuthInterceptor(email, password))
+				Timber.d("XXXA pridano basic")
+				
 			}
 		}
 

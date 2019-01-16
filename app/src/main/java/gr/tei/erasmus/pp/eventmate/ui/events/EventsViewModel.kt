@@ -25,9 +25,9 @@ class EventsViewModel : BaseViewModel() {
 	
 	private var allEvents = mutableListOf<Event>()
 	
-	fun getEvents() {
+	fun getEvents(showProgress: Boolean = true) {
 		launch {
-			mStates.postValue(LoadingState)
+			if (showProgress) mStates.postValue(LoadingState)
 			allEvents.clear()
 			try {
 				val response = eventRepository.getMyEvents().await()

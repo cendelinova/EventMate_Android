@@ -4,7 +4,9 @@ import android.accounts.Account
 import android.accounts.AccountManager
 import android.content.Context
 import gr.tei.erasmus.pp.eventmate.app.App
+import gr.tei.erasmus.pp.eventmate.constants.Constants
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.USER_ID
+import gr.tei.erasmus.pp.eventmate.data.model.User
 import gr.tei.erasmus.pp.eventmate.data.model.UserRequest
 import gr.tei.erasmus.pp.eventmate.helpers.RestHelper
 import okhttp3.Credentials
@@ -12,6 +14,8 @@ import timber.log.Timber
 
 
 class UserRepository(private val context: Context, private val restHelper: RestHelper) {
+	
+	private val sharedPreferenceHelper = App.COMPONENTS.provideSharedPreferencesHelper()
 	
 	companion object {
 		private const val TYPE_ACCOUNT = "gr.tei.erasmus.pp.eventmate"
@@ -42,12 +46,20 @@ class UserRepository(private val context: Context, private val restHelper: RestH
 //		}
 //	}
 	
+	fun loginUser(user: UserRequest) = restHelper.loginUser(user)
+	
 	fun getMyProfile() = restHelper.getMyProfile()
 	
 	fun saveUserCredentials(userEmail: String, password: String) {
 		val accountManager = AccountManager.get(context)
 		val account = Account(userEmail, TYPE_ACCOUNT)
 		accountManager.addAccountExplicitly(account, password, null)
+	}
+	
+	fun saveUserToSharedPreferences(user: User, password: String) {
+		sharedPreferenceHelper.saveLong(USER_ID, user.id!!)
+		sharedPreferenceHelper.saveString(Constants.USER_MAIL, user.email)
+		sharedPreferenceHelper.saveString(Constants.USER_PASSWORD, password)
 	}
 	
 	fun getGuests(eventId: Long) = restHelper.getEventGuests(eventId)

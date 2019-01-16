@@ -12,9 +12,8 @@ class UserRoleHelper(
 	private val sharedPreferenceHelper: SharedPreferenceHelper
 ) {
 	
-	
 	fun isSameUser(user: User): Boolean {
-		return sharedPreferenceHelper.loadLong(USER_ID) == user.id && sharedPreferenceHelper.loadString(USER_MAIL) == user.email
+		return sharedPreferenceHelper.loadLong(USER_ID) == user.id
 	}
 	
 }

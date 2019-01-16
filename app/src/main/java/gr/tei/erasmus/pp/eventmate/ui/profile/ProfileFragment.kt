@@ -5,10 +5,16 @@ import android.os.Bundle
 import android.view.*
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import gr.tei.erasmus.pp.eventmate.BuildConfig
 import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.app.App
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.USER_ID
+import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.USER_MAIL
+import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.USER_PASSWORD
 import gr.tei.erasmus.pp.eventmate.data.model.User
+import gr.tei.erasmus.pp.eventmate.di.AppModule
+import gr.tei.erasmus.pp.eventmate.di.DaggerAppComponent
+import gr.tei.erasmus.pp.eventmate.di.NetworkModule
 import gr.tei.erasmus.pp.eventmate.helpers.FileHelper
 import gr.tei.erasmus.pp.eventmate.helpers.GameRankHelper
 import gr.tei.erasmus.pp.eventmate.helpers.StateHelper
@@ -16,12 +22,11 @@ import gr.tei.erasmus.pp.eventmate.ui.base.BaseFragment
 import gr.tei.erasmus.pp.eventmate.ui.base.ErrorState
 import gr.tei.erasmus.pp.eventmate.ui.base.LoadingState
 import gr.tei.erasmus.pp.eventmate.ui.base.State
-import gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.guests.UserAdapter
 import gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.guests.UserViewModel
 import gr.tei.erasmus.pp.eventmate.ui.gameRank.GameRankActivity
+import gr.tei.erasmus.pp.eventmate.ui.login.LoginActivity
 import gr.tei.erasmus.pp.eventmate.ui.mainActivity.MainActivity
 import gr.tei.erasmus.pp.eventmate.ui.settings.SettingsActivity
-import gr.tei.erasmus.pp.eventmate.ui.userProfile.UserProfileActivity
 import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.user_profile.*
 import timber.log.Timber
@@ -30,7 +35,7 @@ import timber.log.Timber
 class ProfileFragment : BaseFragment() {
 	
 	private val viewModel by lazy { ViewModelProviders.of(this).get(UserViewModel::class.java) }
-	private val sharedPreferenceHelper =  App.COMPONENTS.provideSharedPreferencesHelper()
+	private val sharedPreferenceHelper = App.COMPONENTS.provideSharedPreferencesHelper()
 	
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 		Timber.v("onCreateView() called with: inflater = [$inflater], container = [$container], savedInstanceState = [$savedInstanceState]")
@@ -68,6 +73,24 @@ class ProfileFragment : BaseFragment() {
 	
 	private fun logOut() {
 		sharedPreferenceHelper.remove(USER_ID)
+		sharedPreferenceHelper.remove(USER_MAIL)
+		sharedPreferenceHelper.remove(USER_PASSWORD)
+		
+		App.COMPONENTS = DaggerAppComponent.builder()
+			.appModule(AppModule(App.COMPONENTS.provideContext()))
+			.networkModule(
+				NetworkModule(
+					App.COMPONENTS.provideContext(),
+					null,
+					BuildConfig.SERVER_URL
+				)
+			).build()
+		
+		activity?.run{
+			finish()
+			startActivity(Intent(this, LoginActivity::class.java))
+		}
+		
 	}
 	
 	private fun observeViewModel() {
