@@ -20,7 +20,9 @@ import gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.guests.UserViewModel
 import gr.tei.erasmus.pp.eventmate.ui.mainActivity.MainActivity
 import gr.tei.erasmus.pp.eventmate.ui.signup.SignupActivity
 import kotlinx.android.synthetic.main.activity_login.*
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
+import timber.log.Timber
 
 class LoginActivity : BaseActivity() {
 	
@@ -72,10 +74,17 @@ class LoginActivity : BaseActivity() {
 			val password = TextHelper.collectValueFromInput(input_password)
 			val user = User(userEmail, password)
 			
-			App.COMPONENTS = DaggerAppComponent.builder()
-				.appModule(AppModule(this))
-				.networkModule(NetworkModule(this, user, BuildConfig.SERVER_URL))
-				.build()
+			runBlocking {
+				App.COMPONENTS = DaggerAppComponent.builder()
+					.appModule(AppModule(this@LoginActivity))
+					.networkModule(NetworkModule(this@LoginActivity, user, BuildConfig.SERVER_URL))
+					.build()
+				
+				Timber.d("cekame")
+				delay(10000)
+			}
+			
+			Timber.d("docekali jsme %s", App.COMPONENTS.provideOkHttpClient().interceptors()))
 			
 			viewModel.login()
 		}

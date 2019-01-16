@@ -4,7 +4,6 @@ import android.view.View
 import android.widget.ProgressBar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
-import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.app.App
 import gr.tei.erasmus.pp.eventmate.data.model.Event
 import gr.tei.erasmus.pp.eventmate.data.model.Event.EventState.*
@@ -25,15 +24,16 @@ object StateHelper {
 		progress.visibility = if (visibility) View.VISIBLE else View.INVISIBLE
 	}
 	
-	fun showError(error: Throwable, progress: ProgressBar, view: View, errorMessage: Int = R.string.loading_error) {
-		val context = App.COMPONENTS.provideContext()
-		Timber.e("Error $error while fetching")
+	fun showError(error: Throwable, progress: ProgressBar, view: View) {
+		Timber.e("Error occurred $error ")
 		toggleProgress(progress, false)
-		Snackbar.make(
-			view,
-			context.getString(errorMessage),
-			Snackbar.LENGTH_LONG
-		).show()
+		error.message?.let {
+			Snackbar.make(
+				view,
+				it,
+				Snackbar.LENGTH_LONG
+			).show()
+		}
 	}
 	
 	fun prepareEventFab(event: Event, fab: FloatingActionButton, fabListener: View.OnClickListener) {

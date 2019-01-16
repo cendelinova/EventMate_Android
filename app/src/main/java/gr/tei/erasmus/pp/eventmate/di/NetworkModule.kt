@@ -29,6 +29,7 @@ class NetworkModule(private val context: Context, private val user: User?, priva
 		with(builder) {
 			HttpLoggingInterceptor().apply {
 				level = HttpLoggingInterceptor.Level.HEADERS
+				redactHeader("Authorization")
 				addInterceptor(this)
 			}
 			user?.run {
