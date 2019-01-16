@@ -80,12 +80,7 @@ class TasksViewModel : BaseViewModel() {
 			try {
 				val response = taskRepository.changeTaskStatus(taskId).await()
 				val state = if (response.isSuccessful && response.body() != null) {
-//					val eventState = Event.EventState.valueOf(response.body()!!.state)
-//					if (eventState == Event.EventState.READY_TO_PLAY) ReadyToPlayEvent(response.body()!!)
-//					else {
-//						EventListState(mutableListOf(response.body()!!))
-//					}
-					TaskListState(mutableListOf(response.body()!!))
+					TaskListState(mutableListOf(response.body()!!), true)
 				} else {
 					Timber.e(response.errorBody()?.string())
 					ErrorState(Throwable(ErrorHelper.getErrorMessageFromHeader(response.headers())))
@@ -98,7 +93,7 @@ class TasksViewModel : BaseViewModel() {
 		}
 	}
 	
-	data class TaskListState(val tasks: MutableList<Task>) : State() {
+	data class TaskListState(val tasks: MutableList<Task>, val render : Boolean = false) : State() {
 		companion object {
 			fun from(list: MutableList<Task>): TaskListState {
 				return if (list.isEmpty()) error("event list should not be empty")

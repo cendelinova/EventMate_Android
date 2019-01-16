@@ -24,7 +24,7 @@ interface TaskService {
 	fun deleteTask(@Path("id") id: Long): Deferred<Response<MutableList<Task>>>
 	
 	@PUT("/task/{id}")
-	fun updateTask(@Path("id") id: Long, @Body task: TaskRequest): Deferred<Response<MutableList<Task>>>
+	fun updateTask(@Path("id") id: Long, @Body task: TaskRequest): Deferred<Response<Task>>
 	
 	@POST("/task/{id}/assignPoints")
 	fun assignPoints(@Path("id") taskId: Long, @Body userSubmissionPointList: MutableList<UserSubmissionPoints>): Deferred<Response<Void>>

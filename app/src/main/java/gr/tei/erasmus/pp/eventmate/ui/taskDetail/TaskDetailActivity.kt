@@ -10,9 +10,11 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import gr.tei.erasmus.pp.eventmate.R
+import gr.tei.erasmus.pp.eventmate.app.App
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.EVENT_ID
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.SUBMISSION_EXTRA
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.TASK_ID
+import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.TASK_SHOW_MENU
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.USER_ID
 import gr.tei.erasmus.pp.eventmate.data.model.SubmissionExtra
 import gr.tei.erasmus.pp.eventmate.data.model.Task
@@ -37,12 +39,14 @@ class TaskDetailActivity : BaseActivity() {
 	
 	private var taskId: Long? = null
 	private var eventId: Long? = null
+	private var showMenu: Boolean = false
 	
 	private lateinit var assigneesAdapter: UserAdapter
 	
 	private lateinit var task: Task
 	
 	private val viewModel by lazy { ViewModelProviders.of(this).get(TasksViewModel::class.java) }
+	private val userRoleHelper = App.COMPONENTS.provideUserRoleHelper()
 	
 	
 	override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,7 +56,8 @@ class TaskDetailActivity : BaseActivity() {
 		initializeRecyclerView()
 		setupToolbar(toolbar)
 		taskId = intent.getLongExtra(TASK_ID, 0)
-		eventId = intent.getLongExtra(EVENT_ID,0)
+		eventId = intent.getLongExtra(EVENT_ID, 0)
+		showMenu = intent.getBooleanExtra(TASK_SHOW_MENU, false)
 		
 		observeViewModel()
 		
@@ -69,11 +74,14 @@ class TaskDetailActivity : BaseActivity() {
 	}
 	
 	override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-		val inflater = menuInflater
-		inflater.inflate(R.menu.menu_fragment_detail, menu)
+		
+		if (showMenu) {
+			val inflater = menuInflater
+			inflater.inflate(R.menu.menu_fragment_detail, menu)
+		}
 		
 		// todo hide menu
-		
+
 //		if (Task.TaskState.valueOf(task.taskState) == Task.TaskState.EDITABLE) {
 //			menu?.findItem(R.id.edit)?.isVisible = false
 //			menu?.findItem(R.id.delete)?.isVisible = false
@@ -115,6 +123,17 @@ class TaskDetailActivity : BaseActivity() {
 				})
 			}
 			is TasksViewModel.TaskListState -> {
+				if (state.render) {
+					finish()
+					startActivity(Intent(this, TaskDetailActivity::class.java).apply {
+						putExtra(TASK_ID, task.id)
+						putExtra(EVENT_ID, eventId)
+						putExtra(
+							TASK_SHOW_MENU,
+							userRoleHelper.isSameUser(task.taskOwner) && Task.TaskState.valueOf(task.taskState) == Task.TaskState.EDITABLE
+						)
+					})
+				}
 				swipe_layout.isRefreshing = false
 				StateHelper.toggleProgress(progress, false)
 				setupLayout(state.tasks[0])

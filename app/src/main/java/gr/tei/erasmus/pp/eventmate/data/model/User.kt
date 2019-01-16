@@ -12,6 +12,17 @@ data class User(
 	var checked: Boolean = false
 ) {
 	
+	constructor(id: Long) : this(
+		id,
+		"",
+		"",
+		"",
+		0,
+		null,
+		0,
+		0
+	)
+	
 	constructor(userName: String) : this(
 		null,
 		userName,

@@ -172,7 +172,7 @@
 	<string name="guests_tab_title">Guests</string>
 	<string name="edit">Edit</string>
 	<string name="tv_no_tasks">No tasks</string>
-	<string name="success_task_created">Task created</string>
+	<string name="success_task_created">Task has been created</string>
 	<string name="tv_no_guests">No guests</string>
 	<string name="title_description">Description</string>
 	<string name="title_time_limit">Time limit</string>
@@ -283,4 +283,5 @@
 	<string name="error_no_permission_event">We\'re sorry you don\'t have permission for this event</string>
 	<string name="btn_update_event">Update event</string>
 	<string name="btn_edit_task">Update task</string>
+	<string name="task_updated">Task has been updated</string>
 </resources>

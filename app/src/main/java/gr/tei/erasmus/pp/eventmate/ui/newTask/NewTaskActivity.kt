@@ -17,8 +17,10 @@ import com.vansuita.pickimage.bundle.PickSetup
 import com.vansuita.pickimage.dialog.PickImageDialog
 import com.vansuita.pickimage.listeners.IPickResult
 import gr.tei.erasmus.pp.eventmate.R
+import gr.tei.erasmus.pp.eventmate.app.App
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.EVENT_ID
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.TASK_ID
+import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.USER_ID
 import gr.tei.erasmus.pp.eventmate.data.model.Task
 import gr.tei.erasmus.pp.eventmate.data.model.TaskRequest
 import gr.tei.erasmus.pp.eventmate.data.model.User
@@ -55,6 +57,7 @@ class NewTaskActivity : BaseActivity(), Validator.ValidationListener, IPickResul
 	private var users: MutableList<User> = mutableListOf()
 	
 	private var assignees: MutableList<User> = mutableListOf()
+	private val sharedPreferenceHelper = App.COMPONENTS.provideSharedPreferencesHelper()
 	
 	private val validator: Validator by lazy {
 		Validator(this).also {
@@ -167,14 +170,11 @@ class NewTaskActivity : BaseActivity(), Validator.ValidationListener, IPickResul
 			place,
 			description,
 			points,
-			null, photo, assignees
+			null, photo, User(sharedPreferenceHelper.loadLong(USER_ID)), assignees
 		)
 		eventId?.let {
 			if (!isEdit) viewModel.createTask(taskRequest) else taskId?.let { it1 ->
-				viewModel.updateTask(
-					it1,
-					taskRequest
-				)
+				viewModel.updateTask(it1, taskRequest)
 			}
 			
 		}
@@ -213,7 +213,9 @@ class NewTaskActivity : BaseActivity(), Validator.ValidationListener, IPickResul
 			is ErrorState -> showError(state.error)
 			is FinishedState -> {
 				toggleProgress(false)
-				Toast.makeText(this, R.string.success_task_created, Toast.LENGTH_LONG).show()
+				val message = if (isEdit) R.string.task_updated else R.string.success_task_created
+				Toast.makeText(this, getString(message), Toast.LENGTH_LONG).show()
+				finish()
 				startActivity(Intent(this, EventDetailActivity::class.java).apply {
 					putExtra(EVENT_ID, eventId)
 				})

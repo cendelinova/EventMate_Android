@@ -1,7 +1,7 @@
 package gr.tei.erasmus.pp.eventmate.helpers
 
-import android.content.res.Resources
 import gr.tei.erasmus.pp.eventmate.R
+import gr.tei.erasmus.pp.eventmate.app.App
 import gr.tei.erasmus.pp.eventmate.helpers.ErrorHelper.ErrorType.*
 import okhttp3.Headers
 
@@ -14,6 +14,7 @@ object ErrorHelper {
 	}
 	
 	fun getErrorMessage(errorCode: Int): String {
+		val context = App.COMPONENTS.provideContext()
 		
 		val message = when (errorCode) {
 			USER_NOT_REPORT_CREATOR.errorCode -> USER_NOT_REPORT_CREATOR.errorMessage
@@ -45,7 +46,7 @@ object ErrorHelper {
 			}
 		}
 		
-		return Resources.getSystem().getString(message)
+		return context.getString(message)
 	}
 	
 	enum class ErrorType(val errorCode: Int, val errorMessage: Int) {

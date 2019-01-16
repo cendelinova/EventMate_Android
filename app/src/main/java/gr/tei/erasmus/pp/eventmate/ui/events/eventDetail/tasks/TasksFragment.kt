@@ -10,8 +10,10 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.button.MaterialButton
 import gr.tei.erasmus.pp.eventmate.R
+import gr.tei.erasmus.pp.eventmate.app.App
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.EVENT_ID
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.TASK_ID
+import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.TASK_SHOW_MENU
 import gr.tei.erasmus.pp.eventmate.data.model.Task
 import gr.tei.erasmus.pp.eventmate.helpers.StateHelper.showError
 import gr.tei.erasmus.pp.eventmate.helpers.StateHelper.toggleProgress
@@ -34,6 +36,8 @@ class TasksFragment : BaseFragment() {
 	private var eventId: Long? = null
 	
 	private lateinit var addTaskBtn: MaterialButton
+	
+	private val userRoleHelper = App.COMPONENTS.provideUserRoleHelper()
 	
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -105,6 +109,10 @@ class TasksFragment : BaseFragment() {
 			startActivity(Intent(activity, TaskDetailActivity::class.java).apply {
 				putExtra(TASK_ID, task.id)
 				putExtra(EVENT_ID, eventId)
+				putExtra(
+					TASK_SHOW_MENU,
+					userRoleHelper.isSameUser(task.taskOwner) && Task.TaskState.valueOf(task.taskState) == Task.TaskState.EDITABLE
+				)
 			})
 		}
 		

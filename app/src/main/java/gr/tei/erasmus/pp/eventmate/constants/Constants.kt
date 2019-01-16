@@ -18,6 +18,7 @@ class Constants {
 		const val EVENT_STATE = "eventState"
 		const val USER_NAME = "userName"
 		const val EVENT_SHOW_MENU = "eventShowMenu"
+		const val TASK_SHOW_MENU = "taskShowMenu"
 	}
 	
 	enum class EventFilter(val text: String) {
