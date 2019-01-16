@@ -132,14 +132,14 @@
 		android:layout_height="match_parent"
 		app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 	
-	<com.google.android.material.button.MaterialButton
-		android:id="@+id/btn_add_task"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:text="@string/btn_add_task"
-		android:layout_marginBottom="@dimen/spacing_huge"
-		android:layout_gravity="bottom|center" />
-	
+	<!--<com.google.android.material.button.MaterialButton-->
+		<!--android:id="@+id/btn_add"-->
+		<!--android:layout_width="wrap_content"-->
+		<!--android:layout_height="wrap_content"-->
+		<!--android:text="@string/btn_add_task"-->
+		<!--android:layout_marginBottom="@dimen/spacing_huge"-->
+		<!--android:layout_gravity="bottom|center" />-->
+	<!---->
 	
 	<com.google.android.material.floatingactionbutton.FloatingActionButton
 		android:id="@+id/state_fab"

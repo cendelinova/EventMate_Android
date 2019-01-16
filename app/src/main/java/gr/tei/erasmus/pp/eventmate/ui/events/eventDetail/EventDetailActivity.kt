@@ -24,8 +24,11 @@ import gr.tei.erasmus.pp.eventmate.helpers.FileHelper
 import gr.tei.erasmus.pp.eventmate.helpers.StateHelper
 import gr.tei.erasmus.pp.eventmate.ui.base.*
 import gr.tei.erasmus.pp.eventmate.ui.events.EventsViewModel
+import gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.EventDetailFragmentAdapter.Companion.GUESTS_TAB
+import gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.EventDetailFragmentAdapter.Companion.TASKS_TAB
 import gr.tei.erasmus.pp.eventmate.ui.events.newEvent.NewEventActivity
 import gr.tei.erasmus.pp.eventmate.ui.mainActivity.MainActivity
+import gr.tei.erasmus.pp.eventmate.ui.newTask.NewTaskActivity
 import gr.tei.erasmus.pp.eventmate.ui.report.ReportListActivity
 import kotlinx.android.synthetic.main.activity_event_detail.*
 import timber.log.Timber
@@ -114,6 +117,15 @@ class EventDetailActivity : BaseActivity() {
 		tabs.setupWithViewPager(view_pager)
 		tabs.addOnTabSelectedListener(selectTabListener)
 		setupTabIcons()
+//		if (view_pager.currentItem == TASKS_TAB) {
+//			btn_add.setOnClickListener {
+//				startActivity(Intent(this, NewTaskActivity::class.java).apply {
+//					putExtra(EVENT_ID, eventId)
+//				})
+//			}
+//		} else if (view_pager.currentItem == GUESTS_TAB){
+//
+//		}
 	}
 	
 	
@@ -126,6 +138,7 @@ class EventDetailActivity : BaseActivity() {
 	private fun setupTabIcons() {
 		tabs.getTabAt(EventDetailFragmentAdapter.TASKS_TAB)?.setIcon(R.drawable.ic_tasks_20dp_selected)
 		tabs.getTabAt(EventDetailFragmentAdapter.GUESTS_TAB)?.setIcon(R.drawable.ic_guests_grey)
+		
 	}
 	
 	private val selectTabListener = object : TabLayout.OnTabSelectedListener {
