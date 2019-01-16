@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import com.android.ex.chips.BaseRecipientAdapter
 import gr.tei.erasmus.pp.eventmate.R
+import gr.tei.erasmus.pp.eventmate.app.App
 import gr.tei.erasmus.pp.eventmate.constants.Constants
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.USER_ID
 import gr.tei.erasmus.pp.eventmate.data.model.Invitation
@@ -43,6 +44,7 @@ class GuestsFragment : BaseFragment() {
 	private var invitedExistingUsers = mutableListOf<User>()
 	private var emails = mutableListOf<String>()
 	private var users: MutableList<User> = mutableListOf()
+	private val userRoleHelper = App.COMPONENTS.provideUserRoleHelper()
 	
 	
 	override fun onCreate(savedInstanceState: Bundle?) {
@@ -127,7 +129,7 @@ class GuestsFragment : BaseFragment() {
 			is UserViewModel.AppUserState -> {
 				swipe_layout.isRefreshing = false
 				StateHelper.toggleProgress(progress, false)
-				users = state.appUsers
+				users = state.appUsers.filter { u -> !userRoleHelper.isSameUser(u) }.toMutableList()
 			}
 		}
 	}

@@ -282,4 +282,5 @@
 	<string name="error_no_permission_task">We\'re sorry you don\'t have permission for this task</string>
 	<string name="error_no_permission_event">We\'re sorry you don\'t have permission for this event</string>
 	<string name="btn_update_event">Update event</string>
+	<string name="btn_edit_task">Update task</string>
 </resources>

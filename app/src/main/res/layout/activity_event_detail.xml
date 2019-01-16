@@ -89,6 +89,7 @@
 				android:layout_marginBottom="60dp"
 				android:theme="@style/AppTheme.AppBarOverlayNoBackground"
 				app:layout_collapseMode="pin"
+				app:layout_scrollFlags="enterAlways"
 				app:popupTheme="@style/AppTheme.PopupOverlay">
 				
 				<TextView
@@ -96,9 +97,6 @@
 					style="@style/MessageTitle"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
-					android:layout_marginStart="?attr/actionBarSize"
-					android:layout_marginEnd="?attr/actionBarSize"
-					android:gravity="center"
 					android:textAllCaps="true" />
 			
 			</androidx.appcompat.widget.Toolbar>
@@ -127,11 +125,20 @@
 		android:elevation="7dp"
 		android:layout_gravity="center" />
 	
+	
 	<gr.tei.erasmus.pp.eventmate.ui.base.NonSwipeableViewPager
 		android:id="@+id/view_pager"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+	
+	<com.google.android.material.button.MaterialButton
+		android:id="@+id/btn_add_task"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="@string/btn_add_task"
+		android:layout_marginBottom="@dimen/spacing_huge"
+		android:layout_gravity="bottom|center" />
 	
 	
 	<com.google.android.material.floatingactionbutton.FloatingActionButton

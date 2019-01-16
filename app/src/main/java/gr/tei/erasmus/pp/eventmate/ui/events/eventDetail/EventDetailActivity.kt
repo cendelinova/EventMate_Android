@@ -207,20 +207,9 @@ class EventDetailActivity : BaseActivity() {
 				StateHelper.toggleProgress(progress, false)
 				event = state.events[0]
 				setupLayout(event)
-				// todo show
-//				Toast.makeText(
-//					this@EventDetailActivity,
-//					Event.EventState.valueOf(state.events[0].state).messageResource,
-//					Toast.LENGTH_LONG
-//				).show()
 			}
 			is EventsViewModel.ReadyToPlayEvent -> {
 				StateHelper.toggleProgress(progress, false)
-//				Toast.makeText(
-//					this@EventDetailActivity,
-//					Event.EventState.valueOf(state.event.state).messageResource,
-//					Toast.LENGTH_LONG
-//				).show()
 				finish()
 				startActivity(Intent(this, EventDetailActivity::class.java).apply {
 					putExtra(EVENT_ID, state.event.id)

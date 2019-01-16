@@ -75,6 +75,7 @@ class NewTaskActivity : BaseActivity(), Validator.ValidationListener, IPickResul
 			taskId = intent.getLongExtra(TASK_ID, 0)
 			isEdit = true
 			viewModel.getTask(taskId!!)
+			btn_save_task.text = getString(R.string.btn_edit_task)
 		}
 		
 		setupChoosingPhotoDialog()

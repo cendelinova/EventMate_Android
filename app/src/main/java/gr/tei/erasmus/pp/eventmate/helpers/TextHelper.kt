@@ -1,12 +1,12 @@
 package gr.tei.erasmus.pp.eventmate.helpers
 
-import android.graphics.drawable.BitmapDrawable
 import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.textfield.TextInputLayout
+import com.makeramen.roundedimageview.RoundedDrawable
 import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.data.model.User
 import gr.tei.erasmus.pp.eventmate.ui.base.AbstractFilterAdapter
@@ -50,7 +50,7 @@ object TextHelper {
 					chipIcon = if (contact.photo.isNullOrEmpty()) ContextCompat.getDrawable(
 						chipGroup.context,
 						R.drawable.ic_user_placeholder
-					) else BitmapDrawable(resources, FileHelper.decodeImage(contact.photo))
+					) else RoundedDrawable.fromBitmap(FileHelper.decodeImage(contact.photo))
 					text = contact.userName
 					
 				} else {
@@ -58,7 +58,7 @@ object TextHelper {
 				}
 				
 				if (onCloseListener == null) {
-					chipBackgroundColor = ContextCompat.getColorStateList(chipGroup.context, R.color.white )
+					chipBackgroundColor = ContextCompat.getColorStateList(chipGroup.context, R.color.white)
 					chipStrokeWidth = 2f
 					chipStrokeColor = ContextCompat.getColorStateList(chipGroup.context, R.color.light_grey)
 					chipGroup.chipSpacingVertical = 10

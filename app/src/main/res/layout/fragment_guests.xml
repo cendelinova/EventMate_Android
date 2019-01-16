@@ -13,17 +13,17 @@
 		<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 			android:id="@+id/swipe_layout"
 			android:layout_width="0dp"
-			android:layout_height="wrap_content"
+			android:layout_height="0dp"
+			app:layout_constraintBottom_toBottomOf="parent"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@id/filters">
+			app:layout_constraintTop_toTopOf="parent">
 			
 			<gr.tei.erasmus.pp.eventmate.ui.common.RecyclerViewEmptyViewSupport
 				android:id="@+id/guest_recycler_view"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:scrollbars="none"
-				app:fastScrollThumbColor="@color/colorAccent" />
+				android:scrollbars="none" />
 		</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 		
 		
@@ -40,9 +40,13 @@
 		
 		<LinearLayout
 			android:id="@+id/guest_empty_view"
-			android:layout_width="match_parent"
-			android:layout_height="match_parent"
-			android:orientation="vertical">
+			android:layout_width="0dp"
+			android:layout_height="0dp"
+			android:orientation="vertical"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent">
 			
 			<Space
 				android:layout_width="match_parent"
@@ -68,10 +72,10 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:text="@string/btn_add_guests"
-			android:layout_marginTop="@dimen/spacing_xhuge"
+			android:layout_marginBottom="@dimen/spacing_xhuge"
+			app:layout_constraintBottom_toBottomOf="parent"
 			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@id/swipe_layout" />
+			app:layout_constraintStart_toStartOf="parent" />
 	
 	
 	</androidx.constraintlayout.widget.ConstraintLayout>
