@@ -53,11 +53,8 @@ class EventsViewModel : BaseViewModel() {
 				val response = eventRepository.delete(eventId).await()
 				val state = if (response.isSuccessful) {
 					val event = allEvents.find { event -> event.id == eventId }
-					event?.let {
-						allEvents.remove(it)
-						mStates.postValue(EventListState(allEvents, it.name))
-					}
-					DeletedState
+					allEvents.remove(event)
+					EventListState(allEvents, event?.name)
 				} else {
 					Timber.e(response.errorBody()?.string())
 					ErrorState(Throwable(ErrorHelper.getErrorMessageFromHeader(response.headers())))

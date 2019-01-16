@@ -37,18 +37,18 @@ class TasksFragment : BaseFragment() {
 	
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
-		Timber.d("onCreate")
+		Timber.d("AAAA onCreate")
 		eventId = arguments?.getLong(EVENT_ID)
 	}
 	
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-		Timber.d("onCreateView")
+		Timber.d("AAAA onCreateView")
 		
 		return inflater.inflate(R.layout.fragment_tasks, container, false)
 	}
 	
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-		Timber.d("onViewCreated")
+		Timber.d("AAAA onViewCreated")
 		super.onViewCreated(view, savedInstanceState)
 		initializeRecyclerView()
 		observeViewModel()
@@ -63,7 +63,7 @@ class TasksFragment : BaseFragment() {
 	 * We have blacklist items obtained, initialize recyclerView and display them.
 	 */
 	private fun initializeRecyclerView() {
-		Timber.v("initializeRecyclerView() called")
+		Timber.v("AAAA initializeRecyclerView() called")
 		
 		taskAdapter = TaskAdapter(
 			context!!,

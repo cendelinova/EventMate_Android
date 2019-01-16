@@ -37,6 +37,7 @@ class UserViewModel : BaseViewModel() {
 					Timber.e(response.errorBody()?.string())
 					ErrorState(Throwable(ErrorHelper.getErrorMessageFromHeader(response.headers())))
 				}
+				Timber.v("AAAA rendering ${response.body()!!.size}")
 				mStates.postValue(state)
 			} catch (error: Throwable) {
 				mStates.postValue(ErrorState(error))

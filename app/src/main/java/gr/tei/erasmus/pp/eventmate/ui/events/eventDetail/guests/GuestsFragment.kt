@@ -50,6 +50,8 @@ class GuestsFragment : BaseFragment() {
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		eventId = arguments?.getLong(Constants.EVENT_ID)
+		Timber.v("AAAA onCreate() $eventId")
+		
 	}
 	
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -61,17 +63,17 @@ class GuestsFragment : BaseFragment() {
 		initializeRecyclerView()
 		observeViewModel()
 		
+		Timber.v("AAAA onViewCreated $eventId")
 		eventId?.let {
 			viewModel.getGuests(it)
 		}
 		
-		viewModel.getAppUsers()
 		handleAddGuest()
 	}
 	
 	private fun handleAddGuest() {
 		btn_add_guests.setOnClickListener {
-			setupGuestsInvitationDialog()
+			viewModel.getAppUsers()
 		}
 		
 		btn_add_guests.visibility =
@@ -82,7 +84,7 @@ class GuestsFragment : BaseFragment() {
 	 * We have blacklist items obtained, initialize recyclerView and display them.
 	 */
 	private fun initializeRecyclerView() {
-		Timber.v("initializeRecyclerView() called")
+		Timber.v("AAAA initializeRecyclerView() called")
 		
 		guestAdapter = UserAdapter(
 			context!!,
@@ -123,13 +125,17 @@ class GuestsFragment : BaseFragment() {
 			is LoadingState -> toggleProgress(progress, true)
 			is ErrorState -> showError(state.error, progress, guests_fragment)
 			is UserViewModel.UserListState -> {
+				swipe_layout.isRefreshing = false
 				toggleProgress(progress, false)
 				guestAdapter.updateUserList(state.users)
+				Timber.v("AAAA guests: ${state.users}")
 			}
 			is UserViewModel.AppUserState -> {
-				swipe_layout.isRefreshing = false
+				Timber.v("AAAA dalsi: ${state.appUsers}")
 				StateHelper.toggleProgress(progress, false)
 				users = state.appUsers.filter { u -> !userRoleHelper.isSameUser(u) }.toMutableList()
+				setupGuestsInvitationDialog()
+				
 			}
 		}
 	}
@@ -171,7 +177,7 @@ class GuestsFragment : BaseFragment() {
 					Invitation.buildInvitation(
 						u,
 						u.email,
-						Invitation.InvitationType.EMAIL_AND_NOTIFICATION
+						Invitation.InvitationType.NOTIFICATION
 					).also { invitationList.add(it) }
 				}
 			}
