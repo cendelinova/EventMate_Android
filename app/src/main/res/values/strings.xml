@@ -284,4 +284,11 @@
 	<string name="btn_update_event">Update event</string>
 	<string name="btn_edit_task">Update task</string>
 	<string name="task_updated">Task has been updated</string>
+	<string name="task_locked">Task has been locked for edit</string>
+	<string name="task_started">Task has been started</string>
+	<string name="task_ended">Task has been stopped</string>
+	<string name="task_ready_to_evaluation">Task has been stooped and is ready to be evaluated</string>
+	<string name="task_finished">Task is finished</string>
+	<string name="event_need_trigger">Firstly event must be started</string>
+	<string name="task_ready_to_play">Task is ready to play</string>
 </resources>

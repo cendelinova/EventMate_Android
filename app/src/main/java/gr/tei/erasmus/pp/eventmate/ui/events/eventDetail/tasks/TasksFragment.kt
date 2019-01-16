@@ -13,6 +13,7 @@ import com.google.android.material.button.MaterialButton
 import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.app.App
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.EVENT_ID
+import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.EVENT_STATE
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.TASK_ID
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.TASK_SHOW_MENU
 import gr.tei.erasmus.pp.eventmate.data.model.Task
@@ -44,13 +45,10 @@ class TasksFragment : BaseFragment() {
 	}
 	
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-		Timber.d("AAAA onCreateView")
-		
 		return inflater.inflate(R.layout.fragment_tasks, container, false)
 	}
 	
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-		Timber.d("AAAA onViewCreated")
 		super.onViewCreated(view, savedInstanceState)
 		initializeRecyclerView()
 		observeViewModel()
@@ -64,8 +62,6 @@ class TasksFragment : BaseFragment() {
 	 * We have blacklist items obtained, initialize recyclerView and display them.
 	 */
 	private fun initializeRecyclerView() {
-		Timber.v("AAAA initializeRecyclerView() called")
-		
 		taskAdapter = TaskAdapter(
 			context!!,
 			taskItemListener,

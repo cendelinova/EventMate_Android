@@ -20,7 +20,7 @@ object StateHelper {
 		val userRoleHelper = App.COMPONENTS.provideUserRoleHelper()
 		button.visibility = when (state) {
 			EDITABLE -> {
-				if (button.id != R.id.btn_add_guests && !userRoleHelper.isSameUser(eventOwner)) {
+				if (button.id == R.id.btn_add_guests && !userRoleHelper.isSameUser(eventOwner)) {
 					View.GONE
 				} else View.VISIBLE
 			}
@@ -32,7 +32,7 @@ object StateHelper {
 	/**
 	 * Toggle progress visibility
 	 * @param progress progress widget
-	 * @param visibility shoudl be visible
+	 * @param visibility should be visible
 	 */
 	fun toggleProgress(progress: ProgressBar, visibility: Boolean) {
 		progress.visibility = if (visibility) View.VISIBLE else View.INVISIBLE

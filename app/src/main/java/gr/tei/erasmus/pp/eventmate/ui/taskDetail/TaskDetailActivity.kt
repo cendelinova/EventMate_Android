@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
@@ -17,6 +18,7 @@ import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.SUBMISSION_EXTR
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.TASK_ID
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.TASK_SHOW_MENU
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.USER_ID
+import gr.tei.erasmus.pp.eventmate.data.model.Event
 import gr.tei.erasmus.pp.eventmate.data.model.SubmissionExtra
 import gr.tei.erasmus.pp.eventmate.data.model.Task
 import gr.tei.erasmus.pp.eventmate.data.model.User
@@ -85,18 +87,10 @@ class TaskDetailActivity : BaseActivity() {
 	}
 	
 	override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-		
 		if (showMenu) {
 			val inflater = menuInflater
 			inflater.inflate(R.menu.menu_fragment_detail, menu)
 		}
-		
-		// todo hide menu
-
-//		if (Task.TaskState.valueOf(task.taskState) == Task.TaskState.EDITABLE) {
-//			menu?.findItem(R.id.edit)?.isVisible = false
-//			menu?.findItem(R.id.delete)?.isVisible = false
-//		}
 		return super.onCreateOptionsMenu(menu)
 	}
 	
@@ -135,18 +129,6 @@ class TaskDetailActivity : BaseActivity() {
 			}
 			is TasksViewModel.TaskListState -> {
 				task = state.tasks[0]
-				if (state.render) {
-					startActivity(Intent(this, TaskDetailActivity::class.java).apply {
-						putExtra(TASK_ID, task.id)
-						putExtra(EVENT_ID, eventId)
-						putExtra(
-							TASK_SHOW_MENU,
-							userRoleHelper.isSameUser(task.taskOwner) && Task.TaskState.valueOf(task.taskState) == Task.TaskState.EDITABLE
-						)
-					})
-//					finish()
-					
-				}
 				swipe_layout.isRefreshing = false
 				StateHelper.toggleProgress(progress, false)
 				setupLayout(state.tasks[0])
@@ -200,6 +182,7 @@ class TaskDetailActivity : BaseActivity() {
 	private fun setupLayout(task: Task) {
 		with(task) {
 			val taskState = Task.TaskState.valueOf(taskState)
+			val parentEventState = Event.EventState.valueOf(parentEventState)
 			task_name.text = name
 			tv_description.text = getDefaultTextIfEmpty(description)
 //			tv_time_limit.text = getDefaultTextIfEmpty(timeLimit?.toString())
@@ -216,16 +199,33 @@ class TaskDetailActivity : BaseActivity() {
 				assigneesAdapter.updateUserList(assignees.toMutableList())
 			}
 			
-			StateHelper.prepareTaskFab(this, fab, View.OnClickListener {
-				if (taskState != Task.TaskState.IN_REVIEW) {
-					viewModel.changeTaskStatus(id)
-				} else {
-					finish()
-					startActivity(Intent(this@TaskDetailActivity, AssignPointsActivity::class.java).apply {
-						putExtra(TASK_ID, id)
-					})
-				}
-			})
+			if (parentEventState != Event.EventState.EDITABLE) {
+				StateHelper.prepareTaskFab(this, fab, View.OnClickListener {
+					if (taskState != Task.TaskState.IN_REVIEW) {
+						viewModel.changeTaskStatus(id)
+					} else {
+						finish()
+						startActivity(Intent(this@TaskDetailActivity, AssignPointsActivity::class.java).apply {
+							putExtra(TASK_ID, id)
+						})
+					}
+				})
+				Toast.makeText(
+					this@TaskDetailActivity,
+					getString(taskState.taskToastMessage),
+					Toast.LENGTH_LONG
+				).show()
+			} else {
+				fab.visibility = View.GONE
+				Toast.makeText(this@TaskDetailActivity, getString(R.string.event_need_trigger), Toast.LENGTH_LONG)
+					.show()
+			}
+			
+			
+			if (taskState != Task.TaskState.EDITABLE) {
+				showMenu = false
+			}
+			invalidateOptionsMenu()
 		}
 	}
 }

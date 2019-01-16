@@ -180,7 +180,7 @@ class EventDetailActivity : BaseActivity() {
 				
 				Toast.makeText(
 					this@EventDetailActivity,
-					getString(Event.EventState.valueOf(this.state).messageResource),
+					getString(state.messageResource),
 					Toast.LENGTH_LONG
 				).show()
 				
