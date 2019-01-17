@@ -89,6 +89,7 @@ object StateHelper {
 			}
 			
 			Event.EventState.FINISHED -> {
+				fab.setOnClickListener(fabListener)
 				fab.setImageResource(FINISHED.iconFab)
 			}
 			

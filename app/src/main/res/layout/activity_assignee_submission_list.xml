@@ -44,7 +44,8 @@
 		android:layout_height="wrap_content"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@id/divider">
+		app:layout_constraintTop_toBottomOf="@id/divider"
+		android:layout_marginTop="@dimen/spacing_normal">
 		
 		<gr.tei.erasmus.pp.eventmate.ui.common.RecyclerViewEmptyViewSupport
 			android:id="@+id/submission_recycler_view"

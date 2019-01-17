@@ -10,6 +10,7 @@ import gr.tei.erasmus.pp.eventmate.data.model.ReportResponse
 import gr.tei.erasmus.pp.eventmate.helpers.ErrorHelper
 import gr.tei.erasmus.pp.eventmate.helpers.FileHelper
 import gr.tei.erasmus.pp.eventmate.ui.base.*
+import gr.tei.erasmus.pp.eventmate.ui.events.EventsViewModel
 import gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.guests.UserViewModel
 import gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.tasks.TasksViewModel
 import kotlinx.coroutines.launch
@@ -20,6 +21,7 @@ class ReportViewModel : BaseViewModel() {
 	private val userRepository = App.COMPONENTS.provideUserRepository()
 	private val taskRepository = App.COMPONENTS.provideTaskRepository()
 	private val reportRepository = App.COMPONENTS.provideReportRepository()
+	private val eventRepository = App.COMPONENTS.provideEventRepository()
 	
 	private val mStates = MutableLiveData<State>()
 	val states: LiveData<State>
@@ -161,6 +163,24 @@ class ReportViewModel : BaseViewModel() {
 					ErrorState(Throwable(ErrorHelper.getErrorMessageFromHeader(response.headers())))
 				}
 				
+				mStates.postValue(state)
+			} catch (error: Throwable) {
+				mStates.postValue(ErrorState(error))
+			}
+		}
+	}
+	
+	fun getEvent(eventId: Long, showProgress: Boolean = true) {
+		launch {
+			if (showProgress) mStates.postValue(LoadingState)
+			try {
+				val response = eventRepository.getEvent(eventId).await()
+				val state = if (response.isSuccessful && response.body() != null) {
+					EventsViewModel.EventListState(mutableListOf(response.body()!!))
+				} else {
+					Timber.e(response.errorBody()?.string())
+					ErrorState(Throwable(ErrorHelper.getErrorMessageFromHeader(response.headers())))
+				}
 				mStates.postValue(state)
 			} catch (error: Throwable) {
 				mStates.postValue(ErrorState(error))

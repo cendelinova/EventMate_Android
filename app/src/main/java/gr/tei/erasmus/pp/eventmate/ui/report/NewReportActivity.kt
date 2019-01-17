@@ -13,6 +13,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.constants.Constants
+import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.EVENT_ID
 import gr.tei.erasmus.pp.eventmate.data.model.*
 import gr.tei.erasmus.pp.eventmate.helpers.DialogHelper
 import gr.tei.erasmus.pp.eventmate.helpers.StateHelper
@@ -200,7 +201,10 @@ class NewReportActivity : BaseActivity() {
 			is FinishedState -> {
 				StateHelper.toggleProgress(progress, false)
 				Toast.makeText(this, R.string.success_report_create, Toast.LENGTH_LONG).show()
-				startActivity(Intent(this, ReportListActivity::class.java))
+				finish()
+				startActivity(Intent(this, ReportListActivity::class.java).apply {
+					putExtra(EVENT_ID, eventId)
+				})
 			}
 		}
 	}

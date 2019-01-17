@@ -14,9 +14,11 @@ import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.constants.Constants
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.EVENT_ID
 import gr.tei.erasmus.pp.eventmate.data.model.Email
+import gr.tei.erasmus.pp.eventmate.data.model.Event
 import gr.tei.erasmus.pp.eventmate.data.model.ReportResponse
 import gr.tei.erasmus.pp.eventmate.data.model.User
 import gr.tei.erasmus.pp.eventmate.helpers.DialogHelper
+import gr.tei.erasmus.pp.eventmate.helpers.FileHelper
 import gr.tei.erasmus.pp.eventmate.helpers.StateHelper
 import gr.tei.erasmus.pp.eventmate.helpers.TextHelper
 import gr.tei.erasmus.pp.eventmate.helpers.TextHelper.getQueryTextListener
@@ -24,6 +26,7 @@ import gr.tei.erasmus.pp.eventmate.ui.base.BaseActivity
 import gr.tei.erasmus.pp.eventmate.ui.base.ErrorState
 import gr.tei.erasmus.pp.eventmate.ui.base.LoadingState
 import gr.tei.erasmus.pp.eventmate.ui.base.State
+import gr.tei.erasmus.pp.eventmate.ui.events.EventsViewModel
 import gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.guests.UserViewModel
 import kotlinx.android.synthetic.main.activity_report_list.*
 import kotlinx.android.synthetic.main.report_item.view.*
@@ -52,9 +55,11 @@ class ReportListActivity : BaseActivity() {
 		
 		eventId = intent.getLongExtra(Constants.EVENT_ID, 0)
 		
+		
 		eventId?.let {
 			viewModel.getEventReports(it)
 			viewModel.getEventGuests(it)
+			viewModel.getEvent(it)
 		}
 	}
 	
@@ -176,6 +181,19 @@ class ReportListActivity : BaseActivity() {
 			is UserViewModel.UserListState -> {
 				StateHelper.toggleProgress(progress, false)
 				users = state.users
+			}
+			is EventsViewModel.EventListState -> {
+				StateHelper.toggleProgress(progress, false)
+				setupHeader(state.events[0])
+			}
+		}
+	}
+	
+	private fun setupHeader(event: Event) {
+		with(event) {
+			event_name.text = name
+			photo?.let {
+				event_photo.setImageBitmap(FileHelper.decodeImage(it))
 			}
 		}
 	}

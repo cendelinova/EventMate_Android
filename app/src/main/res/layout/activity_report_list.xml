@@ -8,7 +8,7 @@
 	tools:context=".ui.report.ReportListActivity">
 	
 	<include
-		android:id="@+id/task_header"
+		android:id="@+id/event_header"
 		layout="@layout/toolbar_event_detail"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content" />
@@ -22,7 +22,7 @@
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toTopOf="@id/task_header" />
+		app:layout_constraintTop_toTopOf="@id/event_header" />
 	
 	<LinearLayout
 		android:id="@+id/reports_empty_view"
@@ -32,7 +32,7 @@
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toTopOf="@id/task_header">
+		app:layout_constraintTop_toTopOf="@id/event_header">
 		
 		<Space
 			android:layout_width="match_parent"
@@ -58,7 +58,8 @@
 		android:layout_height="wrap_content"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@id/task_header">
+		app:layout_constraintTop_toBottomOf="@id/event_header"
+		android:layout_marginTop="@dimen/spacing_normal">
 		
 		<gr.tei.erasmus.pp.eventmate.ui.common.RecyclerViewEmptyViewSupport
 			android:id="@+id/reports_recycler_view"
