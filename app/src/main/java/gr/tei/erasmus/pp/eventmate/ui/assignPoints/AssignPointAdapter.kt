@@ -10,6 +10,7 @@ import com.warkiz.widget.OnSeekChangeListener
 import com.warkiz.widget.SeekParams
 import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.data.model.User
+import gr.tei.erasmus.pp.eventmate.helpers.FileHelper
 import kotlinx.android.synthetic.main.assign_point_item.view.*
 import timber.log.Timber
 
@@ -37,6 +38,9 @@ class AssignPointAdapter(
 		with(holder.itemView) {
 			user_name.text = user.userName
 			seek_bar.max = maximumPoints.toFloat()
+			user.photo?.let {
+				profile_photo.setImageBitmap(FileHelper.decodeImage(it))
+			}
 			seek_bar.onSeekChangeListener = object : OnSeekChangeListener {
 				override fun onSeeking(seekParams: SeekParams?) {
 				}

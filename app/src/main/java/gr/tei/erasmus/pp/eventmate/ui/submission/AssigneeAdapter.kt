@@ -31,6 +31,8 @@ class AssigneeAdapter(
 			user_photo.setImageBitmap(user.photo?.let { FileHelper.decodeImage(it) })
 			user_name.text = user.userName
 			file_indicator.visibility = if (user.hasSent) View.VISIBLE else View.GONE
+			points_layout.visibility = if (user.achievedPoints == null) View.GONE else View.VISIBLE
+			tv_points.text = user.achievedPoints.toString()
 		}
 	}
 	

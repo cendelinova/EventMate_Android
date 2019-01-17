@@ -161,8 +161,6 @@ class TaskDetailActivity : BaseActivity() {
 				).show()
 			}
 			
-			// todo setup male ikonky
-			
 		}
 		
 	}
@@ -194,6 +192,7 @@ class TaskDetailActivity : BaseActivity() {
 	private fun setupLayout(task: Task) {
 		with(task) {
 			val taskState = Task.TaskState.valueOf(taskState)
+			
 			val parentEventState = Event.EventState.valueOf(parentEventState)
 			task_name.text = name
 			tv_description.text = getDefaultTextIfEmpty(description)
@@ -209,6 +208,16 @@ class TaskDetailActivity : BaseActivity() {
 			
 			val setOfSubmitters = submissions.map { s -> s.submitter }
 			assignees?.filter { a -> setOfSubmitters.contains(a) }?.forEach { a -> a.hasSent = true }
+			
+			if (taskState == Task.TaskState.FINISHED) {
+				val mapOfSubmittersPoints = HashMap<Long?, Long>()
+				for (submission in submissions) {
+					mapOfSubmittersPoints[submission.submitter.id] = submission.earnedPoints
+				}
+
+				assignees?.forEach { a -> a.achievedPoints = 0 }
+				assignees?.forEach { a -> a.achievedPoints = mapOfSubmittersPoints[a.id] ?: mapOfSubmittersPoints[a.id] }
+			}
 			
 			if (!assignees.isNullOrEmpty()) {
 				assigneesAdapter.updateUserList(assignees.toMutableList())

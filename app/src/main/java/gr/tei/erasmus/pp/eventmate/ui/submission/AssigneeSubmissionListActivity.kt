@@ -191,6 +191,7 @@ class AssigneeSubmissionListActivity : BaseActivity(), IPickResult {
 			} else {
 				View.VISIBLE
 			}
+			taskId = data.taskId
 			viewModel.getUserTaskSubmissions(data.userId, data.taskId)
 		}
 	}

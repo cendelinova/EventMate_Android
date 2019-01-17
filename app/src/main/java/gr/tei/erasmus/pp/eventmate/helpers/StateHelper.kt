@@ -137,10 +137,7 @@ object StateHelper {
 			}
 			
 			Task.TaskState.FINISHED -> {
-				setFabSettings(
-					fab, Task.TaskState.FINISHED.fabIcon, fabListener,
-					task.taskOwner, userRoleHelper
-				)
+				fab.visibility = View.GONE
 			}
 			
 		}
@@ -157,7 +154,6 @@ object StateHelper {
 		with(fab) {
 			setImageResource(imageResource)
 			setOnClickListener(listener)
-			// todo more roles
 			visibility = if (userRoleHelper.isSameUser(user)) View.VISIBLE else View.GONE
 		}
 	}

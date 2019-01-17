@@ -7,6 +7,7 @@ data class SubmissionResponse(
 	val taskDescription: String?,
 	val content: List<SubmissionFile>,
 	val submitter: User,
-	val parentTaskId: Long) {
+	val parentTaskId: Long,
+	val earnedPoints: Long) {
 	
 }

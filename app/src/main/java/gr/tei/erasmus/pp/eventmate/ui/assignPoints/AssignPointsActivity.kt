@@ -1,10 +1,13 @@
 package gr.tei.erasmus.pp.eventmate.ui.assignPoints
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import gr.tei.erasmus.pp.eventmate.R
+import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.EVENT_ID
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.TASK_ID
 import gr.tei.erasmus.pp.eventmate.data.model.Task
 import gr.tei.erasmus.pp.eventmate.data.model.User
@@ -12,7 +15,11 @@ import gr.tei.erasmus.pp.eventmate.data.model.UserSubmissionPoints
 import gr.tei.erasmus.pp.eventmate.helpers.FileHelper
 import gr.tei.erasmus.pp.eventmate.helpers.StateHelper.showError
 import gr.tei.erasmus.pp.eventmate.helpers.StateHelper.toggleProgress
-import gr.tei.erasmus.pp.eventmate.ui.base.*
+import gr.tei.erasmus.pp.eventmate.ui.base.BaseActivity
+import gr.tei.erasmus.pp.eventmate.ui.base.ErrorState
+import gr.tei.erasmus.pp.eventmate.ui.base.LoadingState
+import gr.tei.erasmus.pp.eventmate.ui.base.State
+import gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.EventDetailActivity
 import gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.tasks.TasksViewModel
 import kotlinx.android.synthetic.main.activity_assign_points.*
 import kotlinx.android.synthetic.main.toolbar_task_detail.*
@@ -62,12 +69,13 @@ class AssignPointsActivity : BaseActivity() {
 		when (state) {
 			is LoadingState -> toggleProgress(progress, true)
 			is ErrorState -> showError(state.error, progress, main)
-			is FinishedState -> {
+			is AssignPointViewModel.EventIdState -> {
 				toggleProgress(progress, false)
-//				Toast.makeText(this, R.string.success_task_created, Toast.LENGTH_LONG).show()
-//				startActivity(Intent(this, EventDetailActivity::class.java).apply {
-//					putExtra(EVENT_ID, eventId)
-//				})
+				Toast.makeText(this, R.string.success_assing_points, Toast.LENGTH_LONG).show()
+				startActivity(Intent(this, EventDetailActivity::class.java).apply {
+					putExtra(EVENT_ID, state.eventId)
+				})
+				finish()
 			}
 			is TasksViewModel.TaskListState -> {
 				toggleProgress(progress, false)
@@ -82,7 +90,9 @@ class AssignPointsActivity : BaseActivity() {
 			task_status_icon.setImageResource(R.drawable.ic_task_under_evaluation)
 			tasks_status.text = getString(R.string.task_state_maximum_points, points.toString())
 			task_photo.setImageBitmap(photo?.let { FileHelper.decodeImage(it) })
-			this@AssignPointsActivity.assignees = assignees?.toMutableList() ?: mutableListOf()
+			val setOfSubmitters = submissions.map { s -> s.submitter }
+			this@AssignPointsActivity.assignees = assignees?.filter { a -> setOfSubmitters.contains(a) }?.toMutableList() ?:
+					mutableListOf()
 			this@AssignPointsActivity.maxPoints = points
 			
 		}

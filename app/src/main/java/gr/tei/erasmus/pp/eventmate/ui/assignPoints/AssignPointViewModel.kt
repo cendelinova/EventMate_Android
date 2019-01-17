@@ -3,6 +3,7 @@ package gr.tei.erasmus.pp.eventmate.ui.assignPoints
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import gr.tei.erasmus.pp.eventmate.app.App
+import gr.tei.erasmus.pp.eventmate.data.model.Task
 import gr.tei.erasmus.pp.eventmate.data.model.UserSubmissionPoints
 import gr.tei.erasmus.pp.eventmate.helpers.ErrorHelper
 import gr.tei.erasmus.pp.eventmate.ui.base.*
@@ -42,7 +43,7 @@ class AssignPointViewModel : BaseViewModel() {
 			try {
 				val response = taskRepository.assignPoints(taskId, userSubmissionPointList).await()
 				val state = if (response.isSuccessful && response.body() != null) {
-					FinishedState
+					EventIdState((response.body()!! as Task).eventId)
 				} else {
 					Timber.e(response.errorBody()?.string())
 					ErrorState(Throwable(ErrorHelper.getErrorMessageFromHeader(response.headers())))
@@ -53,6 +54,8 @@ class AssignPointViewModel : BaseViewModel() {
 			}
 		}
 	}
+	
+	data class EventIdState(val eventId: Long) : State()
 	
 	
 }

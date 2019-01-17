@@ -10,7 +10,8 @@ data class User(
 	val attendedEvents: Int,
 	val organizedEvents: Int,
 	var checked: Boolean = false,
-	var hasSent : Boolean = false
+	var hasSent : Boolean = false,
+	var achievedPoints : Long? = 0
 ) {
 	
 	constructor(id: Long) : this(
