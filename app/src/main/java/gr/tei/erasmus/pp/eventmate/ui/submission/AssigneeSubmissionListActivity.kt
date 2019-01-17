@@ -33,14 +33,17 @@ import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.AUDIO
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.PHOTO
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.SUBMISSION_EXTRA
+import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.TASK_ID
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.VIDEO
 import gr.tei.erasmus.pp.eventmate.data.model.SubmissionExtra
 import gr.tei.erasmus.pp.eventmate.data.model.SubmissionFile
 import gr.tei.erasmus.pp.eventmate.data.model.SubmissionResponse
+import gr.tei.erasmus.pp.eventmate.data.model.Task
 import gr.tei.erasmus.pp.eventmate.helpers.DialogHelper
 import gr.tei.erasmus.pp.eventmate.helpers.FileHelper
 import gr.tei.erasmus.pp.eventmate.helpers.StateHelper
 import gr.tei.erasmus.pp.eventmate.ui.base.*
+import gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.tasks.TasksViewModel
 import kotlinx.android.synthetic.main.activity_assignee_submission_list.*
 import kotlinx.android.synthetic.main.submission_item.view.*
 import kotlinx.android.synthetic.main.toolbar_task_detail.*
@@ -52,6 +55,7 @@ class AssigneeSubmissionListActivity : BaseActivity(), IPickResult {
 	private val viewModel by lazy { ViewModelProviders.of(this).get(SubmissionViewModel::class.java) }
 	
 	private lateinit var submissionAdapter: SubmissionAdapter
+	private var taskId: Long? = null
 	
 	companion object {
 		const val REQUEST_VIDEO_CAPTURE = 1
@@ -83,10 +87,17 @@ class AssigneeSubmissionListActivity : BaseActivity(), IPickResult {
 		
 	}
 	
+	override fun onBackPressed() {
+		super.onBackPressed()
+		finish()
+	}
+	
 	override fun onPickResult(pickResult: PickResult?) {
 		pickResult?.let {
-			val intent = Intent(this, AssigneeNewSubmissionActivity::class.java)
-			intent.putExtra(PHOTO, pickResult.uri.toString())
+			val intent = Intent(this, AssigneeNewSubmissionActivity::class.java).apply {
+				putExtra(PHOTO, pickResult.uri.toString())
+				putExtra(TASK_ID, taskId)
+			}
 			startActivity(intent)
 		}
 	}
@@ -103,15 +114,36 @@ class AssigneeSubmissionListActivity : BaseActivity(), IPickResult {
 			is ErrorState -> StateHelper.showError(state.error, progress, main)
 			is SubmissionViewModel.SubmissionState -> {
 				StateHelper.toggleProgress(progress, false)
-				setupLayout(state.submissionResponses[0])
-				
+				if (state.submissionResponses.isNotEmpty()) setupLayout(state.submissionResponses[0])
+				else taskId?.let { viewModel.getTask(it) }
 			}
 			is FinishedState -> StateHelper.toggleProgress(progress, false)
+			is TasksViewModel.TaskListState -> {
+				StateHelper.toggleProgress(progress, false)
+				setupTaskHeader(state.tasks[0])
+			}
+		}
+	}
+	
+	private fun setupTaskHeader(task: Task) {
+		with(task) {
+			taskId = id
+			task_name.text = name
+			photo?.let {
+				task_photo.setImageBitmap(FileHelper.decodeImage(it))
+			}
+			description?.let {
+				tv_description.text = it
+			}
+			
+			task_status_icon.visibility = View.GONE
+			
 		}
 	}
 	
 	private fun setupLayout(submissionResponse: SubmissionResponse) {
 		with(submissionResponse) {
+			taskId = parentTaskId
 			task_name.text = taskName
 			taskPhoto?.let {
 				task_photo.setImageBitmap(FileHelper.decodeImage(it))
@@ -154,11 +186,13 @@ class AssigneeSubmissionListActivity : BaseActivity(), IPickResult {
 	private fun parseIntent() {
 		if (intent.hasExtra(SUBMISSION_EXTRA) && intent.getParcelableExtra<SubmissionExtra>(SUBMISSION_EXTRA) != null) {
 			val data = intent.getParcelableExtra<SubmissionExtra>(SUBMISSION_EXTRA)
-			// todo real data
-			viewModel.getUserTaskSubmissions(2, 8)
+			state_fab.visibility = if (data.seeTaskOwner) {
+				View.GONE
+			} else {
+				View.VISIBLE
+			}
+			viewModel.getUserTaskSubmissions(data.userId, data.taskId)
 		}
-		viewModel.getUserTaskSubmissions(2, 8)
-		
 	}
 	
 	private fun dispatchTakePhotoIntent() {
@@ -258,7 +292,6 @@ class AssigneeSubmissionListActivity : BaseActivity(), IPickResult {
 		
 		override fun onSubmissionDownload(submissionFile: SubmissionFile) {
 			viewModel.saveFileLocally(this@AssigneeSubmissionListActivity, submissionFile)
-			
 		}
 		
 		override fun onSubmissionDelete(submissionFile: SubmissionFile) {
@@ -286,7 +319,9 @@ class AssigneeSubmissionListActivity : BaseActivity(), IPickResult {
 		super.onActivityResult(requestCode, resultCode, data)
 		
 		if (resultCode == Activity.RESULT_OK) {
-			val intent = Intent(this, AssigneeNewSubmissionActivity::class.java)
+			val intent = Intent(this, AssigneeNewSubmissionActivity::class.java).apply {
+				putExtra(TASK_ID, taskId)
+			}
 			when (requestCode) {
 				REQUEST_AUDIO_RECORD -> intent.putExtra(AUDIO, data?.data.toString())
 				REQUEST_VIDEO_CAPTURE -> intent.putExtra(VIDEO, data?.data.toString())
@@ -294,6 +329,7 @@ class AssigneeSubmissionListActivity : BaseActivity(), IPickResult {
 			
 			startActivity(intent)
 		}
+		finish()
 	}
 	
 	private fun showDataPreview(submissionFile: SubmissionFile) {

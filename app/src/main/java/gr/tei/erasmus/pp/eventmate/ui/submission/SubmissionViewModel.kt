@@ -9,11 +9,13 @@ import gr.tei.erasmus.pp.eventmate.data.model.SubmissionResponse
 import gr.tei.erasmus.pp.eventmate.helpers.ErrorHelper
 import gr.tei.erasmus.pp.eventmate.helpers.FileHelper
 import gr.tei.erasmus.pp.eventmate.ui.base.*
+import gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.tasks.TasksViewModel
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
 class SubmissionViewModel : BaseViewModel() {
 	private val submissionRepository by lazy { App.COMPONENTS.provideSubmissionRepository() }
+	private val taskRepository = App.COMPONENTS.provideTaskRepository()
 	
 	private val mStates = MutableLiveData<State>()
 	val states: LiveData<State>
@@ -97,7 +99,26 @@ class SubmissionViewModel : BaseViewModel() {
 				val response = submissionRepository.deleteSubmissionFile(submissionFileId).await()
 				Timber.d("deleteSubmissionFile() $response ${response.isSuccessful}")
 				val state = if (response.isSuccessful && response.body() != null) {
-					SubmissionState(response.body()!!)
+					SubmissionState(mutableListOf(response.body()!!))
+				} else {
+					Timber.e(response.errorBody()?.string())
+					ErrorState(Throwable(ErrorHelper.getErrorMessageFromHeader(response.headers())))
+				}
+				mStates.postValue(state)
+			} catch (error: Throwable) {
+				mStates.postValue(ErrorState(error))
+			}
+		}
+	}
+	
+	fun getTask(taskId: Long) {
+		launch {
+			mStates.postValue(LoadingState)
+			try {
+				val response = taskRepository.getTask(taskId).await()
+				Timber.d("deleteSubmissionFile() $response ${response.isSuccessful}")
+				val state = if (response.isSuccessful && response.body() != null) {
+					TasksViewModel.TaskListState(mutableListOf(response.body()!!))
 				} else {
 					Timber.e(response.errorBody()?.string())
 					ErrorState(Throwable(ErrorHelper.getErrorMessageFromHeader(response.headers())))

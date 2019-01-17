@@ -5,17 +5,20 @@ import android.os.Parcelable
 
 data class SubmissionExtra(
 	val userId: Long,
-	val taskId: Long
+	val taskId: Long,
+	val seeTaskOwner: Boolean
 ) : Parcelable {
 	constructor(parcel: Parcel) : this(
 		parcel.readLong(),
-		parcel.readLong()
+		parcel.readLong(),
+		parcel.readByte() != 0.toByte()
 	) {
 	}
 	
 	override fun writeToParcel(parcel: Parcel, flags: Int) {
 		parcel.writeLong(userId)
 		parcel.writeLong(taskId)
+		parcel.writeByte(if (seeTaskOwner) 1 else 0)
 	}
 	
 	override fun describeContents(): Int {

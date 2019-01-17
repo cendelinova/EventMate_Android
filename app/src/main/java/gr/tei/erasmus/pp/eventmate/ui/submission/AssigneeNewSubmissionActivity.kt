@@ -11,9 +11,12 @@ import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
 import gr.tei.erasmus.pp.eventmate.R
+import gr.tei.erasmus.pp.eventmate.app.App
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.AUDIO
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.PHOTO
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.SUBMISSION_EXTRA
+import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.TASK_ID
+import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.USER_ID
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.VIDEO
 import gr.tei.erasmus.pp.eventmate.data.model.SubmissionExtra
 import gr.tei.erasmus.pp.eventmate.data.model.SubmissionFile
@@ -31,9 +34,12 @@ class AssigneeNewSubmissionActivity : BaseActivity() {
 	
 	private val viewModel by lazy { ViewModelProviders.of(this).get(SubmissionViewModel::class.java) }
 	
+	private val sharedPreferenceHelper = App.COMPONENTS.provideSharedPreferencesHelper()
+	
 	private lateinit var submissionType: SubmissionFile.FileType
 	
 	private var dataUri: Uri? = null
+	private var taskId: Long? = null
 	
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -41,8 +47,16 @@ class AssigneeNewSubmissionActivity : BaseActivity() {
 		
 		setupToolbar(toolbar)
 		observeViewModel()
+		
+		taskId = intent.getLongExtra(TASK_ID, 0)
+		
 		parseIntent()
 		handleSendingNewSubmission()
+	}
+	
+	override fun onBackPressed() {
+		super.onBackPressed()
+		finish()
 	}
 	
 	private fun handleSendingNewSubmission() {
@@ -57,7 +71,12 @@ class AssigneeNewSubmissionActivity : BaseActivity() {
 			}
 			
 			data?.run {
-				viewModel.saveNewSubmissionFile(8, SubmissionFile(name, comment, submissionType.name, this))
+				taskId?.let { it1 ->
+					viewModel.saveNewSubmissionFile(
+						it1,
+						SubmissionFile(name, comment, submissionType.name, this)
+					)
+				}
 			}
 			
 		}
@@ -86,9 +105,10 @@ class AssigneeNewSubmissionActivity : BaseActivity() {
 				StateHelper.toggleProgress(progress, false)
 				Toast.makeText(this, R.string.success_file_uploaded, Toast.LENGTH_LONG).show()
 				startActivity(Intent(this, AssigneeSubmissionListActivity::class.java).apply {
-					// todo real data
-					putExtra(SUBMISSION_EXTRA, SubmissionExtra(3, 8))
+					putExtra(SUBMISSION_EXTRA,
+						taskId?.let { SubmissionExtra(sharedPreferenceHelper.loadLong(USER_ID), it, false) })
 				})
+				finish()
 			}
 			is SubmissionViewModel.SubmissionState -> {
 				StateHelper.toggleProgress(progress, false)
@@ -116,6 +136,7 @@ class AssigneeNewSubmissionActivity : BaseActivity() {
 		} else if (intent.hasExtra(AUDIO) && intent.getStringExtra(AUDIO) != null) {
 			prepareAudioLayout()
 		}
+		
 	}
 	
 	private fun prepareAudioLayout() {

@@ -1,2 +1,249 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+	<string name="app_name">EventMate</string>
+	<string name="tab_inbox">Zprávy</string>
+	<string name="tab_events">Moje události</string>
+	<string name="tab_profile">Můj profil</string>
+	<string name="hint_email">Emailová adresa</string>
+	<string name="hint_password">Heslo</string>
+	<string name="mgs_welcome">Rádi Vás znovu vidíme</string>
+	<string name="btn_login">Přihlášení</string>
+	<string name="btn_facebook">Facebook</string>
+	<string name="btn_google">Google</string>
+	<string name="tv_no_account">Nemáte účet? <b>Vytvořte jej</b></string>
+	<string name="tv_forgotten_password">Zapomenuté heslo?</string>
+	<string name="hint_name">Jméno</string>
+	<string name="btn_signup">Přihlásit se</string>
+	<string name="msg_give_info_you">Dejte nám o sobě informace</string>
+	<string name="title_my_events">Moje události</string>
+	<string name="hint_repeat_password">Zopakujte heslo</string>
+	<string name="hint_search">Vyhledávání</string>
+	<string name="tv_no_events">Žádné události</string>
+	<string name="event_owner">Majitel události</string>
+	<string name="event_guest">Host události</string>
+	<string name="event_status_editable">Upravitelný</string>
+	<string name="event_status_ready_to_play">Připraven ke hře</string>
+	<string name="event_status_in_play">Hraný</string>
+	<string name="event_status_evaluation">Hodnocený</string>
+	<string name="event_status_finished">Ukončený</string>
+	<string name="event_status_undefined">Nedefinovaný</string>
+	<string name="who">Kdo</string>
+	<string name="event_status">Status eventu</string>
+	<string name="btn_confirm">Potvrdit</string>
+	<string name="title_select_filters">Vybrat filtry</string>
+	<string name="error_invalid_email">Špatná emailová adresa</string>
+	<string name="error_required_field">Toto pole je povinné</string>
+	<string name="error_password_not_equal">Hesla nesouhlasí</string>
+	<string name="error_invalid_password">Heslo musí být alespoň 6 znaků dlouhé</string>
+	<string name="mgs_congrats">Gratulujeme</string>
+	<string name="tv_organized_events">orzanizované události</string>
+	<string name="tv_attended_events">zůčastněné události</string>
+	<string name="tv_earned_points">získané body</string>
+	<string name="settings">Nastavení</string>
+	<string name="game_rank">Herní hodnost</string>
+	<string name="help">Nápověda</string>
+	<string name="logout">Odhlášení</string>
+	<string name="title_activity_settings">Nastavení</string>
+	
+	<!-- Strings related to Settings -->
+	
+	<!-- Example General settings -->
+	<string name="pref_header_general">Obecné</string>
+	
+	<string name="pref_title_social_recommendations">Enable social recommendations</string>
+	<string name="pref_description_social_recommendations">Recommendations for people to contact based on your message
+		history
+	</string>
+	
+	<string name="pref_title_display_name">Display name</string>
+	<string name="pref_default_display_name">John Smith</string>
+	
+	<string name="pref_title_add_friends_to_messages">Add friends to messages</string>
+	<string-array name="pref_example_list_titles">
+		<item>Always</item>
+		<item>When possible</item>
+		<item>Never</item>
+	</string-array>
+	<string-array name="pref_example_list_values">
+		<item>1</item>
+		<item>0</item>
+		<item>-1</item>
+	</string-array>
+	
+	<!-- Example settings for Data & Sync -->
+	<string name="pref_header_data_sync">Data &amp; sync</string>
+	
+	<string name="pref_title_sync_frequency">Sync frequency</string>
+	<string-array name="pref_sync_frequency_titles">
+		<item>15 minutes</item>
+		<item>30 minutes</item>
+		<item>1 hour</item>
+		<item>3 hours</item>
+		<item>6 hours</item>
+		<item>Never</item>
+	</string-array>
+	<string-array name="pref_sync_frequency_values">
+		<item>15</item>
+		<item>30</item>
+		<item>60</item>
+		<item>180</item>
+		<item>360</item>
+		<item>-1</item>
+	</string-array>
+	
+	<string-array name="list_preference_entries">
+		<item>Entry 1</item>
+		<item>Entry 2</item>
+		<item>Entry 3</item>
+	</string-array>
+	
+	<string-array name="list_preference_entry_values">
+		<item>1</item>
+		<item>2</item>
+		<item>3</item>
+	</string-array>
+	
+	<string-array name="multi_select_list_preference_default_value" />
+	
+	<string name="pref_title_system_sync_settings">System sync settings</string>
+	
+	<!-- Example settings for Notifications -->
+	<string name="pref_header_notifications">Notifikace</string>
+	
+	<string name="pref_title_new_message_notifications">Notifikace o nové příchozí zprávě</string>
+	
+	<string name="pref_title_ringtone">Ringtone</string>
+	<string name="pref_ringtone_silent">Silent</string>
+	
+	<string name="pref_title_vibrate">Vibrace</string>
+	<string name="filter">Filtrovat</string>
+	<string name="btn_cancel">Zrušit</string>
+	<string name="hint_event_name">Název události</string>
+	<string name="hint_date">Datum</string>
+	<string name="hint_place">Místo</string>
+	<string name="hint_guests">Hosti</string>
+	<string name="btn_create_event">Vytvoření události</string>
+	<string name="msg_give_info">Dejte nám více informací</string>
+	<string name="choose_photo">Vyberte fotografii</string>
+	<string name="hint_time">Time</string>
+	<string name="error_future_time">Čas by měl být v budoucnosti</string>
+	<string name="loading_error">Chyba nahrávání</string>
+	<string name="retry">Opakovat</string>
+	<string name="error_create_event">Nastala chyba při vytváření události</string>
+	<string name="empty_string">-</string>
+	<string name="hint_type_message">Napište zprávu</string>
+	<string name="tv_no_conversation">Žádné konverzace</string>
+	<string name="title_inbox">Moje konverzace</string>
+	<string name="tv_no_messages">Žádné zprávy</string>
+	<string name="success_event_created">Událost byla vytvořena</string>
+	<string name="preferences_category_notifications">Notifikace</string>
+	<string name="preferences_category_others">Ostatní</string>
+	<string name="pref_title_pm">Zprávy</string>
+	<string name="pref_description_pm">Notifkace, když vám příjde zpráva</string>
+	<string name="pref_title_event_start">Začátek události</string>
+	<string name="pref_description_event_start">Notifikace, když by měl event začít</string>
+	<string name="pref_title_assign_points">Přidělení bodů</string>
+	<string name="pref_description_assign_points">Notifkace, když by jste měli přidělit body</string>
+	<string name="pref_title_reset_score">Vyresetovat skore</string>
+	<string name="pref_description_reset_score">Vyresetuje se vám skore</string>
+	<string name="pref_description_ringtone">Choose rigntone</string>
+	<string name="pref_key_pm">notification_pm</string>
+	<string name="pref_key_gm">notification_gm</string>
+	<string name="pref_key_event_start">notification_event_start</string>
+	<string name="pref_key_assign_points">notification_assign_points</string>
+	<string name="pref_key_event_invitation">Pozvánka k události</string>
+	<string name="pref_description_event_invitation">Notifikace, když Vás kamarád pozve do události</string>
+	<string name="pref_title_event_invitation">Pozvánka k události</string>
+	<string name="pref_key_reset_score">reset_score</string>
+	<string name="delete">Delete</string>
+	<string name="event_item_removed">Událost %1$s úspěšně smazána</string>
+	<string name="undo">vrátit</string>
+	<string name="title_activity_new_task">NewTaskActivity</string>
+	<string name="btn_create_task">Save task</string>
+	<string name="hint_task_name">Název úkolu</string>
+	<string name="hint_points">Body</string>
+	<string name="hint_asigness">Přiřazení úživatelé</string>
+	<string name="hint_description">Popis</string>
+	<string name="hint_task_time">Čas úkolu</string>
+	<string name="msg_task_info">O čem je tento úkol?</string>
+	
+	<!-- TODO: Remove or change this placeholder text -->
+	<string name="hello_blank_fragment">Hello blank fragment</string>
+	<string name="tasks_tab_title">Úkoly</string>
+	<string name="guests_tab_title">Hosti</string>
+	<string name="edit">Editovat</string>
+	<string name="tv_no_tasks">Žádné úkoly</string>
+	<string name="success_task_created">Úkol vytvořen</string>
+	<string name="tv_no_guests">Žádní hosti</string>
+	<string name="title_description">Popis</string>
+	<string name="title_time_limit">Časový limit</string>
+	<string name="title_location">Lokace</string>
+	<string name="title_points">Body</string>
+	<string name="title_assigness">Přiřazení k úkolu</string>
+	<string name="tv_no_assignee">K úkolu není nikdo přiřazený</string>
+	<string name="success_sign_up">Úspěšné přihlášení</string>
+	<string name="tv_no_reports">Žádné reporty</string>
+	<string name="name">Název</string>
+	<string name="msg_time_assign_points">Je čas přidělit body</string>
+	<string name="title_delete">Vymazání</string>
+	<string name="message_wish_delete">Opravdu tohle chcete smazat?</string>
+	<string name="active_filters">Aktivní filtry</string>
+	<string name="share">Sdílet</string>
+	<string name="download">Stáhnout</string>
+	<string name="msg_report_marker">Report designer</string>
+	<string name="hint_report_name">Název reportu</string>
+	<string name="hint_report_comment">Váš komentář</string>
+	<string name="btn_generate_report">Vygenerovat report</string>
+	<string name="category">Kategorie</string>
+	<string name="full_report">Plný report</string>
+	<string name="certificate">Certifikát</string>
+	<string name="display_options">Zobrazit nastavení</string>
+	<string name="show_event_info">Zobrazit <b><font fgcolor='#064f68'>informace o události</font></b></string>
+	<string name="display_guests">Zobrazit <b><font fgcolor='#064f68'>hosty</font></b></string>
+	<string name="include_tasks">Zahrnout <b><font fgcolor='#064f68'>úkoly</font></b></string>
+	<string name="event_date">Datum události</string>
+	<string name="event_place">Místo události</string>
+	<string name="report_creator">Kdo vytvořil report</string>
+	<string name="report_created_date">Čas vytvoření reportu</string>
+	<string name="mgs_report_info">KTERÉ INFORMACE CHETE ZAHRNOUT?</string>
+	<string name="msg_report_guests">KDO BUDE VE VAŠEM REPORTU?</string>
+	<string name="msg_report_tasks">KTERÉ ÚKOLY CHCETE ZAHRNOUT?</string>
+	<string name="tv_no_submission">Žádný soubor odevzdání</string>
+	<string name="take_photo">Vyfotit fot¨ku</string>
+	<string name="record_video">Nahrát video</string>
+	<string name="record_audio">Nahrát zvuk</string>
+	<string name="msg_submission">Nové odevzdání</string>
+	<string name="hint_submission_name">Název odevzdání</string>
+	<string name="hint_submission_comment">Váš komentář</string>
+	<string name="btn_send_submission">Odeslat odevzdání</string>
+	<string name="camera_audio_permission_msg">\"K vytvoření fotky k Vašemu odevzdání je potřeba jak oprávnění ke kameře tak k nahrávání zvuku</string>
+	<string name="camera_audio_permission_title"><![CDATA[Camera & audio permission]]></string>
+	<string name="needed_camera_permission">Je potřeba oprávnění k použití fotoaparátu a nahrávání zvuku</string>
+	<string name="assignee_submission">Odevzdání od</string>
+	<string name="photo_proof">Photo důkaz</string>
+	<string name="video_proof">Video důkaz</string>
+	<string name="audio_proof">Audio důkaz</string>
+	<string name="view">Zobrazit</string>
+	<string name="error_uploading_data">Nastala chyba při načítání, zkuste to prosím znovu</string>
+	<string name="success_file_uploaded">Soubor odevzdání byl úspěšně nahrán</string>
+	<string name="error_user_not_report_creator">Omlouváme se, nemáte oprávnění manipulovat s tímto reportem</string>
+	<string name="success_report_create">Report úspěšně vytvořen</string>
+	<string name="msg_share_reports">Kdo dostate tento report?</string>
+	<string name="hint_mail_subject">Předmět emailu</string>
+	<string name="hint_mail_text">Obsah emailu</string>
+	<string name="existing_users">Existující uživatel</string>
+	<string name="mgs_invite_guests">Koho chcete pozvat?</string>
+	<string name="via_email">Pozvat přes email</string>
+	<string name="event_invitation">Pozvánka k události</string>
+	<string name="hint_emails">Napiště emailové adresy příjemnců</string>
+	<string name="invite_event_guests">Pozvěte hosty události</string>
+	<string name="choose_assigness">Vyberte komu úkol přidělit</string>
+	<string name="mgs_pick_assignee">Vyberte komu úkol přidělit</string>
+	<string name="btn_add_task">Přidat úkol</string>
+	<string name="btn_add_guests">Přidat hosty</string>
+	<string name="event_locked">Události byla zamknuta proti úpravanám</string>
+	<string name="event_started">Události byla úspěšně odstartována</string>
+	<string name="event_stopped">Událost byla zastavena</string>
+	<string name="event_evaluated">Události je připravena k ohodnocení</string>
+	<string name="event_summary_requested">Report je připraven k zobrazení</string>
+</resources>

@@ -6,6 +6,7 @@ data class SubmissionResponse(
 	val taskPhoto: String?,
 	val taskDescription: String?,
 	val content: List<SubmissionFile>,
-	val submitter: User) {
+	val submitter: User,
+	val parentTaskId: Long) {
 	
 }

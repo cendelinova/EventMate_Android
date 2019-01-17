@@ -29,9 +29,9 @@ import gr.tei.erasmus.pp.eventmate.helpers.TextHelper.getDefaultTextIfEmpty
 import gr.tei.erasmus.pp.eventmate.ui.assignPoints.AssignPointsActivity
 import gr.tei.erasmus.pp.eventmate.ui.base.*
 import gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.EventDetailActivity
-import gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.guests.UserAdapter
 import gr.tei.erasmus.pp.eventmate.ui.events.eventDetail.tasks.TasksViewModel
 import gr.tei.erasmus.pp.eventmate.ui.newTask.NewTaskActivity
+import gr.tei.erasmus.pp.eventmate.ui.submission.AssigneeAdapter
 import gr.tei.erasmus.pp.eventmate.ui.submission.AssigneeSubmissionListActivity
 import gr.tei.erasmus.pp.eventmate.ui.userProfile.UserProfileActivity
 import kotlinx.android.synthetic.main.activity_task_detail.*
@@ -44,7 +44,7 @@ class TaskDetailActivity : BaseActivity() {
 	private var eventId: Long? = null
 	private var showMenu: Boolean = false
 	
-	private lateinit var assigneesAdapter: UserAdapter
+	private lateinit var assigneesAdapter: AssigneeAdapter
 	
 	private lateinit var task: Task
 	
@@ -136,17 +136,29 @@ class TaskDetailActivity : BaseActivity() {
 		}
 	}
 	
-	private val onUserClick = object : UserAdapter.GuestListener {
+	private val onUserClick = object : AssigneeAdapter.AssigneeListener {
 		override fun onUserClick(user: User) {
 			val state = Task.TaskState.valueOf(task.taskState)
-			if (state == Task.TaskState.IN_REVIEW) {
+			if ((state == Task.TaskState.IN_PLAY || state == Task.TaskState.IN_REVIEW) && (userRoleHelper.isSameUser(
+					user
+				) || userRoleHelper.isSameUser(task.taskOwner))
+			) {
 				startActivity(Intent(this@TaskDetailActivity, AssigneeSubmissionListActivity::class.java).apply {
-					putExtra(SUBMISSION_EXTRA, SubmissionExtra(user.id!!, task.id))
+					putExtra(
+						SUBMISSION_EXTRA,
+						SubmissionExtra(user.id!!, task.id, userRoleHelper.isSameUser(task.taskOwner))
+					)
 				})
-			} else {
+			} else if (state == Task.TaskState.EDITABLE) {
 				startActivity(Intent(this@TaskDetailActivity, UserProfileActivity::class.java).apply {
 					putExtra(USER_ID, user.id)
 				})
+			} else if (state == Task.TaskState.IN_PLAY && !userRoleHelper.isSameUser(user)) {
+				Toast.makeText(
+					this@TaskDetailActivity,
+					getString(R.string.no_permission_open_submission),
+					Toast.LENGTH_LONG
+				).show()
 			}
 			
 			// todo setup male ikonky
@@ -161,7 +173,7 @@ class TaskDetailActivity : BaseActivity() {
 	private fun initializeRecyclerView() {
 		Timber.v("initializeRecyclerView() called")
 		
-		assigneesAdapter = UserAdapter(
+		assigneesAdapter = AssigneeAdapter(
 			this,
 			onUserClick,
 			mutableListOf()
@@ -194,6 +206,9 @@ class TaskDetailActivity : BaseActivity() {
 			photo?.let {
 				task_photo.setImageBitmap(FileHelper.decodeImage(it))
 			}
+			
+			val setOfSubmitters = submissions.map { s -> s.submitter }
+			assignees?.filter { a -> setOfSubmitters.contains(a) }?.forEach { a -> a.hasSent = true }
 			
 			if (!assignees.isNullOrEmpty()) {
 				assigneesAdapter.updateUserList(assignees.toMutableList())

@@ -19,5 +19,5 @@ interface SubmissionService {
 	fun saveSubmissionFile(@Path("taskId") taskId: Long, @Body submissionFile: SubmissionFile): Deferred<Response<Task>>
 	
 	@DELETE("/file/submissionFile/{id}")
-	fun deleteSubmissionFile(@Path("id") fileId: Long): Deferred<Response<MutableList<SubmissionResponse>>>
+	fun deleteSubmissionFile(@Path("id") fileId: Long): Deferred<Response<SubmissionResponse>>
 }

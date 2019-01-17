@@ -17,7 +17,8 @@ data class Task(
 	val taskOwner: User,
 	val submissionsCount: Int,
 	var checked: Boolean = false,
-	val parentEventState: String
+	val parentEventState: String,
+	val submissions: List<SubmissionResponse>
 ) {
 
 //	constructor(

@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="app_name">EventMate</string>
+	<string name="tab_inbox">μηνυμάτων</string>
+	<string name="tab_events">τα γεγονότα μου</string>
+	<string name="tab_profile">το ΠΡΟΦΙΛ μου</string>
+	<string name="hint_email">ηλεκτρονική διεύθυνσή</string>
+	<string name="hint_password">Κωδικός πρόσβασης</string>
+	<string name="mgs_welcome">Χαίρομαι που θα σε δω ξανά</string>
+	<string name="btn_login">Σύνδεση</string>
+	<string name="btn_facebook">Facebook</string>
+	<string name="btn_google">Google</string>
+	<string name="tv_no_account">Δεν έχετε λογαριασμό ακόμα <b>Δημιουργία νέου</b></string>
+	<string name="tv_forgotten_password">Ξεχασμένος κωδικός?</string>
+	<string name="hint_name">Ονομα</string>
+	<string name="btn_signup">Εγγραφείτε</string>
+	<string name="msg_give_info_you">Δώστε μας πληροφορίες σχετικά με εσάς</string>
+	<string name="title_my_events">Οι εκδηλώσεις μου</string>
+	<string name="hint_repeat_password">Επαναλάβετε τον κωδικό πρόσβασης</string>
+	<string name="hint_search">Ψάξιμο</string>
+	<string name="tv_no_events">δεν υπάρχουν συμβάντα</string>
+	<string name="event_owner">Κάτοχος εκδήλωσης</string>
+	<string name="event_guest">Επισκέπτης συμβάντος</string>
+	<string name="event_status_editable">Επεξεργάσιμη</string>
+	<string name="event_status_ready_to_play">Ετοιμος για παιχνίδι</string>
+	<string name="event_status_in_play">Σε παιχνίδι</string>
+	<string name="event_status_evaluation">Εκτίμηση</string>
+	<string name="event_status_finished">Πεπερασμένος</string>
+	<string name="event_status_undefined">Απροσδιόριστος</string>
+	<string name="who">Ο οποίος</string>
+	<string name="event_status">Κατάσταση συμβάντος</string>
+	<string name="btn_confirm">Επιβεβαιώνω</string>
+	<string name="title_select_filters">Επιλέξτε φίλτρα</string>
+	<string name="error_invalid_email">Μη έγκυρη διεύθυνση e-mail</string>
+	<string name="error_required_field">Αυτό το πεδίο απαιτείται</string>
+	<string name="error_password_not_equal">οι κωδικοί πρόσβασης δεν ταιριάζουν</string>
+	<string name="error_invalid_password">Ο κωδικός πρόσβασης πρέπει να είναι τουλάχιστον 6 χαρακτήρες</string>
+	<string name="mgs_congrats">συγχαρητήρια</string>
+	<string name="tv_organized_events">οργανωμένες εκδηλώσεις</string>
+	<string name="tv_attended_events">παρακολούθησαν εκδηλώσεις</string>
+	<string name="tv_earned_points">κέρδισε πόντους</string>
+	<string name="settings">Ρυθμίσεις</string>
+	<string name="game_rank">Κατάταξη παιχνιδιών</string>
+	<string name="help">Βοήθεια</string>
+	<string name="logout">Αποσυνδέση</string>
+	<string name="title_activity_settings">Ρυθμίσεις</string>
+	
+	<!-- Strings related to Settings -->
+	
+	<!-- Example General settings -->
+	<string name="pref_header_general">General</string>
+	
+	<string name="pref_title_social_recommendations">Enable social recommendations</string>
+	<string name="pref_description_social_recommendations">Recommendations for people to contact based on your message
+		history
+	</string>
+	
+	<string name="pref_title_display_name">Display name</string>
+	<string name="pref_default_display_name">John Smith</string>
+	
+	<string name="pref_title_add_friends_to_messages">Add friends to messages</string>
+	<string-array name="pref_example_list_titles">
+		<item>Always</item>
+		<item>When possible</item>
+		<item>Never</item>
+	</string-array>
+	<string-array name="pref_example_list_values">
+		<item>1</item>
+		<item>0</item>
+		<item>-1</item>
+	</string-array>
+	
+	<!-- Example settings for Data & Sync -->
+	<string name="pref_header_data_sync">Data &amp; sync</string>
+	
+	<string name="pref_title_sync_frequency">Sync frequency</string>
+	<string-array name="pref_sync_frequency_titles">
+		<item>15 minutes</item>
+		<item>30 minutes</item>
+		<item>1 hour</item>
+		<item>3 hours</item>
+		<item>6 hours</item>
+		<item>Never</item>
+	</string-array>
+	<string-array name="pref_sync_frequency_values">
+		<item>15</item>
+		<item>30</item>
+		<item>60</item>
+		<item>180</item>
+		<item>360</item>
+		<item>-1</item>
+	</string-array>
+	
+	<string-array name="list_preference_entries">
+		<item>Entry 1</item>
+		<item>Entry 2</item>
+		<item>Entry 3</item>
+	</string-array>
+	
+	<string-array name="list_preference_entry_values">
+		<item>1</item>
+		<item>2</item>
+		<item>3</item>
+	</string-array>
+	
+	<string-array name="multi_select_list_preference_default_value" />
+	
+	<string name="pref_title_system_sync_settings">System sync settings</string>
+	
+	<!-- Example settings for Notifications -->
+	<string name="pref_header_notifications">Notifications</string>
+	
+	<string name="pref_title_new_message_notifications">New message notifications</string>
+	
+	<string name="pref_title_ringtone">Ringtone</string>
+	<string name="pref_ringtone_silent">Silent</string>
+	
+	<string name="pref_title_vibrate">Δονώ</string>
+	<string name="filter">Φίλτρο</string>
+	<string name="btn_cancel">Ματαίωση</string>
+	<string name="hint_event_name">Όνομα συμβάντος</string>
+	<string name="hint_date">Ημερομηνία</string>
+	<string name="hint_place">Θέση</string>
+	<string name="hint_guests">Οι επισκέπτες</string>
+	<string name="btn_create_event">Δημιουργία συμβάντος</string>
+	<string name="msg_give_info">Δώστε μας περισσότερες πληροφορίες</string>
+	<string name="choose_photo">Διάλεξε φωτογραφία</string>
+	<string name="hint_time">χρόνος</string>
+	<string name="error_future_time">Ο χρόνος πρέπει να είναι στο μέλλον</string>
+	<string name="loading_error">Σφάλμα φόρτωσης</string>
+	<string name="retry">Ξαναδοκιμάσετε</string>
+	<string name="error_create_event">Παρουσιάστηκε σφάλμα κατά τη δημιουργία συμβάντος</string>
+	<string name="empty_string">-</string>
+	<string name="hint_type_message">Πληκτρολογήστε μήνυμα</string>
+	<string name="tv_no_conversation">Δεν υπάρχουν συνομιλίες</string>
+	<string name="title_inbox">Η συνομιλία μου</string>
+	<string name="tv_no_messages">Δεν υπάρχουν μηνύματα</string>
+	<string name="success_event_created">Η εκδήλωση έχει δημιουργηθεί</string>
+	<string name="preferences_category_notifications">Ειδοποιήσεις</string>
+	<string name="preferences_category_others">Οι υπολοιποι</string>
+	<string name="pref_title_pm">Ιδιωτικό μήνυμα</string>
+	<string name="pref_description_pm">Να ενημερώνεστε όταν λαμβάνετε ένα ιδιωτικό μήνυμα</string>
+	<string name="pref_title_event_start">Έναρξη εκδήλωσης</string>
+	<string name="pref_description_event_start">Να ενημερώνεστε όταν πρόκειται να ξεκινήσει ένα συμβάν</string>
+	<string name="pref_title_assign_points">Αντιστοιχίστε σημεία</string>
+	<string name="pref_description_assign_points">Να ενημερώνεστε όταν πρέπει να αντιστοιχίσετε σημεία στους φίλους σας</string>
+	<string name="pref_title_reset_score">Επαναφορά βαθμολογίας</string>
+	<string name="pref_description_reset_score">Θα επαναφέρει την επιτυγχανόμενη βαθμολογία σας</string>
+	<string name="pref_description_ringtone">Επιλέξτε ήχο κλήσης</string>
+	<string name="pref_key_pm">notification_pm</string>
+	<string name="pref_key_gm">notification_gm</string>
+	<string name="pref_key_event_start">notification_event_start</string>
+	<string name="pref_key_assign_points">notification_assign_points</string>
+	<string name="pref_key_event_invitation">Πρόσκληση συμβάντος</string>
+	<string name="pref_description_event_invitation">Ενημερώστε όταν ο φίλος σας έχει προσκαλέσει στην εκδήλωσή του</string>
+	<string name="pref_title_event_invitation">Πρόσκληση συμβάντος</string>
+	<string name="pref_key_reset_score">reset_score</string>
+	<string name="delete">Διαγράφω</string>
+	<string name="event_item_removed">Εκδήλωση %1$s έχουν καταργηθεί με επιτυχία</string>
+	<string name="undo">ξεκάνω</string>
+	<string name="title_activity_new_task">NewTaskActivity</string>
+	<string name="btn_create_task">Αποθηκεύστε την εργασία</string>
+	<string name="hint_task_name">Ονομα εργασίας</string>
+	<string name="hint_points">Σημεία</string>
+	<string name="hint_asigness">Ασυνείδητο</string>
+	<string name="hint_description">Περιγραφή</string>
+	<string name="hint_task_time">Χρόνος εργασίας</string>
+	<string name="msg_task_info">Τι είναι αυτό το καθήκον;</string>
+	
+	<!-- TODO: Remove or change this placeholder text -->
+	<string name="hello_blank_fragment">Hello blank fragment</string>
+	<string name="tasks_tab_title">Καθήκοντα</string>
+	<string name="guests_tab_title">Οι επισκέπτες</string>
+	<string name="edit">Επεξεργασία</string>
+	<string name="tv_no_tasks">Δεν υπάρχουν καθήκοντα</string>
+	<string name="success_task_created">Δημιουργήθηκε εργασία</string>
+	<string name="tv_no_guests">Δεν καλεσμένοι</string>
+	<string name="title_description">Περιγραφή</string>
+	<string name="title_time_limit">Προθεσμία</string>
+	<string name="title_location">Τοποθεσία</string>
+	<string name="title_points">Σημεία</string>
+	<string name="title_assigness">Ανάθεση</string>
+	<string name="tv_no_assignee">Κανένας εκδοχέας</string>
+	<string name="success_sign_up">Επιτυχής εγγραφή</string>
+	<string name="tv_no_reports">Δεν υπάρχουν αναφορές</string>
+	<string name="name">Ονομα</string>
+	<string name="msg_time_assign_points">Ήρθε η ώρα να ορίσετε σημεία</string>
+	<string name="title_delete">Διαγραφή ενέργειας</string>
+	<string name="message_wish_delete">Θέλετε πραγματικά να το διαγράψετε;</string>
+	<string name="active_filters">Ενεργά φίλτρα</string>
+	<string name="share">Μερίδιο</string>
+	<string name="download">Κατεβάστε</string>
+	<string name="msg_report_marker">Σχεδιασμός αναφοράς συμβάντων</string>
+	<string name="hint_report_name">Αναφορά ονόματος</string>
+	<string name="hint_report_comment">Το σχόλιό σου</string>
+	<string name="btn_generate_report">Δημιουργία αναφοράς</string>
+	<string name="category">Κατηγορία</string>
+	<string name="full_report">Πλήρης περίληψη</string>
+	<string name="certificate">Πιστοποιητικό</string>
+	<string name="display_options">Επιλογές προβολής</string>
+	<string name="show_event_info">προβολή <b><font fgcolor='#064f68'>πληροφορίες εκδήλωσης</font></b></string>
+	<string name="display_guests">Απεικόνιση <b><font fgcolor='#064f68'>επισκέπτες</font></b></string>
+	<string name="include_tasks">Περιλαμβάνω <b><font fgcolor='#064f68'>καθήκοντα</font></b></string>
+	<string name="event_date">Ημερομηνία γεγονότος</string>
+	<string name="event_place">Τόπος εκδήλωσης</string>
+	<string name="report_creator">Δημιουργός αναφοράς</string>
+	<string name="report_created_date">Δημιουργία ημερομηνίας αναφοράς</string>
+	<string name="mgs_report_info">ΤΙ ΠΛΗΡΟΦΟΡΙΕΣ ΘΑ ΠΡΕΠΕΙ ΝΑ ΠΕΡΙΛΑΜΒΑΝΕΤΕ;</string>
+	<string name="msg_report_guests">ΠΟΙΟΣ ΕΙΝΑΙ ΣΤΗΝ ΕΚΘΕΣΗ ΣΑΣ;</string>
+	<string name="msg_report_tasks">ΠΟΙΑ ΑΠΑΝΤΗΣΕΙΣ ΘΑ ΠΡΕΠΕΙ ΝΑ ΠΕΡΙΛΑΜΒΑΝΕΤΕ;</string>
+	<string name="tv_no_submission">Δεν υπάρχει αρχείο υποβολής</string>
+	<string name="take_photo">Βγάλε φωτογραφία</string>
+	<string name="record_video">Εγγραφή βίντεο</string>
+	<string name="record_audio">Εγγραφή ήχου</string>
+	<string name="msg_submission">Νέα υποβολή</string>
+	<string name="hint_submission_name">Όνομα υποβολής</string>
+	<string name="hint_submission_comment">Το σχόλιό σου</string>
+	<string name="btn_send_submission">Αποστολή αποστολής</string>
+	<string name="camera_audio_permission_msg">\"Τόσο η άδεια κάμερας όσο και η λήψη ήχου απαιτούνται για τη λήψη φωτογραφιών των υποβολών σας</string>
+	<string name="camera_audio_permission_title"><![CDATA[Camera & audio permission]]></string>
+	<string name="needed_camera_permission">Απαιτείται πρόσβαση φωτογραφικής μηχανής και ήχου για λήψη φωτογραφιών των υποβολών</string>
+	<string name="assignee_submission">Υποβολές εργασιών από</string>
+	<string name="photo_proof">Φωτογραφία απόδειξη</string>
+	<string name="video_proof">Βίντεο απόδειξη</string>
+	<string name="audio_proof">Ακουστική απόδειξη</string>
+	<string name="view">Θέα</string>
+	<string name="error_uploading_data">Σφάλμα κατά τη φόρτωση. Δοκιμάστε ξανά</string>
+	<string name="success_file_uploaded">Δημοσίευσε επιτυχώς το αρχείο υποβολής</string>
+	<string name="error_user_not_report_creator">Λυπούμαστε που δεν έχετε άδεια να επεξεργαστείτε την αναφορά.</string>
+	<string name="success_report_create">Έκθεση που δημιουργήθηκε με επιτυχία</string>
+	<string name="msg_share_reports">Ποιος θα πάρει αυτή την αναφορά;</string>
+	<string name="hint_mail_subject">Το θέμα του email</string>
+	<string name="hint_mail_text">Email κείμενο</string>
+	<string name="existing_users">Υπάρχοντες χρήστες</string>
+	<string name="mgs_invite_guests">Ποιος θέλετε να προσκαλέσετε;</string>
+	<string name="via_email">Πρόσκληση μέσω ηλεκτρονικού ταχυδρομείου</string>
+	<string name="event_invitation">Πρόσκληση συμβάντος</string>
+	<string name="hint_emails">Πληκτρολογήστε τα μηνύματα ηλεκτρονικού ταχυδρομείου των παραληπτών</string>
+	<string name="invite_event_guests">Προσκαλέστε τους επισκέπτες της εκδήλωσης</string>
+	<string name="choose_assigness">Επιλέξτε εντολοδότες εργασιών</string>
+	<string name="mgs_pick_assignee">Επιλέξτε εντολοδότες εργασιών</string>
+	<string name="btn_add_task">Προσθέστε εργασία</string>
+	<string name="btn_add_guests">Add guests</string>
+	<string name="event_locked">Το συμβάν έχει κλειδωθεί για επεξεργασία</string>
+	<string name="event_started">Το συμβάν ξεκίνησε με επιτυχία</string>
+	<string name="event_stopped">Το συμβάν έχει σταματήσει</string>
+	<string name="event_evaluated">Το συμβάν είναι έτοιμο για αξιολόγηση</string>
+	<string name="event_summary_requested">Η περίληψη συμβάντος είναι έτοιμη να προβληθεί</string>
+</resources>

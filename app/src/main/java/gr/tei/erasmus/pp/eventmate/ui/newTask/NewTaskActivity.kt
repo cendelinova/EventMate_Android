@@ -238,7 +238,11 @@ class NewTaskActivity : BaseActivity(), Validator.ValidationListener, IPickResul
 			input_points.editText?.setText(points.toString())
 			input_description.editText?.setText(description)
 			input_place.editText?.setText(place)
-			task_photo.setImageBitmap(task.photo?.let { FileHelper.decodeImage(it) })
+			photo?.let {
+				task_photo.setImageBitmap(FileHelper.decodeImage(it))
+				photoPicked = true
+			}
+			
 			
 			if (!assignees.isNullOrEmpty()) {
 				this@NewTaskActivity.assignees = assignees.toMutableList()

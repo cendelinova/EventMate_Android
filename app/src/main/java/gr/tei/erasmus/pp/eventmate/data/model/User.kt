@@ -9,7 +9,8 @@ data class User(
 	val photo: String?,
 	val attendedEvents: Int,
 	val organizedEvents: Int,
-	var checked: Boolean = false
+	var checked: Boolean = false,
+	var hasSent : Boolean = false
 ) {
 	
 	constructor(id: Long) : this(
