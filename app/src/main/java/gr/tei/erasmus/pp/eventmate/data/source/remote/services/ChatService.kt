@@ -10,7 +10,7 @@ import retrofit2.http.Path
 
 interface ChatService {
 	@POST("/message")
-	fun saveMessage(@Body message: ChatMessage): Deferred<Response<ChatMessage>>
+	fun saveMessage(@Body message: ChatMessage): Deferred<Response<MutableList<ChatMessage>>>
 	
 	@GET("/me/messages/last")
 	fun getMyConversations(): Deferred<Response<MutableList<ChatMessage>>>

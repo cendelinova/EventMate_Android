@@ -27,7 +27,7 @@ class ChatViewModel : BaseViewModel() {
 			try {
 				val response = chatRepository.saveMessage(chatMessage).await()
 				val state = if (response.isSuccessful && response.body() != null) {
-					MessageListState(mutableListOf(response.body()!!))
+					MessageListState(response.body()!!)
 				} else {
 					Timber.e(response.errorBody()?.string())
 					ErrorState(Throwable(ErrorHelper.getErrorMessageFromHeader(response.headers())))
@@ -56,9 +56,9 @@ class ChatViewModel : BaseViewModel() {
 		}
 	}
 	
-	fun getConversationDetail(userId: Long) {
+	fun getConversationDetail(userId: Long, showLoading: Boolean = true) {
 		launch {
-			mStates.postValue(LoadingState)
+			if (showLoading) mStates.postValue(LoadingState)
 			try {
 				val response = chatRepository.getConversationDetail(userId).await()
 				val state = if (response.isSuccessful && response.body() != null) {
@@ -92,9 +92,8 @@ class ChatViewModel : BaseViewModel() {
 		}
 	}
 	
-	fun getUser(userId: Long) {
+	fun getUser(userId: Long, showLoading: Boolean = true) {
 		launch {
-			mStates.postValue(LoadingState)
 			try {
 				val response = userRepository.getUser(userId).await()
 				val state = if (response.isSuccessful && response.body() != null) {

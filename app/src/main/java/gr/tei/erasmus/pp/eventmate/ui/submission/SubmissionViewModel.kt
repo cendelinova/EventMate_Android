@@ -21,9 +21,9 @@ class SubmissionViewModel : BaseViewModel() {
 	val states: LiveData<State>
 		get() = mStates
 	
-	fun getUserTaskSubmissions(userId: Long, taskId: Long) {
+	fun getUserTaskSubmissions(userId: Long, taskId: Long, showLoading : Boolean = true) {
 		launch {
-			mStates.postValue(LoadingState)
+			if (showLoading) mStates.postValue(LoadingState)
 			try {
 				val response = submissionRepository.getSubmissions(userId, taskId).await()
 				val state = if (response.isSuccessful && response.body() != null) {

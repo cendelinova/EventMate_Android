@@ -30,17 +30,23 @@
 		
 		</androidx.appcompat.widget.Toolbar>
 		
-		<gr.tei.erasmus.pp.eventmate.ui.common.RecyclerViewEmptyViewSupport
-			android:id="@+id/message_recycler_view"
+		<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+			android:id="@+id/swipe_layout"
 			android:layout_width="0dp"
 			android:layout_height="0dp"
-			android:scrollbars="none"
-			app:fastScrollThumbColor="@color/colorAccent"
-			app:layout_constraintBottom_toTopOf="@id/message_layout"
+			app:layout_constraintBottom_toTopOf="@+id/message_layout"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@id/toolbar"
-			android:layout_marginBottom="@dimen/spacing_normal"/>
+			app:layout_constraintTop_toBottomOf="@id/toolbar">
+			
+			<gr.tei.erasmus.pp.eventmate.ui.common.RecyclerViewEmptyViewSupport
+				android:id="@+id/message_recycler_view"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:scrollbars="none"
+				app:fastScrollThumbColor="@color/colorAccent" />
+		</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+		
 		
 		<ProgressBar
 			android:id="@+id/progress"
@@ -54,10 +60,14 @@
 			app:layout_constraintTop_toTopOf="parent" />
 		
 		<LinearLayout
-			android:id="@+id/messages_empty_view"
-			android:layout_width="match_parent"
-			android:layout_height="match_parent"
-			android:orientation="vertical">
+			android:id="@+id/conversation_detail_empty_view"
+			android:layout_width="0dp"
+			android:layout_height="0dp"
+			android:orientation="vertical"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent">
 			
 			<Space
 				android:layout_width="match_parent"

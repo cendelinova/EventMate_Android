@@ -68,6 +68,7 @@ class ConversationAdapter(
 	 * Update and notify data set change.
 	 */
 	fun updateConversationList(updatedConversations: MutableList<ChatMessage>) {
+		conversations.clear()
 		conversations = updatedConversations
 		notifyDataSetChanged()
 	}

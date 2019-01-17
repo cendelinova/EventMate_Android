@@ -56,6 +56,7 @@ class AssigneeSubmissionListActivity : BaseActivity(), IPickResult {
 	
 	private lateinit var submissionAdapter: SubmissionAdapter
 	private var taskId: Long? = null
+	private var userId: Long? = null
 	
 	companion object {
 		const val REQUEST_VIDEO_CAPTURE = 1
@@ -113,6 +114,7 @@ class AssigneeSubmissionListActivity : BaseActivity(), IPickResult {
 			is LoadingState -> StateHelper.toggleProgress(progress, true)
 			is ErrorState -> StateHelper.showError(state.error, progress, main)
 			is SubmissionViewModel.SubmissionState -> {
+				swipe_layout.isRefreshing = false
 				StateHelper.toggleProgress(progress, false)
 				if (state.submissionResponses.isNotEmpty()) setupLayout(state.submissionResponses[0])
 				else taskId?.let { viewModel.getTask(it) }
@@ -192,6 +194,7 @@ class AssigneeSubmissionListActivity : BaseActivity(), IPickResult {
 				View.VISIBLE
 			}
 			taskId = data.taskId
+			userId = data.userId
 			viewModel.getUserTaskSubmissions(data.userId, data.taskId)
 		}
 	}
@@ -256,6 +259,12 @@ class AssigneeSubmissionListActivity : BaseActivity(), IPickResult {
 			setEmptyView(submission_empty_view)
 			layoutManager = LinearLayoutManager(context)
 			adapter = submissionAdapter
+		}
+		
+		swipe_layout.setOnRefreshListener {
+			if (taskId != null && userId != null) {
+				viewModel.getUserTaskSubmissions(userId!!, taskId!!, false)
+			}
 		}
 	}
 	

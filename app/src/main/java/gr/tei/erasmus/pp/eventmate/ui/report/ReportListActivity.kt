@@ -90,6 +90,10 @@ class ReportListActivity : BaseActivity() {
 			layoutManager = LinearLayoutManager(context!!)
 			adapter = reportAdapter
 		}
+		
+		swipe_layout.setOnRefreshListener {
+			eventId?.let { viewModel.getEventReports(it, false) }
+		}
 	}
 	
 	private val onReportClick = object : ReportAdapter.ReportListener {
@@ -165,6 +169,7 @@ class ReportListActivity : BaseActivity() {
 			is LoadingState -> StateHelper.toggleProgress(progress, true)
 			is ErrorState -> StateHelper.showError(state.error, progress, main)
 			is ReportViewModel.ReportState -> {
+				swipe_layout.isRefreshing = false
 				StateHelper.toggleProgress(progress, false)
 				reportAdapter.updateReportList(state.reports)
 			}

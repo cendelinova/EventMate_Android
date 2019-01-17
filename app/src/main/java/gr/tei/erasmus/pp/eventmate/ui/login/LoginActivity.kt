@@ -28,8 +28,6 @@ class LoginActivity : BaseActivity() {
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_login)
-
-//		userRepository.saveUserToSharedPreferences(User("", ""), "")
 		
 		if (sharedPreferenceHelper.hasKey(USER_ID)) {
 			startActivity(Intent(this, MainActivity::class.java))

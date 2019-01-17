@@ -1,6 +1,7 @@
 package gr.tei.erasmus.pp.eventmate.ui.chat.conversationDetail
 
 import android.os.Bundle
+import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -10,6 +11,7 @@ import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.USER_NAME
 import gr.tei.erasmus.pp.eventmate.data.model.ChatMessage
 import gr.tei.erasmus.pp.eventmate.data.model.User
 import gr.tei.erasmus.pp.eventmate.helpers.StateHelper
+import gr.tei.erasmus.pp.eventmate.helpers.TextHelper
 import gr.tei.erasmus.pp.eventmate.ui.base.BaseActivity
 import gr.tei.erasmus.pp.eventmate.ui.base.ErrorState
 import gr.tei.erasmus.pp.eventmate.ui.base.LoadingState
@@ -30,13 +32,15 @@ class ConversationDetailActivity : BaseActivity() {
 	private var userId: Long? = null
 	private var userName: String? = null
 	private lateinit var receiverUser: User
-	private var messsages = mutableListOf<ChatMessage>()
 	
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_conversation_detail)
 		
 		setupToolbar(toolbar)
+		
+		initializeRecyclerView()
+		
 		userId = intent.getLongExtra(USER_ID, 0)
 		userName = intent.getStringExtra(USER_NAME)
 		
@@ -48,7 +52,6 @@ class ConversationDetailActivity : BaseActivity() {
 		viewModel.getUser(userId!!)
 		
 		handleBtnSendMessage()
-		initializeRecyclerView()
 		
 	}
 	
@@ -68,6 +71,7 @@ class ConversationDetailActivity : BaseActivity() {
 			val message = input_message.text.toString()
 			if (!message.isEmpty()) viewModel.saveMessage(ChatMessage(receiverUser, message))
 			input_message.setText("")
+			TextHelper.hideKeyboardFrom(this, input_message)
 		}
 	}
 	
@@ -76,9 +80,10 @@ class ConversationDetailActivity : BaseActivity() {
 			is LoadingState -> StateHelper.toggleProgress(progress, true)
 			is ErrorState -> StateHelper.showError(state.error, progress, new_message)
 			is ChatViewModel.MessageListState -> {
+				swipe_layout.isRefreshing = false
 				StateHelper.toggleProgress(progress, false)
-				messsages.addAll(state.messages)
-				messageListAdapter.updateConversationList(messsages)
+				messageListAdapter.updateConversationList(state.messages)
+				conversation_detail_empty_view.visibility = if (state.messages.isNotEmpty()) View.GONE else View.VISIBLE
 			}
 			is UserViewModel.UserListState -> {
 				StateHelper.toggleProgress(progress, false)
@@ -94,9 +99,13 @@ class ConversationDetailActivity : BaseActivity() {
 		
 		with(message_recycler_view) {
 			setHasFixedSize(true)
-			setEmptyView(messages_empty_view)
+			setEmptyView(conversation_detail_empty_view)
 			layoutManager = LinearLayoutManager(context)
 			adapter = messageListAdapter
+		}
+		
+		swipe_layout.setOnRefreshListener {
+			userId?.let { viewModel.getConversationDetail(it, false) }
 		}
 	}
 }

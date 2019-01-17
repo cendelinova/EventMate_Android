@@ -10,6 +10,12 @@ import com.makeramen.roundedimageview.RoundedDrawable
 import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.data.model.User
 import gr.tei.erasmus.pp.eventmate.ui.base.AbstractFilterAdapter
+import android.app.Activity
+import android.content.Context
+import android.view.inputmethod.InputMethodManager
+import androidx.core.content.ContextCompat.getSystemService
+
+
 
 object TextHelper {
 	
@@ -26,6 +32,11 @@ object TextHelper {
 		for (input in listOfInputs) {
 			input.markRequired()
 		}
+	}
+	
+	fun hideKeyboardFrom(context: Context, view: View) {
+		val imm = context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+		imm.hideSoftInputFromWindow(view.windowToken, 0)
 	}
 	
 	private fun TextInputLayout.markRequired() {

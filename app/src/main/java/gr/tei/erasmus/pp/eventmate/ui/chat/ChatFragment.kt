@@ -47,17 +47,8 @@ class ChatFragment : BaseFragment() {
 		handleFabBtn()
 		
 		viewModel.getMyConversations()
-		repeatConversations()
 	}
-	private fun repeatConversations() {
-		launch {
-			do {
-				delay(2000)
-				viewModel.getMyConversations()
-			} while (true)
-
-		}
-	}
+	
 	
 	private fun observeViewModel() {
 		with(viewModel) {
@@ -69,6 +60,7 @@ class ChatFragment : BaseFragment() {
 		when (state) {
 			is ErrorState -> showError(state.error, progress, chat_fragment)
 			is ChatViewModel.MessageListState -> {
+				swipe_layout.isRefreshing = false
 				conversationAdapter.updateConversationList(state.messages)
 			}
 		}
@@ -87,6 +79,10 @@ class ChatFragment : BaseFragment() {
 			setEmptyView(conversation_empty_view)
 			layoutManager = LinearLayoutManager(context!!)
 			adapter = conversationAdapter
+		}
+		
+		swipe_layout.setOnRefreshListener {
+			viewModel.getMyConversations()
 		}
 	}
 	

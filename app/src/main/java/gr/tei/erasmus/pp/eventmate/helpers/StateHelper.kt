@@ -89,12 +89,7 @@ object StateHelper {
 			}
 			
 			Event.EventState.FINISHED -> {
-				event.eventOwner?.let {
-					setFabSettings(
-						fab, Event.EventState.FINISHED.iconFab, fabListener,
-						it, userRoleHelper
-					)
-				}
+				fab.setImageResource(FINISHED.iconFab)
 			}
 			
 			UNDEFINED_STATE -> {

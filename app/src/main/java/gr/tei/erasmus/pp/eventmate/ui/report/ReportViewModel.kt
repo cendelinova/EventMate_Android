@@ -83,9 +83,9 @@ class ReportViewModel : BaseViewModel() {
 		}
 	}
 	
-	fun getEventReports(eventId: Long) {
+	fun getEventReports(eventId: Long, showLoading: Boolean = true) {
 		launch {
-			mStates.postValue(LoadingState)
+			if (showLoading) mStates.postValue(LoadingState)
 			try {
 				val response = reportRepository.getReports(eventId).await()
 				Timber.d("getEventReports() with id: $eventId $response ${response.isSuccessful}")

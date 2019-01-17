@@ -8,22 +8,23 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import gr.tei.erasmus.pp.eventmate.R
+import gr.tei.erasmus.pp.eventmate.app.App
 import gr.tei.erasmus.pp.eventmate.data.model.ChatMessage
 import gr.tei.erasmus.pp.eventmate.helpers.DateTimeHelper
 import gr.tei.erasmus.pp.eventmate.helpers.FileHelper
 import org.joda.time.DateTime
 
 
-class MessageListAdapter(private val context: Context, private var messages: List<ChatMessage>) :
+class MessageListAdapter(private val context: Context, private var messages: MutableList<ChatMessage>) :
 	RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 	
+	private val userRoleHelper = App.COMPONENTS.provideUserRoleHelper()
 	override fun getItemCount() = messages.size
 	
 	// Determines the appropriate ViewType according to the sender of the message.
 	override fun getItemViewType(position: Int): Int {
 		val message = messages[position]
-		// todo current user
-		return if (message.from?.id == 2L) {
+		return if (userRoleHelper.isSameUser(message.from)) {
 			// If the current user is the sender of the message
 			VIEW_TYPE_MESSAGE_SENT
 		} else {
@@ -59,6 +60,7 @@ class MessageListAdapter(private val context: Context, private var messages: Lis
 	}
 	
 	fun updateConversationList(messages: MutableList<ChatMessage>) {
+		this.messages.clear()
 		this.messages = messages
 		notifyDataSetChanged()
 	}
