@@ -144,13 +144,13 @@ class ReportViewModel : BaseViewModel() {
 		}
 	}
 	
-	fun saveFileLocally(context: Context, data: String) {
+	fun saveFileLocally(context: Context, data: String, report: String) {
 		launch {
 			mStates.postValue(LoadingState)
 			FileHelper.saveFileLocally(
 				context,
 				data,
-				".pdf",
+				"$report.pdf",
 				"application/pdf"
 			)
 			
