@@ -144,30 +144,19 @@ class ReportViewModel : BaseViewModel() {
 		}
 	}
 	
-	fun downloadReport(context: Context, reportId: Long) {
+	fun saveFileLocally(context: Context, data: String) {
 		launch {
 			mStates.postValue(LoadingState)
-			try {
-				val response = reportRepository.downloadReport(reportId).await()
-				Timber.d("downloadReport() with id: $reportId $response ${response.isSuccessful}")
-				val state = if (response.isSuccessful && response.body() != null) {
-					FileHelper.saveFileLocally(
-						context,
-						response.body()!!,
-						".pdf",
-						"application/pdf"
-					)
-					FinishedState
-				} else {
-					Timber.e(response.errorBody()?.string())
-					ErrorState(Throwable(ErrorHelper.getErrorMessageFromHeader(response.headers())))
-				}
-				
-				mStates.postValue(state)
-			} catch (error: Throwable) {
-				mStates.postValue(ErrorState(error))
-			}
+			FileHelper.saveFileLocally(
+				context,
+				data,
+				".pdf",
+				"application/pdf"
+			)
+			
+			mStates.postValue(FinishedState)
 		}
+		
 	}
 	
 	fun getEvent(eventId: Long, showProgress: Boolean = true) {

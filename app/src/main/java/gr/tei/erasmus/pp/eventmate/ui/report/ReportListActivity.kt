@@ -130,7 +130,7 @@ class ReportListActivity : BaseActivity() {
 		
 		override fun onReportDownload(report: ReportResponse) {
 			Timber.d("onReportDownload called")
-			report.id?.let { viewModel.downloadReport(this@ReportListActivity, it) }
+			report.id?.let { report.content?.let { it1 -> viewModel.saveFileLocally(this@ReportListActivity, it1) } }
 		}
 		
 		override fun onReportDelete(report: ReportResponse) {
