@@ -75,6 +75,9 @@ class AssigneeSubmissionListActivity : BaseActivity(), IPickResult {
 		
 		parseIntent()
 		
+		taskId?.let { viewModel.getTask(it) }
+//
+		
 		state_fab.addOnMenuItemClickListener { _, _, id ->
 			when (id) {
 				R.id.action_take_photo -> dispatchTakePhotoIntent()
@@ -87,11 +90,11 @@ class AssigneeSubmissionListActivity : BaseActivity(), IPickResult {
 		}
 		
 	}
-	
-	override fun onBackPressed() {
-		super.onBackPressed()
-		finish()
-	}
+
+//	override fun onBackPressed() {
+//		super.onBackPressed()
+//		finish()
+//	}
 	
 	override fun onPickResult(pickResult: PickResult?) {
 		pickResult?.let {
@@ -117,7 +120,6 @@ class AssigneeSubmissionListActivity : BaseActivity(), IPickResult {
 				swipe_layout.isRefreshing = false
 				StateHelper.toggleProgress(progress, false)
 				if (state.submissionResponses.isNotEmpty()) setupLayout(state.submissionResponses[0])
-//				else taskId?.let { viewModel.getTask(it) }
 				taskId?.let { viewModel.getTask(it) }
 			}
 			is FinishedState -> StateHelper.toggleProgress(progress, false)

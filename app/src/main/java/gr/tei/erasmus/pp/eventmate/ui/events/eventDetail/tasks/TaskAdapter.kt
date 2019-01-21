@@ -77,6 +77,7 @@ class TaskAdapter(
 		val photoSize = context.resources.getDimension(R.dimen.icon_size).toInt()
 		val marginEnd = context.resources.getDimension(R.dimen.spacing_tiny).toInt()
 		var counter = 0
+		itemView.assignees_list.removeAllViews()
 		assignees.forEachIndexed {index, user ->
 			counter++
 			if (counter == 3) return

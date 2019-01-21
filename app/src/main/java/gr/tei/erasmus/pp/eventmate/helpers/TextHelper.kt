@@ -51,6 +51,7 @@ object TextHelper {
 		onCloseListener: View.OnClickListener?,
 		isCloseIconVisible: Boolean = true
 	) {
+		chipGroup.removeAllViews()
 		listOfInput.forEach { contact ->
 			
 			val chip = Chip(chipGroup.context)
