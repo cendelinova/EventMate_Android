@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:pp="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
 	android:id="@+id/login"
@@ -13,11 +13,15 @@
 	tools:context=".ui.login.LoginActivity">
 	
 	<TextView
+		android:id="@+id/message"
 		style="@style/MessageTitle"
-		android:layout_width="match_parent"
+		android:layout_width="0dp"
 		android:layout_height="wrap_content"
 		android:layout_marginTop="@dimen/spacing_normal"
-		android:text="@string/mgs_welcome" />
+		android:text="@string/mgs_welcome"
+		pp:layout_constraintEnd_toEndOf="parent"
+		pp:layout_constraintStart_toStartOf="parent"
+		pp:layout_constraintTop_toTopOf="parent" />
 	
 	<ImageView
 		android:id="@+id/icon"
@@ -25,15 +29,21 @@
 		android:layout_height="@dimen/bigger_icon_size"
 		android:layout_marginTop="@dimen/spacing_large"
 		android:layout_marginBottom="@dimen/spacing_large"
-		android:src="@mipmap/ic_launcher" />
+		android:src="@mipmap/ic_launcher_round"
+		pp:layout_constraintEnd_toEndOf="parent"
+		pp:layout_constraintStart_toStartOf="parent"
+		pp:layout_constraintTop_toBottomOf="@id/message" />
 	
 	
 	<com.google.android.material.textfield.TextInputLayout
 		android:id="@+id/input_email"
 		style="@style/MyEditText"
-		android:layout_width="match_parent"
+		android:layout_width="0dp"
 		android:layout_height="wrap_content"
-		android:hint="@string/hint_email">
+		android:hint="@string/hint_email"
+		pp:layout_constraintEnd_toEndOf="parent"
+		pp:layout_constraintStart_toStartOf="parent"
+		pp:layout_constraintTop_toBottomOf="@id/icon">
 		
 		<com.google.android.material.textfield.TextInputEditText
 			android:layout_width="match_parent"
@@ -46,9 +56,12 @@
 	<com.google.android.material.textfield.TextInputLayout
 		android:id="@+id/input_password"
 		style="@style/MyEditText"
-		android:layout_width="match_parent"
+		android:layout_width="0dp"
 		android:layout_height="wrap_content"
 		android:hint="@string/hint_password"
+		pp:layout_constraintEnd_toEndOf="parent"
+		pp:layout_constraintStart_toStartOf="parent"
+		pp:layout_constraintTop_toBottomOf="@id/input_email"
 		pp:passwordToggleEnabled="true">
 		
 		<com.google.android.material.textfield.TextInputEditText
@@ -61,33 +74,46 @@
 		android:id="@+id/progress"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:visibility="gone"
+		android:visibility="invisible"
 		android:elevation="7dp"
-		android:layout_gravity="center" />
+		android:layout_gravity="center"
+		pp:layout_constraintBottom_toBottomOf="parent"
+		pp:layout_constraintEnd_toEndOf="parent"
+		pp:layout_constraintStart_toStartOf="parent"
+		pp:layout_constraintTop_toTopOf="parent" />
 	
 	<Button
 		android:id="@+id/btn_login"
 		style="@style/Button"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:text="@string/btn_login" />
+		android:text="@string/btn_login"
+		pp:layout_constraintEnd_toEndOf="parent"
+		pp:layout_constraintStart_toStartOf="parent"
+		pp:layout_constraintTop_toBottomOf="@id/input_password" />
 	
 	<TextView
 		android:id="@+id/tv_no_account"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:layout_marginBottom="@dimen/spacing_small"
 		android:text="@string/tv_no_account"
-		android:textSize="@dimen/font_normal" />
+		android:textSize="@dimen/font_normal"
+		android:layout_marginTop="@dimen/spacing_normal"
+		pp:layout_constraintEnd_toEndOf="parent"
+		pp:layout_constraintStart_toStartOf="parent"
+		pp:layout_constraintTop_toBottomOf="@id/btn_login" />
 	
 	
 	<LinearLayout
-		android:layout_width="match_parent"
+		android:layout_width="0dp"
 		android:layout_height="wrap_content"
+		android:orientation="horizontal"
 		android:layout_marginStart="@dimen/spacing_normal"
-		android:layout_marginTop="@dimen/spacing_huge"
 		android:layout_marginEnd="@dimen/spacing_normal"
-		android:orientation="horizontal">
+		android:layout_marginTop="@dimen/spacing_huge"
+		pp:layout_constraintEnd_toEndOf="parent"
+		pp:layout_constraintStart_toStartOf="parent"
+		pp:layout_constraintTop_toBottomOf="@+id/tv_no_account">
 		
 		<Button
 			android:id="@+id/btn_facebook"
@@ -119,4 +145,4 @@
 	</LinearLayout>
 
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
