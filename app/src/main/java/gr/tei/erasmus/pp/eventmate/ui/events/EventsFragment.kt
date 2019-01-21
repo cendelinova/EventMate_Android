@@ -19,7 +19,8 @@ import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.EVENT_ID
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.EVENT_SHOW_MENU
 import gr.tei.erasmus.pp.eventmate.constants.Constants.EventFilter.*
 import gr.tei.erasmus.pp.eventmate.data.model.Event
-import gr.tei.erasmus.pp.eventmate.data.model.Event.EventState.*
+import gr.tei.erasmus.pp.eventmate.data.model.EventDetail
+import gr.tei.erasmus.pp.eventmate.data.model.EventDetail.EventState.*
 import gr.tei.erasmus.pp.eventmate.helpers.StateHelper.showError
 import gr.tei.erasmus.pp.eventmate.helpers.StateHelper.toggleProgress
 import gr.tei.erasmus.pp.eventmate.ui.base.*
@@ -90,7 +91,7 @@ class EventsFragment : BaseFragment() {
 				
 				newList = viewModel.filterEvents(
 					UNDEFINED_FILTER,
-					Event.EventState.valueOf(sharedPreferenceHelper.loadString(Constants.FILTER_EVENT_STATE))
+					EventDetail.EventState.valueOf(sharedPreferenceHelper.loadString(Constants.FILTER_EVENT_STATE))
 				)
 				
 			} else {
@@ -192,7 +193,7 @@ class EventsFragment : BaseFragment() {
 				putExtra(EVENT_ID, event.id)
 				putExtra(
 					EVENT_SHOW_MENU,
-					event.state == Event.EventState.EDITABLE.name && userRoleHelper.isSameUser(event.eventOwner)
+					event.state == EventDetail.EventState.EDITABLE.name && userRoleHelper.isSameUser(event.eventOwner)
 				)
 			})
 		}
@@ -219,7 +220,7 @@ class EventsFragment : BaseFragment() {
 			}
 		}!!
 		
-		val eventStateFilter: Event.EventState = eventStateFilterId?.run {
+		val eventStateFilter: EventDetail.EventState = eventStateFilterId?.run {
 			when (this) {
 				R.id.editable -> EDITABLE
 				R.id.ready_to_play -> READY_TO_PLAY
@@ -256,7 +257,7 @@ class EventsFragment : BaseFragment() {
 		when (state) {
 			is LoadingState -> toggleProgress(progress, true)
 			is ErrorState -> showError(state.error, progress, events_fragment)
-			is EventsViewModel.EventListState -> {
+			is EventsViewModel.EventList2State -> {
 				toggleProgress(progress, false)
 				swipe_layout.isRefreshing = false
 				eventAdapter.updateEventList(state.events)

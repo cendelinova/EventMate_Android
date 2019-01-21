@@ -20,7 +20,7 @@ class EventRepository(private val eventDao: EventDao, private val taskRepository
 //		Timber.d("Get my Events $result")
 //		if (result.isSuccessful && result.body() != null) {
 //			// save events locally
-//			val events = result.body()!!.map { Event.convertToEntity(it) }
+//			val events = result.body()!!.map { EventDetail.convertToEntity(it) }
 //			eventDao.insertAll(events)
 //			for (event in result.body()!!) {
 //				// save event's tasks locally
@@ -36,13 +36,13 @@ class EventRepository(private val eventDao: EventDao, private val taskRepository
 //		val result =
 //		Timber.v("Result of adding new event $result")
 //		if (result.isSuccessful && result.body() != null) {
-//			eventDao.insert(Event.convertToEntity(result.body()!!))
+//			eventDao.insert(EventDetail.convertToEntity(result.body()!!))
 //		}
 //	}
 	
 	fun update(event: EventRequest) = restHelper.updateEvent(event)
 //		if (result?.isSuccessful == true && result.body() != null) {
-//			eventDao.update(Event.convertToEntity(result.body()!!))
+//			eventDao.update(EventDetail.convertToEntity(result.body()!!))
 //		}
 	
 	 fun delete(eventId: Long) = restHelper.deleteEvent(eventId)

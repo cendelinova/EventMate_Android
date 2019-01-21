@@ -7,7 +7,8 @@ import gr.tei.erasmus.pp.eventmate.app.App
 import gr.tei.erasmus.pp.eventmate.constants.Constants
 import gr.tei.erasmus.pp.eventmate.constants.Constants.EventFilter.*
 import gr.tei.erasmus.pp.eventmate.data.model.Event
-import gr.tei.erasmus.pp.eventmate.data.model.Event.EventState.UNDEFINED_STATE
+import gr.tei.erasmus.pp.eventmate.data.model.EventDetail
+import gr.tei.erasmus.pp.eventmate.data.model.EventDetail.EventState.UNDEFINED_STATE
 import gr.tei.erasmus.pp.eventmate.data.model.EventRequest
 import gr.tei.erasmus.pp.eventmate.helpers.ErrorHelper
 import gr.tei.erasmus.pp.eventmate.ui.base.*
@@ -34,7 +35,7 @@ class EventsViewModel : BaseViewModel() {
 				val response = eventRepository.getMyEvents().await()
 				val state = if (response.isSuccessful && response.body() != null) {
 					allEvents.addAll(response.body()!!)
-					EventListState(response.body()!!)
+					EventList2State(response.body()!!)
 				} else {
 					Timber.e(response.errorBody()?.string())
 					ErrorState(Throwable(ErrorHelper.getErrorMessageFromHeader(response.headers())))
@@ -54,7 +55,7 @@ class EventsViewModel : BaseViewModel() {
 				val state = if (response.isSuccessful) {
 					val event = allEvents.find { event -> event.id == eventId }
 					allEvents.remove(event)
-					EventListState(allEvents, event?.name)
+					EventList2State(allEvents, event?.name)
 				} else {
 					Timber.e(response.errorBody()?.string())
 					ErrorState(Throwable(ErrorHelper.getErrorMessageFromHeader(response.headers())))
@@ -92,7 +93,7 @@ class EventsViewModel : BaseViewModel() {
 			try {
 				val response = eventRepository.getEvent(eventId).await()
 				val state = if (response.isSuccessful && response.body() != null) {
-					EventListState(mutableListOf(response.body()!!))
+					EventList2State(mutableListOf(response.body()!!))
 				} else {
 					Timber.e(response.errorBody()?.string())
 					ErrorState(Throwable(ErrorHelper.getErrorMessageFromHeader(response.headers())))
@@ -143,7 +144,7 @@ class EventsViewModel : BaseViewModel() {
 	
 	fun filterEvents(
 		filterRole: Constants.EventFilter?,
-		eventStateFilter: Event.EventState
+		eventStateFilter: EventDetail.EventState
 	): MutableList<Event> {
 		var filteredEvents: List<Event> = allEvents
 		
@@ -196,6 +197,11 @@ class EventsViewModel : BaseViewModel() {
 	}
 	
 	data class EventListState(
+		val events: MutableList<EventDetail>,
+		val deleteEventName: String? = null
+	) : State()
+	
+	data class EventList2State(
 		val events: MutableList<Event>,
 		val deleteEventName: String? = null
 	) : State()

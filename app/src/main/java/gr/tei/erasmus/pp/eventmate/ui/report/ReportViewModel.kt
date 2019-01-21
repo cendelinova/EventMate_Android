@@ -165,7 +165,7 @@ class ReportViewModel : BaseViewModel() {
 			try {
 				val response = eventRepository.getEvent(eventId).await()
 				val state = if (response.isSuccessful && response.body() != null) {
-					EventsViewModel.EventListState(mutableListOf(response.body()!!))
+					EventsViewModel.EventList2State(mutableListOf(response.body()!!))
 				} else {
 					Timber.e(response.errorBody()?.string())
 					ErrorState(Throwable(ErrorHelper.getErrorMessageFromHeader(response.headers())))

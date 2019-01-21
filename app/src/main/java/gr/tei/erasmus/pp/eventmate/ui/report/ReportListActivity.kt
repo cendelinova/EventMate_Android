@@ -13,10 +13,7 @@ import com.daimajia.androidanimations.library.YoYo
 import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.constants.Constants
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.EVENT_ID
-import gr.tei.erasmus.pp.eventmate.data.model.Email
-import gr.tei.erasmus.pp.eventmate.data.model.Event
-import gr.tei.erasmus.pp.eventmate.data.model.ReportResponse
-import gr.tei.erasmus.pp.eventmate.data.model.User
+import gr.tei.erasmus.pp.eventmate.data.model.*
 import gr.tei.erasmus.pp.eventmate.helpers.DialogHelper
 import gr.tei.erasmus.pp.eventmate.helpers.FileHelper
 import gr.tei.erasmus.pp.eventmate.helpers.StateHelper
@@ -186,7 +183,7 @@ class ReportListActivity : BaseActivity() {
 				StateHelper.toggleProgress(progress, false)
 				users = state.users
 			}
-			is EventsViewModel.EventListState -> {
+			is EventsViewModel.EventList2State -> {
 				StateHelper.toggleProgress(progress, false)
 				setupHeader(state.events[0])
 			}

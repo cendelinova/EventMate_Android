@@ -1,16 +1,12 @@
 package gr.tei.erasmus.pp.eventmate.ui.events.newEvent
 
-import android.Manifest
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.os.Bundle
 import android.text.util.Rfc822Tokenizer
 import android.view.View
 import android.widget.Toast
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.android.ex.chips.BaseRecipientAdapter
@@ -28,7 +24,7 @@ import com.vansuita.pickimage.listeners.IPickResult
 import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.app.App
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.EVENT_ID
-import gr.tei.erasmus.pp.eventmate.data.model.Event
+import gr.tei.erasmus.pp.eventmate.data.model.EventDetail
 import gr.tei.erasmus.pp.eventmate.data.model.EventRequest
 import gr.tei.erasmus.pp.eventmate.data.model.Invitation
 import gr.tei.erasmus.pp.eventmate.data.model.Invitation.Companion.buildInvitation
@@ -368,7 +364,7 @@ class NewEventActivity : BaseActivity(), IPickResult, Validator.ValidationListen
 		}
 	}
 	
-	private fun setupInputs(event: Event) {
+	private fun setupInputs(event: EventDetail) {
 		with(event) {
 			input_event_name.editText?.setText(name)
 			input_date.editText?.setText(DateTimeHelper.formatDateTimeString(date, DateTimeHelper.DATE_FORMAT))

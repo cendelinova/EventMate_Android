@@ -169,7 +169,7 @@ class UserViewModel : BaseViewModel() {
 			try {
 				val response = eventRepository.inviteGuests(eventId, invitations).await()
 				val state = if (response.isSuccessful && response.body() != null) {
-					val guests = (response.body()!! as Event).guests
+					val guests = (response.body()!! as EventDetail).guests
 					guests?.let { UserViewModel.UserListState(it) }
 				} else {
 					Timber.e(response.errorBody()?.string())

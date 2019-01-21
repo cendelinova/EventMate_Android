@@ -117,7 +117,8 @@ class AssigneeSubmissionListActivity : BaseActivity(), IPickResult {
 				swipe_layout.isRefreshing = false
 				StateHelper.toggleProgress(progress, false)
 				if (state.submissionResponses.isNotEmpty()) setupLayout(state.submissionResponses[0])
-				else taskId?.let { viewModel.getTask(it) }
+//				else taskId?.let { viewModel.getTask(it) }
+				taskId?.let { viewModel.getTask(it) }
 			}
 			is FinishedState -> StateHelper.toggleProgress(progress, false)
 			is TasksViewModel.TaskListState -> {

@@ -76,8 +76,10 @@ class TaskAdapter(
 	private fun addAssignees(itemView: View, assignees: MutableList<User>) {
 		val photoSize = context.resources.getDimension(R.dimen.icon_size).toInt()
 		val marginEnd = context.resources.getDimension(R.dimen.spacing_tiny).toInt()
-		assignees.forEachIndexed { index, user ->
-			if (index == 2) return@forEachIndexed
+		var counter = 0
+		assignees.forEachIndexed {index, user ->
+			counter++
+			if (counter == 3) return
 			val assigneeImage = CircleImageView(context).apply {
 				layoutParams = LinearLayout.LayoutParams(photoSize, photoSize, 0f).also {
 					it.marginEnd = marginEnd

@@ -30,11 +30,11 @@ object PermissionHelper {
 				.withOpenSettingsButton(R.string.settings)
 				.withCallback(object : Snackbar.Callback() {
 					override fun onShown(snackbar: Snackbar?) {
-						// Event handler for when the given Snackbar has been dismissed
+						// EventDetail handler for when the given Snackbar has been dismissed
 					}
 					
 					override fun onDismissed(snackbar: Snackbar?, event: Int) {
-						// Event handler for when the given Snackbar is visible
+						// EventDetail handler for when the given Snackbar is visible
 					}
 				})
 				.build()

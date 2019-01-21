@@ -14,10 +14,10 @@ import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.tabs.TabLayout
 import gr.tei.erasmus.pp.eventmate.R
-import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.EVENT_ADD_TASKS
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.EVENT_ID
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.EVENT_SHOW_MENU
 import gr.tei.erasmus.pp.eventmate.data.model.Event
+import gr.tei.erasmus.pp.eventmate.data.model.EventDetail
 import gr.tei.erasmus.pp.eventmate.helpers.DateTimeHelper
 import gr.tei.erasmus.pp.eventmate.helpers.DialogHelper
 import gr.tei.erasmus.pp.eventmate.helpers.FileHelper
@@ -72,11 +72,11 @@ class EventDetailActivity : BaseActivity() {
 		handleToolbar()
 	}
 	
-	override fun onBackPressed() {
-		finish()
-		startActivity(Intent(this@EventDetailActivity, MainActivity::class.java))
-	}
-	
+//	override fun onBackPressed() {
+//		finish()
+//		startActivity(Intent(this@EventDetailActivity, MainActivity::class.java))
+//	}
+//
 	
 	override fun onCreateOptionsMenu(menu: Menu?): Boolean {
 		Timber.d("onCreateOptionsMenu")
@@ -158,7 +158,7 @@ class EventDetailActivity : BaseActivity() {
 	
 	private fun setupLayout(event: Event?) {
 		event?.run {
-			val state = Event.EventState.valueOf(state)
+			val state = EventDetail.EventState.valueOf(state)
 			event_name_title.text = name
 			event_status.text = "[" + getString(state.statusMessage) + "]"
 			event_name.text = name
@@ -169,7 +169,7 @@ class EventDetailActivity : BaseActivity() {
 			}
 			
 			StateHelper.prepareEventFab(this, state_fab, View.OnClickListener {
-				if (state != Event.EventState.FINISHED) {
+				if (state != EventDetail.EventState.FINISHED) {
 					viewModel.changeEventStatus(id, this@EventDetailActivity)
 				} else {
 					finish()
@@ -196,7 +196,7 @@ class EventDetailActivity : BaseActivity() {
 				}
 			}
 			
-			if (state != Event.EventState.EDITABLE) {
+			if (state != EventDetail.EventState.EDITABLE) {
 				showMenu = false
 			}
 			invalidateOptionsMenu()
@@ -213,7 +213,7 @@ class EventDetailActivity : BaseActivity() {
 				StateHelper.toggleProgress(progress, true)
 				startActivity(Intent(this, MainActivity::class.java))
 			}
-			is EventsViewModel.EventListState -> {
+			is EventsViewModel.EventList2State -> {
 				StateHelper.toggleProgress(progress, false)
 				event = state.events[0]
 				setupLayout(event)

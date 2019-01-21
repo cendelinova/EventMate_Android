@@ -18,7 +18,7 @@ import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.SUBMISSION_EXTR
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.TASK_ID
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.TASK_SHOW_MENU
 import gr.tei.erasmus.pp.eventmate.constants.Constants.Companion.USER_ID
-import gr.tei.erasmus.pp.eventmate.data.model.Event
+import gr.tei.erasmus.pp.eventmate.data.model.EventDetail
 import gr.tei.erasmus.pp.eventmate.data.model.SubmissionExtra
 import gr.tei.erasmus.pp.eventmate.data.model.Task
 import gr.tei.erasmus.pp.eventmate.data.model.User
@@ -70,15 +70,15 @@ class TaskDetailActivity : BaseActivity() {
 		
 	}
 	
-	override fun onBackPressed() {
-		super.onBackPressed()
-		finish()
-		startActivity(Intent(this, EventDetailActivity::class.java).apply {
-			putExtra(EVENT_ID, eventId)
-			putExtra(Constants.EVENT_ADD_TASKS, false)
-			putExtra(Constants.EVENT_ADD_GUESTS, false)
-		})
-	}
+//	override fun onBackPressed() {
+//		super.onBackPressed()
+//		finish()
+//		startActivity(Intent(this, EventDetailActivity::class.java).apply {
+//			putExtra(EVENT_ID, eventId)
+//			putExtra(Constants.EVENT_ADD_TASKS, false)
+//			putExtra(Constants.EVENT_ADD_GUESTS, false)
+//		})
+//	}
 	
 	private fun observeViewModel() {
 		with(viewModel) {
@@ -159,6 +159,13 @@ class TaskDetailActivity : BaseActivity() {
 					getString(R.string.no_permission_open_submission),
 					Toast.LENGTH_LONG
 				).show()
+			} else if (state == Task.TaskState.FINISHED) {
+				startActivity(Intent(this@TaskDetailActivity, AssigneeSubmissionListActivity::class.java).apply {
+					putExtra(
+						SUBMISSION_EXTRA,
+						SubmissionExtra(user.id!!, task.id, userRoleHelper.isSameUser(task.taskOwner))
+					)
+				})
 			}
 			
 		}
@@ -193,7 +200,7 @@ class TaskDetailActivity : BaseActivity() {
 		with(task) {
 			val taskState = Task.TaskState.valueOf(taskState)
 			
-			val parentEventState = Event.EventState.valueOf(parentEventState)
+			val parentEventState = EventDetail.EventState.valueOf(parentEventState)
 			task_name.text = name
 			tv_description.text = getDefaultTextIfEmpty(description)
 //			tv_time_limit.text = getDefaultTextIfEmpty(timeLimit?.toString())
@@ -208,7 +215,7 @@ class TaskDetailActivity : BaseActivity() {
 			
 			val setOfSubmitters = submissions.map { s -> s.submitter }
 			assignees?.filter { a -> setOfSubmitters.contains(a) }?.forEach { a -> a.hasSent = true }
-			
+
 			if (taskState == Task.TaskState.FINISHED) {
 				val mapOfSubmittersPoints = HashMap<Long?, Long>()
 				for (submission in submissions) {
@@ -216,14 +223,16 @@ class TaskDetailActivity : BaseActivity() {
 				}
 
 				assignees?.forEach { a -> a.achievedPoints = 0 }
-				assignees?.forEach { a -> a.achievedPoints = mapOfSubmittersPoints[a.id] ?: mapOfSubmittersPoints[a.id] }
+				assignees?.forEach { a ->
+					a.achievedPoints = mapOfSubmittersPoints[a.id] ?: mapOfSubmittersPoints[a.id]
+				}
 			}
-			
+
 			if (!assignees.isNullOrEmpty()) {
 				assigneesAdapter.updateUserList(assignees.toMutableList())
 			}
 			
-			if (parentEventState != Event.EventState.EDITABLE) {
+			if (parentEventState != EventDetail.EventState.EDITABLE) {
 				StateHelper.prepareTaskFab(this, fab, View.OnClickListener {
 					if (taskState != Task.TaskState.IN_REVIEW) {
 						viewModel.changeTaskStatus(id)

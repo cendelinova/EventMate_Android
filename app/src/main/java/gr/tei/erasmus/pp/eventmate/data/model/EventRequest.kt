@@ -6,6 +6,6 @@ data class EventRequest(
 	var date: String = "",
 	var place: String? = null,
 	var photo: String? = null,
-	var state: String = Event.EventState.EDITABLE.name,
+	var state: String = EventDetail.EventState.EDITABLE.name,
 	var invitations: List<Invitation> = mutableListOf()
 )

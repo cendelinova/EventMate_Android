@@ -90,10 +90,10 @@ class AssignPointsActivity : BaseActivity() {
 			task_status_icon.setImageResource(R.drawable.ic_task_under_evaluation)
 			tasks_status.text = getString(R.string.task_state_maximum_points, points.toString())
 			task_photo.setImageBitmap(photo?.let { FileHelper.decodeImage(it) })
-			val setOfSubmitters = submissions.map { s -> s.submitter }
-			this@AssignPointsActivity.assignees = assignees?.filter { a -> setOfSubmitters.contains(a) }?.toMutableList() ?:
-					mutableListOf()
-			this@AssignPointsActivity.maxPoints = points
+//			val setOfSubmitters = submissions.map { s -> s.submitter }
+//			this@AssignPointsActivity.assignees = assignees?.filter { a -> setOfSubmitters.contains(a) }?.toMutableList() ?:
+//					mutableListOf()
+//			this@AssignPointsActivity.maxPoints = points
 			
 		}
 		initializeRecyclerView()

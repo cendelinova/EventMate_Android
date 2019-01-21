@@ -8,7 +8,8 @@ import com.google.android.material.snackbar.Snackbar
 import gr.tei.erasmus.pp.eventmate.R
 import gr.tei.erasmus.pp.eventmate.app.App
 import gr.tei.erasmus.pp.eventmate.data.model.Event
-import gr.tei.erasmus.pp.eventmate.data.model.Event.EventState.*
+import gr.tei.erasmus.pp.eventmate.data.model.EventDetail
+import gr.tei.erasmus.pp.eventmate.data.model.EventDetail.EventState.*
 import gr.tei.erasmus.pp.eventmate.data.model.Task
 import gr.tei.erasmus.pp.eventmate.data.model.Task.TaskState.IN_REVIEW
 import gr.tei.erasmus.pp.eventmate.data.model.User
@@ -16,7 +17,7 @@ import timber.log.Timber
 
 object StateHelper {
 	
-	fun toggleButton(eventOwner: User, state: Event.EventState, button: MaterialButton) {
+	fun toggleButton(eventOwner: User, state: EventDetail.EventState, button: MaterialButton) {
 		val userRoleHelper = App.COMPONENTS.provideUserRoleHelper()
 		button.visibility = when (state) {
 			EDITABLE -> {
@@ -53,12 +54,12 @@ object StateHelper {
 	fun prepareEventFab(event: Event, fab: FloatingActionButton, fabListener: View.OnClickListener) {
 		val userRoleHelper = App.COMPONENTS.provideUserRoleHelper()
 		
-		val state = Event.EventState.valueOf(event.state)
+		val state = EventDetail.EventState.valueOf(event.state)
 		when (state) {
-			Event.EventState.EDITABLE -> {
+			EventDetail.EventState.EDITABLE -> {
 				event.eventOwner?.let {
 					setFabSettings(
-						fab, Event.EventState.EDITABLE.iconFab, fabListener,
+						fab, EventDetail.EventState.EDITABLE.iconFab, fabListener,
 						it, userRoleHelper
 					)
 				}
@@ -71,10 +72,10 @@ object StateHelper {
 					)
 				}
 			}
-			Event.EventState.IN_PLAY -> {
+			EventDetail.EventState.IN_PLAY -> {
 				event.eventOwner?.let {
 					setFabSettings(
-						fab, Event.EventState.IN_PLAY.iconFab, fabListener,
+						fab, EventDetail.EventState.IN_PLAY.iconFab, fabListener,
 						it, userRoleHelper
 					)
 				}
@@ -88,7 +89,7 @@ object StateHelper {
 				}
 			}
 			
-			Event.EventState.FINISHED -> {
+			EventDetail.EventState.FINISHED -> {
 				fab.setOnClickListener(fabListener)
 				fab.setImageResource(FINISHED.iconFab)
 			}

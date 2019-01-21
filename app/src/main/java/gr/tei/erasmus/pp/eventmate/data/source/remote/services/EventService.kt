@@ -1,6 +1,7 @@
 package gr.tei.erasmus.pp.eventmate.data.source.remote.services
 
 import gr.tei.erasmus.pp.eventmate.data.model.Event
+import gr.tei.erasmus.pp.eventmate.data.model.EventDetail
 import gr.tei.erasmus.pp.eventmate.data.model.EventRequest
 import gr.tei.erasmus.pp.eventmate.data.model.Invitation
 import kotlinx.coroutines.Deferred
@@ -15,17 +16,17 @@ interface EventService {
 	fun getEvent(@Path("id") id: Long): Deferred<Response<Event>>
 	
 	@POST("/event")
-	fun insertEvent(@Body event: EventRequest): Deferred<Response<Event>>
+	fun insertEvent(@Body event: EventRequest): Deferred<Response<EventDetail>>
 	
 	@PUT("/event/{id}")
-	fun updateEvent(@Path("id") id: Long, @Body event: EventRequest): Deferred<Response<Event>>
+	fun updateEvent(@Path("id") id: Long, @Body event: EventRequest): Deferred<Response<EventDetail>>
 	
 	@DELETE("/event/{id}")
 	fun deleteEvent(@Path("id") id: Long): Deferred<Response<Void>>
 	
 	@POST("/event/{id}/invitation/list")
-	fun inviteGuests(@Path("id") id: Long, @Body invitations: MutableList<Invitation>): Deferred<Response<Event>>
+	fun inviteGuests(@Path("id") id: Long, @Body invitations: MutableList<Invitation>): Deferred<Response<EventDetail>>
 	
 	@POST("/event/{id}/pushState")
-	fun changeState(@Path("id") id: Long): Deferred<Response<Event>>
+	fun changeState(@Path("id") id: Long): Deferred<Response<EventDetail>>
 }
